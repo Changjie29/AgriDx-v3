@@ -108,6 +108,10 @@ def main():
                 raise ValueError('来源网址须为完整HTTP(S)链接')
             if source.get('emission_stage') not in [None, '国三', '国四']:
                 raise ValueError('排放阶段无效')
+            if source.get('configuration') not in [None, 'CAB', 'ROPS']:
+                raise ValueError('来源配置无效')
+            if source.get('drive_configuration') not in [None, '2WD', '4WD']:
+                raise ValueError('来源驱动配置无效')
             if 'models' in source and (not isinstance(source['models'], list) or not source['models'] or
                                       any(not isinstance(model, str) or not model.strip() for model in source['models'])):
                 raise ValueError('精确型号列表无效')
@@ -176,8 +180,23 @@ def main():
             source = source_map.get(entry['source_id'])
             if not source or entry['brand'] != source['brand']:
                 raise ValueError('来源不存在或品牌不一致')
+            if 'models' in entry:
+                models = entry['models']
+                if (not isinstance(models, list) or not models or
+                        any(not isinstance(model, str) or not model.strip() or
+                            model not in source.get('models', []) for model in models) or
+                        len(set(models)) != len(models)):
+                    raise ValueError('条目精确型号须为来源型号列表的非空、无重复子集')
             if entry.get('emission_stage') not in [None, '国三', '国四']:
                 raise ValueError('条目排放条件无效')
+            if entry.get('configuration') not in [None, 'CAB', 'ROPS']:
+                raise ValueError('条目配置无效')
+            if entry.get('configuration') and source.get('configuration') and entry['configuration'] != source['configuration']:
+                raise ValueError('条目与来源配置冲突')
+            if entry.get('drive_configuration') not in [None, '2WD', '4WD']:
+                raise ValueError('条目驱动配置无效')
+            if entry.get('drive_configuration') and source.get('drive_configuration') and entry['drive_configuration'] != source['drive_configuration']:
+                raise ValueError('条目与来源驱动配置冲突')
             if entry.get('emission_stage') and source.get('emission_stage') and entry['emission_stage'] != source['emission_stage']:
                 raise ValueError('条目与来源的排放阶段冲突')
             path = resolved(entry['knowledge_path'], REPO / '知识库/整理后的知识库')

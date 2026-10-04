@@ -126,6 +126,8 @@ export interface ResolvedScope {
   brand?: string;
   models: string[];
   emissions: string[];
+  configurations: ('CAB' | 'ROPS')[];
+  driveConfigurations: ('2WD' | '4WD')[];
   ambiguous: boolean;
   tractorArchive: boolean;
   genericKnowledge: boolean;
@@ -139,6 +141,13 @@ export function resolveScope(query: string, context: RetrievalContext): Resolved
   const explicitModel = context.model?.trim();
   const models = explicitModel ? declaredModels({ source: '', heading: '', text: '', model: explicitModel }) : modelsIn(query);
   const emissions = ['国三', '国四'].filter((stage) => [query, explicitModel].some((text) => text?.includes(stage)));
+  const configurationText = [query, explicitModel].filter(Boolean).join(' ');
+  const configurations: ('CAB' | 'ROPS')[] = [];
+  if (/\bcab\b|驾驶室/i.test(configurationText)) configurations.push('CAB');
+  if (/\brops\b|防翻架|防翻滚架/i.test(configurationText)) configurations.push('ROPS');
+  const driveConfigurations: ('2WD' | '4WD')[] = [];
+  if (/\b2wd\b|两驱|二驱|两轮驱动|二轮驱动/i.test(configurationText)) driveConfigurations.push('2WD');
+  if (/\b4wd\b|四驱|四轮驱动/i.test(configurationText)) driveConfigurations.push('4WD');
   const type = context.machineType?.trim();
   const tractorArchive = type
     ? /^(拖拉机|tractor|新能源农机|new-energy|无人农机|autonomous)$/i.test(type)
@@ -146,7 +155,7 @@ export function resolveScope(query: string, context: RetrievalContext): Resolved
   const electric = /电动|新能源|无人|electric|autonomous|new-energy/i.test([type, explicitBrand, context.model, query].filter(Boolean).join(' ')) ||
     brand === '鸿鹄' || models.includes('t70');
   const ambiguous = !explicitBrand && brands.length > 1;
-  return { brand, models, emissions, ambiguous, tractorArchive, electric, genericKnowledge: !electric && !brand && models.length === 0 && emissions.length === 0 && !ambiguous };
+  return { brand, models, emissions, configurations, driveConfigurations, ambiguous, tractorArchive, electric, genericKnowledge: !electric && !brand && models.length === 0 && emissions.length === 0 && !ambiguous };
 }
 
 /** Matching is identity selection, not proof of market, configuration or version applicability. */
@@ -154,12 +163,14 @@ export function archiveApplicability(chunk: KnowledgeChunk, scope: ResolvedScope
   const brand = canonicalBrand(chunk.brand);
   if (!scope.tractorArchive || scope.ambiguous || (scope.brand && scope.brand !== brand)) return undefined;
   if (scope.electric && brand !== '鸿鹄' && brand !== '千寻位置 / 千耘') return undefined;
+  if (chunk.configuration && scope.configurations.some((configuration) => configuration !== chunk.configuration)) return undefined;
+  if (chunk.driveConfiguration && scope.driveConfigurations.some((configuration) => configuration !== chunk.driveConfiguration)) return undefined;
   const allowed = declaredModels(chunk);
   const emissionStage = chunk.emissionStage ?? (chunk.model === '国三拖拉机' ? '国三'
     : allowed.length > 0 && allowed.every((model) => model.endsWith('g4')) ? '国四' : undefined);
   if (scope.emissions.some((stage) => stage !== emissionStage)) return undefined;
   const models = scope.models.filter((model) => model !== '国三' && model !== '国四');
-  if (models.length === 0) return scope.brand === brand ? 'pending' : undefined;
+  if (models.length === 0) return !chunk.requiresExactModel && scope.brand === brand ? 'pending' : undefined;
 
   if (chunk.model === '具体系列待核实') return scope.brand === brand ? 'pending' : undefined;
   if (chunk.model === '国三拖拉机' && scope.brand !== brand) return undefined;

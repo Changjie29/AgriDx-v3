@@ -32,7 +32,7 @@ before(() => {
 test('indexes each archived entry exactly once and preserves the 9 existing chunks', () => {
   const indexed = fs.readFileSync('知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl', 'utf8')
     .trim().split(/\r?\n/).map((line) => JSON.parse(line) as {
-      entry_id: string; source_id: string; title: string; brand: string; model: string;
+      entry_id: string; source_id: string; title: string; brand: string; model: string; models?: string[];
     });
   const sources = JSON.parse(fs.readFileSync('知识库/整理后的知识库/农用拖拉机知识库/sources.json', 'utf8')) as {
     source_id: string; models?: string[];
@@ -40,8 +40,8 @@ test('indexes each archived entry exactly once and preserves the 9 existing chun
   const sourceModels = new Map(sources.map((source) => [source.source_id, source.models]));
   assert.equal(stats().archivedEntries, indexed.length);
   assert.equal(stats().chunks, indexed.length + 9);
-  const entries = indexed.map(({ entry_id, source_id, title, brand, model }) => {
-    const exactModel = sourceModels.get(source_id)?.[0] ?? model;
+  const entries = indexed.map(({ entry_id, source_id, title, brand, model, models }) => {
+    const exactModel = models?.[0] ?? sourceModels.get(source_id)?.[0] ?? model;
     const found = retrieve(title, indexed.length, { ...tractor, brand, model: exactModel });
     const chunk = expectEntry(found, entry_id);
     assert.ok(chunk.sourceId);
@@ -80,6 +80,77 @@ test('new brand aliases and source-declared model families remain distinct', () 
   assert.equal(retrieve('原件与适用范围', 100, { ...tractor, brand: 'Weitai', model: 'TT804(G5)' }).length, 0);
   assert.equal(retrieve('原件与适用范围', 100, { ...tractor, brand: '久保田', model: 'LF804S' }).length, 0);
   expectEntry(retrieve('原件与适用范围', 100, { ...tractor, brand: 'Lovol', model: 'TX平台' }), 'KB-LV-TX-TRAINING-001');
+});
+
+test('CAB-only LX2620 entries require an exact documented CAB model', () => {
+  const query = 'CAB驾驶室内循环与新风滤网清洁条件 空调冷凝器滤网';
+  const cabIds = ['KB-LX2620-014', 'KB-LX2620-015'];
+  for (const model of ['LX2620HSDC', 'LX2620HSDCC']) {
+    const context = { ...tractor, brand: '久保田', model };
+    for (const entryId of cabIds) {
+      const entry = expectEntry(retrieve(query, 100, context), entryId);
+      assert.equal(entry.requiresExactModel, true);
+      expectEntry(retrieve(`Kubota ${model} ${query}`, 100), entryId);
+    }
+  }
+  for (const model of ['LX2620', 'LX2620SU', 'LX2620HSD', 'LX2620SUHSD', 'LX2620/LX2620SU', 'LX2620HSDCX']) {
+    for (const found of [
+      retrieve(query, 100, { ...tractor, brand: '久保田', model }),
+      retrieve(`久保田 ${model} ${query}`, 100),
+    ]) assert.ok(found.every((entry) => !cabIds.includes(entry.entryId ?? '')), model);
+  }
+  assert.ok(retrieve(query, 100, { ...tractor, brand: '久保田' })
+    .every((entry) => !cabIds.includes(entry.entryId ?? '')));
+  assert.ok(retrieve('ROPS防翻架 内循环与新风滤网 空调冷凝器', 100, { ...tractor, brand: '久保田', model: 'LX2620HSDC' })
+    .every((entry) => !cabIds.includes(entry.entryId ?? '')));
+  // The manual's shared radiator check still applies to the documented SU model.
+  expectEntry(retrieve('散热格栅与滤网清洁', 100, { ...tractor, brand: '久保田', model: 'LX2620SUHSD' }), 'KB-LX2620-010');
+});
+
+test('new US manual identities stay separate and cannot establish Chinese emission compatibility', () => {
+  for (const [model, entryId, sourceId, query] of [
+    ['M6060', 'KB-KB-M6060-005', 'SRC-KB-M6060-3C13199724', 'DPF消声器周围易燃物检查'],
+    ['M7060', 'KB-KB-M6060-006', 'SRC-KB-M6060-3C13199724', '保险丝熔断先查原因'],
+    ['M5-091', 'KB-KB-M5-001', 'SRC-KB-M5-3B79199724', '禁止短接起动端子'],
+    ['M5-111', 'KB-KB-M5-004', 'SRC-KB-M5-3B79199724', '液压高压泄漏不能用手探查'],
+  ]) {
+    const context = { ...tractor, brand: '久保田', model };
+    const found = retrieve(query, 100, context);
+    expectEntry(found, entryId);
+    assert.ok(found.every((entry) => entry.sourceId === sourceId), model);
+    expectEntry(retrieve(`Kubota ${model} ${query}`, 100), entryId);
+    assert.equal(retrieve(`国四 ${query}`, 100, context).length, 0, model);
+    assert.equal(retrieve(`国三 ${query}`, 100, context).length, 0, model);
+  }
+  for (const model of ['M7040', 'M6061', 'M5-092', 'M5-111(G4)']) {
+    assert.equal(retrieve('起动 油位 液压', 100, { ...tractor, brand: '久保田', model }).length, 0, model);
+  }
+  for (const query of ['M6060 CAB ROPS位置与安全带使用条件', 'M7060驾驶室 DPF消声器', 'CAB 保险丝熔断']) {
+    assert.equal(retrieve(query, 100, { ...tractor, brand: '久保田', model: 'M6060' }).length, 0, query);
+  }
+  assert.equal(retrieve('久保田 M6060 CAB ROPS位置与安全带使用条件', 100).length, 0);
+  expectEntry(retrieve('久保田 M6060 ROPS位置与安全带使用条件', 100), 'KB-KB-M6060-001');
+  for (const drive of ['2WD', '两驱', '二轮驱动']) {
+    assert.equal(retrieve(`久保田 M6060 ${drive} 变速箱油位检查`, 100).length, 0, drive);
+    assert.equal(retrieve(`${drive} DPF消声器周围易燃物检查`, 100, { ...tractor, brand: '久保田', model: 'M6060' }).length, 0, drive);
+  }
+  expectEntry(retrieve('久保田 M6060 四驱 ROPS位置与安全带使用条件', 100), 'KB-KB-M6060-001');
+  // Mixed-scope M5 source has no single whole-manual drive configuration.
+  expectEntry(retrieve('久保田 M5-091 2WD 禁止短接起动端子', 100), 'KB-KB-M5-001');
+});
+
+test('Weitai chapter differences remain verification information rather than a combined starting procedure', () => {
+  const context = { ...tractor, brand: '潍泰', model: 'TT804(G4)' };
+  const query = '起动前操纵位置的章节差异与实车核对';
+  const found = retrieve(query, 100, context);
+  assert.equal(found[0]?.entryId, 'KB-WT-TRACTOR-MANUAL-002');
+  assert.equal(found[0].entryType, '资料核验');
+  const reply = generateLocalKnowledgeReply(query, found, context);
+  assert.match(reply, /【来源与适用信息】/);
+  assert.match(reply, /不能据此生成一套通用起动步骤/);
+  assert.match(reply, /中立／下降/);
+  assert.doesNotMatch(reply, /【建议排查】/);
+  assert.equal(retrieve('国四 起动操纵位置', 100, context).length, 0);
 });
 
 test('navigation-system aliases do not establish equivalence to conflicting model fields or whole tractors', () => {

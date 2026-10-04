@@ -13,6 +13,9 @@ interface ArchiveEntry {
   source_id: string;
   brand: string;
   model: string;
+  models?: string[];
+  configuration?: 'CAB' | 'ROPS';
+  drive_configuration?: '2WD' | '4WD';
   title: string;
   knowledge_path: string;
   locator: string;
@@ -30,6 +33,8 @@ interface ArchiveSource {
   version: string;
   scope_boundary: string;
   models?: string[];
+  configuration?: 'CAB' | 'ROPS';
+  drive_configuration?: '2WD' | '4WD';
   emission_stage?: '国三' | '国四';
 }
 
@@ -55,6 +60,12 @@ export function loadArchive(): { chunks: KnowledgeChunk[]; fileCount: number } {
     if (source.emission_stage !== undefined && !['国三', '国四'].includes(source.emission_stage)) {
       throw new Error(`知识来源排放阶段无效：${source.source_id}`);
     }
+    if (source.configuration !== undefined && !['CAB', 'ROPS'].includes(source.configuration)) {
+      throw new Error(`知识来源配置无效：${source.source_id}`);
+    }
+    if (source.drive_configuration !== undefined && !['2WD', '4WD'].includes(source.drive_configuration)) {
+      throw new Error(`知识来源驱动配置无效：${source.source_id}`);
+    }
     if (sourceMap.has(source.source_id)) throw new Error(`来源编号重复：${source.source_id}`);
     sourceMap.set(source.source_id, source);
   }
@@ -75,6 +86,19 @@ export function loadArchive(): { chunks: KnowledgeChunk[]; fileCount: number } {
     ids.add(entry.entry_id);
     const source = sourceMap.get(entry.source_id);
     if (!source) throw new Error(`知识条目来源不存在：${entry.entry_id}`);
+    if (entry.models !== undefined && (!Array.isArray(entry.models) || !entry.models.length ||
+      entry.models.some((model) => typeof model !== 'string' || !model.trim() || !source.models?.includes(model)) ||
+      new Set(entry.models).size !== entry.models.length)) {
+      throw new Error(`知识条目机型须为来源明确型号的非空子集：${entry.entry_id}`);
+    }
+    if (entry.configuration !== undefined && (!['CAB', 'ROPS'].includes(entry.configuration) ||
+      (source.configuration !== undefined && entry.configuration !== source.configuration))) {
+      throw new Error(`知识条目配置无效或与来源冲突：${entry.entry_id}`);
+    }
+    if (entry.drive_configuration !== undefined && (!['2WD', '4WD'].includes(entry.drive_configuration) ||
+      (source.drive_configuration !== undefined && entry.drive_configuration !== source.drive_configuration))) {
+      throw new Error(`知识条目驱动配置无效或与来源冲突：${entry.entry_id}`);
+    }
 
     const file = path.resolve(process.cwd(), entry.knowledge_path);
     const relative = path.relative(ARCHIVE_ROOT, file);
@@ -107,7 +131,10 @@ export function loadArchive(): { chunks: KnowledgeChunk[]; fileCount: number } {
       sourceId: entry.source_id,
       brand: entry.brand,
       model: entry.model,
-      models: source.models ? [...source.models] : undefined,
+      models: entry.models ? [...entry.models] : source.models ? [...source.models] : undefined,
+      requiresExactModel: entry.models !== undefined,
+      configuration: entry.configuration ?? source.configuration,
+      driveConfiguration: entry.drive_configuration ?? source.drive_configuration,
       emissionStage: entry.emission_stage ?? source.emission_stage,
       sourceUrl: source.url,
       originalPath: source.path,

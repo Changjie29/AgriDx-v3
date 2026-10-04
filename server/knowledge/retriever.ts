@@ -25,6 +25,10 @@ export interface KnowledgeChunk {
   brand?: string;
   model?: string;
   models?: string[];
+  /** Entry-specific subsets require an exact identity rather than a brand-only match. */
+  requiresExactModel?: boolean;
+  configuration?: 'CAB' | 'ROPS';
+  driveConfiguration?: '2WD' | '4WD';
   emissionStage?: '国三' | '国四';
   sourceUrl?: string;
   originalPath?: string;

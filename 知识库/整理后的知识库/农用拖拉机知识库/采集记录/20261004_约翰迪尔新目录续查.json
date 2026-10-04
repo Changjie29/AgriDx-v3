@@ -1,0 +1,297 @@
+{
+  "checked_at": "2026-10-04",
+  "purpose": "继续发现高质量官方新拖拉机手册；不重复此前OMSJ34997/OMSU54855下载重试",
+  "new_complete_manuals_acquired": 0,
+  "new_knowledge_entries": 0,
+  "download_attempted_publications": [
+    "OMSU55602",
+    "OMSU54857"
+  ],
+  "candidates": [
+    {
+      "publication": "OMSU55602",
+      "family_candidate": "5E",
+      "landing_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=5E-1004",
+      "catalog_response": {
+        "http_status": 200,
+        "bytes": 9512,
+        "sha256": "39c0c3fe9801055f6abd43da91eef14dacc891d687aed411cd0270ea24442469",
+        "hash_scope": "官方目录卡片HTML响应；不是PDF"
+      },
+      "language": "Chinese",
+      "catalog_version": "G9",
+      "market_edition": "China",
+      "catalog_serial_or_model_year": "MY2017",
+      "evidence_grade": "已读取厂家目录卡片；未取得正文",
+      "knowledge_entry_status": "未进入事实检索，零操作/维修条目",
+      "redistribution_status": "未取得PDF或授权条件；免费目录图标不当作再分发授权",
+      "checked_at": "2026-10-04",
+      "models_declared_by_catalog": [
+        "5E-850",
+        "5E-854",
+        "5E-904",
+        "5E-954",
+        "5E-1000",
+        "5E-1004",
+        "5E-1200",
+        "5E-1204"
+      ],
+      "downloadId": 450773,
+      "marketing_code": "3A",
+      "catalog_publication_type": "Operator's Manual",
+      "viewer_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu55602",
+      "status": "官方公开下载实际HTTP500；错误JSON不是手册",
+      "download_attempt": {
+        "url": "https://techpubs.deere.com/api/download/free",
+        "body": {
+          "downloadId": 450773,
+          "publicationType": "Operator's Manual",
+          "productName": "OMSU55602",
+          "marketingCode": "3A"
+        },
+        "attempt": 1,
+        "status": 500,
+        "error": "HTTP Error 500: Internal Server Error",
+        "response_bytes": 36,
+        "response_sha256": "9eae2251c81338581c269bf17a960c5ee1875d0ee301211a1bdd4cf8b8dad96d",
+        "content_type": "application/json; charset=utf-8",
+        "network_method": "inherited HTTP(S) proxy and verified TLS"
+      }
+    },
+    {
+      "publication": "OMSU54857",
+      "family_candidate": "6B",
+      "landing_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6B-1404",
+      "catalog_response": {
+        "http_status": 200,
+        "bytes": 9828,
+        "sha256": "73bb5b6bb1363096f5283467a2b695ab6a1c3a05aac37c85d7498ca10b491943",
+        "hash_scope": "官方目录卡片HTML响应；不是PDF"
+      },
+      "language": "English",
+      "catalog_version": "L1",
+      "market_edition": "Asia",
+      "catalog_serial_or_model_year": "JD954 (512125-), JD1104 (510023-), JD1204-A (511589-), JD1354-A (510201-), JD1404-A, w/4045 Engine (512891-), JD1404-A w/6068 Engine (512911-)",
+      "evidence_grade": "已读取厂家目录卡片；未取得正文",
+      "knowledge_entry_status": "未进入事实检索，零操作/维修条目",
+      "redistribution_status": "未取得PDF或授权条件；免费目录图标不当作再分发授权",
+      "checked_at": "2026-10-04",
+      "models_declared_by_catalog": [
+        "6B-1104",
+        "JD1104",
+        "6B-1204",
+        "JD1204",
+        "6B-1354",
+        "JD1354",
+        "6B-1404",
+        "JD1404",
+        "6B-954",
+        "JD954"
+      ],
+      "downloadId": 449221,
+      "marketing_code": "3A",
+      "catalog_publication_type": "Operator's Manual",
+      "viewer_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu54857",
+      "status": "官方公开下载实际HTTP500；错误JSON不是手册",
+      "download_attempt": {
+        "url": "https://techpubs.deere.com/api/download/free",
+        "body": {
+          "downloadId": 449221,
+          "publicationType": "Operator's Manual",
+          "productName": "OMSU54857",
+          "marketingCode": "3A"
+        },
+        "attempt": 1,
+        "status": 500,
+        "error": "HTTP Error 500: Internal Server Error",
+        "response_bytes": 36,
+        "response_sha256": "9eae2251c81338581c269bf17a960c5ee1875d0ee301211a1bdd4cf8b8dad96d",
+        "content_type": "application/json; charset=utf-8",
+        "network_method": "inherited HTTP(S) proxy and verified TLS"
+      }
+    },
+    {
+      "publication": "OMSU55601",
+      "family_candidate": "5E",
+      "landing_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=5E-1004",
+      "catalog_response": {
+        "http_status": 200,
+        "bytes": 9436,
+        "sha256": "e1fd059fc6bfc8f12daa5836854177ff5183868750afe45098980ace330e6299",
+        "hash_scope": "官方目录卡片HTML响应；不是PDF"
+      },
+      "language": "English",
+      "catalog_version": "G9",
+      "market_edition": "China",
+      "catalog_serial_or_model_year": "MY2017",
+      "evidence_grade": "已读取厂家目录卡片；未取得正文",
+      "knowledge_entry_status": "未进入事实检索，零操作/维修条目",
+      "redistribution_status": "未取得PDF或授权条件；免费目录图标不当作再分发授权",
+      "checked_at": "2026-10-04",
+      "models_declared_by_catalog": [
+        "5E-850",
+        "5E-854",
+        "5E-904",
+        "5E-954",
+        "5E-1000",
+        "5E-1004",
+        "5E-1200",
+        "5E-1204"
+      ],
+      "downloadId": 479989,
+      "marketing_code": "3A",
+      "catalog_publication_type": "Operator's Manual",
+      "viewer_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu55601",
+      "status": "新候选；目录已核验，正文未取得",
+      "download_attempt_status": "本轮未尝试下载；按语言/版本保留目录线索，避免无差别重试"
+    },
+    {
+      "publication": "OMSU55700",
+      "family_candidate": "5E",
+      "landing_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=5E-1004",
+      "catalog_response": {
+        "http_status": 200,
+        "bytes": 9792,
+        "sha256": "6819e378e9b6271bd9c96c5126b0260293fade1896a28a712f3f66057a6f26cb",
+        "hash_scope": "官方目录卡片HTML响应；不是PDF"
+      },
+      "language": "Uyghur",
+      "catalog_version": "K8",
+      "market_edition": "China",
+      "catalog_serial_or_model_year": "MY2017-",
+      "evidence_grade": "已读取厂家目录卡片；未取得正文",
+      "knowledge_entry_status": "未进入事实检索，零操作/维修条目",
+      "redistribution_status": "未取得PDF或授权条件；免费目录图标不当作再分发授权",
+      "checked_at": "2026-10-04",
+      "models_declared_by_catalog": [
+        "5E-904",
+        "5E-850",
+        "5E-1000",
+        "5E-1200",
+        "5E-854",
+        "5E-954",
+        "5E-1004",
+        "5E-1204"
+      ],
+      "downloadId": 481361,
+      "marketing_code": "3A",
+      "catalog_publication_type": "Operator's Manual",
+      "viewer_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu55700",
+      "status": "新候选；目录已核验，正文未取得",
+      "download_attempt_status": "本轮未尝试下载；按语言/版本保留目录线索，避免无差别重试"
+    },
+    {
+      "publication": "OMSU54856",
+      "family_candidate": "6B",
+      "landing_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6B-1404",
+      "catalog_response": {
+        "http_status": 200,
+        "bytes": 13163,
+        "sha256": "4a47ba8f604aa8a6d94c9863aa9ffe58b6fe3d5aea16b59f29e05a10028b4eaf",
+        "hash_scope": "官方目录卡片HTML响应；不是PDF"
+      },
+      "language": "Uyghur",
+      "catalog_version": "L1",
+      "market_edition": "Asia",
+      "catalog_serial_or_model_year": "JD954 (512125-), JD1104 (510023-), JD1204-A (511589-), JD1354-A (510201-), JD1404-A,4045 Engine (512891-), JD1404-A 6068 Engine (512911-)",
+      "evidence_grade": "已读取厂家目录卡片；未取得正文",
+      "knowledge_entry_status": "未进入事实检索，零操作/维修条目",
+      "redistribution_status": "未取得PDF或授权条件；免费目录图标不当作再分发授权",
+      "checked_at": "2026-10-04",
+      "status": "候选隔离：语言为Uyghur，目录将其归为Component Technical Manual，Equipment Model列大量与JD954等标题不符的机型，且未见公开DOWNLOAD按钮；不确立适用型号。",
+      "scope_conflict": "标题含JD954/JD1104/JD1204-A/JD1354-A/JD1404-A；Equipment Model字段却含工程机械、林业机械等，保持待核实"
+    }
+  ],
+  "equipment_searches": [
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=4M-804",
+      "status": 200,
+      "bytes": 127315,
+      "sha256": "c71b36c1f149f87a2c1430859bb1daec50d045c8469ae4275a909a0477d41e2f",
+      "content_type": "text/html; charset=utf-8",
+      "content_length": null,
+      "final_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=4M-804",
+      "hash_scope": "官方搜索HTML响应；不是PDF"
+    },
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=5E-1004",
+      "status": 200,
+      "bytes": 145437,
+      "sha256": "366166a3399b9377fb438e41aff2923788e31f02ef8295c042711faa4fd9b72f",
+      "content_type": "text/html; charset=utf-8",
+      "content_length": null,
+      "final_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=5E-1004",
+      "hash_scope": "官方搜索HTML响应；不是PDF"
+    },
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6B-1404",
+      "status": 200,
+      "bytes": 163202,
+      "sha256": "226a8aa9d5318e9436e26cc46839b3dd249e4acdbae39f36d79bb4fb5efae5a9",
+      "content_type": "text/html; charset=utf-8",
+      "content_length": null,
+      "final_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6B-1404",
+      "hash_scope": "官方搜索HTML响应；不是PDF"
+    },
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=4M",
+      "status": 200,
+      "bytes": 240054,
+      "sha256": "ebce768733b880d3d30e3a2ad80df1afd6bd8f7cb9b8bc88eccbde6507cb5fba",
+      "total_search_results": [
+        "18"
+      ],
+      "hash_scope": "官方搜索HTML响应；不是PDF"
+    },
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=4M804",
+      "status": 200,
+      "bytes": 127179,
+      "sha256": "80496ca3851a468fdbcc3dbf215b0cc19e5733cf082bca53ea21cb04a483cba6",
+      "total_search_results": [
+        "0"
+      ],
+      "hash_scope": "官方搜索HTML响应；不是PDF"
+    }
+  ],
+  "search_relevance_notes": [
+    "4M-804和4M804两种名称检索均HTTP200、totalSearchResults=0；只代表该目录查询结果，不代表厂家不存在手册。",
+    "4M宽搜返回18项，但当前页可见型号均为4044M等海外紧凑型，不是中国4M804；未混为国内4M资料。",
+    "5E新候选OMSU55602为MY2017 G9中国中文版本，不能自动用于MY2018以上或国四机型；纸面版本、排放和实车配置尚未核验。",
+    "6B新候选OMSU54857为英文，标题标China Edition而目录Edition为Asia；保留序列号/发动机分界，未根据目录推导操作参数。"
+  ],
+  "viewer_fetch": {
+    "url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu55602",
+    "publication": "OMSU55602",
+    "status": 200,
+    "bytes": 2999,
+    "sha256": "ef7546c01ceb7094ce3fa87100b1130e47cc740e0d19a7fe089744ab2ea3b354",
+    "content_type": "text/html",
+    "scripts": [
+      "/assets/js/uxframe-plus-2.14.0.min.js",
+      "https://d39nut347vqd77.cloudfront.net/runtime.c3cfc34a840ecb91c5a8.js",
+      "https://d39nut347vqd77.cloudfront.net/polyfills.87f199b3ea7f66c6ce65.js",
+      "https://d39nut347vqd77.cloudfront.net/main.2cb5c4546b9d55bc6f65.js"
+    ]
+  },
+  "viewer_script_fetch": {
+    "url": "https://d39nut347vqd77.cloudfront.net/main.2cb5c4546b9d55bc6f65.js",
+    "status": 200,
+    "bytes": 437239,
+    "sha256": "df1ca33bb087e717e44b2e7565a87f67bbed4c91ba5b93bb83b43c90ee49a9bc"
+  },
+  "viewer_content_fetch": {
+    "url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/assets/Config/config.json",
+    "status": 200,
+    "bytes": 884,
+    "sha256": "ba12019a54bbd71ac74ebb013a983a30fc2c8ce2042b676f4887b990aac986a5",
+    "document_path": "content/manuals/manualbooks",
+    "toc_fetch": {
+      "url": "https://d2at55i8vn7oz8.cloudfront.net/content/manuals/manualbooks/omsu55602_toc.xml",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+  },
+  "network_result": "公开PDF API新文件各1次，HTTP500；官方HTML应用壳/脚本/config HTTP200，正文CDN d2at55i8vn7oz8.cloudfront.net CONNECT403。保留继承代理及TLS校验，未绕过或改云配置。",
+  "retention_note": "长期保留独立概述、官方链接与目录响应哈希/字节数。临时网页、JS、错误响应仅在研究目录，未当作手册或维修知识。",
+  "integrity_note": "未取得PDF，未填manual_sha256/manual_bytes/manual_pdf_pages，未声称全文可解析或已核验封面。"
+}
