@@ -1,0 +1,304 @@
+{
+  "collected_date": "2026-10-04",
+  "official_original_evidence_count": 0,
+  "third_party_report_count": 2,
+  "model_evidence_records_count": 11,
+  "unique_model_candidate_count": 10,
+  "mixed_heat_model_count": 9,
+  "quantified_model_count": 1,
+  "qualitative_major_model_count": 1,
+  "sources": [
+    {
+      "source_id": "REPORT-NJT-20250704-SALES2025",
+      "title": "2025上半年拖拉机销售额同比下滑38%，五大头部企业市场份额近七成",
+      "url": "https://www.nongjitong.com/news/2025/529555.html",
+      "publication_date": "2025-07-04",
+      "author": "农机通",
+      "publisher": "农机通（第三方网站）",
+      "authority": "third_party",
+      "fetched_date": "2026-10-04",
+      "html_sha256": "6a9446ab6e62c959c36cd4a56fe42275e72e4ef781e18896b0a11285342d5c69",
+      "html_bytes": 17335,
+      "verified_content": "核对实际 HTML 正文中的型号、数值及数据口径说明；未核对原始官方购机公示，未目视复核榜单图片。",
+      "observation_period": "2025 年上半年",
+      "scope": "报道讨论中国拖拉机市场；底层补贴公开数据的省份覆盖、采集截点、状态口径与去重方法未披露。",
+      "statistic_definition": "作者据农机购置补贴公开数据统计，并称为“销量”；不是自行核验后的官方全国销量或保有量。",
+      "short_quote": "根据农机购置补贴公开数据统计",
+      "limitations": [
+        "原始购机公示与底层统计表未取得。",
+        "19521 台是潍柴雷沃品牌总量，不是 M2004-5RP 型号销量。",
+        "不能把品牌制造企业位于江苏解释为江苏省购机量。",
+        "未证明统计型号的排放后缀或配置，不应自动追加 G4 或混用近似型号手册。"
+      ],
+      "hash_scope": "2026-10-04实际取得的HTML响应；原HTML未新增归档，非手册PDF",
+      "source_record_path": "报告来源记录/REPORT-NJT-20250704-SALES2025.md",
+      "source_record_sha256": "5630c077948e74c1a7c489a5282c9ef83b6cfb2c153a14309f5de8a73e15797d",
+      "source_record_bytes": 2003
+    },
+    {
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "title": "国内拖拉机行业进入萧条期，品牌热度呈现两极分化趋势！",
+      "url": "https://www.nongjitong.com/news/2024/521416.html",
+      "publication_date": "2024-04-07",
+      "author": "农机通",
+      "publisher": "农机通（第三方网站）",
+      "authority": "third_party",
+      "fetched_date": "2026-10-04",
+      "html_sha256": "2a786bc25ba87a0a9981d34f90265521786fc5ae8befa61e8fc2108dd1e864fb",
+      "html_bytes": 15422,
+      "verified_content": "核对实际 HTML 正文中的型号、数值及数据口径说明；未核对原始官方购机公示，未目视复核榜单图片。",
+      "observation_period": "2023 年",
+      "scope": "中国拖拉机行业的分功率段产品热度测算；不是购机台数或保有量排名。",
+      "statistic_definition": "农机通网络数据、求购线索及补贴公开数据三个数据源混合测算的热度值。",
+      "short_quote": "依据农机通网络数据、求购线索以及补贴公开数据三大数据源",
+      "limitations": [
+        "文章于 2024 年发布，测算对象是 2023 年；不能称为 2024 年或当前销量。",
+        "指数归一方式与底层样本覆盖未披露。",
+        "热度值 100 不代表 100 台；各功率段热度值不能直接合并比较。",
+        "只有 HTML 正文所写的三个分段前 3 名被提取，未由图片补全榜单。"
+      ],
+      "hash_scope": "2026-10-04实际取得的HTML响应；原HTML未新增归档，非手册PDF",
+      "source_record_path": "报告来源记录/REPORT-NJT-20240407-HEAT2023.md",
+      "source_record_sha256": "f2bb022073072b93cc0575f3d03dc026912502c81645bab9632ca1c4c447fe5f",
+      "source_record_bytes": 2664
+    }
+  ],
+  "records": [
+    {
+      "record_id": "MODEL-SALES2025-CFJ2204",
+      "source_id": "REPORT-NJT-20250704-SALES2025",
+      "brand": "常发",
+      "model": "CFJ2204",
+      "evidence_type": "third_party_subsidy_based_sales_count",
+      "reported_units": 1383,
+      "observation_period": "2025 年上半年",
+      "reported_scope": "中国市场讨论范围；公开补贴数据实际地域覆盖不明",
+      "short_quote": "销量达1383台",
+      "original_summary": "报道把 CFJ2204 列为常发的主销型号，并给出该型号在 2025 年上半年的统计台数 1383。该数字来自作者据公开补贴数据的第三方统计。",
+      "manual_priority": "优先寻找确切 CFJ2204 国内使用说明书；仍须核对排放、配置及版次。",
+      "limitations": [
+        "不是全国保有量。",
+        "未获取并重新统计官方原始公示。",
+        "报道未标注 G4，不能据年份直接追加排放后缀。"
+      ]
+    },
+    {
+      "record_id": "MODEL-SALES2025-M2004-5RP",
+      "source_id": "REPORT-NJT-20250704-SALES2025",
+      "brand": "潍柴雷沃",
+      "model": "M2004-5RP",
+      "evidence_type": "third_party_major_model_statement",
+      "reported_units": null,
+      "observation_period": "2025 年上半年",
+      "reported_scope": "中国市场讨论范围；公开补贴数据实际地域覆盖不明",
+      "short_quote": "主销机型为雷沃M2004-5RP动力换挡拖拉机",
+      "original_summary": "报道将 M2004-5RP 称为潍柴雷沃的主销机型，正文没有给出该型号购机台数。报道中的 19521 台属于潍柴雷沃品牌总量。",
+      "brand_total_units_context": 19521,
+      "manual_priority": "可作为下一批确切型号手册目标，但不能据此给出该型号销量排名。",
+      "limitations": [
+        "主销是作者的定性表述，未披露该型号份额。",
+        "不能把 19521 台赋给此型号。",
+        "M2004-5RP 与 M2004-5G 是不同完整型号，不合并或互换手册。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-M504-E",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "潍柴雷沃",
+      "model": "M504-E",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "100 马力以下",
+      "segment_rank": 1,
+      "heat_index": 100,
+      "reported_units": null,
+      "original_summary": "正文把 M504-E 列为“100 马力以下”产品热度榜第 1 名，热度值为 100；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-ME504-5",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "东方红",
+      "model": "ME504-5",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "100 马力以下",
+      "segment_rank": 2,
+      "heat_index": 54,
+      "reported_units": null,
+      "original_summary": "正文把 ME504-5 列为“100 马力以下”产品热度榜第 2 名，热度值为 54；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-M704-B",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "潍柴雷沃",
+      "model": "M704-B",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "100 马力以下",
+      "segment_rank": 3,
+      "heat_index": 49,
+      "reported_units": null,
+      "original_summary": "正文把 M704-B 列为“100 马力以下”产品热度榜第 3 名，热度值为 49；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-LY1204",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "东方红",
+      "model": "LY1204",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "100–200 马力",
+      "segment_rank": 1,
+      "heat_index": 100,
+      "reported_units": null,
+      "original_summary": "正文把 LY1204 列为“100–200 马力”产品热度榜第 1 名，热度值为 100；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-M2004-5G",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "潍柴雷沃",
+      "model": "M2004-5G",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "100–200 马力",
+      "segment_rank": 2,
+      "heat_index": 88,
+      "reported_units": null,
+      "original_summary": "正文把 M2004-5G 列为“100–200 马力”产品热度榜第 2 名，热度值为 88；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-6E-1504",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "约翰迪尔",
+      "model": "6E-1504",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "100–200 马力",
+      "segment_rank": 3,
+      "heat_index": 85,
+      "reported_units": null,
+      "original_summary": "正文把 6E-1504 列为“100–200 马力”产品热度榜第 3 名，热度值为 85；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-6M-2104",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "约翰迪尔",
+      "model": "6M-2104",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "200 马力以上",
+      "segment_rank": 1,
+      "heat_index": 100,
+      "reported_units": null,
+      "original_summary": "正文把 6M-2104 列为“200 马力以上”产品热度榜第 1 名，热度值为 100；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-MW2104-6",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "潍柴雷沃",
+      "model": "MW2104-6",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "200 马力以上",
+      "segment_rank": 2,
+      "heat_index": 98,
+      "reported_units": null,
+      "original_summary": "正文把 MW2104-6 列为“200 马力以上”产品热度榜第 2 名，热度值为 98；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    },
+    {
+      "record_id": "MODEL-HEAT2023-CFJ2204",
+      "source_id": "REPORT-NJT-20240407-HEAT2023",
+      "brand": "常发",
+      "model": "CFJ2204",
+      "evidence_type": "mixed_interest_index",
+      "observation_period": "2023 年",
+      "reported_scope": "中国拖拉机行业热度测算；底层覆盖不明",
+      "power_segment_as_reported": "200 马力以上",
+      "segment_rank": 3,
+      "heat_index": 63,
+      "reported_units": null,
+      "original_summary": "正文把 CFJ2204 列为“200 马力以上”产品热度榜第 3 名，热度值为 63；这是多个数据源合成的兴趣/关注指标。",
+      "manual_priority": "仅为次级手册发现线索；需用真实购机数量或官方使用证据进一步核对。",
+      "limitations": [
+        "非销量、购机台数或保有量。",
+        "未核对底层数据与热度计算。",
+        "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
+      ]
+    }
+  ],
+  "unique_models": [
+    "6E-1504",
+    "6M-2104",
+    "CFJ2204",
+    "LY1204",
+    "M2004-5G",
+    "M2004-5RP",
+    "M504-E",
+    "M704-B",
+    "ME504-5",
+    "MW2104-6"
+  ],
+  "global_boundary": "本记录服务说明书采集优先级研究，不是维修操作条目；没有证据证明这 10 款是当前全国保有量前 10 名。官方省厅请求失败记录仍保留，第三方报道不得升级为官方一级来源。",
+  "schema_version": 1,
+  "purpose": "说明书采集研究；不参与维修知识检索",
+  "included_in_repair_retrieval": false,
+  "official_original_evidence_count_scope": "本轮新取得且可用于型号使用数量判断的官方原始统计；不含既有T70局部应用转载",
+  "official_search_record": "../采集记录/20261004_国内官方与报道查找.json",
+  "retained_official_application_record": "报告来源记录/湖北T70_既有局部应用记录.md"
+}

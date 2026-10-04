@@ -1,0 +1,241 @@
+{
+  "checked_at": "2026-10-04",
+  "scope": "按国内热度候选6E-1504与6M-2104查找官方匹配整机手册；不是不限品牌爬取",
+  "priority_basis_received": "已核验农机通2024-04-07报告正文；观察期2023年、混合热度，不代表销量/保有量，排放未给出",
+  "new_complete_manuals_acquired": 0,
+  "new_knowledge_entries": 0,
+  "existing_manuals_recounted": 0,
+  "new_pdf_download_attempts": 1,
+  "equipment_searches": [
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6E-1504",
+      "query_model": "6E-1504",
+      "checked_at_shanghai": "2026-10-04T09:54:00.088143+08:00",
+      "network_method": "inherited proxy; verified TLS",
+      "status": 200,
+      "bytes": 151814,
+      "sha256": "87a8896c9856ebdce5d1b19586d85cc94736977363a7dc982c9c0f99096bbf42",
+      "content_type": "text/html; charset=utf-8",
+      "hash_scope": "官方设备搜索网页响应；不是手册PDF",
+      "total_search_results": [
+        "2"
+      ],
+      "visible_models": [
+        "6E-1504",
+        "6E-1504"
+      ]
+    },
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6M-2104",
+      "query_model": "6M-2104",
+      "checked_at_shanghai": "2026-10-04T09:54:00.088766+08:00",
+      "network_method": "inherited proxy; verified TLS",
+      "status": 200,
+      "bytes": 127321,
+      "sha256": "d4f06e7ce7a11d406aecf8d7716075b40c5abcfeb06ce319691cc89f6c04a60e",
+      "content_type": "text/html; charset=utf-8",
+      "hash_scope": "官方设备搜索网页响应；不是手册PDF",
+      "total_search_results": [
+        "0"
+      ],
+      "visible_models": []
+    },
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6M2104",
+      "query_model": "6M2104",
+      "status": 200,
+      "bytes": 127315,
+      "sha256": "da6e2ff7fbf255f32d31a4835199e4ccc03ba5ab54bc088309f45ae08c539d9a",
+      "total_search_results": [
+        "0"
+      ],
+      "visible_models": [],
+      "hash_scope": "官方设备搜索网页响应；不是手册PDF"
+    },
+    {
+      "url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=2104",
+      "query_model": "2104",
+      "status": 200,
+      "bytes": 160307,
+      "sha256": "1be36299a72ed392ae8a649ace2e94863f219de2e9dd3ef25b7a80043c55f1c1",
+      "total_search_results": [
+        "4"
+      ],
+      "visible_models": [
+        "2104 (JD2104)",
+        "6J-2104",
+        "6M 2104",
+        "MS2104"
+      ],
+      "hash_scope": "官方设备搜索网页响应；不是手册PDF"
+    }
+  ],
+  "catalog_records": [
+    {
+      "publication": "OMSU64123",
+      "url": "https://techpubs.deere.com/zh-CHS/Search/EquipmentPubs",
+      "status": "新旧版本线索：C2中文，中国版本在标题中，Edition为Asia；未下载",
+      "bytes": 9515,
+      "sha256": "14c306542b08901945a04af7b0389416bcbd745faf0fae34a4b172f247ce8901",
+      "hash_scope": "厂家目录卡片HTML，不是PDF",
+      "catalog_fields": {
+        "Language": "Chinese",
+        "Equipment Model": "6E-1204, 6E-1204-P, 6E-1404, 6E-1404-P, 6E-1404-L, 6E-1404-PL, 6E-1504-L, 6E-1504-PL",
+        "Edition": "Asia",
+        "Version": "C2"
+      },
+      "download_attributes": {
+        "name": "OMSU64123",
+        "description": "6E-1204, 6E-1204-P, 6E-1404, 6E-1404-P, 6E-1404-L, 6E-1404-PL, 6E-1504-L和6E-1504-PL拖拉机 -: (中国版本)",
+        "language": "Chinese",
+        "format": "DOWNLOAD",
+        "format-name": "OMSU64123",
+        "format-id": "547960",
+        "format-price": "0.00",
+        "pubtype": "Operator's Manual",
+        "template": "1490-PBBPR-DCY",
+        "pubgroup": "Operator's Manuals",
+        "approvers": "",
+        "version": "C2",
+        "marketingcode": "3A"
+      },
+      "status_boundary": "已看厂家目录；未因此声称读到正文、排放或全部机型兼容",
+      "manual_body_acquired_this_round": false,
+      "paper_market_emission_scope": "尚未读取该候选正文，不能由中文/Asia/Other或新闻热度推断纸面市场/排放阶段",
+      "priority_model_match": "目录仅6E-1504-L和6E-1504-PL；裸6E-1504不可直接确立兼容"
+    },
+    {
+      "publication": "OMTR115296",
+      "url": "https://techpubs.deere.com/zh-CHS/Search/EquipmentPubs",
+      "status": "现有资料，避免重复计数；新目录复核不扩展已归档封面适用范围",
+      "bytes": 9113,
+      "sha256": "1eb428b569ffcdd394c34b1c9058ca9bea54cb54316de2474f2923466e21bc24",
+      "hash_scope": "厂家目录卡片HTML，不是PDF",
+      "catalog_fields": {
+        "Language": "Chinese",
+        "Equipment Model": "6E-1004, 6E-1204, 6E-1404, 6E-1504",
+        "Edition": "Other",
+        "Version": "27MAR26"
+      },
+      "download_attributes": {
+        "name": "OMTR115296",
+        "description": "6E 系列拖拉机",
+        "language": "Chinese",
+        "format": "DOWNLOAD",
+        "format-name": "OMTR115296",
+        "format-id": "599457",
+        "format-price": "0.00",
+        "pubtype": "Operator's Manual",
+        "template": "1490-PBBPR-DCY",
+        "pubgroup": "Operator's Manuals",
+        "approvers": "",
+        "version": "27MAR26",
+        "marketingcode": ""
+      },
+      "status_boundary": "已看厂家目录；未因此声称读到正文、排放或全部机型兼容",
+      "manual_body_acquired_this_round": false,
+      "paper_market_emission_scope": "尚未读取该候选正文，不能由中文/Asia/Other或新闻热度推断纸面市场/排放阶段",
+      "existing_repository_source_id": "SRC-JD-6E-G4-OMTR115296",
+      "existing_cover_scope": "已有原件封面明确6E-1504-L(G4)、6E-1504-PL(G4)，没有裸6E-1504",
+      "priority_model_match": "新闻裸6E-1504需实车型号后缀、国四阶段、PIN及配置匹配；本轮没有重新下载原件"
+    },
+    {
+      "publication": "OMAL232272",
+      "url": "https://techpubs.deere.com/zh-CHS/Search/EquipmentPubs",
+      "equipment_row": "6M 2104",
+      "serial_range_id": 23045,
+      "status": "新整机候选：03AUG26中文目录已核验，公开PDF下载一次HTTP500",
+      "bytes": 9104,
+      "sha256": "f25634138a26aaf83c87d46b0bd710d2abe4fe00e94ace80550e30d4839294fd",
+      "hash_scope": "厂家目录卡片HTML，不是PDF",
+      "catalog_fields": {
+        "Language": "Chinese",
+        "Equipment Model": "6M-1854, 6M-1654, 6M-2104",
+        "Edition": "Other",
+        "Version": "03AUG26"
+      },
+      "download_attributes": {
+        "name": "OMAL232272",
+        "description": "6M 系列拖拉机",
+        "language": "Chinese",
+        "format": "DOWNLOAD",
+        "format-name": "OMAL232272",
+        "format-id": "599456",
+        "format-price": "0.00",
+        "pubtype": "Operator's Manual",
+        "template": "1490-PBBPR-DCY",
+        "pubgroup": "Operator's Manuals",
+        "approvers": "",
+        "version": "03AUG26",
+        "marketingcode": ""
+      },
+      "status_boundary": "已看厂家目录；未因此声称读到正文、排放或全部机型兼容",
+      "manual_body_acquired_this_round": false,
+      "paper_market_emission_scope": "尚未读取该候选正文，不能由中文/Asia/Other或新闻热度推断纸面市场/排放阶段",
+      "priority_model_match": "官方6M 2104设备行对应的中文卡片明确6M-2104；Edition为Other，中国市场/排放需正文核实",
+      "download_attempt": {
+        "publication": "OMAL232272",
+        "url": "https://techpubs.deere.com/api/download/free",
+        "body": {
+          "downloadId": 599456,
+          "publicationType": "Operator's Manual",
+          "productName": "OMAL232272",
+          "marketingCode": ""
+        },
+        "attempt": 1,
+        "catalog_version": "03AUG26",
+        "checked_at_shanghai": "2026-10-04T09:56:25.943276+08:00",
+        "network_method": "inherited proxy; verified TLS",
+        "status": 500,
+        "error": "HTTP Error 500: Internal Server Error",
+        "response_bytes": 36,
+        "response_sha256": "9eae2251c81338581c269bf17a960c5ee1875d0ee301211a1bdd4cf8b8dad96d",
+        "content_type": "application/json; charset=utf-8"
+      }
+    },
+    {
+      "publication": "OMAL235254",
+      "url": "https://techpubs.deere.com/zh-CHS/Search/EquipmentPubs",
+      "equipment_row": "6M 2104",
+      "serial_range_id": 23045,
+      "status": "新整机候选：H1英文中国版目录线索；未下载，未据此作维修判断",
+      "bytes": 9237,
+      "sha256": "9d94193bfcc38fde51d41ae76937563287ed194c06745e2017a89f257e630b68",
+      "hash_scope": "厂家目录卡片HTML，不是PDF",
+      "catalog_fields": {
+        "Language": "English",
+        "Equipment Model": "6M-1654, 6M-1854, 6M-2104",
+        "Edition": "Asia",
+        "Version": "H1"
+      },
+      "download_attributes": {
+        "name": "OMAL235254",
+        "description": "6M-1654, 6M-1854, and 6M-2104 Tractors, (China Edition)",
+        "language": "English",
+        "format": "DOWNLOAD",
+        "format-name": "OMAL235254",
+        "format-id": "559962",
+        "format-price": "0.00",
+        "pubtype": "Operator's Manual",
+        "template": "1490-PBBPR-DCY",
+        "pubgroup": "Operator's Manuals",
+        "approvers": "",
+        "version": "H1",
+        "marketingcode": "3A"
+      },
+      "status_boundary": "已看厂家目录；未因此声称读到正文、排放或全部机型兼容",
+      "manual_body_acquired_this_round": false,
+      "paper_market_emission_scope": "尚未读取该候选正文，不能由中文/Asia/Other或新闻热度推断纸面市场/排放阶段",
+      "priority_model_match": "目录机型明列6M-2104，英文标题明确China Edition，Edition为Asia，纸面适用范围待核实"
+    }
+  ],
+  "scope_checks": [
+    "6M-2104与6M2104精确查询均为零；进一步官方2104目录中读到6M 2104目标行（SerialRangeId23045），没有采用同页6J-2104、JD2104或MS2104资料。",
+    "官方OMAL232272机型字段明确使用6M-2104，因此设备行空格命名与标题连字符命名有同一目录卡片关联依据。",
+    "中文OMAL232272的Edition为Other，不能提前写成纸面中国版；英文OMAL235254题名China Edition、Edition为Asia，两者分别保留。",
+    "已有OMTR115296封面只支持6E-1504-L(G4)/6E-1504-PL(G4)，新目录简写6E-1504不会扩大封面机型范围；新闻裸型号也不能等同G4。",
+    "版本03AUG26是本次官方目录字段；2023热度数据与2026目录版次分开，不补造新闻中的年款/配置。"
+  ],
+  "network_and_integrity": "继承代理并验证TLS。仅新OMAL232272公开PDF请求一次，返回HTTP500、36字节错误JSON。没有PDF哈希/页数/末页解析或封面审校结果；未重复旧5E/6B失败下载。",
+  "retention_note": "长期归档原创说明、官方链接、目录响应哈希/字节数、参数及取得状态；原始HTML和错误JSON只暂存研究目录。不加入来源/事实索引，待取得手册正文后再核实。"
+}

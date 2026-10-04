@@ -1,0 +1,231 @@
+{
+  "collection_date": "2026-10-04",
+  "research_type": "targeted_manual_discovery_from_verified_heat_report",
+  "target_models_count": 4,
+  "verified_model_product_pages_count": 4,
+  "matching_complete_manual_pdf_count": 0,
+  "new_operational_entry_count": 0,
+  "crawl_scope": "仅从已取得农机通主页、企业店和栏目真实锚点低并发读取公开 HTML；不猜附件 URL。",
+  "requests": [
+    {
+      "name": "company-index",
+      "url": "https://www.nongjitong.com/company/2.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/2.html",
+      "bytes": 23188,
+      "sha256": "787bb22e8d706d26ce6b5a7fadb30aaf469017d7e0b20cebcc2638428250e072"
+    },
+    {
+      "name": "m504e-product",
+      "url": "https://www.nongjitong.com/product/lovol_m505_e_tractor.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/product/lovol_m505_e_tractor.html",
+      "bytes": 36438,
+      "sha256": "2eb0dbce37cf747e626eea06a1da7f0d2290d81c88d5408bd019e3b0c69d686e"
+    },
+    {
+      "name": "company-products",
+      "url": "https://www.nongjitong.com/company/2_4.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/2_4.html",
+      "bytes": 11324,
+      "sha256": "be8469ba87bc9361a274f083eb8c86fa017f3400a6b90e5378f9e2ebb23fb308"
+    },
+    {
+      "name": "maintenance-nav",
+      "url": "https://www.nongjitong.com/company/lovol/product_maintenance_and_repair.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/lovol/product_maintenance_and_repair.html",
+      "bytes": 8515,
+      "sha256": "3dc59981ae4f15bf03fc54ed591f188f233de7a4ef9aba77844787e5f9b0674d"
+    },
+    {
+      "name": "m704b-product",
+      "url": "https://www.nongjitong.com/product/41249.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/product/41249.html",
+      "bytes": 40402,
+      "sha256": "75c9ebd5eaa622c2744ad0e4b1972fc75a01eb3ef1ea2ce00cf052459597cf45"
+    },
+    {
+      "name": "mw2104-6-product",
+      "url": "https://www.nongjitong.com/product/lovol_m2104_k_tractor.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/product/lovol_m2104_k_tractor.html",
+      "bytes": 34383,
+      "sha256": "43ac1a31ee5ee84178be2f5ba240e296ce58c9f0f7bc5a05cbe9f996fb7b2dc1"
+    },
+    {
+      "name": "tractor-maintenance-index",
+      "url": "https://www.nongjitong.com/company/lovol/tractorselfcheck.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/lovol/tractorselfcheck.html",
+      "bytes": 9762,
+      "sha256": "f0a96753056a59c54f1de3852549e823c10dbf8085f803bf194c834ae76b42e9"
+    },
+    {
+      "name": "category-200plus",
+      "url": "https://www.nongjitong.com/company/category/462792.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/category/462792.html",
+      "bytes": 12645,
+      "sha256": "5e40eb3e4c0af4a846d7e2e105bb709ba6925ea21e22607c43d84f486894f877"
+    },
+    {
+      "name": "m2004-5g-product",
+      "url": "https://www.nongjitong.com/product/lovolzg_m2004-5g_tractor.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/product/lovolzg_m2004-5g_tractor.html",
+      "bytes": 28688,
+      "sha256": "a93249d519ca02e0eb19301b65032d07c811a3ac973a9e1f15edf3bccde293f1"
+    },
+    {
+      "name": "training-index",
+      "url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "bytes": 7702,
+      "sha256": "2184d0de5014baf6c5dbb7a089896a5c08f0996d051872eba94895dbc874eac6"
+    }
+  ],
+  "records": [
+    {
+      "target_model": "M504-E",
+      "brand": "潍柴雷沃",
+      "priority_basis": "农机通 2024-04-07 报告中的 2023 年混合热度；非销量或保有量",
+      "priority_report_url": "https://www.nongjitong.com/news/2024/521416.html",
+      "product_url": "https://www.nongjitong.com/product/lovol_m505_e_tractor.html",
+      "discovery_page_url": "https://www.nongjitong.com/company/2.html",
+      "current_product_page_title": "雷沃欧豹M504-E（G4）轮式拖拉机",
+      "html_sha256": "2eb0dbce37cf747e626eea06a1da7f0d2290d81c88d5408bd019e3b0c69d686e",
+      "html_bytes": 36438,
+      "product_identity_checked": true,
+      "matching_complete_manual_pdf_count": 0,
+      "manual_url": null,
+      "manual_number": null,
+      "manual_version": null,
+      "manual_sha256": null,
+      "manual_pdf_pages": null,
+      "status": "product_page_verified_manual_missing",
+      "result": "实际 HTML 产品页未发现此完整型号的整机使用说明书 PDF 或文档附件。",
+      "scope_boundary": "产品页及技术参数页不能替代维修或操作手册。当前网页标题 G4 不扩展为 2023 年热度报告型号的排放证据；还需核对原件版本与配置。",
+      "operational_entries": []
+    },
+    {
+      "target_model": "M704-B",
+      "brand": "潍柴雷沃",
+      "priority_basis": "农机通 2024-04-07 报告中的 2023 年混合热度；非销量或保有量",
+      "priority_report_url": "https://www.nongjitong.com/news/2024/521416.html",
+      "product_url": "https://www.nongjitong.com/product/41249.html",
+      "discovery_page_url": "https://www.nongjitong.com/company/2.html",
+      "current_product_page_title": "雷沃欧豹M704-B（G4）拖拉机",
+      "html_sha256": "75c9ebd5eaa622c2744ad0e4b1972fc75a01eb3ef1ea2ce00cf052459597cf45",
+      "html_bytes": 40402,
+      "product_identity_checked": true,
+      "matching_complete_manual_pdf_count": 0,
+      "manual_url": null,
+      "manual_number": null,
+      "manual_version": null,
+      "manual_sha256": null,
+      "manual_pdf_pages": null,
+      "status": "product_page_verified_manual_missing",
+      "result": "实际 HTML 产品页未发现此完整型号的整机使用说明书 PDF 或文档附件。",
+      "scope_boundary": "产品页及技术参数页不能替代维修或操作手册。当前网页标题 G4 不扩展为 2023 年热度报告型号的排放证据；还需核对原件版本与配置。",
+      "operational_entries": []
+    },
+    {
+      "target_model": "M2004-5G",
+      "brand": "潍柴雷沃",
+      "priority_basis": "农机通 2024-04-07 报告中的 2023 年混合热度；非销量或保有量",
+      "priority_report_url": "https://www.nongjitong.com/news/2024/521416.html",
+      "product_url": "https://www.nongjitong.com/product/lovolzg_m2004-5g_tractor.html",
+      "discovery_page_url": "https://www.nongjitong.com/company/category/462792.html",
+      "current_product_page_title": "雷沃欧豹M2004-5G（G4）拖拉机",
+      "html_sha256": "a93249d519ca02e0eb19301b65032d07c811a3ac973a9e1f15edf3bccde293f1",
+      "html_bytes": 28688,
+      "product_identity_checked": true,
+      "matching_complete_manual_pdf_count": 0,
+      "manual_url": null,
+      "manual_number": null,
+      "manual_version": null,
+      "manual_sha256": null,
+      "manual_pdf_pages": null,
+      "status": "product_page_verified_manual_missing",
+      "result": "实际 HTML 产品页未发现此完整型号的整机使用说明书 PDF 或文档附件。",
+      "scope_boundary": "产品页及技术参数页不能替代维修或操作手册。当前网页标题 G4 不扩展为 2023 年热度报告型号的排放证据；还需核对原件版本与配置。",
+      "operational_entries": []
+    },
+    {
+      "target_model": "MW2104-6",
+      "brand": "潍柴雷沃",
+      "priority_basis": "农机通 2024-04-07 报告中的 2023 年混合热度；非销量或保有量",
+      "priority_report_url": "https://www.nongjitong.com/news/2024/521416.html",
+      "product_url": "https://www.nongjitong.com/product/lovol_m2104_k_tractor.html",
+      "discovery_page_url": "https://www.nongjitong.com/company/2.html",
+      "current_product_page_title": "雷沃欧豹MW2104-6（G4）拖拉机",
+      "html_sha256": "43ac1a31ee5ee84178be2f5ba240e296ce58c9f0f7bc5a05cbe9f996fb7b2dc1",
+      "html_bytes": 34383,
+      "product_identity_checked": true,
+      "matching_complete_manual_pdf_count": 0,
+      "manual_url": null,
+      "manual_number": null,
+      "manual_version": null,
+      "manual_sha256": null,
+      "manual_pdf_pages": null,
+      "status": "product_page_verified_manual_missing",
+      "result": "实际 HTML 产品页未发现此完整型号的整机使用说明书 PDF 或文档附件。",
+      "scope_boundary": "产品页及技术参数页不能替代维修或操作手册。当前网页标题 G4 不扩展为 2023 年热度报告型号的排放证据；还需核对原件版本与配置。",
+      "operational_entries": []
+    }
+  ],
+  "shared_manual_navigation": [
+    {
+      "name": "maintenance-nav",
+      "url": "https://www.nongjitong.com/company/lovol/product_maintenance_and_repair.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/lovol/product_maintenance_and_repair.html",
+      "bytes": 8515,
+      "sha256": "3dc59981ae4f15bf03fc54ed591f188f233de7a4ef9aba77844787e5f9b0674d"
+    },
+    {
+      "name": "tractor-maintenance-index",
+      "url": "https://www.nongjitong.com/company/lovol/tractorselfcheck.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/lovol/tractorselfcheck.html",
+      "bytes": 9762,
+      "sha256": "f0a96753056a59c54f1de3852549e823c10dbf8085f803bf194c834ae76b42e9"
+    },
+    {
+      "name": "training-index",
+      "url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "bytes": 7702,
+      "sha256": "2184d0de5014baf6c5dbb7a089896a5c08f0996d051872eba94895dbc874eac6"
+    }
+  ],
+  "rejected_old_training_substitutions": [
+    {
+      "title": "雷沃拖拉机TX平台交机培训手册",
+      "url": "https://f.danongchang.cn/fileview.aspx?id=e64a1feb-1800-4199-8ef6-c93c585a331b",
+      "reason": "平台交机培训旧文；此次仅记录目录锚点，未用其替代目标型号整机说明书。"
+    },
+    {
+      "title": "雷沃拖拉机TD平台交机培训手册",
+      "url": "https://f.danongchang.cn/fileview.aspx?id=8e13ef19-930a-41b4-9f32-c5776d2d5c60",
+      "reason": "平台交机培训旧文；此次仅记录目录锚点，未用其替代目标型号整机说明书。"
+    },
+    {
+      "title": "雷沃拖拉机TB平台交机培训手册",
+      "url": "https://f.danongchang.cn/fileview.aspx?id=4fd6bcc6-e7c5-4337-9b85-6c082c2ad2d0",
+      "reason": "平台交机培训旧文；此次仅记录目录锚点，未用其替代目标型号整机说明书。"
+    },
+    {
+      "title": "雷沃阿波斯P5000拖拉机交机培训手册",
+      "url": "https://f.danongchang.cn/fileview.aspx?id=1d7cfc2e-4450-43e6-9715-c767dacbac75",
+      "reason": "P5000 交机培训旧文；此次仅记录目录锚点，未用其替代目标型号整机说明书。"
+    }
+  ],
+  "network_boundary": "本轮尝试www.lovol.com.cn收到CONNECT403，搜索必需JS收到401；保持当前代理与TLS，不绕过。",
+  "limits": "没有取得匹配整机 PDF，不产生维修事实。该结论仅描述此次检查的公开页面，不声称全网不存在说明书。"
+}

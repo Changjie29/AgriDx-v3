@@ -1,0 +1,234 @@
+[
+  {
+    "name": "bing-0",
+    "url": "https://www.bing.com/search?q=CFJ2204",
+    "status": 200,
+    "final_url": "https://www.bing.com/search?q=CFJ2204",
+    "bytes": 114919,
+    "sha256": "860ca12d0177de8082bfa4f4d08dd8b0a301bc593ae7fe6eb5a138a03c4be9a8",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "CFJ2204 - Search"
+    ]
+  },
+  {
+    "name": "bing-1",
+    "url": "https://www.bing.com/search?q=CFJ2204%20manual%20pdf",
+    "status": 200,
+    "final_url": "https://www.bing.com/search?q=CFJ2204%20manual%20pdf",
+    "bytes": 107199,
+    "sha256": "ac1f9e271d52d31dcb19309c88fb833ce66d8fd66889eac6f7d8e39478bf9e5b",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "CFJ2204 manual pdf - Search"
+    ]
+  },
+  {
+    "name": "bing-2",
+    "url": "https://www.bing.com/search?q=%E5%B8%B8%E5%8F%91CFJ2204%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6",
+    "status": 200,
+    "final_url": "https://www.bing.com/search?q=%E5%B8%B8%E5%8F%91CFJ2204%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6",
+    "bytes": 126539,
+    "sha256": "7a0d21b52bf484469c58d26f06e032e7521cc5f36f8be226e6007018d078ec4b",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "常发CFJ2204使用说明书 - Search"
+    ]
+  },
+  {
+    "name": "njt-changfa-company",
+    "url": "https://www.nongjitong.com/company/21.html",
+    "status": 200,
+    "final_url": "https://www.nongjitong.com/company/21.html",
+    "bytes": 22965,
+    "sha256": "83bbca66e0e57e7ed56da4fc09212513941f8eacd2998c9dec510553833428d6",
+    "content_type": "text/html",
+    "title": [
+      "常州常发农业装备有限公司网站首页-公司网站"
+    ]
+  },
+  {
+    "name": "cf-english-home",
+    "url": "https://en.changfanz.com/",
+    "status": 200,
+    "final_url": "https://en.changfanz.com/",
+    "bytes": 72519,
+    "sha256": "7e1b4863a1530c5ba4581ce15317071829465ea3c92a7f80b85814b6831aa35b",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "Changfa Agricultural Equipment - Changfa Agricultural Equipment"
+    ]
+  },
+  {
+    "name": "njt-cfj2204-product",
+    "url": "https://www.nongjitong.com/product/changfa_cfh2204l_tractor.html",
+    "status": 200,
+    "final_url": "https://www.nongjitong.com/product/changfa_cfh2204l_tractor.html",
+    "bytes": 35657,
+    "sha256": "d0de432c2ec516aff8606511139daed9e2b064775ffa958db4acaac5c0dc1bd3",
+    "content_type": "text/html",
+    "title": [
+      "常发CFJ2204轮式拖拉机-常发拖拉机-报价、补贴和图片"
+    ]
+  },
+  {
+    "name": "njt-company-products",
+    "url": "https://www.nongjitong.com/company/21_4.html",
+    "status": 200,
+    "final_url": "https://www.nongjitong.com/company/21_4.html",
+    "bytes": 22078,
+    "sha256": "c47675179a0e2af5e64a173932a2c550bb0ba054c8c849bf20cb9209b64cf160",
+    "content_type": "text/html",
+    "title": [
+      "常州常发农业装备有限公司产品中心-公司网站"
+    ]
+  },
+  {
+    "name": "cf-english-tractors",
+    "url": "https://en.changfanz.com/Tractor.html",
+    "status": 200,
+    "final_url": "https://en.changfanz.com/Tractor.html",
+    "bytes": 70893,
+    "sha256": "2fe6e1bf4e596ff3073f45c48d598f97b8400bcded1068868cfb4c0054cfee1c",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "Tractor - Changfa Agricultural Equipment"
+    ]
+  },
+  {
+    "name": "cf-220hp",
+    "url": "https://www.changfanz.com/220mali.html",
+    "status": 200,
+    "final_url": "https://www.changfanz.com/220mali.html",
+    "bytes": 58662,
+    "sha256": "2a64eaa84b2b844af660bf8a2e046152a78c9a28b4a4e6d2241eedbdadc6575d",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "220马力 - 常发农装"
+    ]
+  },
+  {
+    "name": "cf-tractors",
+    "url": "https://www.changfanz.com/tuolaji.html",
+    "status": 200,
+    "final_url": "https://www.changfanz.com/tuolaji.html",
+    "bytes": 66465,
+    "sha256": "f512d0a2215f5535be98224aecfe16ab5b8b901d5afd16d1e03cb405668d97fc",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "拖拉机 - 常发农装"
+    ]
+  },
+  {
+    "name": "cf-cfj2204-6m",
+    "url": "https://www.changfanz.com/archives/tuolaji/1280.html",
+    "status": 200,
+    "final_url": "https://www.changfanz.com/archives/tuolaji/1280.html",
+    "bytes": 98189,
+    "sha256": "a8503a0a0ffbcd22ab0f2181e627a2833ce4bcbb3f4494fe4caf0a114a361e50",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "常发CFJ2204-6M超速舰轮式拖拉机 - 常发农装"
+    ]
+  },
+  {
+    "name": "cf-knowledge",
+    "url": "https://www.changfanz.com/zhishixiaoketang.html",
+    "status": 200,
+    "final_url": "https://www.changfanz.com/zhishixiaoketang.html",
+    "bytes": 107767,
+    "sha256": "a753a2d090af2201681f1a55a82a3a9b6521d6cb84e2bd837a5147ad6c82bbed",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "知识小课堂 - 常发农装"
+    ]
+  },
+  {
+    "name": "cf-app",
+    "url": "https://www.changfanz.com/APP.html",
+    "status": 200,
+    "final_url": "https://www.changfanz.com/APP.html",
+    "bytes": 35035,
+    "sha256": "7b5ddce7eeaa97fc7832ec8109122694543d72b9834a28a0878a78e672233766",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "APP - 常发农装"
+    ]
+  },
+  {
+    "name": "njt-so-robots",
+    "url": "https://so.nongjitong.com/robots.txt",
+    "error": "HTTP Error 401: Unauthorized"
+  },
+  {
+    "name": "njt-so-js",
+    "url": "https://so.nongjitong.com/js/so.js?v=20220328",
+    "error": "HTTP Error 401: Unauthorized"
+  },
+  {
+    "name": "njt-so-index",
+    "url": "https://so.nongjitong.com/js/index.js",
+    "error": "HTTP Error 401: Unauthorized"
+  },
+  {
+    "name": "njt-search-cfj2204",
+    "url": "https://so.nongjitong.com/Default.aspx?keyword=CFJ2204",
+    "status": 200,
+    "final_url": "https://so.nongjitong.com/Default.aspx?keyword=CFJ2204",
+    "bytes": 4529,
+    "sha256": "ebe56c1832088496405d22b662bf26328be9c7a302be2f8346c5b082ee11fdfa",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "\r\n\t全部CFJ2204_农机通全文检索\r\n"
+    ]
+  },
+  {
+    "name": "basis-report",
+    "url": "https://www.nongjitong.com/news/2025/529555.html",
+    "error": "HTTP Error 503: Service Unavailable"
+  },
+  {
+    "name": "changfa-home",
+    "url": "https://www.changfa.com/",
+    "error": "HTTP Error 503: Service Unavailable"
+  },
+  {
+    "name": "changfa-robots",
+    "url": "https://www.changfa.com/robots.txt",
+    "error": "HTTP Error 503: Service Unavailable"
+  },
+  {
+    "name": "changfanz-home",
+    "url": "https://www.changfanz.com/",
+    "status": 200,
+    "final_url": "https://www.changfanz.com/",
+    "bytes": 74175,
+    "sha256": "e232285ab2d14c9d6fbca088981650b3b9f25703c38d48acec45b2bbe64ddab2",
+    "content_type": "text/html; charset=utf-8",
+    "title": [
+      "常发农装 - 常发农装"
+    ]
+  },
+  {
+    "name": "changfanz-robots",
+    "url": "https://www.changfanz.com/robots.txt",
+    "status": 200,
+    "final_url": "https://www.changfanz.com/robots.txt",
+    "bytes": 24,
+    "sha256": "e5c4b84484ee4216e9373be99380320c25dd94805f99f0a805846f087636553f",
+    "content_type": "text/plain",
+    "title": []
+  },
+  {
+    "name": "njt-cfj2204-maintenance-video",
+    "url": "https://www.nongjitong.com/video/497439.html",
+    "status": 200,
+    "final_url": "https://www.nongjitong.com/video/497439.html",
+    "bytes": 10821,
+    "sha256": "7269f71adcef47e20d7fb1220381383d243960235eeeaf670b43a3a6d75f3439",
+    "content_type": "text/html",
+    "title": [
+      "常发CFJ2204拖拉机保养视频-农机视频-农机通"
+    ]
+  }
+]

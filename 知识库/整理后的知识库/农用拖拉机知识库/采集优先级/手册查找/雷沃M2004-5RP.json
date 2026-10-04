@@ -1,0 +1,133 @@
+{
+  "target_brand": "雷沃",
+  "target_model": "M2004-5RP",
+  "checked_date": "2026-10-04",
+  "result": "未取得精确匹配的M2004-5RP完整整机说明书或使用保养手册",
+  "downloaded_matching_pdfs": 0,
+  "new_verified_facts": 0,
+  "new_retrieval_entries": 0,
+  "checks": [
+    {
+      "url": "https://www.nongjitong.com/company/lovol/product_maintenance_and_repair.html",
+      "http_status": 200,
+      "title": "雷沃全系产品-维修保养手册",
+      "final_url": "https://www.nongjitong.com/company/lovol/product_maintenance_and_repair.html",
+      "content_type": "text/html",
+      "bytes": 8515,
+      "sha256": "3dc59981ae4f15bf03fc54ed591f188f233de7a4ef9aba77844787e5f9b0674d",
+      "error": null,
+      "assessment": "农机通品牌栏目资料导航，可作发现入口；不是M2004-5RP整机手册。"
+    },
+    {
+      "url": "https://www.nongjitong.com/company/lovol/tractorselfcheck.html",
+      "http_status": 200,
+      "title": "雷沃拖拉机维修与保养手册",
+      "final_url": "https://www.nongjitong.com/company/lovol/tractorselfcheck.html",
+      "content_type": "text/html",
+      "bytes": 9762,
+      "sha256": "f0a96753056a59c54f1de3852549e823c10dbf8085f803bf194c834ae76b42e9",
+      "error": null,
+      "assessment": "导航列交机培训、TG通用故障、行走系统、电气液压、国三发动机及视频，未提供本目标精确型号的整机PDF。"
+    },
+    {
+      "url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "http_status": 200,
+      "title": "雷沃拖拉机交机培训手册",
+      "final_url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "content_type": "text/html",
+      "bytes": 7702,
+      "sha256": "2184d0de5014baf6c5dbb7a089896a5c08f0996d051872eba94895dbc874eac6",
+      "error": null,
+      "assessment": "四个附件链接标题为TX、TD、TB、P5000交机培训；不同平台且本项目已有，不替代M2004-5RP。"
+    },
+    {
+      "url": "https://www.nongjitong.com/company/category/462792.html",
+      "http_status": 200,
+      "title": "200及以上-潍柴雷沃智慧农业科技股份有限公司",
+      "final_url": "https://www.nongjitong.com/company/category/462792.html",
+      "content_type": "text/html",
+      "bytes": 12645,
+      "sha256": "5e40eb3e4c0af4a846d7e2e105bb709ba6925ea21e22607c43d84f486894f877",
+      "error": null,
+      "assessment": "目录9款，2004型号为M2004-5G（G4）与MG2004（G4），型号后缀不匹配目标。"
+    },
+    {
+      "url": "https://so.nongjitong.com/Default.aspx?keyword=M2004-5RP",
+      "http_status": 200,
+      "title": "\r\n\t全部M2004-5RP_农机通全文检索\r\n",
+      "final_url": "https://so.nongjitong.com/Default.aspx?keyword=M2004-5RP",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 4549,
+      "sha256": "d824b96b9479715ee917716de93adca209e6cb7babcb414a501cb10256f9d805",
+      "error": null,
+      "assessment": "HTTP200但HTML只有动态检索框；相关JS本次HTTP401，未读取检索结果，不能称零搜索结果。"
+    },
+    {
+      "url": "https://www.bing.com/search?q=%22M2004-5RP%22%20%22%E8%AF%B4%E6%98%8E%E4%B9%A6%22",
+      "http_status": 200,
+      "title": "\"M2004-5RP\" \"说明书\" - Search",
+      "final_url": "https://www.bing.com/search?q=%22M2004-5RP%22%20%22%E8%AF%B4%E6%98%8E%E4%B9%A6%22",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 112493,
+      "sha256": "7b095e97055c8056b38048cda66b61e478f17b3c641c4a96c616922f387c118b",
+      "error": null,
+      "assessment": "标题含查询，但结果正文明显无关；不使用为资料不存在证据。"
+    },
+    {
+      "url": "https://www.bing.com/search?q=M2004-5RP",
+      "http_status": 200,
+      "title": "M2004-5RP - Search",
+      "final_url": "https://www.bing.com/search?q=M2004-5RP",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 123924,
+      "sha256": "1b99dff9859f77cd05deff1ee8c5079690186c873801be3ec64d31ef2e6af487",
+      "error": null,
+      "assessment": "标题含查询，但结果正文明显无关；不跟随无关结果。"
+    },
+    {
+      "url": "https://www.baidu.com/s?wd=M2004-5RP%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6",
+      "http_status": null,
+      "title": null,
+      "final_url": null,
+      "content_type": null,
+      "bytes": null,
+      "sha256": null,
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "assessment": "代理连接403，未取得页面；未绕过。"
+    },
+    {
+      "url": "https://www.lovol.com.cn/",
+      "http_status": null,
+      "title": null,
+      "final_url": null,
+      "content_type": null,
+      "bytes": null,
+      "sha256": null,
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "assessment": "尝试的厂家主站地址代理连接403，未取得厂家内容，真实性与当前资料入口仍待核实；未绕过。"
+    }
+  ],
+  "excluded_candidates": [
+    {
+      "title": "雷沃欧豹M2004-5G（G4）拖拉机",
+      "url": "https://www.nongjitong.com/product/lovolzg_m2004-5g_tractor.html",
+      "discovery_url": "https://www.nongjitong.com/company/category/462792.html",
+      "reason": "分类页链接可见；本次未取该产品正文，后缀5G与5RP不同，不采作5RP手册。"
+    },
+    {
+      "title": "雷沃欧豹MG2004（G4）轮式拖拉机",
+      "url": "https://www.nongjitong.com/product/lovolzg_mg2004_tractor.html",
+      "discovery_url": "https://www.nongjitong.com/company/category/462792.html",
+      "reason": "分类页链接可见；本次未取该产品正文，精确型号不同，不采作5RP手册。"
+    }
+  ],
+  "remaining_gap": "需要厂家明确覆盖M2004-5RP的原始整机使用/保养手册，核对完整型号、发动机、市场/排放、配置、版次及证据页；未获前不生成维修流程与参数。",
+  "limits": "本轮可访问入口中的未取得结论，不能推定网上不存在资料。HTML字节数与sha256属于采集页，不是手册PDF完整性数据。",
+  "usage_evidence": {
+    "url": "https://www.nongjitong.com/news/2025/529555.html",
+    "publisher": "农机通",
+    "date": "2025-07-04",
+    "statement": "第三方据补贴公开数据称雷沃M2004-5RP为主销机型；未给该型号销量。19521台是潍柴雷沃品牌总量。",
+    "status": "对应新闻已取得正文并核对，原始统计未独立重算"
+  }
+}

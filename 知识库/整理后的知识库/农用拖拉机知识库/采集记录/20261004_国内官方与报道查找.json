@@ -1,0 +1,269 @@
+{
+  "collected_date": "2026-10-04",
+  "workflow": "使用证据→报告所列型号候选→匹配整机手册→内容审校→正式检索",
+  "new_verified_official_original_model_statistics": 0,
+  "verified_third_party_reports": 2,
+  "model_evidence_records": 11,
+  "unique_model_candidates": 10,
+  "matching_complete_manuals_acquired_in_domestic_stage": 0,
+  "new_repair_entries_in_domestic_stage": 0,
+  "official_requests": [
+    {
+      "name": "ministry",
+      "url": "https://www.moa.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "machinery",
+      "url": "https://www.njhs.moa.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "hlj-home",
+      "url": "https://nynct.hlj.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "hlj-robots",
+      "url": "https://nynct.hlj.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "jl-home",
+      "url": "https://agri.jl.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "jl-robots",
+      "url": "https://agri.jl.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "nmg-home",
+      "url": "https://nmt.nmg.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "nmg-robots",
+      "url": "https://nmt.nmg.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "hn-home",
+      "url": "https://nynct.henan.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "hn-robots",
+      "url": "https://nynct.henan.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "sd-home",
+      "url": "https://nync.shandong.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "sd-robots",
+      "url": "https://nync.shandong.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "region": "jiangsu",
+      "url": "https://nynct.jiangsu.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "region": "hubei",
+      "url": "https://nynct.hubei.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "region": "hunan",
+      "url": "https://agri.hunan.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "region": "anhui",
+      "url": "https://nync.ah.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "region": "zhejiang",
+      "url": "https://nynct.zj.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "region": "jiangxi",
+      "url": "https://nync.jiangxi.gov.cn/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+  ],
+  "official_boundary": "部/省厅原站本轮均CONNECT403，未取得新官方型号数量统计；不能由失败断言无资料",
+  "rejected_as_usage_quantity_evidence": [
+    {
+      "evidence_id": "NORTH-MEDIA-LUOBEI-20260509",
+      "url": "https://www.nongjitong.com/news/2026/533157.html",
+      "title": "进口拖拉机国产机具——萝北90后现代农人的底气从哪来？",
+      "publisher": "农机通",
+      "publication_date": "2026-05-09",
+      "source_level": "行业媒体实地/人物报道；非官方",
+      "evidence_kind": "应用实例",
+      "geography": "黑龙江省萝北县凤翔镇胜鑫家庭农场",
+      "brand": "凯斯",
+      "exact_models": [],
+      "quantities": [],
+      "boundary": "正文未指明具体拖拉机型号或数量，只能支持凯斯进口大马力拖拉机应用实例；不能推定常见型号、当地占比或全国保有量。报道大量介绍龙丰农具，不能将农具型号转成拖拉机型号。",
+      "sha256": "c97c5e55df8c0edf25801485467efd7f521b60a3d5ead65a993354a4311cf5e1",
+      "bytes": 18428,
+      "use": "只保留线索，不进入维修检索，不作为较多使用型号统计",
+      "hash_scope": "当次HTML响应；不是官方底层统计或附件"
+    },
+    {
+      "evidence_id": "NORTH-REPRINT-HLJ-20260803",
+      "url": "https://www.nongjitong.com/news/2026/533783.html",
+      "title": "对黑龙江省2024—2026年农机购置与应用补贴第六批自主投档违规企业约谈的函",
+      "publisher": "农机通转载；署名黑龙江省农业农村厅农业机械化管理处",
+      "publication_date": "2026-08-04",
+      "original_document_date": "2026-08-03",
+      "source_level": "官方文件行业媒体转载；官方原始正文未取得",
+      "evidence_kind": "投档违规处理/政策",
+      "geography": "黑龙江省",
+      "exact_models": [],
+      "quantities": [],
+      "boundary": "产品投档和违规约谈不等于实际购机、销量或保有量，不能用于使用数量排序。",
+      "official_link_given_by_reprint": "https://nynct.hlj.gov.cn/",
+      "sha256": "21813c0211553c88db6065355384c8eab698cf0c59b181d8dad4ed1eb51dd10b",
+      "bytes": 13455,
+      "use": "排除为较多使用证据",
+      "hash_scope": "当次HTML响应；不是官方底层统计或附件"
+    },
+    {
+      "evidence_id": "NORTH-REPRINT-HLJ-TEST-20251013",
+      "url": "https://www.nongjitong.com/news/2025/531393.html",
+      "title": "2025年第五批黑龙江省农业机械试验鉴定结果的通报",
+      "publisher": "农机通转载；署名黑龙江省农业机械试验鉴定站",
+      "publication_date": "2025-10-13",
+      "source_level": "官方鉴定通知行业媒体转载；官方原始正文未取得",
+      "evidence_kind": "鉴定准入",
+      "geography": "黑龙江省",
+      "exact_models": [],
+      "quantities": [],
+      "boundary": "获证、换证、注销目录仅证明鉴定状态，不等于购买、在用机数量或全国常见程度。附件未取得/未审，不填其中型号。",
+      "sha256": "edc09fb05779805fd8c237d2c2f4748ae8edd3c82fe8cd0cc275a7d17a818738",
+      "bytes": 13145,
+      "use": "排除为较多使用证据",
+      "hash_scope": "当次HTML响应；不是官方底层统计或附件",
+      "original_document_date": "2025-10-11",
+      "reported_source_address": "http://www.hnkjdz.org.cn/",
+      "reported_source_address_boundary": "转载页所给来源地址；本轮访问CONNECT403，未核验该域名机构归属，不据缩写推断地域"
+    },
+    {
+      "evidence_id": "NORTH-PROMOTIONAL-LOVOL-20260929",
+      "url": "https://www.nongjitong.com/news/2026/534155.html",
+      "title": "雷沃拖拉机 东北主粮区明星产品强势来袭",
+      "publisher": "农机通；页面链接潍柴雷沃公司信息",
+      "publication_date": "2026-09-29",
+      "source_level": "企业产品推广",
+      "evidence_kind": "宣传/推荐",
+      "geography": "东北主粮区（标题）",
+      "exact_models": [],
+      "quantities": [],
+      "boundary": "标题明星产品和网页关注度不等于实际购机或保有量；页面正文主要图片，未核图中文字，不填型号。",
+      "sha256": "b706eb9ff3fe98ac526748722dda37c8a19ce641e1b20a89595dc3ddda0b1948",
+      "bytes": 11979,
+      "use": "排除为较多使用证据",
+      "hash_scope": "当次HTML响应；不是官方底层统计或附件"
+    }
+  ],
+  "search_boundary": "Bing多组查询HTTP200但返回正文主题不相关已剔除；百度CONNECT403；农机通动态壳所需JS401，不记成无结果",
+  "retained_official_application": {
+    "source_id": "SRC-HH-T70-20250414",
+    "role": "湖北日报新闻在湖北省厅转载；既有HTML复读",
+    "quantity": 9,
+    "quantity_definition": "郧阳三个村合作社试用交付T70实例；不进入较多使用排名",
+    "human_record": "../采集优先级/报告来源记录/湖北T70_既有局部应用记录.md"
+  },
+  "evidence_index": "../采集优先级/证据索引.json",
+  "model_queue": "../采集优先级/型号清单.jsonl",
+  "network_draft": {
+    "saved": true,
+    "revision": 16,
+    "custom_domains_count": 48,
+    "new_domestic_domains_this_stage": [
+      "www.moa.gov.cn",
+      "www.njhs.moa.gov.cn",
+      "nynct.hlj.gov.cn",
+      "agri.jl.gov.cn",
+      "nmt.nmg.gov.cn",
+      "nynct.henan.gov.cn",
+      "nync.shandong.gov.cn",
+      "nynct.jiangsu.gov.cn",
+      "nynct.hubei.gov.cn",
+      "agri.hunan.gov.cn",
+      "nync.ah.gov.cn",
+      "nynct.zj.gov.cn",
+      "nync.jiangxi.gov.cn",
+      "news.nongji360.com",
+      "a.nongjitong.com",
+      "nyt.hubei.gov.cn",
+      "www.lovol.com.cn"
+    ],
+    "published_or_applied_by_tool": false,
+    "runtime_access_verified": false,
+    "required_action": "云环境设置中审阅、保存并发布后，以实际响应验证；草稿工具不能激活网络"
+  },
+  "repair_archive_unchanged_in_domestic_stage": {
+    "sources": 20,
+    "entries": 165,
+    "total_chunks": 174
+  },
+  "github_and_deployment_boundary": "本记录随本轮2.2.0资料整理提交；不声称agridx.xyz已部署",
+  "validation": {
+    "research_json_references": "passed",
+    "source_record_hashes": "passed",
+    "local_document_links_checked": 130,
+    "archive_validation_errors": 0,
+    "tests_passed": 27,
+    "server_build": "passed",
+    "external_manual_pdfs_refetched_this_stage": false,
+    "runtime": {
+      "health": {
+        "ok": true,
+        "version": "2.2.0",
+        "timestamp": "2026-10-04T02:14:56.239Z",
+        "knowledge": {
+          "chunks": 174,
+          "archivedEntries": 165
+        }
+      },
+      "unsupported_candidates": [
+        {
+          "brand": "常发",
+          "model": "CFJ2204",
+          "http_status": 200,
+          "provider": "knowledge-base",
+          "knowledge_chunks": 0,
+          "answer": "**【故障现象分析】**\n收到关于「拖拉机 常发 CFJ2204」的咨询：“发动机不能起动，要怎么检查？”。\n\n**【当前资料不足】**\n未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。\n\n**【安全提醒】**\n故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。"
+        },
+        {
+          "brand": "雷沃",
+          "model": "M2004-5RP",
+          "http_status": 200,
+          "provider": "knowledge-base",
+          "knowledge_chunks": 0,
+          "answer": "**【故障现象分析】**\n收到关于「拖拉机 雷沃 M2004-5RP」的咨询：“发动机不能起动，要怎么检查？”。\n\n**【当前资料不足】**\n未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。\n\n**【安全提醒】**\n故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。"
+        },
+        {
+          "brand": "约翰迪尔",
+          "model": "6E-1504",
+          "http_status": 200,
+          "provider": "knowledge-base",
+          "knowledge_chunks": 0,
+          "answer": "**【故障现象分析】**\n收到关于「拖拉机 约翰迪尔 6E-1504」的咨询：“发动机不能起动，要怎么检查？”。\n\n**【当前资料不足】**\n未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。\n\n**【安全提醒】**\n故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。"
+        }
+      ]
+    },
+    "browser_and_live_deployment_verified": false
+  }
+}

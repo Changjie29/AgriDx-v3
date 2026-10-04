@@ -1,0 +1,81 @@
+{
+  "checked_date": "2026-10-04",
+  "target_models": [
+    "LY1204",
+    "ME504-5"
+  ],
+  "basis_source_id": "REPORT-NJT-20240407-HEAT2023",
+  "matching_complete_manual_count": 0,
+  "new_repair_entry_count": 0,
+  "hash_scope": "实际HTML响应；没有新的匹配手册PDF",
+  "requests": [
+    {
+      "name": "yto-ly-page",
+      "url": "https://www.nongjitong.com/product/yto_ly1204_tractor.html",
+      "method": "从既有实际型号页记录取得链接，读取正文并检查公开附件",
+      "status": 200,
+      "final_url": "https://www.nongjitong.com/product/yto_ly1204_tractor.html",
+      "bytes": 34387,
+      "sha256": "9f94f055cd291b270bbe85579e684d68753f02850e5265b103df24162398810d",
+      "model_links": [],
+      "attachment_links": []
+    },
+    {
+      "name": "yto-products",
+      "url": "https://www.nongjitong.com/company/yto/product.html",
+      "method": "试探路径返回404；不是已验证标准导航，不作资料不存在证明",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://www.nongjitong.com/company/yto/",
+      "model_target": "LY1204",
+      "evidence_source": "2024农机通2023热度报告；非销量/保有量",
+      "purpose": "查真实机型/手册锚点",
+      "status": 200,
+      "bytes": 11109,
+      "sha256": "0eb8f3ed4c8a83a42fa7f63ab7ac114deed1b2a86696ff5efbceacd976eb2c3a",
+      "matches": [],
+      "assessment": "实际为叉车栏目；零匹配输出不说明拖拉机资料不存在"
+    },
+    {
+      "url": "https://www.nongjitong.com/product/ytdongfanghong_me504_tractor.html",
+      "target": "ME504-5",
+      "discovery": "既有实际东方红企业目录锚点；2023热度候选",
+      "complete_matching_manuals": 0,
+      "error": "The read operation timed out"
+    },
+    {
+      "url": "https://www.nongjitong.com/product/ytdongfanghong_me504_tractor.html",
+      "target": "ME504-5",
+      "attempt": 2,
+      "purpose": "首次读正文超时后单次重取；原链接来自实际企业目录锚点",
+      "error": "HTTP Error 503: Service Unavailable",
+      "matching_complete_manuals": 0
+    }
+  ],
+  "model_results": [
+    {
+      "model": "LY1204",
+      "product_url": "https://www.nongjitong.com/product/yto_ly1204_tractor.html",
+      "http_status": 200,
+      "actual_title": "东方红LY1204-L（G4）轮式拖拉机",
+      "manual_result": "已读产品HTML未发现PDF或fileview附件",
+      "scope_boundary": "当前页为LY1204-L(G4)，不证明报告裸LY1204的后缀/排放，不与旧LX系列手册混用"
+    },
+    {
+      "model": "ME504-5",
+      "discovery_url": "https://www.nongjitong.com/company/category/324002.html",
+      "actual_anchor_text": "东方红ME504-5（G4）/ME504-5N轮式拖拉机",
+      "product_url": "https://www.nongjitong.com/product/ytdongfanghong_me504_tractor.html",
+      "manual_result": "首次读正文超时，单次重取HTTP503；未取得目标产品正文",
+      "scope_boundary": "只证明目录锚点存在，不声称已检查产品正文无附件；不把ME504-5N或G4加入报告型号",
+      "discovery_html_sha256": "8b8fb76b5f0bc583239a81be331dea2d93d64002c87e0cef19b9bd080c4ec20e",
+      "discovery_html_bytes": 17508
+    }
+  ],
+  "navigation_exclusions": [
+    "company/yto/product.html试探路径404，不作有效标准导航",
+    "company/yto/响应实际为“叉车-中国一拖”，不作拖拉机首页无资料证据"
+  ],
+  "limits": "目标产品页和既有培训/旧系列资料不替代匹配整机手册；本轮未取得不代表全网不存在"
+}

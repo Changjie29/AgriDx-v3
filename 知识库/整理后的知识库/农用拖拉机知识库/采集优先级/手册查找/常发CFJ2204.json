@@ -1,0 +1,290 @@
+{
+  "research_date_shanghai": "2026-10-04",
+  "task": "按新闻报道的常发CFJ2204补贴购机量候选依据，定向寻找完整整机使用/保养说明书",
+  "basis": {
+    "url": "https://www.nongjitong.com/news/2025/529555.html",
+    "title": "2025上半年拖拉机销售额同比下滑38%，五大头部企业市场份额近七成",
+    "publication_date": "2025-07-04",
+    "source_level": "行业媒体基于补贴公开数据的统计报道，非官方保有量统计",
+    "model": "CFJ2204",
+    "reported_quantity": 1383,
+    "quantity_label_in_article": "销量",
+    "reported_period": "2025年上半年",
+    "coverage_and_deduplication": "正文没有交代覆盖省份、公示范围和去重方法；不能推定全国保有量",
+    "basis_validation": "报告原文已由报告采集任务取得并核对；本型号查找任务再次读取同一URL返回HTTP503，两次响应分别保留"
+  },
+  "target_brand": "常发",
+  "target_model": "CFJ2204",
+  "complete_matching_manuals_obtained": 0,
+  "new_manual_fact_entries": 0,
+  "conclusion": "当前已核网页没有取得CFJ2204完整整机使用维护说明书或保养手册。不能据本轮访问断言全网不存在。",
+  "manufacturer_pages": [
+    {
+      "url": "https://www.changfanz.com/",
+      "role": "常发农装官网；产品导航"
+    },
+    {
+      "url": "https://www.changfanz.com/220mali.html",
+      "role": "220马力目录；现列CFJ2204-6M"
+    },
+    {
+      "url": "https://www.changfanz.com/tuolaji.html",
+      "role": "拖拉机目录；现列CFJ2204-6M"
+    },
+    {
+      "url": "https://www.changfanz.com/archives/tuolaji/1280.html",
+      "role": "CFJ2204-6M产品页；非完整手册",
+      "model_boundary": "CFJ2204-6M不能在缺少厂家证明时当作统计CFJ2204的等价别名或同版本"
+    },
+    {
+      "url": "https://www.changfanz.com/zhishixiaoketang.html",
+      "role": "轮拖H系列培训视频目录；不能用于CFJ2204维修参数"
+    },
+    {
+      "url": "https://www.changfanz.com/APP.html",
+      "role": "APP下载/推广入口；未取得应用内手册；没有下载APK或创建账户"
+    },
+    {
+      "url": "https://en.changfanz.com/",
+      "role": "英文厂商导航；未取得CFJ2204正文"
+    },
+    {
+      "url": "https://en.changfanz.com/Tractor.html",
+      "role": "英文拖拉机产品目录；海外产品范围不能自动套国内CFJ2204"
+    }
+  ],
+  "model_specific_candidates": [
+    {
+      "url": "https://www.nongjitong.com/product/changfa_cfh2204l_tractor.html",
+      "title": "常发CFJ2204轮式拖拉机",
+      "role": "行业产品页",
+      "discovery": "农机通常发公司首页实际锚链接",
+      "exact_model_in_body": "CFJ2204",
+      "boundary": "页面标题和型号行确为CFJ2204；URL路径包含cfh2204l不当作型号别名。产品宣传/参数不是维修手册；未取得手册编号、版次或排放范围。",
+      "sha256": "d0de432c2ec516aff8606511139daed9e2b064775ffa958db4acaac5c0dc1bd3",
+      "bytes": 35657,
+      "use": "保留候选入口，不进入维修检索"
+    },
+    {
+      "url": "https://www.nongjitong.com/video/497439.html",
+      "title": "常发CFJ2204拖拉机保养视频",
+      "role": "保养短视频入口，非完整手册",
+      "discovery": "CFJ2204产品页实际链接",
+      "page_update_date": "2021-12-06",
+      "duration_displayed_on_product_page": "3:32",
+      "media_url_in_public_html": "https://vodmedia.s105.cn/video/UploadFiles/video/2021/12/pchd/pms63dctn74b.mp4",
+      "video_downloaded": false,
+      "video_content_verified": false,
+      "manual_version": null,
+      "emission_stage": null,
+      "boundary": "页面更新时间不是手册版次。未逐帧核验或核对实车配置，不将2021视频推定为2025购机型号国四说明书，不生成维修参数。",
+      "sha256": "7269f71adcef47e20d7fb1220381383d243960235eeeaf670b43a3a6d75f3439",
+      "bytes": 10821,
+      "use": "保留辅助资料待审线索，不计完整说明书，不进入事实检索"
+    }
+  ],
+  "page_inspections": [
+    {
+      "url": "https://www.bing.com/search?q=CFJ2204",
+      "status": 200,
+      "title": [
+        "CFJ2204 - Search"
+      ],
+      "sha256": "860ca12d0177de8082bfa4f4d08dd8b0a301bc593ae7fe6eb5a138a03c4be9a8",
+      "bytes": 114919,
+      "document_role": "搜索响应主题错配，排除",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.bing.com/search?q=CFJ2204%20manual%20pdf",
+      "status": 200,
+      "title": [
+        "CFJ2204 manual pdf - Search"
+      ],
+      "sha256": "ac1f9e271d52d31dcb19309c88fb833ce66d8fd66889eac6f7d8e39478bf9e5b",
+      "bytes": 107199,
+      "document_role": "搜索响应主题错配，排除",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.bing.com/search?q=%E5%B8%B8%E5%8F%91CFJ2204%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6",
+      "status": 200,
+      "title": [
+        "常发CFJ2204使用说明书 - Search"
+      ],
+      "sha256": "7a0d21b52bf484469c58d26f06e032e7521cc5f36f8be226e6007018d078ec4b",
+      "bytes": 126539,
+      "document_role": "搜索响应主题错配，排除",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.nongjitong.com/company/21.html",
+      "status": 200,
+      "title": [
+        "常州常发农业装备有限公司网站首页-公司网站"
+      ],
+      "sha256": "83bbca66e0e57e7ed56da4fc09212513941f8eacd2998c9dec510553833428d6",
+      "bytes": 22965,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://en.changfanz.com/",
+      "status": 200,
+      "title": [
+        "Changfa Agricultural Equipment - Changfa Agricultural Equipment"
+      ],
+      "sha256": "7e1b4863a1530c5ba4581ce15317071829465ea3c92a7f80b85814b6831aa35b",
+      "bytes": 72519,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.nongjitong.com/product/changfa_cfh2204l_tractor.html",
+      "status": 200,
+      "title": [
+        "常发CFJ2204轮式拖拉机-常发拖拉机-报价、补贴和图片"
+      ],
+      "sha256": "d0de432c2ec516aff8606511139daed9e2b064775ffa958db4acaac5c0dc1bd3",
+      "bytes": 35657,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.nongjitong.com/company/21_4.html",
+      "status": 200,
+      "title": [
+        "常州常发农业装备有限公司产品中心-公司网站"
+      ],
+      "sha256": "c47675179a0e2af5e64a173932a2c550bb0ba054c8c849bf20cb9209b64cf160",
+      "bytes": 22078,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://en.changfanz.com/Tractor.html",
+      "status": 200,
+      "title": [
+        "Tractor - Changfa Agricultural Equipment"
+      ],
+      "sha256": "2fe6e1bf4e596ff3073f45c48d598f97b8400bcded1068868cfb4c0054cfee1c",
+      "bytes": 70893,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.changfanz.com/220mali.html",
+      "status": 200,
+      "title": [
+        "220马力 - 常发农装"
+      ],
+      "sha256": "2a64eaa84b2b844af660bf8a2e046152a78c9a28b4a4e6d2241eedbdadc6575d",
+      "bytes": 58662,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.changfanz.com/tuolaji.html",
+      "status": 200,
+      "title": [
+        "拖拉机 - 常发农装"
+      ],
+      "sha256": "f512d0a2215f5535be98224aecfe16ab5b8b901d5afd16d1e03cb405668d97fc",
+      "bytes": 66465,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.changfanz.com/archives/tuolaji/1280.html",
+      "status": 200,
+      "title": [
+        "常发CFJ2204-6M超速舰轮式拖拉机 - 常发农装"
+      ],
+      "sha256": "a8503a0a0ffbcd22ab0f2181e627a2833ce4bcbb3f4494fe4caf0a114a361e50",
+      "bytes": 98189,
+      "document_role": "CFJ2204-6M产品宣传页；不确认与CFJ2204等价",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.changfanz.com/zhishixiaoketang.html",
+      "status": 200,
+      "title": [
+        "知识小课堂 - 常发农装"
+      ],
+      "sha256": "a753a2d090af2201681f1a55a82a3a9b6521d6cb84e2bd837a5147ad6c82bbed",
+      "bytes": 107767,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.changfanz.com/APP.html",
+      "status": 200,
+      "title": [
+        "APP - 常发农装"
+      ],
+      "sha256": "7b5ddce7eeaa97fc7832ec8109122694543d72b9834a28a0878a78e672233766",
+      "bytes": 35035,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://so.nongjitong.com/Default.aspx?keyword=CFJ2204",
+      "status": 200,
+      "title": [
+        "\r\n\t全部CFJ2204_农机通全文检索\r\n"
+      ],
+      "sha256": "ebe56c1832088496405d22b662bf26328be9c7a302be2f8346c5b082ee11fdfa",
+      "bytes": 4529,
+      "document_role": "检索空壳；脚本401，未取得搜索结果",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.changfanz.com/",
+      "status": 200,
+      "title": [
+        "常发农装 - 常发农装"
+      ],
+      "sha256": "e232285ab2d14c9d6fbca088981650b3b9f25703c38d48acec45b2bbe64ddab2",
+      "bytes": 74175,
+      "document_role": "导航/产品页；来源等级按域名与具体页面区分",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.changfanz.com/robots.txt",
+      "status": 200,
+      "title": [],
+      "sha256": "e5c4b84484ee4216e9373be99380320c25dd94805f99f0a805846f087636553f",
+      "bytes": 24,
+      "document_role": "robots文件",
+      "pdf_link_occurrences": 0
+    },
+    {
+      "url": "https://www.nongjitong.com/video/497439.html",
+      "status": 200,
+      "title": [
+        "常发CFJ2204拖拉机保养视频-农机视频-农机通"
+      ],
+      "sha256": "7269f71adcef47e20d7fb1220381383d243960235eeeaf670b43a3a6d75f3439",
+      "bytes": 10821,
+      "document_role": "短视频入口，非完整手册；内容未逐帧核验",
+      "pdf_link_occurrences": 0
+    }
+  ],
+  "access_summary": {
+    "requests": 23,
+    "http200": 17,
+    "unsuccessful": 6,
+    "max_concurrency": 2,
+    "network_policy_preserved": true,
+    "tls_verification_preserved": true,
+    "robots_changfanz": "HTTP200;User-agent:*;Disallow为空",
+    "robots_nongjitong_search": "HTTP401；必需搜索脚本亦401，未绕过"
+  },
+  "all_requests": "常发CFJ2204_请求记录.json",
+  "next_steps": [
+    "取得厂家公开CFJ2204完整使用维护手册，或由用户提供实车随车说明书扫描件。",
+    "封面、机型范围、版次、排放、发动机/变速及配置逐一对齐；未经厂家证明不合并CFJ2204-6M。",
+    "若后续审看保养短视频，单独记录发布时间、原出处、配置和时间戳，不能替代完整手册版次/机型证明。"
+  ],
+  "hash_scope": "网页响应哈希及字节数；本轮没有取得匹配手册PDF"
+}
