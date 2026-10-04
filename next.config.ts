@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  // Node self-hosting reads local environment variables. Sites/Vinext continues
-  // to use the real Cloudflare binding through its separate Vite configuration.
+// Vinext also reads this file. Apply the Node environment alias only when the
+// explicit self-hosted commands select it; Sites needs real Worker exports.
+const nodeSelfHosted = process.env.AGRIDX_NODE_RUNTIME === "1";
+
+const nextConfig: NextConfig = nodeSelfHosted ? {
   turbopack: {
     resolveAlias: { 'cloudflare:workers': './lib/node-runtime-env.ts' },
   },
@@ -13,6 +15,6 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
-};
+} : {};
 
 export default nextConfig;
