@@ -6,7 +6,7 @@ export async function POST(req:Request){
  let english=req.headers.get('accept-language')?.startsWith('en')||false;
  const error=(code:string,status:number)=>Response.json({error:chatError(code,english),code},{status,headers:{'Cache-Control':'no-store'}});
  const origin=req.headers.get('origin');const requestUrl=new URL(req.url);
- // The trusted deployment proxy must overwrite Host and X-Forwarded-Proto.
+ // Next may use localhost internally; the trusted proxy overwrites Host and X-Forwarded-Proto.
  const protocol=req.headers.get('x-forwarded-proto')?.split(',')[0].trim()||requestUrl.protocol.slice(0,-1);
  if(origin&&origin!==protocol+'://'+(req.headers.get('host')||requestUrl.host))return error('unsupported_origin',403);
  const ip=req.headers.get('cf-connecting-ip')||'local';const now=Date.now();
