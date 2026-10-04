@@ -87,7 +87,7 @@ NODE_ENV=production PORT=3000 npm start
 
 部署须包含`dist/`、`server.ts`、`server/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
 
-发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。当前线上部署位置未配置，不能用本地检查代替`agridx.xyz`的结果。本轮本地生产验收与线上受阻详情见[部署验收记录](docs/deployment/2026-10-04-production-validation.md)。
+发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。本轮隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。后续实际线上核验已确认2.2.2、20来源/165条/174片段及型号过滤；`/chat`直达仍404，Sites前端路由待修，整站验收尚未全部通过，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
 
 ## LLM 选择策略
 

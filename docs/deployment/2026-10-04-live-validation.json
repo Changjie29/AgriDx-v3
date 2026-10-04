@@ -1,0 +1,342 @@
+{
+  "date_shanghai": "2026-10-04",
+  "checked_at_shanghai": "2026-10-04T18:50:40.800271+08:00",
+  "scope": "agridx.xyz实际HTTP接口与静态资源；非浏览器渲染",
+  "project_version": "2.2.2",
+  "sites_project": {
+    "id": "appgprj_6ab5efd42cc48191a3bee1276e02c952",
+    "name": "耕知·耘诊",
+    "provided_by_user": true,
+    "native_sites_publish_tools_available_in_this_conversation": false
+  },
+  "status": "partial_pass_requires_spa_route_fix",
+  "deployed_by_this_conversation": false,
+  "health": {
+    "url": "https://agridx.xyz/api/health",
+    "http_status": 200,
+    "body_sha256": "95965b40b6676385f499f6537da79e8b9b0d7bbeee983bbedf951f782aacddb7",
+    "body": {
+      "ok": true,
+      "version": "2.2.2",
+      "timestamp": "2026-10-04T10:40:28.336Z",
+      "knowledge": {
+        "chunks": 174,
+        "archivedEntries": 165,
+        "sources": 20
+      },
+      "release": {
+        "sourceRepository": "Changjie29/AgriDx-v2",
+        "sourceBranch": "main",
+        "sourceCommit": "2c4d73112bf5514960b71aa330a5ac9e9c64c71f"
+      }
+    },
+    "reported_commit_matches_github_main_at_check": true,
+    "boundary": "release为线上接口报告的来源信息；未核对整套构建产物与本地逐字节相等"
+  },
+  "homepage": {
+    "url": "https://agridx.xyz/",
+    "http_status": 200,
+    "body_bytes": 1088,
+    "body_sha256": "001ab2ea360cac1471cdeb02fbdbc391b78d38f56cc4e03e2250d6d7ba8237f7"
+  },
+  "frontend_and_models": {
+    "scope": "agridx.xyz线上只读GET/HEAD；未执行下载的脚本、未部署",
+    "request_count": 7,
+    "tls_proxy_preserved": true,
+    "checks": [
+      {
+        "checked_at_utc": "2026-10-04T10:42:43.807319+00:00",
+        "label": "chat",
+        "method": "GET",
+        "url": "https://agridx.xyz/chat",
+        "curl_exit_code": 0,
+        "http_status": 404,
+        "content_type": null,
+        "tls_verify_result": 0,
+        "redirect_url": null,
+        "size_download": 0,
+        "content_length": "0",
+        "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "body_bytes": 0,
+        "error": null,
+        "etag": null,
+        "origin_status_line": "HTTP/2 404 "
+      },
+      {
+        "checked_at_utc": "2026-10-04T10:42:43.402061+00:00",
+        "label": "entry-js",
+        "method": "GET",
+        "url": "https://agridx.xyz/assets/index-BXi9PYov.js",
+        "curl_exit_code": 0,
+        "http_status": 200,
+        "content_type": "text/javascript",
+        "tls_verify_result": 0,
+        "redirect_url": null,
+        "size_download": 313457,
+        "content_length": "313457",
+        "body_sha256": "92a8c1509c93117c79920e48f0803e4e8d7a1b09f0dae8245217ad833ed5c72c",
+        "body_bytes": 313457,
+        "error": null,
+        "etag": "\"480792d7ef51fe2d650042c7e91720ee\"",
+        "origin_status_line": "HTTP/2 200 "
+      },
+      {
+        "checked_at_utc": "2026-10-04T10:42:43.568181+00:00",
+        "label": "entry-css",
+        "method": "GET",
+        "url": "https://agridx.xyz/assets/index-kstz0l5i.css",
+        "curl_exit_code": 0,
+        "http_status": 200,
+        "content_type": "text/css",
+        "tls_verify_result": 0,
+        "redirect_url": null,
+        "size_download": 53891,
+        "content_length": "53891",
+        "body_sha256": "baa92cd2205f4ba937f9c08ac44e85eebede799baf1216be2549a44573e90e61",
+        "body_bytes": 53891,
+        "error": null,
+        "etag": "\"13189cd1dba9083e229624f5cf39dbf1\"",
+        "origin_status_line": "HTTP/2 200 "
+      },
+      {
+        "checked_at_utc": "2026-10-04T10:42:43.449081+00:00",
+        "label": "static-model",
+        "method": "HEAD",
+        "url": "https://agridx.xyz/models/tractor.glb",
+        "curl_exit_code": 0,
+        "http_status": 200,
+        "content_type": "application/octet-stream",
+        "tls_verify_result": 0,
+        "redirect_url": null,
+        "size_download": 0,
+        "content_length": null,
+        "body_sha256": null,
+        "body_bytes": null,
+        "error": null,
+        "etag": "\"748603e9a4a20575b3c45bd6880e33dc\"",
+        "origin_status_line": "HTTP/2 200 ",
+        "content_length_verified": false
+      },
+      {
+        "checked_at_utc": "2026-10-04T10:42:43.698003+00:00",
+        "label": "api-model",
+        "method": "HEAD",
+        "url": "https://agridx.xyz/api/model/tractor",
+        "curl_exit_code": 0,
+        "http_status": 200,
+        "content_type": "application/octet-stream",
+        "tls_verify_result": 0,
+        "redirect_url": null,
+        "size_download": 0,
+        "content_length": null,
+        "body_sha256": null,
+        "body_bytes": null,
+        "error": null,
+        "etag": "\"748603e9a4a20575b3c45bd6880e33dc\"",
+        "origin_status_line": "HTTP/2 200 ",
+        "content_length_verified": false
+      },
+      {
+        "checked_at_utc": "2026-10-04T10:43:31.263109+00:00",
+        "label": "homepage-chunk",
+        "method": "GET",
+        "url": "https://agridx.xyz/assets/HomePage-Dv1mqN-5.js",
+        "discovered_from": "https://agridx.xyz/assets/index-BXi9PYov.js",
+        "curl_exit_code": 0,
+        "http_status": 200,
+        "content_type": "text/javascript",
+        "tls_verify_result": 0,
+        "redirect_url": null,
+        "body_sha256": "a03c88e1fc5f5c673eab2d19b2b9e7b1f63e1514ead09cee34233141f457dcca",
+        "body_bytes": 1171100,
+        "version_2_2_2_occurrences": 1,
+        "version_2_2_2_snippets": [
+          "iagnosis\"),k.jsx(PT,{size:18})]})]})]})]})})}const K6=\"2.2.2\";function Y6(){const i=ET(),e=yr(),t=(n,s)=>e===\"zh\"?n"
+        ],
+        "error": null,
+        "etag": "\"b70a998486f360bb00e2c99227e09fc7\"",
+        "origin_status_line": "HTTP/2 200 "
+      },
+      {
+        "checked_at_utc": "2026-10-04T10:43:32.060544+00:00",
+        "label": "chatpage-chunk",
+        "method": "GET",
+        "url": "https://agridx.xyz/assets/ChatPage-Cz0zQ0R7.js",
+        "discovered_from": "https://agridx.xyz/assets/index-BXi9PYov.js",
+        "curl_exit_code": 0,
+        "http_status": 200,
+        "content_type": "text/javascript",
+        "tls_verify_result": 0,
+        "redirect_url": null,
+        "body_sha256": "3e1086225f3fea3d7844b149b993375954112d9fd1e41bacadc46aa0660d806a",
+        "body_bytes": 230664,
+        "version_2_2_2_occurrences": 0,
+        "version_2_2_2_snippets": [],
+        "error": null,
+        "etag": "\"c58ddc0fc28ad8cb84d5ef993c6be654\"",
+        "origin_status_line": "HTTP/2 200 "
+      }
+    ],
+    "chat_deep_link": "failed_HTTP_404",
+    "browser_rendering_verified": false,
+    "frontend_version": {
+      "value": "2.2.2",
+      "verified_in_downloaded_homepage_js": true,
+      "footer_binding_verified": true,
+      "version_contexts": [
+        "开始诊断\",\"Start diagnosis\"),k.jsx(PT,{size:18})]})]})]})]})})}const K6=\"2.2.2\";function Y6(){const i=ET(),e=yr(),t=(n,s)=>e===\"zh\"?n:s;",
+        "26 Gengzhi · Yunzhen · Agricultural Machinery Diagnosis\"),\" · v\",K6]}),k.jsx(\"div\",{children:t(\"所有数据仅供演示参考 · 实际诊断请结合专业技术人员判断\",\"Data "
+      ]
+    }
+  },
+  "chat_api_checks": [
+    {
+      "case": "bad-request",
+      "curl_exit_code": 0,
+      "http_status": "400",
+      "checked_at_utc": "2026-10-04T10:42:13.487426+00:00",
+      "response_keys": [
+        "error",
+        "code"
+      ],
+      "code": "bad_request",
+      "answer_length": 0,
+      "answer_has_source_id": false,
+      "answer_has_insufficient_knowledge": false,
+      "answer_has_page_reference": false,
+      "machine_brand": null,
+      "machine_model": null
+    },
+    {
+      "case": "known-lx2620",
+      "curl_exit_code": 0,
+      "http_status": "200",
+      "checked_at_utc": "2026-10-04T10:42:14.231883+00:00",
+      "response_keys": [
+        "choices",
+        "model",
+        "provider",
+        "fellBack",
+        "knowledgeChunks"
+      ],
+      "provider": "knowledge-base",
+      "model": "kb-rag-engine (本地知识引擎)",
+      "fellBack": true,
+      "knowledgeChunks": 6,
+      "answer_length": 1398,
+      "answer_has_source_id": true,
+      "answer_has_insufficient_knowledge": true,
+      "answer_has_page_reference": true,
+      "machine_brand": "久保田",
+      "machine_model": "LX2620",
+      "source_id": "SRC-KB-LX2620-6C82063118",
+      "source_id_verified_in_formal_index": true
+    },
+    {
+      "case": "unknown-g4",
+      "curl_exit_code": 0,
+      "http_status": "200",
+      "checked_at_utc": "2026-10-04T10:42:15.058146+00:00",
+      "response_keys": [
+        "choices",
+        "model",
+        "provider",
+        "fellBack",
+        "knowledgeChunks"
+      ],
+      "provider": "knowledge-base",
+      "model": "kb-rag-engine (本地知识引擎)",
+      "fellBack": true,
+      "knowledgeChunks": 0,
+      "answer_length": 226,
+      "answer_has_source_id": false,
+      "answer_has_insufficient_knowledge": true,
+      "answer_has_page_reference": false,
+      "machine_brand": "东方红",
+      "machine_model": "LY1204(G4)"
+    },
+    {
+      "case": "emission-conflict",
+      "curl_exit_code": 0,
+      "http_status": "200",
+      "checked_at_utc": "2026-10-04T10:42:15.632129+00:00",
+      "response_keys": [
+        "choices",
+        "model",
+        "provider",
+        "fellBack",
+        "knowledgeChunks"
+      ],
+      "provider": "knowledge-base",
+      "model": "kb-rag-engine (本地知识引擎)",
+      "fellBack": true,
+      "knowledgeChunks": 0,
+      "answer_length": 224,
+      "answer_has_source_id": false,
+      "answer_has_insufficient_knowledge": true,
+      "answer_has_page_reference": false,
+      "machine_brand": "东方红",
+      "machine_model": "LF1504"
+    },
+    {
+      "case": "new-manual-m6060",
+      "curl_exit_code": 0,
+      "http_status": "200",
+      "checked_at_utc": "2026-10-04T10:47:17.984703+00:00",
+      "provider": "knowledge-base",
+      "knowledgeChunks": 6,
+      "fellBack": true,
+      "has_expected_source": true,
+      "insufficient_knowledge": true,
+      "response_model": "kb-rag-engine (本地知识引擎)",
+      "machine_brand": "久保田",
+      "machine_model": "M6060",
+      "source_id": "SRC-KB-M6060-3C13199724",
+      "source_id_verified_in_formal_index": true
+    },
+    {
+      "case": "configuration-conflict",
+      "curl_exit_code": 0,
+      "http_status": "200",
+      "checked_at_utc": "2026-10-04T10:47:18.967646+00:00",
+      "provider": "knowledge-base",
+      "knowledgeChunks": 0,
+      "fellBack": true,
+      "has_expected_source": false,
+      "insufficient_knowledge": true,
+      "response_model": "kb-rag-engine (本地知识引擎)",
+      "machine_brand": "久保田",
+      "machine_model": "M6060 CAB"
+    }
+  ],
+  "route_failure_confirmation": [
+    {
+      "url": "https://agridx.xyz/chat",
+      "http_status": 404,
+      "body_bytes": 0
+    },
+    {
+      "url": "https://agridx.xyz/chat?deployment_check=2.2.2",
+      "request_cache_control": "no-cache",
+      "http_status": 404,
+      "body_bytes": 0
+    },
+    {
+      "url": "https://agridx.xyz/chat/",
+      "http_status": 404,
+      "body_bytes": 0
+    }
+  ],
+  "verified_runtime_provider": "knowledge-base",
+  "external_llm_or_browser_rendering_verified": false,
+  "remediation": {
+    "required": "Sites前端托管层为/chat提供SPA入口index.html；保留现有/api/*和模型路由，不把它们重写成HTML",
+    "source_code_reference": "server.ts生产模式已设SPA入口回退，本地验收/chat是200；实际Sites路由映射需另核",
+    "desired_checks": [
+      "GET /chat 返回200与SPA HTML",
+      "去缓存参数及/chat/按发布约定得到页面或正常重定向",
+      "/api/health仍为JSON，实际检索保留来源与型号/排放/配置门禁"
+    ],
+    "status": "blocked_from_this_conversation_due_to_missing_sites_publish_tools"
+  }
+}
