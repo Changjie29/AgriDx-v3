@@ -1,11 +1,11 @@
 {
   "name": "agri-fault-diagnosis",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "start": "node server.ts",
+    "start": "tsx server.ts",
     "build": "npm run build:client",
     "build:client": "tsc -b tsconfig.app.json && vite build",
     "build:server": "tsc -p tsconfig.server.json",
@@ -39,6 +39,7 @@
     "tailwindcss": "^4.2.2",
     "three": "^0.185.1",
     "three-stdlib": "^2.36.1",
+    "tsx": "^4",
     "undici": "^8.10.2"
   },
   "devDependencies": {
@@ -56,9 +57,11 @@
     "eslint-plugin-react-hooks": "^7",
     "eslint-plugin-react-refresh": "^0.4",
     "sharp": "^0.35.4",
-    "tsx": "^4",
     "typescript": "~5.9",
     "typescript-eslint": "^8",
     "vite": "^7"
+  },
+  "engines": {
+    "node": ">=22.19.0"
   }
 }

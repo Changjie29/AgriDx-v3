@@ -1,0 +1,205 @@
+{
+  "checked_at_utc": "2026-10-04T10:00:38.022978+00:00",
+  "scope": "本地隔离生产模式；非agridx.xyz线上",
+  "version": "2.2.2",
+  "runtime": {
+    "node": "v24.19.0",
+    "production_only_dependencies_installed": true,
+    "tsx_present": true,
+    "vite_absent": true,
+    "typescript_absent": true,
+    "external_llm_keys": "显式留空，未复制.env"
+  },
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "served_dist_index": true
+    },
+    {
+      "method": "GET",
+      "path": "/chat",
+      "status": 200,
+      "served_dist_index": true
+    },
+    {
+      "method": "HEAD",
+      "path": "/models/tractor.glb",
+      "status": 200,
+      "content_length": 7371372
+    },
+    {
+      "method": "HEAD",
+      "path": "/api/model/tractor",
+      "status": 200,
+      "content_length": 7371372
+    },
+    {
+      "method": "POST",
+      "path": "/api/chat",
+      "case": "无效请求",
+      "status": 400,
+      "code": "bad_request"
+    },
+    {
+      "method": "POST",
+      "path": "/api/chat",
+      "brand": "久保田",
+      "model": "LX2620",
+      "case": "known",
+      "status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 6,
+      "source_references_verified": true,
+      "insufficient_knowledge": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/chat",
+      "brand": "东方红",
+      "model": "LY1204(G4)",
+      "case": "unknown",
+      "status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "source_references_verified": false,
+      "insufficient_knowledge": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/chat",
+      "brand": "东方红",
+      "model": "LF1504",
+      "case": "conflict",
+      "status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "source_references_verified": false,
+      "insufficient_knowledge": true
+    }
+  ],
+  "health": {
+    "ok": true,
+    "version": "2.2.2",
+    "timestamp": "2026-10-04T10:00:38.784Z",
+    "knowledge": {
+      "chunks": 174,
+      "archivedEntries": 165
+    }
+  },
+  "asset_checks": [
+    {
+      "path": "/assets/ChatPage-CBcL-W_j.js",
+      "status": 200,
+      "bytes": 229661,
+      "sha256": "c46c1864329f191d15677a960ac7e1ab836da874a43a4599dda41333105fde83"
+    },
+    {
+      "path": "/assets/HomePage-Cc09N727.js",
+      "status": 200,
+      "bytes": 1171100,
+      "sha256": "0a05abf651b52cd351c8056b5ceead6f15a5b83abcac4d4b675061414c542cbf"
+    },
+    {
+      "path": "/assets/content-B-Y9CRRj.js",
+      "status": 200,
+      "bytes": 10507,
+      "sha256": "b32003686cf7e5bb886b5f315ee69a779cf046883bdf41d3696c8caf10c37a92"
+    },
+    {
+      "path": "/assets/index-BWrRtOgL.js",
+      "status": 200,
+      "bytes": 313457,
+      "sha256": "29ad10715b04c21896ea53a1f8ea72c02f3f957bd7d56fb226e16d456c6aaffa"
+    },
+    {
+      "path": "/assets/index-DfDvbqxX.css",
+      "status": 200,
+      "bytes": 53840,
+      "sha256": "c40531ab48d59a9579a62243aaab319073b33740f4956c70ffb752ba57cebd54"
+    }
+  ],
+  "frontend_version_assets": [
+    "/assets/HomePage-Cc09N727.js"
+  ],
+  "status": "passed",
+  "shutdown": "SIGTERM_completed",
+  "checks_summary": {
+    "tests": {
+      "passed": 27,
+      "failed": 0
+    },
+    "frontend_build": "passed",
+    "backend_build": "passed",
+    "lint": {
+      "errors": 0,
+      "existing_warnings": 1
+    },
+    "frontend_existing_warning": "首页资源块大于500 kB"
+  },
+  "original_failure": {
+    "command": "NODE_ENV=production PORT=3101 npm start",
+    "version": "2.2.1",
+    "node": "v24.19.0",
+    "exit_code": 1,
+    "code": "ERR_MODULE_NOT_FOUND",
+    "module": "./server/index",
+    "reason": "node直接执行TypeScript入口时无法解析无扩展名模块导入"
+  },
+  "live_site": {
+    "url": "https://agridx.xyz/",
+    "verification_status": "blocked_before_origin",
+    "attempts": [
+      {
+        "method": "GET",
+        "url": "https://agridx.xyz/",
+        "curl_exit_code": 56,
+        "origin_http_status_received": false,
+        "proxy_error": "CONNECT tunnel failed, response 403"
+      },
+      {
+        "method": "GET",
+        "url": "https://agridx.xyz/api/health",
+        "curl_exit_code": 56,
+        "origin_http_status_received": false,
+        "proxy_error": "CONNECT tunnel failed, response 403"
+      }
+    ],
+    "deployed_by_this_task": false,
+    "deployed_version_verified": false,
+    "deployment_target": "unknown",
+    "deployment_credentials_configured": false,
+    "boundary": "代理拒绝不是站点HTTP响应，不证明站点故障或线上版本；Git同步不代表部署",
+    "github_deployment_discovery": {
+      "attempted": true,
+      "operations": [
+        "gh api repository deployments",
+        "gh api latest commit check-runs"
+      ],
+      "result": "Forbidden；未取得API结果，不能确认自动部署平台或状态"
+    }
+  },
+  "cloud_configuration": {
+    "draft_revision": 22,
+    "custom_domains": 62,
+    "network_saved_and_read_back": true,
+    "production_start_instructions_saved_and_read_back": true,
+    "requires_publish": true,
+    "application_or_publication_verified": false,
+    "existing_custom_domains_preserved": 60,
+    "new_domains": [
+      "agridx.xyz",
+      "api.github.com"
+    ]
+  },
+  "external_checks": {
+    "browser_rendering": false,
+    "external_llm": false
+  },
+  "repository_changes": [
+    "package.json生产start改为tsx，tsx移入运行依赖，Node>=22.19.0，版本2.2.2",
+    "README生产构建、启动、文件范围与验收说明",
+    "CHANGELOG与本次验收档案"
+  ]
+}

@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**2.2.1**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以实际部署为准。
+当前项目版本：**2.2.2**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以实际部署为准。
 
 国内资料新增按“使用/购机证据 → 报告所列型号 → 精确说明书 → 审校与检索”整理，见[型号采集优先级](知识库/整理后的知识库/农用拖拉机知识库/采集优先级/README.md)。现有3篇第三方报告、21条证据、20种型号/排放写法候选，均完成定向查找；尚未取得这些候选的新匹配完整手册，不能据此给出全国保有量排名。部分省厅正文与吉林公开搜索现已可读；总量背景、历史/展示实例和当前仍失败入口分别归档，研究资料不参与维修检索。
 
@@ -20,7 +20,7 @@
 
 ### 环境要求
 
-- Node.js ≥ 20
+- Node.js ≥ 22.19.0（建议24 LTS）
 - npm ≥ 10
 
 ### 1. 安装依赖
@@ -71,6 +71,23 @@ npm run lint        # eslint
 npm run build       # 前端类型检查与构建
 npm run build:server # 后端编译检查
 ```
+
+## 生产部署与验收
+
+在仓库根目录使用Node.js ≥ 22.19.0（建议24 LTS）。先安装完整依赖并构建前端，再仅保留运行依赖：
+
+```bash
+npm install --include=dev
+npm run build
+npm prune --omit=dev
+NODE_ENV=production PORT=3000 npm start
+```
+
+`npm start`使用运行依赖中的`tsx`执行TypeScript服务入口。启动时必须设置`NODE_ENV=production`，否则会进入需要Vite的开发模式；若主机已固定生产模式，可在进程管理器配置该变量。配置API Key请使用服务器环境变量或既有`server/.env`，不要写入前端或Git。
+
+部署须包含`dist/`、`server.ts`、`server/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
+
+发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。当前线上部署位置未配置，不能用本地检查代替`agridx.xyz`的结果。本轮本地生产验收与线上受阻详情见[部署验收记录](docs/deployment/2026-10-04-production-validation.md)。
 
 ## LLM 选择策略
 
@@ -217,7 +234,7 @@ AgriDx-v2/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "2.2.0", "timestamp": "...", "knowledge": { "chunks": 174, "archivedEntries": 165 } }
+{ "ok": true, "version": "2.2.2", "timestamp": "...", "knowledge": { "chunks": 174, "archivedEntries": 165 } }
 ```
 
 ### `POST /api/chat`
