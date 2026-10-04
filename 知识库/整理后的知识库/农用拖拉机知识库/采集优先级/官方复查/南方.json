@@ -1,0 +1,306 @@
+{
+  "collection_date": "2026-10-04",
+  "scope": "湖北、江苏、湖南农业农村厅及实际链接的市县/公开购机入口",
+  "status": "completed_bounded_discovery_no_new_model_evidence",
+  "official_html_pages_read": 9,
+  "official_articles_checked": 4,
+  "new_verified_model_level_count_records": 0,
+  "new_unique_tractor_models": 0,
+  "new_matched_manuals": 0,
+  "new_operational_entries": 0,
+  "current_reachable_sites": [
+    "https://nyt.hubei.gov.cn/",
+    "https://agri.hunan.gov.cn/"
+  ],
+  "historical_error_boundary": "以前 nynct.hubei.gov.cn 及省厅 CONNECT403 是历史记录；此次 nyt.hubei.gov.cn 和湖南省厅完整正文已实际 HTTP200，不沿用旧状态。",
+  "requests": [
+    {
+      "name": "hubei-home",
+      "url": "https://nyt.hubei.gov.cn/",
+      "status": 200,
+      "final_url": "https://nyt.hubei.gov.cn/",
+      "bytes": 152431,
+      "sha256": "c4d0a2846c403a3782836f429a7d9f361f2b2b29475a930e925dda39256269ce"
+    },
+    {
+      "name": "hubei-robots",
+      "url": "https://nyt.hubei.gov.cn/robots.txt",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "jiangsu-home",
+      "url": "https://nynct.jiangsu.gov.cn/",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "jiangsu-robots",
+      "url": "https://nynct.jiangsu.gov.cn/robots.txt",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "hunan-home",
+      "url": "https://agri.hunan.gov.cn/",
+      "status": 200,
+      "final_url": "https://agri.hunan.gov.cn/",
+      "bytes": 167626,
+      "sha256": "72ce1938ed7ef9e25078f01f47bd546c5e95790b30cc92fd3c9164ddb6eac7bb"
+    },
+    {
+      "name": "hunan-robots",
+      "url": "https://agri.hunan.gov.cn/robots.txt",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "hubei-city-news",
+      "url": "http://nyt.hubei.gov.cn/bmdt/yw/szdt/",
+      "status": 200,
+      "final_url": "http://nyt.hubei.gov.cn/bmdt/yw/szdt/",
+      "bytes": 36084,
+      "sha256": "709c5d2c759fd30b4b9fa26ace3aeddf0abd1d1602860806b358364d75bb5040",
+      "discovered_from_url": "https://nyt.hubei.gov.cn/"
+    },
+    {
+      "name": "hunan-city-news",
+      "url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/sxdt_1/index.html",
+      "status": 200,
+      "final_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/sxdt_1/index.html",
+      "bytes": 43482,
+      "sha256": "aa6a70a6a2a85f94388352aca8b78bc743007ead079554baa91ae09324fdf275",
+      "discovered_from_url": "https://agri.hunan.gov.cn/"
+    },
+    {
+      "name": "hubei-public-subsidy",
+      "url": "http://113.57.190.247:2018/gzbtgl/Bt21To23/pub/gongshi",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "hubei-agriculture-center",
+      "url": "http://hbnysy.hubei.gov.cn/",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "hunan-official-search",
+      "url": "http://searching.hunan.gov.cn/hunan/119000000/news?q=%E6%8B%96%E6%8B%89%E6%9C%BA",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "hunan-machinery-recent",
+      "url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260930_34075028.html",
+      "status": 200,
+      "final_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260930_34075028.html",
+      "bytes": 39606,
+      "sha256": "0e166343740085b0ca6cd3fd4178885899e7d424ca85e4194da1eac6fea962b0",
+      "discovered_from_url": "https://agri.hunan.gov.cn/"
+    },
+    {
+      "name": "hunan-work-news",
+      "url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/index.html",
+      "status": 200,
+      "final_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/index.html",
+      "bytes": 44134,
+      "sha256": "2b8b48d97e7604127d4a9b318ecc1927f61d7529649369946dd05d2b54b97c74",
+      "discovered_from_url": "https://agri.hunan.gov.cn/"
+    },
+    {
+      "name": "changde-agriculture-home",
+      "url": "http://nyncj.changde.gov.cn",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "changde-robots",
+      "url": "http://nyncj.changde.gov.cn/robots.txt",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "hunan-autumn-machinery",
+      "url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260924_34071474.html",
+      "status": 200,
+      "final_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260924_34071474.html",
+      "bytes": 40805,
+      "sha256": "b4cf002b269fdefa34be99895f39461963cfacce524dde24bcdd57ccdf04b471",
+      "discovered_from_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/index.html"
+    },
+    {
+      "name": "hunan-field-machinery",
+      "url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260920_34068221.html",
+      "status": 200,
+      "final_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260920_34068221.html",
+      "bytes": 40650,
+      "sha256": "7eba5f2a22d7167b592f41e23b218ae6eb028fbdbe85fb862a279dc25e243c21",
+      "discovered_from_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/index.html"
+    },
+    {
+      "name": "hunan-yongzhou-autumn",
+      "url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/sxdt_1/202609/t20260929_34073777.html",
+      "status": 200,
+      "final_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/sxdt_1/202609/t20260929_34073777.html",
+      "bytes": 40669,
+      "sha256": "020904990d9dd3d7e7e5bd79766353dd7c9b2e409950a598850dd93632203b42",
+      "discovered_from_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/sxdt_1/index.html"
+    }
+  ],
+  "article_exclusion_records": [
+    {
+      "record_id": "EXCLUDE-hunan-machinery-recent",
+      "source_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260930_34075028.html",
+      "title": "省农机事务中心组织秸秆综合利用重点机具产销对接",
+      "publisher": "湖南省农业农村厅网站",
+      "publication_datetime_as_displayed": "2026-09-30 07:49",
+      "observation_date": "2026-09-29",
+      "region": "湖南省",
+      "brand": null,
+      "model": null,
+      "tractor_model_quantity": null,
+      "tractor_model_unit": "台",
+      "status": "excluded_no_exact_tractor_model",
+      "evidence_kind": "trade_matching_meeting",
+      "reason": "参会生产经销企业与部门交流，正文不列确切拖拉机型号及机器购置/在用台数。",
+      "reported_other_quantities": [
+        {
+          "value": 87,
+          "unit": "家",
+          "meaning": "生产经销企业，非拖拉机台数"
+        }
+      ],
+      "source_author": "页面正文未列首发作者；不把校审人员当作者。",
+      "original_publisher_identification": "官方厅网站发布，未从正文确认另一个原始首发稿件；不补造原作者。",
+      "deduplication_scope": "此次采集目录内按真实 URL 去重，仅保留四篇互异报道；T70 地方试用报道未收录、未重计。",
+      "html_sha256": "0e166343740085b0ca6cd3fd4178885899e7d424ca85e4194da1eac6fea962b0",
+      "html_bytes": 39606,
+      "attachment_count_found_in_html": 0,
+      "attachment_sha256": null,
+      "attachment_bytes": null,
+      "verification_scope": "完整读取 HTML 正文，核对日期、地点、量词及有无文字完整型号；图片未审，不由照片推断品牌型号。",
+      "limitations": [
+        "不支持具体拖拉机型号销量、购机量或保有量。",
+        "不支持全国使用量排序。",
+        "没有匹配手册目标，不产生维修或操作事实。"
+      ]
+    },
+    {
+      "record_id": "EXCLUDE-hunan-autumn-machinery",
+      "source_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260924_34071474.html",
+      "title": "技术赋能秋收 秸秆点草成金",
+      "publisher": "湖南省农业农村厅网站",
+      "publication_datetime_as_displayed": "2026-09-24 08:01",
+      "observation_date": "2026-09-22",
+      "region": "湖南省湘潭市",
+      "brand": null,
+      "model": null,
+      "tractor_model_quantity": null,
+      "tractor_model_unit": "台",
+      "status": "excluded_no_exact_tractor_model",
+      "evidence_kind": "training_demonstration",
+      "reason": "秸秆机械化培训和田间观摩，正文没有拖拉机品牌或完整型号，参训人数不是设备数量。",
+      "reported_other_quantities": [
+        {
+          "value": "150余",
+          "unit": "人",
+          "meaning": "参训人数，非拖拉机台数"
+        }
+      ],
+      "source_author": "页面正文未列首发作者；不把校审人员当作者。",
+      "original_publisher_identification": "官方厅网站发布，未从正文确认另一个原始首发稿件；不补造原作者。",
+      "deduplication_scope": "此次采集目录内按真实 URL 去重，仅保留四篇互异报道；T70 地方试用报道未收录、未重计。",
+      "html_sha256": "b4cf002b269fdefa34be99895f39461963cfacce524dde24bcdd57ccdf04b471",
+      "html_bytes": 40805,
+      "attachment_count_found_in_html": 0,
+      "attachment_sha256": null,
+      "attachment_bytes": null,
+      "verification_scope": "完整读取 HTML 正文，核对日期、地点、量词及有无文字完整型号；图片未审，不由照片推断品牌型号。",
+      "limitations": [
+        "不支持具体拖拉机型号销量、购机量或保有量。",
+        "不支持全国使用量排序。",
+        "没有匹配手册目标，不产生维修或操作事实。"
+      ]
+    },
+    {
+      "record_id": "EXCLUDE-hunan-field-machinery",
+      "source_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/gzdt_5/202609/t20260920_34068221.html",
+      "title": "湖南省2026年第一期“田间地头展·农机进万家”活动在石门成功举办",
+      "publisher": "湖南省农业农村厅网站",
+      "publication_datetime_as_displayed": "2026-09-20 10:17",
+      "observation_date": "2026-09-18",
+      "region": "湖南省常德市石门县",
+      "brand": null,
+      "model": null,
+      "tractor_model_quantity": null,
+      "tractor_model_unit": "台",
+      "status": "excluded_no_exact_tractor_model",
+      "evidence_kind": "mixed_machinery_transactions",
+      "reason": "正文提供各类农机混合成交台数，未细分拖拉机品牌、型号或台数，不能给任何拖拉机型号赋值。",
+      "reported_other_quantities": [
+        {
+          "value": 366,
+          "unit": "台（套）",
+          "meaning": "活动全部机具现场成交总量，非某拖拉机型号数量"
+        },
+        {
+          "value": "180余",
+          "unit": "人",
+          "meaning": "参会主体人数，非机器台数"
+        },
+        {
+          "value": "30余",
+          "unit": "类",
+          "meaning": "展示的农机产品类别，非具体型号的使用量"
+        }
+      ],
+      "source_author": "页面正文未列首发作者；不把校审人员当作者。",
+      "original_publisher_identification": "官方厅网站发布，未从正文确认另一个原始首发稿件；不补造原作者。",
+      "deduplication_scope": "此次采集目录内按真实 URL 去重，仅保留四篇互异报道；T70 地方试用报道未收录、未重计。",
+      "html_sha256": "7eba5f2a22d7167b592f41e23b218ae6eb028fbdbe85fb862a279dc25e243c21",
+      "html_bytes": 40650,
+      "attachment_count_found_in_html": 0,
+      "attachment_sha256": null,
+      "attachment_bytes": null,
+      "verification_scope": "完整读取 HTML 正文，核对日期、地点、量词及有无文字完整型号；图片未审，不由照片推断品牌型号。",
+      "limitations": [
+        "不支持具体拖拉机型号销量、购机量或保有量。",
+        "不支持全国使用量排序。",
+        "没有匹配手册目标，不产生维修或操作事实。"
+      ]
+    },
+    {
+      "record_id": "EXCLUDE-hunan-yongzhou-autumn",
+      "source_url": "https://agri.hunan.gov.cn/agri/xxgk/gzdt/sxdt_1/202609/t20260929_34073777.html",
+      "title": "永州市| 秋收未尽 秋种抢先",
+      "publisher": "湖南省农业农村厅网站",
+      "publication_datetime_as_displayed": "2026-09-29 08:18",
+      "observation_date": "2026-09-23",
+      "region": "湖南省永州市东安县鹿马桥镇",
+      "brand": null,
+      "model": null,
+      "tractor_model_quantity": null,
+      "tractor_model_unit": "台",
+      "status": "excluded_no_exact_tractor_model",
+      "evidence_kind": "field_application_without_identity",
+      "reason": "文字描述旋耕机配浅耕直播机作业，未列厂家或完整型号；日作业亩数不是机器购置/保有台数。",
+      "reported_other_quantities": [],
+      "source_author": "页面正文未列首发作者；不把校审人员当作者。",
+      "original_publisher_identification": "官方厅网站发布，未从正文确认另一个原始首发稿件；不补造原作者。",
+      "deduplication_scope": "此次采集目录内按真实 URL 去重，仅保留四篇互异报道；T70 地方试用报道未收录、未重计。",
+      "html_sha256": "020904990d9dd3d7e7e5bd79766353dd7c9b2e409950a598850dd93632203b42",
+      "html_bytes": 40669,
+      "attachment_count_found_in_html": 0,
+      "attachment_sha256": null,
+      "attachment_bytes": null,
+      "verification_scope": "完整读取 HTML 正文，核对日期、地点、量词及有无文字完整型号；图片未审，不由照片推断品牌型号。",
+      "limitations": [
+        "不支持具体拖拉机型号销量、购机量或保有量。",
+        "不支持全国使用量排序。",
+        "没有匹配手册目标，不产生维修或操作事实。"
+      ]
+    }
+  ],
+  "network_scope": "继承运行时代理与 TLS 信任，最大并发2；未绕过403/登录/反爬，未变更域名镜像。",
+  "robots_result": {
+    "nyt.hubei.gov.cn": "HTTP404",
+    "agri.hunan.gov.cn": "HTTP404",
+    "nynct.jiangsu.gov.cn": "HTTP403",
+    "nyncj.changde.gov.cn": "HTTP403"
+  },
+  "privacy": "公开个人购机公示未取得；不含农户个人明细。临时新闻 HTML 只供复核，长期拟稿不复制个体姓名。",
+  "limits": "目录抽样和四篇正文没有满足品牌+完整型号+真实购机/在用量的记录，不代表这些地区没有相关数据。原始购机公示等入口受限，保留来源链等待可读后复核。",
+  "included_in_repair_retrieval": false
+}

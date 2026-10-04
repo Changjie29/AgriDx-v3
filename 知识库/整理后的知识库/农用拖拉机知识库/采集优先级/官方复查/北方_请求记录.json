@@ -1,0 +1,839 @@
+[
+  {
+    "name": "arong-robots",
+    "url": "http://www.arq.gov.cn/robots.txt",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "name": "molida-robots",
+    "url": "http://www.mldw.gov.cn/robots.txt",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "name": "tuquan-robots",
+    "url": "http://www.tq.gov.cn/robots.txt",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "name": "kailu-robots",
+    "url": "http://www.kailu.gov.cn/robots.txt",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "name": "chayouzhong-robots",
+    "url": "https://www.cyzq.gov.cn/robots.txt",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "huade-robots",
+    "url": "https://www.huade.gov.cn/robots.txt",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "nmg-gov-robots",
+    "url": "https://www.nmg.gov.cn/robots.txt",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "nmg-jining-purchase-report",
+    "url": "https://www.nmg.gov.cn/zwyw/gzdt/msdt/202406/t20240604_2518171.html",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "nmg-disclosure-coverage-notice",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/tzgg/202512/t20251204_2827660.html",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/tzgg/202512/t20251204_2827660.html",
+    "bytes": 42821,
+    "sha256": "79398ea47501fc929ffc0163eea9ce261ac9acc6c5e56fded0944980b2a8dd50",
+    "content_type": "text/html",
+    "title": [
+      "\n    关于加强农机购置与应用补贴公开电话和信息公开专栏建设的提示函-通知公告及补贴额一览表_\n    内蒙古自治区农牧厅\n"
+    ]
+  },
+  {
+    "name": "hlj-search-tractor",
+    "url": "https://nynct.hlj.gov.cn/so/s?qt=%E6%8B%96%E6%8B%89%E6%9C%BA",
+    "status": 200,
+    "final_url": "https://nynct.hlj.gov.cn/so/s?qt=%E6%8B%96%E6%8B%89%E6%9C%BA",
+    "bytes": 105929,
+    "sha256": "8d9b5fa1396b6e5f80dbb09fc0ba3635eb9c942ca10609debcf23f2b9e3eaccf",
+    "content_type": "text/html;charset=UTF-8",
+    "title": []
+  },
+  {
+    "name": "hlj-search-subsidy-public",
+    "url": "https://nynct.hlj.gov.cn/so/s?qt=%E8%B4%AD%E6%9C%BA%E5%85%AC%E7%A4%BA",
+    "status": 200,
+    "final_url": "https://nynct.hlj.gov.cn/so/s?qt=%E8%B4%AD%E6%9C%BA%E5%85%AC%E7%A4%BA",
+    "bytes": 105935,
+    "sha256": "c69775b937666432e2861ab610400d387dd5c8fbd1253bf22a436c548b936366",
+    "content_type": "text/html;charset=UTF-8",
+    "title": []
+  },
+  {
+    "name": "nmg-search-app-js",
+    "url": "https://nmt.nmg.gov.cn/nmg_dept_search/js/app.e8f47742.js",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmg_dept_search/js/app.e8f47742.js",
+    "bytes": 68355,
+    "sha256": "eb3030ed154129479fefc4b65e9f6ae5bbfe8fd8cd66c4e4960d368012077d01",
+    "content_type": "application/javascript",
+    "title": []
+  },
+  {
+    "name": "jl-search-provider-robots",
+    "url": "https://haiyun.jl.gov.cn/robots.txt",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "nmg-search-yto",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E4%B8%9C%E6%96%B9%E7%BA%A2",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E4%B8%9C%E6%96%B9%E7%BA%A2",
+    "bytes": 10105,
+    "sha256": "1e162dddc96aad99b3082fa60a85b2ab304deb1c644769c354bff0d30fdb132e",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-search-lovol",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E9%9B%B7%E6%B2%83",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E9%9B%B7%E6%B2%83",
+    "bytes": 9424,
+    "sha256": "a5854a6cf7548c86e8e3c638ee864cdfe2a02a94a2e136a28fcbc5ba28378a47",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-search-changfa",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E5%B8%B8%E5%8F%91",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E5%B8%B8%E5%8F%91",
+    "bytes": 9959,
+    "sha256": "6fb59bcfd145e771992ef840c9d4d601a77fcccdee7369a203dc861a65ad5b4b",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-search-deere",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94",
+    "bytes": 3404,
+    "sha256": "cb60117ae11c847c8f93795878d80b2e0cb5225ca30f14703d0266bc3fcf0002",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-hitech-spring",
+    "url": "https://nmt.nmg.gov.cn/xw/nmyw/202503/t20250312_2680698.html",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/xw/nmyw/202503/t20250312_2680698.html",
+    "bytes": 91890,
+    "sha256": "eb9845a68076260af3fdc0cc987cde31a4170b5c97a4f00717ba651543ee5ab2",
+    "content_type": "text/html",
+    "title": [
+      "\n    农机中的“劳斯莱斯”长啥样？来，一起见识内蒙古春耕“黑科技”-农牧动态_\n    内蒙古自治区农牧厅\n"
+    ]
+  },
+  {
+    "name": "nmg-service-lovol",
+    "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202607/t20260724_2932583.html",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/bjxnr/202607/t20260724_2932583.html",
+    "bytes": 57701,
+    "sha256": "8ec9a183d548bba549d03e7a86f62a7246f3326a8300d2b2e73f294603e9bc62",
+    "content_type": "text/html",
+    "title": [
+      "\n    农机服务“链出”低空经济与良种繁育——扎根乡村的80后新农人崔秀奇-内蒙古新农人_\n    内蒙古自治区农牧厅\n"
+    ]
+  },
+  {
+    "name": "nmg-hlbe-disclosure",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/hlbe/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/hlbe/",
+    "bytes": 29790,
+    "sha256": "d7761309d592e470e9c792870935aea5377920bbac1aa568851650a948943f14",
+    "content_type": "text/html",
+    "title": [
+      "呼伦贝尔_内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-xam-disclosure",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/xam/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/xam/",
+    "bytes": 28450,
+    "sha256": "f9527b06ec080a462ab63e3b4197b8a729fc84b0494e4d356b518b26698a4f11",
+    "content_type": "text/html",
+    "title": [
+      "兴安盟_内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-tl-disclosure",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/tl/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/tl/",
+    "bytes": 28302,
+    "sha256": "1c57270222064904517077671be31831dafee48ec5f7f82f13a4744f0374d35e",
+    "content_type": "text/html",
+    "title": [
+      "通辽_内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-wlcb-disclosure",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/wlcb/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/wlcb/",
+    "bytes": 28830,
+    "sha256": "55326e1457088db88fa39fedb9e6e322e38d06294a4dfbd14e03c8d93be5793c",
+    "content_type": "text/html",
+    "title": [
+      "乌兰察布_内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-native-tractor-search",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&fileType=",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&fileType=",
+    "bytes": 10724,
+    "sha256": "ad1f66620c9516cb6ae4bcfdc6298aa7cd03cae635a12d6237c145cc8b6709d9",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-platform-buyer",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E8%B4%AD%E6%9C%BA%E8%80%85",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E8%B4%AD%E6%9C%BA%E8%80%85",
+    "bytes": 11022,
+    "sha256": "e4284bf8b1b646968fc2de9c64eef82806583518d7344c3e5c9db17976c0e777",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-platform-beneficiary",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E5%8F%97%E7%9B%8A%E6%88%B7",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E5%8F%97%E7%9B%8A%E6%88%B7",
+    "bytes": 4428,
+    "sha256": "0cb6f0d81176f84e5d3c1ccd764017ebb2e80b4bc9122cc27737cad11cc649eb",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-platform-subsidy-purchase",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E5%86%9C%E6%9C%BA%E8%B4%AD%E7%BD%AE%E8%A1%A5%E8%B4%B4&fullKeywords=%E8%B4%AD%E6%9C%BA%E8%80%85",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E5%86%9C%E6%9C%BA%E8%B4%AD%E7%BD%AE%E8%A1%A5%E8%B4%B4&fullKeywords=%E8%B4%AD%E6%9C%BA%E8%80%85",
+    "bytes": 11140,
+    "sha256": "e0bddd6d7a0fc817cc537610a6364092ec434c4ea0814df8dc53535238bc4d35",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-platform-tractor-purchase",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA&fullKeywords=%E5%85%AC%E7%A4%BA",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=0&searchTag=all&orKeywords=&notKeywords=&sort=time&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA&fullKeywords=%E5%85%AC%E7%A4%BA",
+    "bytes": 14652,
+    "sha256": "0d2c1bd33ceef72fb4dec84954e8f30a6794d1aaa8b81fb34a18ff7e8e3f0107",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-county-disclosure",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/msqxxxgkzl/",
+    "bytes": 29610,
+    "sha256": "926bd441575188067fac48ebdb5965d3eef2a9614ff219c3129e57de35875e9e",
+    "content_type": "text/html",
+    "title": [
+      "盟市旗县信息公开_内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-spring-machinery",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/zhyw/202503/t20250310_2679134.html",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/zhyw/202503/t20250310_2679134.html",
+    "bytes": 36328,
+    "sha256": "2b0b4a67d4309acfb4354e2dd971c0a034632dd59148dc734814247b1f9c5c51",
+    "content_type": "text/html",
+    "title": [
+      "\n    农机装备优 整装备战春耕春播-综合要闻_\n    内蒙古自治区农牧厅\n"
+    ]
+  },
+  {
+    "name": "nmg-field-day",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/zhyw/202608/t20260819_2942612.html",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/zhyw/202608/t20260819_2942612.html",
+    "bytes": 34971,
+    "sha256": "21a9d7e712fd7002b19d443091c0bc7030ddb639ae59db1b19d182475100b3c2",
+    "content_type": "text/html",
+    "title": [
+      "\n    2026中国农机推广田间日活动在内蒙古巴彦淖尔举办-综合要闻_\n    内蒙古自治区农牧厅\n"
+    ]
+  },
+  {
+    "name": "nmg-subsidy-progress-list",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/btzj/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/btzj/",
+    "bytes": 29464,
+    "sha256": "63bb4d63db0be9f4a05faaed2fb357f63c84dea3599303e6ad3bc9a45bd8418f",
+    "content_type": "text/html",
+    "title": [
+      "补贴资金及实施进度_内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-native-tractor-related",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA&sort=",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA&sort=",
+    "bytes": 10331,
+    "sha256": "e9e05c5b1a938292eaeeccc74e380234ce495d17e258f56f677e5c87bf0f8017",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-native-purchase-disclosure",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E8%B4%AD%E6%9C%BA%E5%85%AC%E7%A4%BA&sort=time",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E8%B4%AD%E6%9C%BA%E5%85%AC%E7%A4%BA&sort=time",
+    "bytes": 11047,
+    "sha256": "68f3a71ff1baf8640f6a47615a158600ebf4e2d7cf2af3e2db8dff40889f51ba",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-native-tractor-model",
+    "url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA+%E5%9E%8B%E5%8F%B7&sort=",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do?siteId=92&searchTag=all&fullKeywords=&orKeywords=&notKeywords=&position=0&startTime=2024-01-01&endTime=2026-10-04&organization=&pageNum=1&pageSize=10&zcYear=&isAlways=0&fileTag=&allKeywords=%E6%8B%96%E6%8B%89%E6%9C%BA+%E5%9E%8B%E5%8F%B7&sort=",
+    "bytes": 9815,
+    "sha256": "da95560ecafd2bae78b70f7847ae512eeffc5eb614a733363fc4a75cfe842434",
+    "content_type": "application/json",
+    "title": []
+  },
+  {
+    "name": "nmg-coop-tractor22",
+    "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/t20260811_2939544.html",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/t20260811_2939544.html",
+    "bytes": 94577,
+    "sha256": "bd3a6648f3d8b1b1343e5659360a326ec4a0f8160da32959f3907843fe5cb46e",
+    "content_type": "text/html",
+    "title": [
+      "\n    农机土专家托起现代农业的“铁牛”梦-内蒙古新农人_\n    内蒙古自治区农牧厅\n"
+    ]
+  },
+  {
+    "name": "nmg-coop-development",
+    "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202609/t20260923_2958134.html",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/bjxnr/202609/t20260923_2958134.html",
+    "bytes": 74261,
+    "sha256": "4d06bb9d54dc219a71d6ce6fbc5f010b3cb033311434fb0f6dedad260708f91c",
+    "content_type": "text/html",
+    "title": [
+      "\n    王茂林：农机开出富民路，盐碱滩变米粮川-内蒙古新农人_\n    内蒙古自治区农牧厅\n"
+    ]
+  },
+  {
+    "name": "hlj-machinery-harvest",
+    "url": "https://nynct.hlj.gov.cn/nynct/c115380/202609/c00_31980750.shtml",
+    "status": 200,
+    "final_url": "https://nynct.hlj.gov.cn/nynct/c115380/202609/c00_31980750.shtml",
+    "bytes": 63337,
+    "sha256": "608ccc2ee2a904fd8ecfd872ee5a1a60e38193c3b2fd8f9dff1e7a83e5058a04",
+    "content_type": "text/html",
+    "title": [
+      "\r\n    农机轰鸣 双鸭山秋收正当时_地市动态_省农业农村厅\r\n  "
+    ]
+  },
+  {
+    "name": "hlj-tech-guideline",
+    "url": "https://nynct.hlj.gov.cn/nynct/c115423/202609/c00_31978669.shtml",
+    "status": 200,
+    "final_url": "https://nynct.hlj.gov.cn/nynct/c115423/202609/c00_31978669.shtml",
+    "bytes": 75825,
+    "sha256": "b442215a6f0beec1fb424445fdb2b992fe3eb527e31d64f63f158b275aac060f",
+    "content_type": "text/html",
+    "title": [
+      "\r\n    关于印发《2026年黑龙江省主要粮食作物秋收秋整地机械化技术指导意见》的通知_黑农厅函_省农业农村厅\r\n  "
+    ]
+  },
+  {
+    "name": "hlj-prefecture-list",
+    "url": "https://nynct.hlj.gov.cn/nynct/c115380/public_list.shtml",
+    "status": 200,
+    "final_url": "https://nynct.hlj.gov.cn/nynct/c115380/public_list.shtml",
+    "bytes": 53309,
+    "sha256": "cf085d77dadc76dba6fd2d549bab53c910138d59da9f4d76dcfc07bf4b50a415",
+    "content_type": "text/html",
+    "title": [
+      "\r\n\t\t\t地市动态_省农业农村厅\r\n\t\t"
+    ]
+  },
+  {
+    "name": "jl-provincial-news-list",
+    "url": "https://agri.jl.gov.cn/xw/stdt/",
+    "status": 200,
+    "final_url": "https://agri.jl.gov.cn/xw/stdt/",
+    "bytes": 18046,
+    "sha256": "b08656ccb00e14c71d5951d8d3697f3a12c4df4d21a59b8ecfce986994544d8e",
+    "content_type": "text/html",
+    "title": [
+      "吉林省农业农村厅(吉林省乡村振兴局)"
+    ]
+  },
+  {
+    "name": "nmg-subsidy-theme",
+    "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/",
+    "bytes": 38052,
+    "sha256": "202023b0859f24f9ae4e880510555921daf613b57bee1dcde2756383c16d9e78",
+    "content_type": "text/html",
+    "title": [
+      "农机购置补贴信息公开专栏_内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-prefecture-list",
+    "url": "https://nmt.nmg.gov.cn/xw/msdt/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/xw/msdt/",
+    "bytes": 53,
+    "sha256": "f17079df97ee42021a518e414daf6a01a094f104d71ebdcf31583fff58867751",
+    "content_type": "text/html",
+    "title": []
+  },
+  {
+    "name": "nmg-door-chunk",
+    "url": "https://nmt.nmg.gov.cn/nmg_dept_search/js/chunk-6b2d545b.3c137b03.js",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmg_dept_search/js/chunk-6b2d545b.3c137b03.js",
+    "bytes": 99394,
+    "sha256": "c651fd34dedeca2a3f861d5120aa5ae3e569f9337d38d28522aad9260bd26b77",
+    "content_type": "application/javascript",
+    "title": []
+  },
+  {
+    "name": "nmg-search-common",
+    "url": "https://nmt.nmg.gov.cn/nmg_dept_search/js/chunk-0a5f8d05.b7e31ba0.js",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmg_dept_search/js/chunk-0a5f8d05.b7e31ba0.js",
+    "bytes": 1132015,
+    "sha256": "ff53b48bb0e683b6237800a644b9caa5d0c47c1449bc2c080203c9066bcd632d",
+    "content_type": "application/javascript",
+    "title": []
+  },
+  {
+    "name": "hlj-search-provider-api-js",
+    "url": "https://p.so-gov.cn/web/api/api.js",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "hlj-search-provider-robots",
+    "url": "https://p.so-gov.cn/robots.txt",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "hlj-header-js",
+    "url": "https://nynct.hlj.gov.cn/nynct/xhtml/js/header.js",
+    "status": 200,
+    "final_url": "https://nynct.hlj.gov.cn/nynct/xhtml/js/header.js",
+    "bytes": 8980,
+    "sha256": "56d04f45d3510f33a464a716a9c32664af688cc601d5250eac9083889c753658",
+    "content_type": "application/javascript",
+    "title": []
+  },
+  {
+    "name": "jl-search-tractor",
+    "url": "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA",
+    "status": 200,
+    "final_url": "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA",
+    "bytes": 32070,
+    "sha256": "f8f2a4817b5d2b1fcad7bea0dd8bc1ccb77ed9efa43959c483e524bccdf20840",
+    "content_type": "text/html",
+    "title": [
+      ""
+    ]
+  },
+  {
+    "name": "nmg-search-app",
+    "url": "https://nmt.nmg.gov.cn/nmg_dept_search/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/nmg_dept_search/",
+    "bytes": 4992,
+    "sha256": "108796a8c0cda0b65e395a932eb09d4e29f9d437c7a8b697701a12cd4a25ae3d",
+    "content_type": "text/html",
+    "title": [
+      "加载中"
+    ]
+  },
+  {
+    "name": "hlj-home",
+    "url": "https://nynct.hlj.gov.cn/",
+    "status": 200,
+    "final_url": "https://nynct.hlj.gov.cn/",
+    "bytes": 90159,
+    "sha256": "bb2854bb77fe8edf56cc176478a23e7934f828057514204e1f2c28ca3796dd15",
+    "content_type": "text/html",
+    "title": [
+      "省农业农村厅"
+    ]
+  },
+  {
+    "name": "hlj-robots",
+    "url": "https://nynct.hlj.gov.cn/robots.txt",
+    "error": "HTTP Error 503: Service Unavailable"
+  },
+  {
+    "name": "jl-home",
+    "url": "https://agri.jl.gov.cn/",
+    "status": 200,
+    "final_url": "https://agri.jl.gov.cn/",
+    "bytes": 48730,
+    "sha256": "fcb7dcb35b75e55896d931803467e6d4183329ee466dc8d0c26fd9896ef2f7e9",
+    "content_type": "text/html",
+    "title": [
+      "吉林省农业农村厅(吉林省乡村振兴局)"
+    ]
+  },
+  {
+    "name": "jl-robots",
+    "url": "https://agri.jl.gov.cn/robots.txt",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "nmg-home",
+    "url": "https://nmt.nmg.gov.cn/",
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/",
+    "bytes": 99097,
+    "sha256": "caafc964e7e93455d5004e99951aefae2817ba083e17e1d2f07c11f279353dad",
+    "content_type": "text/html",
+    "title": [
+      "内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "name": "nmg-robots",
+    "url": "https://nmt.nmg.gov.cn/robots.txt",
+    "status": 200,
+    "final_url": "http://nmt.nmg.gov.cn/404/40x.html",
+    "bytes": 2431,
+    "sha256": "6315fd172a99523409fd4a18cf1aa3d2419699f0c3b94d6c34b8c5fbace80613",
+    "content_type": "text/html",
+    "title": [
+      "内蒙古自治区农牧厅"
+    ]
+  },
+  {
+    "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/W020260811625505429946.png",
+    "parent_url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/t20260811_2939544.html",
+    "figure": 1,
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/W020260811625505429946.png",
+    "bytes": 446737,
+    "sha256": "d53d66e2b51a1128900670ed57710062ced052d1de48b00df114a56adb9b6edb",
+    "name": "coop22-figure1",
+    "role": "正文配图"
+  },
+  {
+    "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/W020260811625505496863.png",
+    "parent_url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/t20260811_2939544.html",
+    "figure": 2,
+    "status": 200,
+    "final_url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/W020260811625505496863.png",
+    "bytes": 375356,
+    "sha256": "b4e306748aeb9ca643e488082d5ba446eb6763ac292fb930b1e1c0af1d136cb1",
+    "name": "coop22-figure2",
+    "role": "正文配图"
+  },
+  {
+    "name": "batch2-hlj-query-js",
+    "url": "https://p.so-gov.cn/web/api/query.js",
+    "status": 200,
+    "final_url": "https://p.so-gov.cn/web/api/query.js",
+    "bytes": 3754,
+    "sha256": "b658c3319c7613989238d207107cfa989d04faaed8671862e4a96488e3407177",
+    "content_type": "application/javascript",
+    "title": []
+  },
+  {
+    "name": "batch2-hlj-util-js",
+    "url": "https://p.so-gov.cn/web/api/util.js",
+    "status": 200,
+    "final_url": "https://p.so-gov.cn/web/api/util.js",
+    "bytes": 22446,
+    "sha256": "ec81939017a9d9b05ea3732b87d48e612bf8aaedb6cf54ea9c4855f70c433c7b",
+    "content_type": "application/javascript",
+    "title": []
+  },
+  {
+    "name": "batch2-hlj-store-js",
+    "url": "https://p.so-gov.cn/web/api/store.js",
+    "status": 200,
+    "final_url": "https://p.so-gov.cn/web/api/store.js",
+    "bytes": 28374,
+    "sha256": "6bd14484be19bc955dabbb63fd9dbbf3062d417b9d5e1bee91300b3b9c3be37e",
+    "content_type": "application/javascript",
+    "title": []
+  },
+  {
+    "name": "batch2-jl-search-1",
+    "url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "method": "POST",
+    "request_parameters": {
+      "code": "192fffa72fa",
+      "searchWord": "拖拉机",
+      "historySearchWords": [],
+      "dataTypeId": "608",
+      "orderBy": "time",
+      "searchBy": "all",
+      "pageNo": 1,
+      "pageSize": 10,
+      "appendixType": "",
+      "granularity": "ALL",
+      "beginDateTime": "",
+      "endDateTime": "",
+      "isSearchForced": 0
+    },
+    "anonymous_id_flow": null,
+    "observed_at_utc": "2026-10-04T09:31:07.304798+00:00",
+    "status": 200,
+    "final_url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "bytes": 7665,
+    "sha256": "e7ff60b4f6e2e4f65a0cabbfbffd03c3e9fc69623005a392d4c8dcc5e7bafa6d",
+    "content_type": "application/json;charset=UTF-8",
+    "response_top_keys": [
+      "success",
+      "msg",
+      "data",
+      "code"
+    ],
+    "json_response": true,
+    "request_discovery_urls": [
+      "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA"
+    ]
+  },
+  {
+    "name": "batch2-jl-search-2",
+    "url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "method": "POST",
+    "request_parameters": {
+      "code": "192fffa72fa",
+      "searchWord": "农机购置补贴 公示",
+      "historySearchWords": [],
+      "dataTypeId": "608",
+      "orderBy": "time",
+      "searchBy": "all",
+      "pageNo": 1,
+      "pageSize": 10,
+      "appendixType": "",
+      "granularity": "ALL",
+      "beginDateTime": "",
+      "endDateTime": "",
+      "isSearchForced": 0
+    },
+    "anonymous_id_flow": null,
+    "observed_at_utc": "2026-10-04T09:31:11.754555+00:00",
+    "status": 200,
+    "final_url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "bytes": 8621,
+    "sha256": "290a1867d38338532262fb741e3a3e485741682bc5545ea4fb6d19e172227a66",
+    "content_type": "application/json;charset=UTF-8",
+    "response_top_keys": [
+      "success",
+      "msg",
+      "data",
+      "code"
+    ],
+    "json_response": true,
+    "request_discovery_urls": [
+      "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA"
+    ]
+  },
+  {
+    "name": "batch2-jl-search-3",
+    "url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "method": "POST",
+    "request_parameters": {
+      "code": "192fffa72fa",
+      "searchWord": "拖拉机 购机",
+      "historySearchWords": [],
+      "dataTypeId": "608",
+      "orderBy": "time",
+      "searchBy": "all",
+      "pageNo": 1,
+      "pageSize": 10,
+      "appendixType": "",
+      "granularity": "ALL",
+      "beginDateTime": "",
+      "endDateTime": "",
+      "isSearchForced": 0
+    },
+    "anonymous_id_flow": null,
+    "observed_at_utc": "2026-10-04T09:31:15.531015+00:00",
+    "status": 200,
+    "final_url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "bytes": 7938,
+    "sha256": "05b6afce4940faff561603a465b9476be6e947250e38816b0fdba6ed26f709ab",
+    "content_type": "application/json;charset=UTF-8",
+    "response_top_keys": [
+      "success",
+      "msg",
+      "data",
+      "code"
+    ],
+    "json_response": true,
+    "request_discovery_urls": [
+      "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA"
+    ]
+  },
+  {
+    "name": "batch2-hlj-search-1",
+    "url": "https://api.so-gov.cn/query/s",
+    "method": "POST",
+    "request_parameters": {
+      "qt": "拖拉机",
+      "siteCode": "2300000032",
+      "tab": "",
+      "keyPlace": "0",
+      "sort": "dateDesc",
+      "timeOption": "0"
+    },
+    "anonymous_id_flow": "Public JS-generated UUIDv4; no account identity",
+    "observed_at_utc": "2026-10-04T09:31:19.674963+00:00",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "request_discovery_urls": [
+      "https://nynct.hlj.gov.cn/so/s?qt=%E6%8B%96%E6%8B%89%E6%9C%BA",
+      "https://p.so-gov.cn/web/api/query.js",
+      "https://p.so-gov.cn/web/api/api.js"
+    ]
+  },
+  {
+    "name": "batch2-jl-search-4",
+    "url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "method": "POST",
+    "request_parameters": {
+      "code": "192fffa72fa",
+      "searchWord": "购机者",
+      "historySearchWords": [],
+      "dataTypeId": "608",
+      "orderBy": "time",
+      "searchBy": "all",
+      "pageNo": 1,
+      "pageSize": 10,
+      "appendixType": "",
+      "granularity": "ALL",
+      "beginDateTime": "",
+      "endDateTime": "",
+      "isSearchForced": 0
+    },
+    "anonymous_id_flow": null,
+    "observed_at_utc": "2026-10-04T09:31:45.495515+00:00",
+    "status": 200,
+    "final_url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "bytes": 8021,
+    "sha256": "931ddb2b2c6474eb9a8c0e72c8b303424417b9bb1735f94ddfa759e3694872f9",
+    "content_type": "application/json;charset=UTF-8",
+    "response_top_keys": [
+      "success",
+      "msg",
+      "data",
+      "code"
+    ],
+    "json_response": true,
+    "request_discovery_urls": [
+      "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA"
+    ]
+  },
+  {
+    "name": "batch2-jl-search-5",
+    "url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "method": "POST",
+    "request_parameters": {
+      "code": "192fffa72fa",
+      "searchWord": "拖拉机 东方红",
+      "historySearchWords": [],
+      "dataTypeId": "608",
+      "orderBy": "time",
+      "searchBy": "all",
+      "pageNo": 1,
+      "pageSize": 10,
+      "appendixType": "",
+      "granularity": "ALL",
+      "beginDateTime": "",
+      "endDateTime": "",
+      "isSearchForced": 0
+    },
+    "anonymous_id_flow": null,
+    "observed_at_utc": "2026-10-04T09:31:47.154250+00:00",
+    "status": 200,
+    "final_url": "https://haiyun.jl.gov.cn/irs/front/search",
+    "bytes": 1889,
+    "sha256": "dedc0321f3c08db24d21e238df55ad9f0c95c4c36eb0dc7fccff1bf5aa20238d",
+    "content_type": "application/json;charset=UTF-8",
+    "response_top_keys": [
+      "success",
+      "msg",
+      "data",
+      "code"
+    ],
+    "json_response": true,
+    "request_discovery_urls": [
+      "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA"
+    ]
+  },
+  {
+    "name": "batch2-jl-fuyu-maintenance",
+    "url": "http://agri.jl.gov.cn/xczx/lssc/202403/t20240319_3341456.html",
+    "status": 200,
+    "final_url": "http://agri.jl.gov.cn/xczx/lssc/202403/t20240319_3341456.html",
+    "bytes": 15733,
+    "sha256": "38f7015776036612b8f2fd88db982776c2c2ba8593d221e1b9b2070f0371725e",
+    "content_type": "text/html",
+    "title": [
+      ""
+    ]
+  },
+  {
+    "name": "batch2-jl-yanbian-production",
+    "url": "http://agri.jl.gov.cn/xczx/lssc/202609/t20260923_3672428.html",
+    "status": 200,
+    "final_url": "http://agri.jl.gov.cn/xczx/lssc/202609/t20260923_3672428.html",
+    "bytes": 21767,
+    "sha256": "827189eb0d4da23b8e25186662a0c32d35fd2c48c2e5c821f8e6748fdd06503f",
+    "content_type": "text/html",
+    "title": [
+      "吉林省农业农村厅(吉林省乡村振兴局)"
+    ]
+  },
+  {
+    "name": "batch2-jl-filing-announcement",
+    "url": "http://agri.jl.gov.cn/gk/tzgg/202608/t20260825_3665495.html",
+    "status": 200,
+    "final_url": "http://agri.jl.gov.cn/gk/tzgg/202608/t20260825_3665495.html",
+    "bytes": 15618,
+    "sha256": "d2ca9e0a3212f0d59e56c7e47a5da7ec4f77fbc7ba7feca2b2992c16e28ac8e8",
+    "content_type": "text/html",
+    "title": [
+      "吉林省农业农村厅(吉林省乡村振兴局)"
+    ]
+  }
+]

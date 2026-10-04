@@ -1,9 +1,9 @@
 {
   "collected_date": "2026-10-04",
   "official_original_evidence_count": 0,
-  "third_party_report_count": 2,
-  "model_evidence_records_count": 11,
-  "unique_model_candidate_count": 10,
+  "third_party_report_count": 3,
+  "model_evidence_records_count": 21,
+  "unique_model_candidate_count": 20,
   "mixed_heat_model_count": 9,
   "quantified_model_count": 1,
   "qualitative_major_model_count": 1,
@@ -61,6 +61,35 @@
       "source_record_path": "报告来源记录/REPORT-NJT-20240407-HEAT2023.md",
       "source_record_sha256": "f2bb022073072b93cc0575f3d03dc026912502c81645bab9632ca1c4c447fe5f",
       "source_record_bytes": 2664
+    },
+    {
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "title": "1204拖拉机排名出炉，2024年全国均价13.77万元",
+      "url": "https://news.nongji360.com/report/994",
+      "publisher": "农机360网",
+      "author": "刘月华",
+      "authority": "third_party",
+      "publication_date": "2025-01-23",
+      "observation_period": "2024年（作者表述），补贴公示数据截点未披露",
+      "fetched_date": "2026-10-04",
+      "html_sha256": "2dec2d88f9b16db9797551fc80fa755c2b6feb66ba6270832daf39bc6be00dbc",
+      "html_bytes": 35646,
+      "verified_content": "读取实际HTML可见report_content正文和发布字段；忽略脚本镜像、广告/推荐区；统计图未取得，原始公示底表未取得",
+      "statistic_definition": "作者据补贴公示数据所作1204轮式拖拉机细分型号销量排序；未独立复算",
+      "scope": "文章表述国内/全国1204轮式拖拉机补贴公示销量；实际省份覆盖、截止日、申请/审核/兑付状态和去重方法未披露",
+      "segment_total_as_reported": "1.21万台（原文概数，不分配给型号）",
+      "limitations": [
+        "不是全国全市场销量或保有量排名。",
+        "正文支持前十型号顺序，不支持各型号具体台数。",
+        "G4为报告型号写法，仍须手册/实车核对；不回填裸型号的排放。",
+        "报告版权声明保留：仅新增原链接、取得完整性和原创概述，不归档全文或原图。"
+      ],
+      "hash_scope": "2026-10-04取得的HTML响应；不是PDF或本地原创记录的哈希",
+      "source_record_path": "报告来源记录/REPORT-NJ360-20250123-1204SALES2024.md",
+      "chart_status": "实际公开图地址两次CONNECT403，图未取得；不推断图中台数",
+      "chart_url": "https://img4.nongji360.com/n/news/2025/01/23104748818201.png",
+      "source_record_sha256": "b7579dc16b412f0143cabaea129ebcc2efe08694aeb4586b09ad55cea15bbd24",
+      "source_record_bytes": 2519
     }
   ],
   "records": [
@@ -280,25 +309,223 @@
         "未核对底层数据与热度计算。",
         "报告所列型号按正文保留；完整后缀仍待核实，不补造排放配置。"
       ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-LY1204-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "东方红",
+      "model": "LY1204(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 1,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将LY1204(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第1位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-M1204-4X-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "潍柴雷沃",
+      "model": "M1204-4X(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 2,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将M1204-4X(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第2位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-M1204-5X-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "潍柴雷沃",
+      "model": "M1204-5X(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 3,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将M1204-5X(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第3位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-DF1204-6A-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "东风",
+      "model": "DF1204-6A(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 4,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将DF1204-6A(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第4位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-CFF1204-H-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "常发",
+      "model": "CFF1204-H(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 5,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将CFF1204-H(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第5位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-WF1204-1-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "沃得",
+      "model": "WF1204-1(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 6,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将WF1204-1(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第6位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-P1204-4P-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "潍柴雷沃",
+      "model": "P1204-4P(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 7,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将P1204-4P(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第7位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-DF1204-8-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "东风",
+      "model": "DF1204-8(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 8,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将DF1204-8(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第8位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-MY1204-9-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "东方红",
+      "model": "MY1204-9(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 9,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将MY1204-9(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第9位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
+    },
+    {
+      "record_id": "MODEL-1204SALES2024-P1204-4M-G4",
+      "source_id": "REPORT-NJ360-20250123-1204SALES2024",
+      "brand": "潍柴雷沃",
+      "model": "P1204-4M(G4)",
+      "evidence_type": "third_party_subsidy_based_segment_sales_rank",
+      "observation_period": "2024年（作者表述）",
+      "reported_scope": "1204轮式拖拉机补贴公示销量；作者所述国内范围，底层地域覆盖未披露",
+      "segment_rank": 10,
+      "reported_units": null,
+      "reported_emission_suffix": "G4",
+      "original_summary": "正文将P1204-4M(G4)列为作者统计的2024年1204轮式拖拉机补贴公示销量第10位，未从正文取得该型号台数。",
+      "limitations": [
+        "统计口径局限本报告1204细分，不能与热度或其他年份相加比较。",
+        "未取得原始公示，不能升级为官方原始统计。",
+        "完整配置、发动机、版次与手册适用性待核。"
+      ]
     }
   ],
   "unique_models": [
     "6E-1504",
     "6M-2104",
+    "CFF1204-H(G4)",
     "CFJ2204",
+    "DF1204-6A(G4)",
+    "DF1204-8(G4)",
     "LY1204",
+    "LY1204(G4)",
+    "M1204-4X(G4)",
+    "M1204-5X(G4)",
     "M2004-5G",
     "M2004-5RP",
     "M504-E",
     "M704-B",
     "ME504-5",
-    "MW2104-6"
+    "MW2104-6",
+    "MY1204-9(G4)",
+    "P1204-4M(G4)",
+    "P1204-4P(G4)",
+    "WF1204-1(G4)"
   ],
-  "global_boundary": "本记录服务说明书采集优先级研究，不是维修操作条目；没有证据证明这 10 款是当前全国保有量前 10 名。官方省厅请求失败记录仍保留，第三方报道不得升级为官方一级来源。",
+  "global_boundary": "采集研究不进入维修检索；3篇第三方报告支持21条证据、20种待核写法，不能给全国保有量排名。新官方正文仅作有边界的背景/排除记录，尚无近期型号数量统计。",
   "schema_version": 1,
   "purpose": "说明书采集研究；不参与维修知识检索",
   "included_in_repair_retrieval": false,
-  "official_original_evidence_count_scope": "本轮新取得且可用于型号使用数量判断的官方原始统计；不含既有T70局部应用转载",
+  "official_original_evidence_count_scope": "本阶段及此前可用于近期型号使用数量判断的官方原始统计；不是已读官方网页数量",
   "official_search_record": "../采集记录/20261004_国内官方与报道查找.json",
-  "retained_official_application_record": "报告来源记录/湖北T70_既有局部应用记录.md"
+  "retained_official_application_record": "报告来源记录/湖北T70_既有局部应用记录.md",
+  "ranked_segment_model_count": 10,
+  "candidate_count_definition": "按报告品牌及型号/排放写法区分；20种写法不等于已证明20种独立实车，裸型号与明确G4关系待核",
+  "official_recheck_records": [
+    "官方复查/北方.json",
+    "官方复查/南方.json",
+    "官方复查/豫鲁皖.json",
+    "官方复查/入口与网络.json"
+  ]
 }

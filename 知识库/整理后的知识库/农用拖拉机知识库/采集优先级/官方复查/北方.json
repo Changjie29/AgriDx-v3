@@ -1,0 +1,739 @@
+{
+  "research_date_shanghai": "2026-10-04",
+  "research_scope": [
+    "黑龙江省农业农村厅",
+    "吉林省农业农村厅",
+    "内蒙古自治区农牧厅及其实际旗县导航"
+  ],
+  "workflow": "官方首页和robots重测→实际锚链接和公开搜索脚本→正文审校→按证据类型分开；无近期型号级使用证据不生成优先型号",
+  "recent_exact_model_usage_evidence_count": 0,
+  "recent_exact_model_purchase_or_stock_quantity_count": 0,
+  "selected_models_for_manual_priority": [],
+  "official_fulltext_review_count": 12,
+  "historical_exact_model_example_count": 1,
+  "exact_model_exhibition_example_count": 1,
+  "reviewed_sources": [
+    {
+      "evidence_id": "NORTH-HLJ-HARVEST-20260930",
+      "url": "https://nynct.hlj.gov.cn/nynct/c115380/202609/c00_31980750.shtml",
+      "title": "农机轰鸣 双鸭山秋收正当时",
+      "publisher": "黑龙江省农业农村厅官网",
+      "attributed_source": "黑龙江日报",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2026-09-30",
+      "observation_period": "2026年秋收报道；数量主要为作物面积",
+      "geography": "黑龙江省双鸭山市",
+      "evidence_kind": "官方门户转载农业生产报道",
+      "actual_models": [],
+      "quantities": [],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "608ccc2ee2a904fd8ecfd872ee5a1a60e38193c3b2fd8f9dff1e7a83e5058a04",
+      "bytes": 63337,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "正文没有拖拉机型号及对应购机/在用数量；收割机或农机总投入不能当拖拉机型号使用量。",
+      "eligible_for_recent_model_priority": false,
+      "metadata_pub_date": "2026-09-30 11:11:29",
+      "displayed_date_time": "2026-09-30 11:05",
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-HLJ-GUIDELINE-20260923",
+      "url": "https://nynct.hlj.gov.cn/nynct/c115423/202609/c00_31978669.shtml",
+      "title": "关于印发《2026年黑龙江省主要粮食作物秋收秋整地机械化技术指导意见》的通知",
+      "publisher": "黑龙江省农业农村厅",
+      "attributed_source": "黑龙江省农业机械化技术推广总站",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2026-09-23",
+      "observation_period": "2026年秋收秋整地技术指导",
+      "geography": "黑龙江省",
+      "evidence_kind": "技术指导/选型建议",
+      "actual_models": [],
+      "quantities": [],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "b442215a6f0beec1fb424445fdb2b992fe3eb527e31d64f63f158b275aac060f",
+      "bytes": 75825,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "“200马力以上”等为选型要求，无品牌型号或在用数量，不能用于型号优先排序；本轮不整理其中操作参数为具体机型维修知识。",
+      "eligible_for_recent_model_priority": false,
+      "document_number": "黑农厅函〔2026〕1213号",
+      "document_date": "2026-09-23",
+      "metadata_pub_date": "2026-09-24 10:25:32",
+      "date_boundary": "正文发文日期/显示日期为2026-09-23，HTML PubDate为2026-09-24；保留差异，不混为版次。",
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-NMG-STOCK-20250310",
+      "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/zhyw/202503/t20250310_2679134.html",
+      "title": "农机装备优 整装备战春耕春播",
+      "publisher": "内蒙古自治区农牧厅",
+      "attributed_source": "内蒙古自治区农牧厅农牧业机械化管理局",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2025-03-10",
+      "observation_period": "2025年春耕备耕报道；存量数字的独立统计截止日未交代",
+      "geography": "内蒙古自治区",
+      "evidence_kind": "official_background",
+      "actual_models": [],
+      "quantities": [
+        {
+          "category": "拖拉机总保有量",
+          "value_as_written": "135.69",
+          "unit_as_written": "万台",
+          "normalized_value": 1356900,
+          "normalized_unit": "台",
+          "quantity_definition": "全自治区全部拖拉机存量",
+          "model": null,
+          "statistical_cutoff": "未明确",
+          "status": "原文保有量背景，不是补贴申请、销量或型号统计",
+          "normalization_boundary": "仅单位换算，不增加原文统计精度，不能当作逐台精确计数"
+        }
+      ],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "2b0b4a67d4309acfb4354e2dd971c0a034632dd59148dc734814247b1f9c5c51",
+      "bytes": 36328,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "仅确认自治区全部拖拉机保有量背景。未分品牌/型号，不能分配给任何型号，不能推定截至2024年末，也不与其他样本合计。",
+      "eligible_for_recent_model_priority": false,
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-NMG-DEMO-20260722",
+      "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/zhyw/202608/t20260819_2942612.html",
+      "title": "2026中国农机推广田间日活动在内蒙古巴彦淖尔举办",
+      "publisher": "内蒙古自治区农牧厅",
+      "attributed_source": "内蒙古自治区农牧厅农牧业机械化管理局",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2026-07-22",
+      "observation_period": "2026-07-21田间日活动",
+      "geography": "内蒙古自治区巴彦淖尔市临河区",
+      "evidence_kind": "农机展示/演示",
+      "actual_models": [],
+      "quantities": [
+        {
+          "value_as_written": "80",
+          "unit_as_written": "台套",
+          "quantity_definition": "活动现场多品牌多品类演示机具",
+          "model": null,
+          "status": "展示数量，非拖拉机存量"
+        }
+      ],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "21a9d7e712fd7002b19d443091c0bc7030ddb639ae59db1b19d182475100b3c2",
+      "bytes": 34971,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "80台套覆盖多品牌、多种机具，不等于80台拖拉机，不能分配给雷沃或某型号；展示不等于购机或在用保有量。",
+      "eligible_for_recent_model_priority": false,
+      "date_boundary": "正文显示发布2026-07-22，URL目录为202608，事件日为2026-07-21；不按URL月份改写事件或发布时间。",
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-NMG-COOP-22-20260811",
+      "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/t20260811_2939544.html",
+      "title": "农机土专家托起现代农业的“铁牛”梦",
+      "publisher": "内蒙古自治区农牧厅",
+      "attributed_source": "内蒙古自治区农牧厅；编者按说明自治区农广校策划系列报道",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2026-08-11",
+      "observation_period": "安装导航行为独立发生日期未明；报道中另述2023/2024年服务经营情况，不用于推定22台时间点",
+      "geography": "内蒙古自治区兴安盟突泉县",
+      "evidence_kind": "合作社设备改造实例（无型号）",
+      "actual_models": [],
+      "quantities": [
+        {
+          "value_as_written": "22",
+          "unit_as_written": "台",
+          "quantity_definition": "单合作社安装华测导航的拖拉机数量",
+          "model": null,
+          "statistical_cutoff": "未明确",
+          "status": "已报道改造实例，无型号统计"
+        }
+      ],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "bd3a6648f3d8b1b1343e5659360a326ec4a0f8160da32959f3907843fe5cb46e",
+      "bytes": 94577,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；下载并目视核对两幅配图（fig1/fig2），为人物/工作照，没有可用于机型识别的铭牌；未推定品牌或型号。",
+      "boundary": "22台是报道中的导航安装数量，没有具体拖拉机品牌/型号；华测是导航品牌，不是拖拉机品牌。不能把22台转成某型号保有量。",
+      "eligible_for_recent_model_priority": false,
+      "reviewed_images": [
+        {
+          "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/W020260811625505429946.png",
+          "figure": 1,
+          "sha256": "d53d66e2b51a1128900670ed57710062ced052d1de48b00df114a56adb9b6edb",
+          "bytes": 446737,
+          "review_status": "已目视核对；没有可读拖拉机型号证据"
+        },
+        {
+          "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202608/W020260811625505496863.png",
+          "figure": 2,
+          "sha256": "b4e306748aeb9ca643e488082d5ba446eb6763ac292fb930b1e1c0af1d136cb1",
+          "bytes": 375356,
+          "review_status": "已目视核对；没有可读拖拉机型号证据"
+        }
+      ],
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-NMG-HISTORICAL-SH50-20260923",
+      "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202609/t20260923_2958134.html",
+      "title": "王茂林：农机开出富民路，盐碱滩变米粮川",
+      "publisher": "内蒙古自治区农牧厅",
+      "attributed_source": "内蒙古自治区农牧厅；编者按说明自治区农广校策划系列报道",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2026-09-23",
+      "observation_period": "1997年历史购机行为，非2024–2026年购机/在用量",
+      "geography": "内蒙古自治区鄂尔多斯市达拉特旗",
+      "evidence_kind": "历史单例购机",
+      "actual_models": [
+        {
+          "as_written": "上海 50 型",
+          "normalized_spacing_only": "上海50型",
+          "brand_as_written": "上海",
+          "evidence_role": "历史购机单例；非近期在用证据"
+        }
+      ],
+      "quantities": [
+        {
+          "value_as_written": "第一台",
+          "normalized_value": 1,
+          "unit": "台",
+          "quantity_definition": "1997年一位经营者首次购买的拖拉机",
+          "model": "上海50型",
+          "status": "历史单例，当前存量未知",
+          "normalization_boundary": "仅单位换算，不增加原文统计精度，不能当作逐台精确计数"
+        }
+      ],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "4d06bb9d54dc219a71d6ce6fbc5f010b3cb033311434fb0f6dedad260708f91c",
+      "bytes": 74261,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "只证明1997年历史单例。未说明该机至今在用，不证明2024–2026常见程度。“上海50型”不推定为上海504或其他机型；不能形成近期型号优先候选。",
+      "eligible_for_recent_model_priority": false,
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-NMG-DISPLAY-JD8R3004-20250312",
+      "url": "https://nmt.nmg.gov.cn/xw/nmyw/202503/t20250312_2680698.html",
+      "title": "农机中的“劳斯莱斯”长啥样？来，一起见识内蒙古春耕“黑科技”",
+      "publisher": "内蒙古自治区农牧厅官网",
+      "attributed_source": "奔腾融媒",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2025-03-12",
+      "observation_period": "2025年第十二届内蒙古春季农业机械博览会；河套春播现场于2025-03-07举行",
+      "geography": "内蒙古自治区；春播现场巴彦淖尔国家农高区",
+      "evidence_kind": "官方门户转载展示报道",
+      "actual_models": [
+        {
+          "as_written": "约翰迪尔8R-3004轮式拖拉机",
+          "brand": "约翰迪尔",
+          "model": "8R-3004",
+          "evidence_role": "展会展示，非购机或在用数量"
+        }
+      ],
+      "quantities": [],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "eb9845a68076260af3fdc0cc987cde31a4170b5c97a4f00717ba651543ee5ab2",
+      "bytes": 91890,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "确切8R-3004仅为展会亮相；无购机/在用数量，不等于常见型号。河套春播“凯斯拖拉机”没有型号，不把相邻段落的作业性能或价格转给约翰迪尔8R-3004。",
+      "eligible_for_recent_model_priority": false,
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-NMG-MULTIBRAND-SERVICE-20260724",
+      "url": "https://nmt.nmg.gov.cn/zt/bjxnr/202607/t20260724_2932583.html",
+      "title": "农机服务“链出”低空经济与良种繁育——扎根乡村的80后新农人崔秀奇",
+      "publisher": "内蒙古自治区农牧厅",
+      "attributed_source": "内蒙古自治区农牧厅；编者按说明自治区农广校策划系列报道",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2026-07-24",
+      "observation_period": "正文述2020年成立代理公司及历年服务；500多名用户累计时段未明",
+      "geography": "内蒙古自治区赤峰市",
+      "evidence_kind": "多品牌农机服务人物报道",
+      "actual_models": [],
+      "quantities": [],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "8ec9a183d548bba549d03e7a86f62a7246f3326a8300d2b2e73f294603e9bc62",
+      "bytes": 57701,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "500多名用户包含多品牌、多类型设备服务，不等于500台拖拉机或雷沃购机数量；没有确切拖拉机型号，不能用于型号排序。",
+      "eligible_for_recent_model_priority": false,
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-NMG-DISCLOSURE-AUDIT-20251204",
+      "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/tzgg/202512/t20251204_2827660.html",
+      "title": "关于加强农机购置与应用补贴公开电话和信息公开专栏建设的提示函",
+      "publisher": "内蒙古自治区农牧厅",
+      "attributed_source": "内蒙古自治区农牧厅农牧业机械化管理局",
+      "author_signature": "未单独列个人作者；以正文来源署名登记",
+      "publication_date_body": "2025-12-04",
+      "observation_period": "发布前“近期”核查；准确核查起止日未写明",
+      "geography": "内蒙古自治区农机补贴实施盟市/旗县",
+      "evidence_kind": "公开资料完整性核查",
+      "actual_models": [],
+      "quantities": [
+        {
+          "value_as_written": "117",
+          "unit": "个专栏",
+          "quantity_definition": "本次公开专栏核查对象数量",
+          "status": "信息公开核查范围，非机具数量"
+        },
+        {
+          "value_as_written": "25",
+          "unit": "个专栏",
+          "quantity_definition": "该核查中未完整公开近3年购机者信息的专栏",
+          "status": "信息公开状况，非机具数量"
+        }
+      ],
+      "counting_status": "逐来源核对文字，不合计不同口径数量；没有购机公示逐行统计",
+      "deduplication": "本来源按原URL和完整HTML哈希识别；未与其他区域或其他年度合并",
+      "sha256": "79398ea47501fc929ffc0163eea9ce261ac9acc6c5e56fded0944980b2a8dd50",
+      "bytes": 42821,
+      "http_status": 200,
+      "review_scope": "已核完整文字正文；没有把照片中的模糊标识、搜索摘要或附件标题当型号证据",
+      "boundary": "这是2025年资料公开状况核查，不是机具统计，也不能描述为所有网站现今缺失。不得把未取得公示的地区当0台；附件1/2未下载审校，正文独立核对。",
+      "eligible_for_recent_model_priority": false,
+      "document_number": "内农牧机函〔2025〕2198号",
+      "attachment_review": "附件1公开电话表、附件2专栏核查表仅取得正文链接，没有下载或核验表内数据",
+      "attachment_candidates": [
+        {
+          "title": "附件2：2025年内蒙古农机购置与应用补贴信息公开专栏核查情况汇总表.xlsx",
+          "url": "https://nmt.nmg.gov.cn/zt/njgzbtxxgkzl/tzgg/202512/P020251204338493333759.xlsx",
+          "status": "仅发现链接，未取得附件正文"
+        }
+      ],
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-JL-FUYU-MAINTENANCE-20240319",
+      "url": "http://agri.jl.gov.cn/xczx/lssc/202403/t20240319_3341456.html",
+      "title": "扶余市：农机检修忙 春耕有保障",
+      "publisher": "吉林省农业农村厅官网",
+      "attributed_source": "正文来源栏为空，未标注转载来源",
+      "author_signature": "没有单独记者署名；正式公告落款按正文登记",
+      "publication_date_body": "2024-03-19",
+      "displayed_date_time": "2024-03-19 07:16:00",
+      "metadata_pub_date": null,
+      "observation_period": "2024年春耕前检修；正文未给独立统计期间",
+      "geography": "吉林省扶余市",
+      "evidence_kind": "官方门户农机检修报道",
+      "actual_models": [],
+      "quantities": [],
+      "counting_status": "逐来源文字核对，未取得购机受益者原始公示，无逐行机具计数",
+      "deduplication": "原URL与完整HTML哈希识别；不同机具种类/补贴与报废口径不合计，不按用户数推机具数",
+      "sha256": "38f7015776036612b8f2fd88db982776c2c2ba8593d221e1b9b2070f0371725e",
+      "bytes": 15733,
+      "http_status": 200,
+      "review_scope": "完整文字正文已核；本小批次未下载图片或附件，不从照片猜机型",
+      "boundary": "农机检修与经销商备货报道；无实际拖拉机品牌、型号或对应购机/在用数量，不算购机公示。",
+      "eligible_for_recent_model_priority": false,
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-JL-YANBIAN-MIXED-SUBSIDY-20260923",
+      "url": "http://agri.jl.gov.cn/xczx/lssc/202609/t20260923_3672428.html",
+      "title": "四“良”齐发力 丰收笑开颜——延边州夯实粮食稳产增产基础纪实",
+      "publisher": "吉林省农业农村厅官网",
+      "attributed_source": "正文来源栏为空，未标注转载来源",
+      "author_signature": "没有单独记者署名；正式公告落款按正文登记",
+      "publication_date_body": "2026-09-23",
+      "displayed_date_time": "2026-09-23 15:29:46",
+      "metadata_pub_date": null,
+      "observation_period": "统计数字明确指2025年延边全州；2026年报道，未标独立抽取或结算截止日",
+      "geography": "吉林省延边朝鲜族自治州",
+      "evidence_kind": "official_background",
+      "actual_models": [],
+      "quantities": [
+        {
+          "category": "各类农机具补贴量",
+          "value_as_written": "4617",
+          "unit_as_written": "台（套）",
+          "normalized_value": 4617,
+          "normalized_unit": "台（套）",
+          "quantity_definition": "全州所有类别农机具补贴数量",
+          "model": null,
+          "statistical_period": "2025年",
+          "statistical_cutoff": "未交代独立结算日期",
+          "status": "官方门户正文汇总报道；非受益者原始公示逐行核验",
+          "normalization_boundary": "仅单位换算，不增加原文统计精度，不能当作逐台精确计数"
+        },
+        {
+          "category": "农机具补贴受益户数",
+          "value_as_written": "3740",
+          "unit_as_written": "户",
+          "normalized_value": 3740,
+          "normalized_unit": "户",
+          "quantity_definition": "上项全州各类农机具补贴对应受益户",
+          "model": null,
+          "statistical_period": "2025年",
+          "status": "受益户不是机具台数",
+          "normalization_boundary": "仅单位换算，不增加原文统计精度，不能当作逐台精确计数"
+        },
+        {
+          "category": "各类老旧农机具报废淘汰量",
+          "value_as_written": "2696",
+          "unit_as_written": "台（套）",
+          "normalized_value": 2696,
+          "normalized_unit": "台（套）",
+          "quantity_definition": "全州所有类别能耗高、安全隐患大的老旧农机具报废淘汰数量",
+          "model": null,
+          "statistical_period": "2025年",
+          "statistical_cutoff": "未交代独立结算日期",
+          "status": "报废总量不是购机量或拖拉机型号量",
+          "normalization_boundary": "仅单位换算，不增加原文统计精度，不能当作逐台精确计数"
+        },
+        {
+          "category": "报废淘汰受益农户",
+          "value_as_written": "2005",
+          "unit_as_written": "户",
+          "normalized_value": 2005,
+          "normalized_unit": "户",
+          "quantity_definition": "上项全州各类老旧农机具报废淘汰对应受益农户",
+          "model": null,
+          "statistical_period": "2025年",
+          "status": "受益农户不是机具台数",
+          "normalization_boundary": "仅单位换算，不增加原文统计精度，不能当作逐台精确计数"
+        }
+      ],
+      "counting_status": "逐来源文字核对，未取得购机受益者原始公示，无逐行机具计数",
+      "deduplication": "原URL与完整HTML哈希识别；不同机具种类/补贴与报废口径不合计，不按用户数推机具数",
+      "sha256": "827189eb0d4da23b8e25186662a0c32d35fd2c48c2e5c821f8e6748fdd06503f",
+      "bytes": 21767,
+      "http_status": 200,
+      "review_scope": "完整文字正文已核；本小批次未下载图片或附件，不从照片猜机型",
+      "boundary": "4617为所有农机具补贴量，2696为老旧农机具报废量；没有拖拉机分类或品牌型号，用户数也不是机具数量。不可把补贴量当保有量、全国销量或全部拖拉机量，也不与报废量加减推存量。",
+      "eligible_for_recent_model_priority": false,
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    },
+    {
+      "evidence_id": "NORTH-JL-FILING-ELIGIBILITY-20260825",
+      "url": "http://agri.jl.gov.cn/gk/tzgg/202608/t20260825_3665495.html",
+      "title": "吉林省农业农村厅关于吉林省2024—2026年农机购置补贴产品第四次形式审核结果的公告",
+      "publisher": "吉林省农业农村厅官网",
+      "attributed_source": "正文来源栏为空，未标注转载来源",
+      "author_signature": "公告落款吉林省农业农村厅，2026年8月25日",
+      "publication_date_body": "2026-08-25",
+      "displayed_date_time": "2026-08-25 15:51:27",
+      "metadata_pub_date": null,
+      "observation_period": "企业2026年7月27日0时前投档产品；公告2026年8月25日",
+      "geography": "吉林省",
+      "evidence_kind": "补贴目录准入排除项",
+      "actual_models": [],
+      "quantities": [
+        {
+          "category": "形式审核通过产品",
+          "value_as_written": "908",
+          "unit_as_written": "个",
+          "normalized_value": 908,
+          "normalized_unit": "个产品",
+          "quantity_definition": "符合补贴范围的投档产品目录数量",
+          "model": null,
+          "status": "准入资格，不是机具台数/购机数量/销量/保有量",
+          "normalization_boundary": "仅单位换算，不增加原文统计精度，不能当作逐台精确计数"
+        }
+      ],
+      "counting_status": "逐来源文字核对，未取得购机受益者原始公示，无逐行机具计数",
+      "deduplication": "原URL与完整HTML哈希识别；不同机具种类/补贴与报废口径不合计，不按用户数推机具数",
+      "sha256": "d2ca9e0a3212f0d59e56c7e47a5da7ec4f77fbc7ba7feca2b2992c16e28ac8e8",
+      "bytes": 15618,
+      "http_status": 200,
+      "review_scope": "完整文字正文已核；本小批次未下载图片或附件，不从照片猜机型",
+      "boundary": "908为纳入补贴范围的产品目录数量，不是908台实际购机、在用或保有量；清单未下载，不能从正文推具体型号。",
+      "eligible_for_recent_model_priority": false,
+      "attachments_discovered_not_reviewed": [
+        {
+          "url": "http://agri.jl.gov.cn/gk/tzgg/202608/P020260825576386713584.xls",
+          "title": "吉林省2024—2026年第四次农机购置与应用补贴投档机具形式审核结果汇总表（通过产品）.xls",
+          "status": "仅发现链接；小批次3份原文额度已用，未下载；其本身为产品资格目录，非使用量资料"
+        }
+      ],
+      "authority_note": "政府门户正文；原作者/首发方按attributed_source保留，转载不升级为政府独立统计"
+    }
+  ],
+  "search_discovery": {
+    "jl": {
+      "homepage": "https://agri.jl.gov.cn/",
+      "form_action": "/kz/ss/",
+      "form_query_field": "q",
+      "search_page_url": "https://agri.jl.gov.cn/kz/ss/?q=%E6%8B%96%E6%8B%89%E6%9C%BA",
+      "provider_url_in_page": "https://haiyun.jl.gov.cn/irs/front/search",
+      "provider_method": "POST",
+      "provider_robots_url": "https://haiyun.jl.gov.cn/robots.txt",
+      "provider_result": "CONNECT403；未向已拒域名POST",
+      "additional_batch_result": "本报告 stage1 的 CONNECT403保留；新增batch2已普通JSON POST HTTP200，5次success=true。详见additional_batches及日志，不再以历史拒绝描述当前所有响应。"
+    },
+    "hlj": {
+      "homepage": "https://nynct.hlj.gov.cn/",
+      "header_js": "https://nynct.hlj.gov.cn/nynct/xhtml/js/header.js",
+      "search_url": "https://nynct.hlj.gov.cn/so/s?qt=%E6%8B%96%E6%8B%89%E6%9C%BA",
+      "script_url_in_page": "https://p.so-gov.cn/web/api/api.js",
+      "api_base_in_page": "https://api.so-gov.cn/",
+      "script_result": "CONNECT403；没有绕过或把页面壳当搜索结果",
+      "additional_batch_result": "新增query.js/util.js/store.js HTTP200；正常端点HTTPS api.so-gov.cn/query/s 首次表单POST仍CONNECT403，立即停止该目的地查询。p域脚本可读不等于API域可读。"
+    },
+    "nmg": {
+      "homepage": "https://nmt.nmg.gov.cn/",
+      "search_app_url": "https://nmt.nmg.gov.cn/nmg_dept_search/",
+      "actual_script": "https://nmt.nmg.gov.cn/nmg_dept_search/js/chunk-6b2d545b.3c137b03.js",
+      "public_get_endpoint": "https://nmt.nmg.gov.cn/nmsearch/trssearch/searchAll.do",
+      "bounded_native_searches": "只取每次10条；参数按公开脚本和页面配置，源码未登录/未破解。siteId=92为搜本站；公开“搜平台”路径siteId=0也按实际脚本使用。",
+      "limits": "搜索结果是发现入口，不是原文数量证据。东方红检索多为村名，常发多为常见病虫害词义，均剔除；复合词搜索有宽泛结果，不以总条数当机具数量。"
+    }
+  },
+  "access_summary": {
+    "requests": 70,
+    "http200": 56,
+    "failed": 14,
+    "max_concurrency": 2,
+    "proxy_and_tls_preserved": true,
+    "no_login_or_antibot_bypass": true
+  },
+  "current_robots_observations": {
+    "hlj": "HTTP503，未取得限制文件",
+    "jl": "HTTP404，未取得限制文件",
+    "nmg": "HTTP200但跳转/正文为404错误页，不是允许声明",
+    "county_and_search_hosts": "真实失败见访问日志；没有改协议/换路绕过被拒域名"
+  },
+  "new_configuration_draft_note": "根代理通知相关域名已加草稿，工具requires_publish；草稿保存不证明运行时访问。追加小批次按父代理实际新响应重试，确认吉林搜索可读和p域脚本可读，黑龙江API实际仍拒绝。不修改配置，不等待激活。",
+  "blocked_or_unsuccessful_requests": [
+    {
+      "name": "arong-robots",
+      "url": "http://www.arq.gov.cn/robots.txt",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "molida-robots",
+      "url": "http://www.mldw.gov.cn/robots.txt",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "tuquan-robots",
+      "url": "http://www.tq.gov.cn/robots.txt",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "kailu-robots",
+      "url": "http://www.kailu.gov.cn/robots.txt",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "chayouzhong-robots",
+      "url": "https://www.cyzq.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "huade-robots",
+      "url": "https://www.huade.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "nmg-gov-robots",
+      "url": "https://www.nmg.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "nmg-jining-purchase-report",
+      "url": "https://www.nmg.gov.cn/zwyw/gzdt/msdt/202406/t20240604_2518171.html",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "jl-search-provider-robots",
+      "url": "https://haiyun.jl.gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "hlj-search-provider-api-js",
+      "url": "https://p.so-gov.cn/web/api/api.js",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "hlj-search-provider-robots",
+      "url": "https://p.so-gov.cn/robots.txt",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "hlj-robots",
+      "url": "https://nynct.hlj.gov.cn/robots.txt",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "name": "jl-robots",
+      "url": "https://agri.jl.gov.cn/robots.txt",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "batch2-hlj-search-1",
+      "url": "https://api.so-gov.cn/query/s",
+      "method": "POST",
+      "request_parameters": {
+        "qt": "拖拉机",
+        "siteCode": "2300000032",
+        "tab": "",
+        "keyPlace": "0",
+        "sort": "dateDesc",
+        "timeOption": "0"
+      },
+      "anonymous_id_flow": "Public JS-generated UUIDv4; no account identity",
+      "observed_at_utc": "2026-10-04T09:31:19.674963+00:00",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "request_discovery_urls": [
+        "https://nynct.hlj.gov.cn/so/s?qt=%E6%8B%96%E6%8B%89%E6%9C%BA",
+        "https://p.so-gov.cn/web/api/query.js",
+        "https://p.so-gov.cn/web/api/api.js"
+      ]
+    }
+  ],
+  "candidate_only_not_acquired": [
+    {
+      "url": "https://www.nmg.gov.cn/zwyw/gzdt/msdt/202406/t20240604_2518171.html",
+      "title_from_public_search": "乌兰察布：农机购置补贴“补”在农民心坎上",
+      "status": "公开搜索给出入口，正文请求CONNECT403；摘要27台/14户/14.63万元未进入核实数量",
+      "reason": "不能把搜索片段当购机事实，不能把申请量当兑付量"
+    }
+  ],
+  "privacy_boundary": "没有取得具体购机受益者清单；长期拟稿仅来源元数据和聚合口径，不输出受益者姓名/身份证/电话/地址/账户或个人行数据。人物新闻原名只保留于真实报道标题，不引入补贴受益人身份记录。HTML和配图仅临时研究。",
+  "manual_search_performed_this_stage": false,
+  "complete_matching_manuals_obtained_this_stage": 0,
+  "next_steps": [
+    "必要域名运行时可访问后，从实际旗县公示和官方后端发现路径取得原文/附件。",
+    "核对公示状态和修订关系，按数量列统计；购机、申请、审核、兑付、在用存量分别记录并去重。",
+    "近期明确型号使用或购机证据形成后再找同型号完整说明书；历史单例/展示不当常见程度依据。"
+  ],
+  "additional_batches": [
+    {
+      "batch_id": "north-batch2-native-search-20261004",
+      "observed_at_utc": "2026-10-04T09:31Z",
+      "parent_reported_precondition": "父代理复查 haiyun.jl.gov.cn/robots.txt HTTP404、p.so-gov.cn/web/api/api.js HTTP200；本批据实际新响应正常重试，未删除旧拒绝记录",
+      "previous_stage_request_count": 58,
+      "new_request_count": 12,
+      "search_request_count": 6,
+      "original_page_request_count": 3,
+      "script_asset_request_count": 3,
+      "query_results": [
+        {
+          "name": "batch2-jl-search-1",
+          "url": "https://haiyun.jl.gov.cn/irs/front/search",
+          "query": "拖拉机",
+          "status": 200,
+          "error": null,
+          "success": true,
+          "pager": {
+            "pageNo": 1,
+            "pageSize": 10,
+            "pageCount": 24,
+            "total": 240
+          },
+          "boundary": "命中总条数仅描述公开索引查询；不是机具台数，第一页未覆盖所有条目，组合词结果不代表完整普查"
+        },
+        {
+          "name": "batch2-jl-search-2",
+          "url": "https://haiyun.jl.gov.cn/irs/front/search",
+          "query": "农机购置补贴 公示",
+          "status": 200,
+          "error": null,
+          "success": true,
+          "pager": {
+            "pageNo": 1,
+            "pageSize": 10,
+            "pageCount": 9,
+            "total": 81
+          },
+          "boundary": "命中总条数仅描述公开索引查询；不是机具台数，第一页未覆盖所有条目，组合词结果不代表完整普查"
+        },
+        {
+          "name": "batch2-jl-search-3",
+          "url": "https://haiyun.jl.gov.cn/irs/front/search",
+          "query": "拖拉机 购机",
+          "status": 200,
+          "error": null,
+          "success": true,
+          "pager": {
+            "pageNo": 1,
+            "pageSize": 10,
+            "pageCount": 3,
+            "total": 28
+          },
+          "boundary": "命中总条数仅描述公开索引查询；不是机具台数，第一页未覆盖所有条目，组合词结果不代表完整普查"
+        },
+        {
+          "name": "batch2-hlj-search-1",
+          "url": "https://api.so-gov.cn/query/s",
+          "query": "拖拉机",
+          "status": null,
+          "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+          "response_file": null
+        },
+        {
+          "name": "batch2-jl-search-4",
+          "url": "https://haiyun.jl.gov.cn/irs/front/search",
+          "query": "购机者",
+          "status": 200,
+          "error": null,
+          "success": true,
+          "pager": {
+            "pageNo": 1,
+            "pageSize": 10,
+            "pageCount": 4,
+            "total": 31
+          },
+          "boundary": "命中总条数仅描述公开索引查询；不是机具台数，第一页未覆盖所有条目，组合词结果不代表完整普查"
+        },
+        {
+          "name": "batch2-jl-search-5",
+          "url": "https://haiyun.jl.gov.cn/irs/front/search",
+          "query": "拖拉机 东方红",
+          "status": 200,
+          "error": null,
+          "success": true,
+          "pager": {
+            "pageNo": 1,
+            "pageSize": 10,
+            "pageCount": 1,
+            "total": 2
+          },
+          "boundary": "命中总条数仅描述公开索引查询；不是机具台数，第一页未覆盖所有条目，组合词结果不代表完整普查"
+        }
+      ],
+      "reviewed_new_source_ids": [
+        "NORTH-JL-FUYU-MAINTENANCE-20240319",
+        "NORTH-JL-YANBIAN-MIXED-SUBSIDY-20260923",
+        "NORTH-JL-FILING-ELIGIBILITY-20260825"
+      ],
+      "new_recent_exact_model_usage_evidence_count": 0,
+      "new_recent_exact_model_purchase_or_stock_quantity_count": 0,
+      "stop_reason": "搜索请求6次及相关正文3篇额度已用；黑龙江正常公开 POST CONNECT403后即停该域名查询；吉林追加正文未给近期确切型号",
+      "privacy": "未读取受益者个人原始公示；正文仅临时研究快照，长期归档不保留个人信息",
+      "assets": "公开脚本 query.js/util.js/store.js 定位普通匿名搜索流程；未调用登录、日志、验证码或破解端点",
+      "anonymous_query_id": "按站点公开 util.js UUIDv4流程生成临时匿名搜索ID，访问记录去除此ID",
+      "max_concurrency": 2,
+      "proxy_and_tls_preserved": true,
+      "no_login_or_antibot_bypass": true
+    }
+  ],
+  "official_background_ids": [
+    "NORTH-NMG-STOCK-20250310",
+    "NORTH-JL-YANBIAN-MIXED-SUBSIDY-20260923"
+  ],
+  "historical_examples_ids": [
+    "NORTH-NMG-HISTORICAL-SH50-20260923"
+  ],
+  "exhibition_examples_ids": [
+    "NORTH-NMG-DISPLAY-JD8R3004-20250312"
+  ],
+  "all_requests_log": "北方_请求记录.json"
+}

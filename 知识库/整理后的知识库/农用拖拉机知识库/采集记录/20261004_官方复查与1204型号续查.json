@@ -1,0 +1,119 @@
+{
+  "collection_date_shanghai": "2026-10-04",
+  "project_version": "2.2.1",
+  "new_report_sources": 1,
+  "new_model_rank_records": 10,
+  "new_reported_model_candidates": 10,
+  "total_third_party_reports": 3,
+  "total_model_evidence_records": 21,
+  "total_reported_model_variants": 20,
+  "new_recent_official_model_quantity_statistics": 0,
+  "new_matching_complete_manuals": 0,
+  "new_repair_entries": 0,
+  "candidate_count_boundary": "按报告品牌及型号/排放写法区分；20种写法不等于已证明20种独立实车，裸型号与明确G4关系待核",
+  "official_recheck_records": [
+    "../采集优先级/官方复查/北方.json",
+    "../采集优先级/官方复查/南方.json",
+    "../采集优先级/官方复查/豫鲁皖.json",
+    "../采集优先级/官方复查/入口与网络.json"
+  ],
+  "evidence_index": "../采集优先级/证据索引.json",
+  "model_queue": "../采集优先级/型号清单.jsonl",
+  "formal_retrieval": {
+    "sources": 20,
+    "archived_entries": 165,
+    "total_chunks": 174
+  },
+  "network": "真实可读性按地区/入口记录，不沿用首次全403；草稿网络revision19，新增12域名，保存不是应用/发布",
+  "validation_status": "passed",
+  "deployment_boundary": "本地及GitHub另验收，不声称agridx.xyz网站部署",
+  "validation": {
+    "archive_index": {
+      "status": "passed",
+      "sources": 20,
+      "entries": 165,
+      "errors": 0
+    },
+    "research_archive": {
+      "reports": 3,
+      "evidence_records": 21,
+      "candidate_spellings": 20,
+      "local_links_checked": 254,
+      "north_articles": 12,
+      "north_requests": 70,
+      "secret_and_temporary_paths": "absent",
+      "data_references_and_source_record_hashes": "passed",
+      "maintenance_index_unchanged": true,
+      "local_links_scope": "根README、CHANGELOG及知识库全部Markdown；排除模板中的1个明确相对路径占位",
+      "research_json_files_checked": 17
+    },
+    "tests": {
+      "command": "npm test",
+      "passed": 27,
+      "failed": 0
+    },
+    "server_build": {
+      "command": "npm run build:server",
+      "status": "passed"
+    },
+    "frontend_build": {
+      "command": "npm run build",
+      "status": "passed",
+      "existing_warning": "首页资源包大于500 kB"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "errors": 0,
+      "existing_warning": "button.tsx Fast Refresh导出警告"
+    },
+    "local_runtime": {
+      "health": {
+        "ok": true,
+        "version": "2.2.1",
+        "timestamp": "2026-10-04T09:37:55.661Z",
+        "knowledge": {
+          "chunks": 174,
+          "archivedEntries": 165
+        }
+      },
+      "queries": [
+        {
+          "brand": "东方红",
+          "model": "LY1204(G4)",
+          "http_status": 200,
+          "provider": "knowledge-base",
+          "knowledge_chunks": 0
+        },
+        {
+          "brand": "东风",
+          "model": "DF1204-6A(G4)",
+          "http_status": 200,
+          "provider": "knowledge-base",
+          "knowledge_chunks": 0
+        },
+        {
+          "brand": "沃得",
+          "model": "WF1204-1(G4)",
+          "http_status": 200,
+          "provider": "knowledge-base",
+          "knowledge_chunks": 0
+        },
+        {
+          "brand": "久保田",
+          "model": "M6060",
+          "http_status": 200,
+          "provider": "knowledge-base",
+          "knowledge_chunks": 3
+        }
+      ],
+      "candidate_queries_result": "三种新候选均返回资料不足，未将采集研究混入维修回答"
+    },
+    "source_integrity": "来源记录哈希/字节数及北方12篇正文实际响应哈希均经独立复核",
+    "external_pdf_refetch": {
+      "performed": false,
+      "boundary": "LF1504、M6060/M7060、M5外链PDF使用此前保存的下载核验记录，本阶段未重新下载"
+    },
+    "external_llm_or_live_deployment_verified": false,
+    "git_diff_check": "passed"
+  }
+}

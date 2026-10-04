@@ -1,0 +1,546 @@
+{
+  "collection_date": "2026-10-04",
+  "requests": [
+    {
+      "name": "moa-robots",
+      "url": "https://www.moa.gov.cn/robots.txt",
+      "method": "公开读取，继承代理/TLS，低并发",
+      "status": 200,
+      "final_url": "https://www.moa.gov.cn/robots.txt",
+      "content_type": "text/plain",
+      "bytes": 24,
+      "sha256": "0a3e398b334584886bcdd4b1fbc302b24cd14e9e80b980a88b649dc90f9d021e",
+      "title": [],
+      "links": []
+    },
+    {
+      "name": "moa-home",
+      "url": "https://www.moa.gov.cn/",
+      "method": "公开读取，继承代理/TLS，低并发",
+      "status": 200,
+      "final_url": "https://www.moa.gov.cn/",
+      "content_type": "text/html",
+      "bytes": 113507,
+      "sha256": "39666f2f8c13db41d0100e8160bba0b0a811457046cf9f5e054eab1e67b8f9f1",
+      "title": [
+        "中华人民共和国农业农村部"
+      ],
+      "links": [
+        {
+          "url": "https://www.moa.gov.cn/xw/qg/202609/t20260928_6488257.htm"
+        },
+        {
+          "url": "https://www.moa.gov.cn/govpublic/FZJHS/202609/t20260911_6487613.htm"
+        },
+        {
+          "url": "https://www.moa.gov.cn/govpublic/NYJXHGLS/202609/t20260918_6487838.htm"
+        },
+        {
+          "url": "https://njhs.moa.gov.cn"
+        },
+        {
+          "url": "http://www.amic.agri.cn"
+        },
+        {
+          "url": "http://www.stats.gov.cn/"
+        }
+      ]
+    },
+    {
+      "name": "machinery-robots",
+      "url": "https://www.njhs.moa.gov.cn/robots.txt",
+      "method": "公开读取，继承代理/TLS，低并发",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "machinery-home",
+      "url": "https://www.njhs.moa.gov.cn/",
+      "method": "公开读取，继承代理/TLS，低并发",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "nj360-chart-retry",
+      "url": "https://img4.nongji360.com/n/news/2025/01/23104748818201.png",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "nj360-report994",
+      "url": "https://news.nongji360.com/report/994",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "status": 200,
+      "final_url": "https://news.nongji360.com/report/994",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 35646,
+      "sha256": "2dec2d88f9b16db9797551fc80fa755c2b6feb66ba6270832daf39bc6be00dbc",
+      "title": [
+        "1204拖拉机排名出炉，2024年全国均价13.77万元_农机360网"
+      ],
+      "links": [
+        {
+          "url": "http://subsidy.nongji360.com"
+        },
+        {
+          "url": "http://www.nongjibang.com"
+        },
+        {
+          "url": "http://subsidy.nongji360.com"
+        },
+        {
+          "url": "http://dudu.nongjibang.com"
+        },
+        {
+          "url": "https://news.nongji360.com/report/view/1128"
+        },
+        {
+          "url": "https://news.nongji360.com/report/view/1126"
+        },
+        {
+          "url": "https://news.nongji360.com/report/view/1125"
+        },
+        {
+          "url": "https://news.nongji360.com/report/view/1124"
+        },
+        {
+          "url": "http://news.nongji360.com/html/2026/08/274123.shtml"
+        },
+        {
+          "url": "http://news.nongji360.com/html/2026/08/274119.shtml"
+        },
+        {
+          "url": "http://news.nongji360.com/html/2026/08/274112.shtml"
+        },
+        {
+          "url": "http://news.nongji360.com/html/2026/08/274109.shtml"
+        },
+        {
+          "url": "http://news.nongji360.com/report/view/1116"
+        },
+        {
+          "url": "https://xgc.nongji360.com/view/149999"
+        },
+        {
+          "url": "http://ytobuy.nongji360.com/product/view/24"
+        },
+        {
+          "url": "http://ytobuy.nongji360.com/product/view/33"
+        },
+        {
+          "url": "http://item.nongji360.com/d/46958"
+        },
+        {
+          "url": "http://item.nongji360.com/d/47017"
+        },
+        {
+          "url": "http://item.nongji360.com/d/47017"
+        },
+        {
+          "url": "http://item.nongji360.com/d/47017"
+        },
+        {
+          "url": "http://item.nongji360.com/d/47797"
+        },
+        {
+          "url": "http://item.nongji360.com/d/47643"
+        },
+        {
+          "url": "http://image.nongji360.com/html/2017/03/2410.shtml"
+        },
+        {
+          "url": "https://www.nongji360.com"
+        },
+        {
+          "url": "https://www.nongji360.com"
+        },
+        {
+          "url": "https://o2o.nongji360.com"
+        },
+        {
+          "url": "https://fuwu.nongji360.com/machinery"
+        }
+      ]
+    },
+    {
+      "name": "njhs-actual-robots",
+      "url": "https://njhs.moa.gov.cn/robots.txt",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "amic-robots",
+      "url": "https://www.amic.agri.cn/robots.txt",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "nj360-robots",
+      "url": "https://news.nongji360.com/robots.txt",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "status": 200,
+      "final_url": "https://news.nongji360.com/robots.txt",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 114081,
+      "sha256": "74fffaa70fce5a733d03bea7cb5b4ec66d3b3989c3a476dafc9214319d2a9450",
+      "title": [
+        "农机资讯网_农业机械行业新闻资讯_农机360网"
+      ],
+      "links": [
+        {
+          "url": "http://subsidy.nongji360.com"
+        },
+        {
+          "url": "http://www.nongjibang.com"
+        },
+        {
+          "url": "https://news.nongji360.com/list/5"
+        },
+        {
+          "url": "http://www.nongjibang.com"
+        },
+        {
+          "url": "https://news.nongji360.com/list/23"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274380.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274374.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274356.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274338.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274324.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274323.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274275.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274270.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274384.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274382.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274381.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274364.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274361.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274357.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274345.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274340.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274337.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274336.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274332.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274329.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274320.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2017/08/217863.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2017/05/216600.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2017/04/216259.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2017/02/215070.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2017/02/214687.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2017/02/214691.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274331.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274263.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/08/274152.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/08/274097.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/08/274048.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/08/274010.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/07/273952.shtml"
+        },
+        {
+          "url": "http://zt.nongji360.com/zhanhui2017"
+        },
+        {
+          "url": "https://news.nongji360.com/list/5"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274348.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274270.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274270.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274401.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274401.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274399.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274399.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274398.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274398.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274397.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274397.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274396.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274396.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274395.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274395.shtml"
+        },
+        {
+          "url": "http://subsidy.nongji360.com/"
+        },
+        {
+          "url": "http://subsidy.nongji360.com/file/1"
+        },
+        {
+          "url": "http://subsidy.nongji360.com/amount/1"
+        },
+        {
+          "url": "http://app.datian360.com/butie/"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274374.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/09/274374.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/08/274152.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/08/274152.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/06/273628.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/06/273628.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/04/273211.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/04/273211.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/04/273210.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2025/02/269364.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2025/02/269364.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2025/01/269138.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2025/01/269138.shtml"
+        },
+        {
+          "url": "http://www.nongji360.com/tech/zhaobiao_show.asp?id=4024"
+        },
+        {
+          "url": "http://www.nongji360.com/tech/zhaobiao_show.asp?id=4026"
+        },
+        {
+          "url": "http://www.nongji360.com/tech/zhaobiao_show.asp?id=4027"
+        },
+        {
+          "url": "http://www.nongji360.com/tech/zhaobiao_show.asp?id=3977"
+        },
+        {
+          "url": "https://news.nongji360.com/expo/view/504"
+        },
+        {
+          "url": "https://news.nongji360.com/expo/view/505"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2023/03/262800.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2022/07/259160.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2021/10/255078.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2021/10/255078.shtml"
+        },
+        {
+          "url": "http://subsidy.nongji360.com"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2026/08/274042.shtml"
+        },
+        {
+          "url": "http://comment.nongji360.com/10/272832"
+        },
+        {
+          "url": "http://comment.nongji360.com/10/272832"
+        },
+        {
+          "url": "http://comment.nongji360.com/10/272832"
+        },
+        {
+          "url": "http://comment.nongji360.com/10/272832"
+        },
+        {
+          "url": "http://comment.nongji360.com/10/272841"
+        },
+        {
+          "url": "http://comment.nongji360.com/10/272841"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2015/06/204400.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2015/06/204366.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2015/06/204175.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2015/04/202499.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2015/03/201923.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2015/03/201661.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2015/02/199782.shtml"
+        },
+        {
+          "url": "https://news.nongji360.com/html/2014/12/198767.shtml"
+        },
+        {
+          "url": "https://www.nongji360.com"
+        }
+      ]
+    },
+    {
+      "name": "postdraft-cyzq-robots",
+      "url": "https://www.cyzq.gov.cn/robots.txt",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "name": "postdraft-haiyun-robots",
+      "url": "https://haiyun.jl.gov.cn/robots.txt",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "postdraft-hlj-script",
+      "url": "https://p.so-gov.cn/web/api/api.js",
+      "collected_date": "2026-10-04",
+      "network_method": "inherited proxy and TLS, public read",
+      "status": 200,
+      "final_url": "https://p.so-gov.cn/web/api/api.js",
+      "content_type": "application/javascript",
+      "bytes": 6277,
+      "sha256": "c9ab062e05c8bda984fb07147dde5055af4f78fe41631cc27159ac73dce006c9",
+      "title": [],
+      "links": []
+    }
+  ],
+  "boundary": "HTTP200也可能为主页/错误页/壳，实际用途分别核对；首页可读不代表补贴公示/后台可读；HTTP403/503与CONNECT403分开保存",
+  "moa_robots": "实际robots为User-agent:* Disallow:/，确认首页后停止自动扩爬；没有从首页推数量",
+  "network_draft": {
+    "custom_domains_count": 60,
+    "network_revision": 19,
+    "added_domains_this_stage": [
+      "njhs.moa.gov.cn",
+      "www.amic.agri.cn",
+      "haiyun.jl.gov.cn",
+      "www.arq.gov.cn",
+      "www.mldw.gov.cn",
+      "www.tq.gov.cn",
+      "www.kailu.gov.cn",
+      "www.cyzq.gov.cn",
+      "www.huade.gov.cn",
+      "p.so-gov.cn",
+      "img4.nongji360.com",
+      "api.so-gov.cn"
+    ],
+    "saved_draft_is_not_apply_or_publish": true,
+    "actual_access_must_be_verified": true
+  },
+  "no_new_operational_entries": true
+}

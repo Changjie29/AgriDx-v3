@@ -1,0 +1,307 @@
+{
+  "checked_at_shanghai_date": "2026-10-04",
+  "task": "按实际第三方2024年1204补贴公示销量报告定向查中国一拖LY1204(G4)、MY1204-9(G4)匹配完整整机手册",
+  "basis": {
+    "url": "https://news.nongji360.com/report/994",
+    "actual_title": "1204拖拉机排名出炉，2024年全国均价13.77万元",
+    "published_date": "2025-01-23",
+    "publisher": "农机360网",
+    "author_as_displayed": "刘月华",
+    "local_html_reviewed": true,
+    "html_bytes": 35646,
+    "html_sha256": "2dec2d88f9b16db9797551fc80fa755c2b6feb66ba6270832daf39bc6be00dbc",
+    "reported_model_rank_in_1204_segment": {
+      "LY1204(G4)": 1,
+      "MY1204-9(G4)": 9
+    },
+    "evidence_category": "第三方补贴公示销量统计，1204细分",
+    "unknowns": [
+      "底层省份/地域覆盖",
+      "公示记录的申请/审核/兑付状态",
+      "数据截止时间",
+      "去重方法"
+    ],
+    "scope_boundary": "用于采集线索，不能解释为全国保有量排名；此前热度报告的裸LY1204或当前LY1204-L均不等同本轮LY1204(G4)文字目标"
+  },
+  "collection_method": {
+    "request_count": 7,
+    "successful_html_count": 5,
+    "failed_request_count": 2,
+    "target_product_count": 2,
+    "maximum_concurrency": 2,
+    "target_followup_delay_seconds": 0.5,
+    "authentication": "未登录，无付费或权限规避；继承代理及TLS验证",
+    "navigation": "真实目录锚点；官网403后未猜路径或改代理"
+  },
+  "matching_complete_manual_count": 0,
+  "new_repair_entry_count": 0,
+  "model_results": [
+    {
+      "brand_as_reported": "中国一拖",
+      "model_as_reported": "LY1204(G4)",
+      "product_directory": "https://www.nongjitong.com/company/category/324005.html",
+      "actual_anchor": "东方红LY1204（G4）拖拉机",
+      "product_url": "https://www.nongjitong.com/product/yto_ly1204d_tractors.html",
+      "product_title": "东方红LY1204（G4）拖拉机-东方红拖拉机-报价、补贴和图片",
+      "product_http_status": 200,
+      "product_bytes": 35428,
+      "product_sha256": "c178389c23c6fe4464171ce3b1b834adf2c0f0621f14555c8c3b5237554a3cc3",
+      "model_text_alignment": "本轮目录锚文字及产品正文标题与1204统计报告型号文字一致；非原件配置或版本匹配",
+      "matching_complete_manuals_acquired": 0,
+      "manual_pdf_acquired": false,
+      "manual_number": null,
+      "manual_version": null,
+      "manual_market": null,
+      "manual_emission_verified": false,
+      "manual_engine_configuration": null,
+      "manual_serial_range": null,
+      "manual_bytes": null,
+      "manual_sha256": null,
+      "manual_pdf_pages": null,
+      "manual_search_status": "已读匹配型号公开产品HTML，未见PDF/fileview/使用维护说明书链接；完整厂家整机手册仍待取得",
+      "admitted_to_repair_retrieval": false,
+      "scope_boundary": "仅对齐公开型号文字；不把LY1204-L、LY1204-M、LY1204-2、MY1204-9C、MY1204-9CZ作为目标等价型号，不使用旧LX或LF系列手册替代",
+      "next_step": "继续厂家服务或授权经销商公开入口，索取完整型号G4版整机使用维护手册；取得原件后核封面型号、编号/版次、发动机/配置、序列号范围及完整长度页数，再审校证据页"
+    },
+    {
+      "brand_as_reported": "中国一拖",
+      "model_as_reported": "MY1204-9(G4)",
+      "product_directory": "https://www.nongjitong.com/company/category/409746.html",
+      "actual_anchor": "东方红MY1204-9（G4）轮式拖拉机",
+      "product_url": "https://www.nongjitong.com/product/353362.html",
+      "product_title": "东方红MY1204-9（G4）轮式拖拉机-东方红轮式拖拉机-报价、补贴和图片",
+      "product_http_status": 200,
+      "product_bytes": 36744,
+      "product_sha256": "30963bdedae27dab6687a890e08e133b1a5283d26d7f253a8ae07b8e212c7d5a",
+      "model_text_alignment": "本轮目录锚文字及产品正文标题与1204统计报告型号文字一致；非原件配置或版本匹配",
+      "matching_complete_manuals_acquired": 0,
+      "manual_pdf_acquired": false,
+      "manual_number": null,
+      "manual_version": null,
+      "manual_market": null,
+      "manual_emission_verified": false,
+      "manual_engine_configuration": null,
+      "manual_serial_range": null,
+      "manual_bytes": null,
+      "manual_sha256": null,
+      "manual_pdf_pages": null,
+      "manual_search_status": "已读匹配型号公开产品HTML，未见PDF/fileview/使用维护说明书链接；完整厂家整机手册仍待取得",
+      "admitted_to_repair_retrieval": false,
+      "scope_boundary": "仅对齐公开型号文字；不把LY1204-L、LY1204-M、LY1204-2、MY1204-9C、MY1204-9CZ作为目标等价型号，不使用旧LX或LF系列手册替代",
+      "next_step": "继续厂家服务或授权经销商公开入口，索取完整型号G4版整机使用维护手册；取得原件后核封面型号、编号/版次、发动机/配置、序列号范围及完整长度页数，再审校证据页"
+    }
+  ],
+  "requests": [
+    {
+      "url": "https://www.yto.com.cn/robots.txt",
+      "checked_at_utc": "2026-10-04T09:14:05.951570+00:00",
+      "purpose": "读取厂家站公开抓取限制",
+      "network_method": "inherited proxy and TLS verification, public read",
+      "error": "HTTP Error 403: Forbidden",
+      "http_status": 403,
+      "document_kind": "未取得正文的请求",
+      "hash_scope": null,
+      "relevant_links": [],
+      "assessment": "未取得正文，不能写成已查目录无附件"
+    },
+    {
+      "url": "https://www.yto.com.cn/",
+      "checked_at_utc": "2026-10-04T09:14:05.952444+00:00",
+      "purpose": "官方主页寻找真实LY/MY产品与服务目录",
+      "network_method": "inherited proxy and TLS verification, public read",
+      "error": "HTTP Error 403: Forbidden",
+      "http_status": 403,
+      "document_kind": "未取得正文的请求",
+      "hash_scope": null,
+      "relevant_links": [],
+      "assessment": "未取得正文，不能写成已查目录无附件"
+    },
+    {
+      "url": "https://www.nongjitong.com/company/category/324002.html",
+      "checked_at_utc": "2026-10-04T09:14:07.177034+00:00",
+      "purpose": "既有东方红真实企业目录，定向找LY1204(G4)与MY1204-9(G4)锚点",
+      "network_method": "inherited proxy and TLS verification, public read",
+      "http_status": 200,
+      "final_url": "https://www.nongjitong.com/company/category/324002.html",
+      "content_type": "text/html",
+      "content_length": "17508",
+      "bytes": 17508,
+      "sha256": "8b8fb76b5f0bc583239a81be331dea2d93d64002c87e0cef19b9bd080c4ec20e",
+      "title": [
+        "ME系列-中国一拖集团有限公司"
+      ],
+      "attachment_refs": [],
+      "document_kind": "公开产品或目录HTML",
+      "hash_scope": "实际HTTP响应HTML字节；不是手册PDF",
+      "relevant_links": [
+        {
+          "url": "https://www.nongjitong.com/company/category/324005.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/company/category/409746.html"
+        }
+      ],
+      "assessment": "已取得公开HTML，目标型号目录/产品标题已读；未发现完整手册附件链接"
+    },
+    {
+      "url": "https://www.nongjitong.com/company/category/324005.html",
+      "checked_at_utc": "2026-10-04T09:14:32.573280+00:00",
+      "purpose": "从实际ME目录LY系列导航取得真实锚点，精确找LY1204(G4)完整手册",
+      "network_method": "inherited proxy and TLS verification, public read",
+      "http_status": 200,
+      "final_url": "https://www.nongjitong.com/company/category/324005.html",
+      "content_type": "text/html",
+      "content_length": "21248",
+      "bytes": 21248,
+      "sha256": "72cd5fadc903a18ad9dc4498e9fdcd7d4402d532ce74afa693350ea1e19da122",
+      "title": [
+        "LY系列-中国一拖集团有限公司"
+      ],
+      "attachment_refs": [],
+      "document_kind": "公开产品或目录HTML",
+      "hash_scope": "实际HTTP响应HTML字节；不是手册PDF",
+      "relevant_links": [
+        {
+          "url": "https://www.nongjitong.com/company/category/324005.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/company/category/409746.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204_tractor.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204d_tractors.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204-m_tractor.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204_2_tractro.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204-c1-_tractor.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204-cl1_tractor.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204-n_tractors.html"
+        }
+      ],
+      "assessment": "已取得公开HTML，目标型号目录/产品标题已读；未发现完整手册附件链接"
+    },
+    {
+      "url": "https://www.nongjitong.com/company/category/409746.html",
+      "checked_at_utc": "2026-10-04T09:14:33.351509+00:00",
+      "purpose": "从实际ME目录MY系列导航取得真实锚点，精确找MY1204-9(G4)完整手册",
+      "network_method": "inherited proxy and TLS verification, public read",
+      "http_status": 200,
+      "final_url": "https://www.nongjitong.com/company/category/409746.html",
+      "content_type": "text/html",
+      "content_length": "15305",
+      "bytes": 15305,
+      "sha256": "cfee2c56d7d9d9a6e4011fa9ddf2a768148766250d84d0be80dee049d439c5ce",
+      "title": [
+        "MY系列-中国一拖集团有限公司"
+      ],
+      "attachment_refs": [],
+      "document_kind": "公开产品或目录HTML",
+      "hash_scope": "实际HTTP响应HTML字节；不是手册PDF",
+      "relevant_links": [
+        {
+          "url": "https://www.nongjitong.com/company/category/324005.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/company/category/409746.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/353362.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_my1204-9c_tractor.html"
+        }
+      ],
+      "assessment": "已取得公开HTML，目标型号目录/产品标题已读；未发现完整手册附件链接"
+    },
+    {
+      "url": "https://www.nongjitong.com/product/yto_ly1204d_tractors.html",
+      "checked_at_utc": "2026-10-04T09:15:00.835745+00:00",
+      "purpose": "LY真实目录锚文字为东方红LY1204(G4)，匹配本轮第三方报道目标；检查正文手册附件",
+      "network_method": "inherited proxy and TLS verification, public read",
+      "http_status": 200,
+      "final_url": "https://www.nongjitong.com/product/yto_ly1204d_tractors.html",
+      "content_type": "text/html",
+      "content_length": "35428",
+      "bytes": 35428,
+      "sha256": "c178389c23c6fe4464171ce3b1b834adf2c0f0621f14555c8c3b5237554a3cc3",
+      "title": [
+        "东方红LY1204（G4）拖拉机-东方红拖拉机-报价、补贴和图片"
+      ],
+      "attachment_refs": [],
+      "document_kind": "公开产品或目录HTML",
+      "hash_scope": "实际HTTP响应HTML字节；不是手册PDF",
+      "relevant_links": [
+        {
+          "url": "https://www.nongjitong.com/video/522733.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/product/yto_ly1204-m_tractor.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/video/522733.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/company/category/324005.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/company/category/409746.html"
+        }
+      ],
+      "assessment": "已取得公开HTML，目标型号目录/产品标题已读；未发现完整手册附件链接"
+    },
+    {
+      "url": "https://www.nongjitong.com/product/353362.html",
+      "checked_at_utc": "2026-10-04T09:15:01.679969+00:00",
+      "purpose": "MY真实目录锚文字为东方红MY1204-9(G4)，匹配本轮第三方报道目标；检查正文手册附件",
+      "network_method": "inherited proxy and TLS verification, public read",
+      "http_status": 200,
+      "final_url": "https://www.nongjitong.com/product/353362.html",
+      "content_type": "text/html",
+      "content_length": "36744",
+      "bytes": 36744,
+      "sha256": "30963bdedae27dab6687a890e08e133b1a5283d26d7f253a8ae07b8e212c7d5a",
+      "title": [
+        "东方红MY1204-9（G4）轮式拖拉机-东方红轮式拖拉机-报价、补贴和图片"
+      ],
+      "attachment_refs": [],
+      "document_kind": "公开产品或目录HTML",
+      "hash_scope": "实际HTTP响应HTML字节；不是手册PDF",
+      "relevant_links": [
+        {
+          "url": "https://www.nongjitong.com/video/522017.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/video/522017.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/company/category/324005.html"
+        },
+        {
+          "url": "https://www.nongjitong.com/company/category/409746.html"
+        }
+      ],
+      "assessment": "已取得公开HTML，目标型号目录/产品标题已读；未发现完整手册附件链接"
+    }
+  ],
+  "exclusions": [
+    "LY1204-L(G4)产品页不是LY1204(G4)精确目标",
+    "MY1204-9C/MY1204-9CZ(G4)不是MY1204-9(G4)精确目标",
+    "LX/LF旧手册不代替LY或MY目标整机手册",
+    "产品宣传参数、视频标题与补贴统计不改写为维修事实"
+  ],
+  "limits": "当前一拖官网主页与robots.txt均实际HTTP403，未读到厂家目录；产品页只证明本轮读取结果，不证明全网不存在手册。HTML哈希不可冒充PDF完整性核验。",
+  "retention": "仓库可归档本报告与自行概述；临时第三方报告原文及产品HTML不作为全文归档或新增维修索引。",
+  "hash_scope": "响应文件的哈希/字节数，依对象content_type及role判断；不是手册PDF完整性或本地来源记录哈希",
+  "included_in_repair_retrieval": false
+}
