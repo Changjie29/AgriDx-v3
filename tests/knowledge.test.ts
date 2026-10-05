@@ -184,6 +184,51 @@ test('LF1504 emission evidence is preserved and a national-four query cannot reu
   assert.equal(retrieve('国三 不能起动', 100, { ...tractor, brand: '约翰迪尔', model: '6E-1204(G4)' }).length, 0);
 });
 
+test('national-emission spellings work in queries and model fields without equating overseas standards', () => {
+  const context = { ...tractor, brand: '东方红', model: 'LF1504' };
+  const query = '起动机不转';
+  for (const stage of ['国三', '国3', '国III', '国Ⅲ', '国 iii']) {
+    expectEntry(retrieve(`东方红 LF1504 ${stage} ${query}`, 100), 'KB-YTO-LF1504-007');
+    expectEntry(retrieve(query, 100, { ...context, model: `LF1504 ${stage}` }), 'KB-YTO-LF1504-007');
+    expectEntry(retrieve(query, 100, { ...context, model: `LF1504(${stage})` }), 'KB-YTO-LF1504-007');
+    expectEntry(retrieve(`雷沃 ${stage} 发动机电气接头与传感器`, 100), 'LV-NR3-001');
+    expectEntry(retrieve('发动机电气接头与传感器', 100, {
+      ...tractor, brand: '雷沃', model: `${stage}拖拉机`,
+    }), 'LV-NR3-001');
+  }
+  for (const stage of ['国四', '国4', '国IV', '国Ⅳ', '国 iv']) {
+    const cases = [
+      { query: `东方红 LF1504 ${stage} ${query}`, context: {} },
+      { query, context: { ...context, model: `LF1504 ${stage}` } },
+      { query, context: { ...context, model: `LF1504(${stage})` } },
+      { query: `雷沃 ${stage} 发动机电气接头与传感器`, context: {} },
+      { query: `雷沃 国三拖拉机 ${stage} 发动机电气接头与传感器`, context: {} },
+      { query: '发动机电气接头与传感器', context: {
+        ...tractor, brand: '雷沃', model: `${stage}拖拉机`,
+      } },
+      { query: `${stage} 发动机电气接头与传感器`, context: {
+        ...tractor, brand: '雷沃', model: '国三拖拉机',
+      } },
+      { query: '国三拖拉机 发动机电气接头与传感器', context: {
+        ...tractor, brand: '雷沃', model: `${stage}拖拉机`,
+      } },
+    ];
+    for (const item of cases) {
+      const found = retrieve(item.query, 100, item.context);
+      assert.equal(found.length, 0, item.query);
+      const reply = generateLocalKnowledgeReply(item.query, found, item.context);
+      assert.match(reply, /未检索到与问题及已知机型相符的知识条目/);
+      assert.doesNotMatch(reply, /已找到对应品牌／型号的资料|【检索到的知识】/);
+    }
+  }
+  for (const standard of ['Tier IV', 'Stage IV']) {
+    expectEntry(retrieve(`久保田 M6060 ${standard} DPF消声器周围易燃物检查`, 100), 'KB-KB-M6060-005');
+  }
+  // Emission normalization must not erase an unsupported model suffix.
+  assert.equal(retrieve(query, 100, { ...context, model: 'LF1504-X 国III' }).length, 0);
+  assert.equal(retrieve(`东方红 LF1504-X 国III ${query}`, 100).length, 0);
+});
+
 test('ranks a model-specific starting fault ahead of the generic sample', () => {
   const found = retrieve(startQuery, 6, workmaster);
   assert.equal(found[0]?.entryId, 'NH-WM25-003');
@@ -249,6 +294,23 @@ test('unidentified equipment and non-tractor equipment do not receive tractor ar
     const found = retrieve(`纽荷兰 WORKMASTER25 ${startQuery}`, 100, { ...workmaster, machineType });
     assert.equal(archived(found).length, 0, machineType);
   }
+});
+
+test('non-tractor equipment cannot receive tractor sample operations or parameters', () => {
+  for (const machineType of ['联合收割机', '插秧机', '植保机', '播种机', 'combine', 'transplanter', 'sprayer']) {
+    for (const item of [
+      { query: '液压提升无力', context: { machineType } },
+      { query: `${machineType} 液压提升无力`, context: {} },
+    ]) {
+      const found = retrieve(item.query, 100, item.context);
+      assert.equal(found.length, 0, machineType);
+      const reply = generateLocalKnowledgeReply(item.query, found, item.context);
+      assert.match(reply, /未检索到与问题及已知机型相符的知识条目/);
+      assert.doesNotMatch(reply, /【检索到的知识】|40–80|16–20|MPa/);
+    }
+  }
+  assert.ok(retrieve('液压提升无力', 100).some((chunk) => chunk.heading === '四、液压系统故障'));
+  assert.ok(retrieve('液压提升无力', 100, tractor).some((chunk) => chunk.heading === '四、液压系统故障'));
 });
 
 test('declared electric equipment cannot receive incompatible diesel tractor archive instructions', () => {

@@ -1,0 +1,102 @@
+{
+  "validated_at_utc": "2026-10-05T02:11:51.793Z",
+  "version": "2.2.3",
+  "scope": "新载入修改后知识库的本地回环API验收；不代表线上部署、外部模型或全书事实审校",
+  "health": {
+    "ok": true,
+    "version": "2.2.3",
+    "timestamp": "2026-10-05T02:11:51.740Z",
+    "knowledge": {
+      "chunks": 174,
+      "archivedEntries": 165
+    }
+  },
+  "cases": [
+    {
+      "query": "联合收割机液压提升无力",
+      "machineType": "联合收割机",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "东方红 LF1504 国Ⅳ 起动机不转",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "起动机不转",
+      "machineType": "拖拉机",
+      "brand": "东方红",
+      "model": "LF1504 国IV",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "东方红 LF1504 国III 起动机不转",
+      "expected": "KB-YTO-LF1504-007",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 6,
+      "result": "passed"
+    },
+    {
+      "query": "雷沃 国Ⅲ 清洁与车身线束改装限制",
+      "expected": "LV-NR3-002",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 2,
+      "result": "passed"
+    },
+    {
+      "query": "国4 发动机电气接头与传感器",
+      "machineType": "拖拉机",
+      "brand": "雷沃",
+      "model": "国三拖拉机",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "钥匙在 START，启动电机不转",
+      "machineType": "拖拉机",
+      "brand": "纽荷兰",
+      "model": "WORKMASTER25",
+      "expected": "NH-WM25-003",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 4,
+      "result": "passed"
+    },
+    {
+      "query": "DPF消声器周围易燃物检查",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M6060",
+      "expected": "KB-KB-M6060-005",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 3,
+      "result": "passed"
+    },
+    {
+      "query": "液压提升无力",
+      "machineType": "拖拉机",
+      "expected": "generic",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 5,
+      "result": "passed"
+    }
+  ]
+}

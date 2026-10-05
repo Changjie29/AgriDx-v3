@@ -45,6 +45,13 @@ function normalizeModel(model: string): string {
   return model.toLowerCase().replace(/欧豹|系列|平台|拖拉机/g, '').replace(/[\s\-_/()（）]/g, '');
 }
 
+/** Only Chinese national-emission labels are aliases; Tier/Stage IV is a separate standard. */
+function normalizeNationalEmissions(text: string): string {
+  return text.replace(/国\s*(三|3|iii|Ⅲ|四|4|iv|Ⅳ)(?![a-z0-9])/gi, (_label, stage: string) =>
+    ['三', '3', 'iii'].includes(stage.normalize('NFKC').toLowerCase()) ? '国三' : '国四',
+  );
+}
+
 /** Explicit lists and parenthetical product names are aliases, never inferred submodels. */
 function declaredModels(chunk: KnowledgeChunk): string[] {
   if (chunk.models?.length) return chunk.models.map(normalizeModel);
@@ -100,6 +107,7 @@ function modelMentions(text: string): ModelMention[] {
 }
 
 function modelsIn(text: string): string[] {
+  text = normalizeNationalEmissions(text);
   const models = modelMentions(text).map((mention) => mention.model);
   if (text.includes('国三')) models.push('国三');
   if (text.includes('国四') && !models.some((model) => model.endsWith('g4'))) models.push('国四');
@@ -108,7 +116,7 @@ function modelsIn(text: string): string[] {
 
 /** Identity selects eligible documents without inflating their symptom relevance. */
 export function queryWithoutIdentity(query: string): string {
-  let text = query;
+  let text = normalizeNationalEmissions(query);
   for (const aliases of Object.values(BRAND_ALIASES)) {
     for (const alias of [...aliases].sort((a, b) => b.length - a.length)) {
       text = /^[a-z ]+$/.test(alias)
@@ -139,8 +147,12 @@ export function resolveScope(query: string, context: RetrievalContext): Resolved
   const explicitBrand = context.brand?.trim();
   const brand = explicitBrand ? canonicalBrand(explicitBrand) : brands.length === 1 ? brands[0] : undefined;
   const explicitModel = context.model?.trim();
-  const models = explicitModel ? declaredModels({ source: '', heading: '', text: '', model: explicitModel }) : modelsIn(query);
-  const emissions = ['国三', '国四'].filter((stage) => [query, explicitModel].some((text) => text?.includes(stage)));
+  // Remove only recognized emission labels; undocumented model suffixes remain distinct identities.
+  const models = explicitModel ? declaredModels({ source: '', heading: '', text: '',
+    model: normalizeNationalEmissions(explicitModel).replace(/国三|国四/g, ''),
+  }).filter(Boolean) : modelsIn(query);
+  const emissionText = normalizeNationalEmissions([query, explicitModel].filter(Boolean).join(' '));
+  const emissions = ['国三', '国四'].filter((stage) => emissionText.includes(stage));
   const configurationText = [query, explicitModel].filter(Boolean).join(' ');
   const configurations: ('CAB' | 'ROPS')[] = [];
   if (/\bcab\b|驾驶室/i.test(configurationText)) configurations.push('CAB');
@@ -155,7 +167,7 @@ export function resolveScope(query: string, context: RetrievalContext): Resolved
   const electric = /电动|新能源|无人|electric|autonomous|new-energy/i.test([type, explicitBrand, context.model, query].filter(Boolean).join(' ')) ||
     brand === '鸿鹄' || models.includes('t70');
   const ambiguous = !explicitBrand && brands.length > 1;
-  return { brand, models, emissions, configurations, driveConfigurations, ambiguous, tractorArchive, electric, genericKnowledge: !electric && !brand && models.length === 0 && emissions.length === 0 && !ambiguous };
+  return { brand, models, emissions, configurations, driveConfigurations, ambiguous, tractorArchive, electric, genericKnowledge: tractorArchive && !electric && !brand && models.length === 0 && emissions.length === 0 && !ambiguous };
 }
 
 /** Matching is identity selection, not proof of market, configuration or version applicability. */
