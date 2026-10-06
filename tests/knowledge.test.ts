@@ -10,6 +10,7 @@ import {
 } from '../server/knowledge/retriever';
 import { buildSystemPrompt } from '../server/knowledge/systemPrompt';
 import { generateLocalKnowledgeReply } from '../server/knowledge/fallbackDiagnosis';
+import { resolveScope, type RetrievalContext } from '../server/knowledge/scope';
 
 const tractor = { machineType: '拖拉机' };
 const workmaster = { ...tractor, brand: '纽荷兰', model: 'WORKMASTER25' };
@@ -25,6 +26,15 @@ function expectEntry(chunks: KnowledgeChunk[], entryId: string): KnowledgeChunk 
   return chunk;
 }
 
+function expectIdentityConflict(query: string, context: RetrievalContext) {
+  const { message, retrieved } = buildSystemPrompt({ query, ...context });
+  assert.equal(retrieved.length, 0, query);
+  assert.equal(retrieve(query, 100, context).length, 0, query);
+  assert.match(generateLocalKnowledgeReply(query, retrieved, context), /请确认本次咨询对象/);
+  assert.match(message.content, /不得生成诊断结论、操作步骤或维修参数/);
+  assert.doesNotMatch(message.content, /适用性：品牌／型号匹配/);
+}
+
 before(() => {
   loadKnowledgeBase();
 });
@@ -32,7 +42,7 @@ before(() => {
 test('indexes each archived entry exactly once and preserves the 9 existing chunks', () => {
   const indexed = fs.readFileSync('知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl', 'utf8')
     .trim().split(/\r?\n/).map((line) => JSON.parse(line) as {
-      entry_id: string; source_id: string; title: string; brand: string; model: string; models?: string[];
+      entry_id: string; source_id: string; title: string; brand: string; model: string; models?: string[]; entry_type: string;
     });
   const sources = JSON.parse(fs.readFileSync('知识库/整理后的知识库/农用拖拉机知识库/sources.json', 'utf8')) as {
     source_id: string; models?: string[];
@@ -40,8 +50,15 @@ test('indexes each archived entry exactly once and preserves the 9 existing chun
   const sourceModels = new Map(sources.map((source) => [source.source_id, source.models]));
   assert.equal(stats().archivedEntries, indexed.length);
   assert.equal(stats().chunks, indexed.length + 9);
-  const entries = indexed.map(({ entry_id, source_id, title, brand, model, models }) => {
-    const exactModel = models?.[0] ?? sourceModels.get(source_id)?.[0] ?? model;
+  const entries = indexed.map(({ entry_id, source_id, title, brand, model, models, entry_type }) => {
+    let exactModel = models?.[0] ?? sourceModels.get(source_id)?.[0] ?? model;
+    const range = sourceModels.get(source_id);
+    const titleModels = resolveScope(title, {}).models.filter((item) => !['国三', '国四'].includes(item));
+    const rangeModels = new Set(range?.flatMap((item) => resolveScope('', { model: item }).models));
+    // A manual-index title can ask about the whole documented range; repair entries stay exact.
+    if (entry_type === '资料索引' && range && titleModels.length > 1 && titleModels.every((item) => rangeModels.has(item))) {
+      exactModel = range.join('/');
+    }
     const found = retrieve(title, indexed.length, { ...tractor, brand, model: exactModel });
     const chunk = expectEntry(found, entry_id);
     assert.ok(chunk.sourceId);
@@ -271,21 +288,108 @@ test('does not apply WORKMASTER25 entries to WORKMASTER25S or an unsupported mod
   }
 });
 
-test('explicit machine identity prevents cross-brand and cross-model retrieval', () => {
-  const kubota = retrieve('纽荷兰 WORKMASTER25 发动机过热', 100, {
-    ...tractor, brand: '久保田', model: 'LX2620',
-  });
-  assert.ok(archived(kubota).length > 0);
-  assert.ok(archived(kubota).every((chunk) => chunk.sourceId === 'SRC-KB-LX2620-6C82063118'));
+test('conflicting query and context identities require confirmation before any retrieval', () => {
+  const kubota = { ...tractor, brand: '久保田', model: 'LX2620' };
+  const conflicts = [
+    { query: '东方红 LF1504 发动机启动困难', context: kubota },
+    { query: '纽荷兰 WORKMASTER25 发动机过热', context: kubota },
+    { query: '久保田 M5-111 发动机机油油位检查', context: kubota },
+    { query: '久保田 L2502 发动机启动困难', context: kubota },
+    { query: '型号 L2502 发动机启动困难', context: kubota },
+    { query: '机型：L2502 发动机启动困难', context: kubota },
+    { query: 'M5-111 发动机机油油位检查', context: { ...tractor, model: 'LX2620' } },
+    { query: '东方红 起动机不转', context: { ...tractor, brand: '久保田' } },
+    { query: '久保田 LX2620 发动机过热', context: { ...tractor, brand: '纽荷兰' } },
+    { query: '久保田 M7060 变速箱油位检查', context: { ...tractor, brand: '久保田', model: 'M6060' } },
+    { query: '久保田 LX2620 M5-111 发动机机油油位检查', context: kubota },
+    { query: '久保田 LX2620/LX2620SU 发动机启动困难', context: kubota },
+    { query: '久保田 M5-111 发动机启动困难', context: { ...kubota, model: 'LX2620/LX2620SU' } },
+    { query: '久保田 东方红 发动机启动困难', context: kubota },
+    { query: '东方红 LF1504-X 国III 起动机不转', context: { ...tractor, brand: '东方红', model: 'LF1504' } },
+  ];
+  for (const { query, context } of conflicts) expectIdentityConflict(query, context);
 
   const tg = retrieve('雷沃 国三 发动机电气接头与传感器', 100, {
     ...tractor, brand: '雷沃', model: '欧豹TG系列',
   });
   assert.ok(archived(tg).every((chunk) => chunk.entryId?.startsWith('LV-TG-')));
-  const conflictingBrand = retrieve('久保田 LX2620 发动机过热', 100, {
-    ...tractor, brand: '纽荷兰',
+});
+
+test('consistent aliases and subsets of an explicit manual model range remain retrievable', () => {
+  const kubota = { ...tractor, brand: '久保田', model: 'LX2620' };
+  for (const item of [
+    { query: 'Kubota LX 2620 发动机启动困难', context: kubota },
+    { query: '久保田 LX2620 发动机启动困难', context: { ...tractor, brand: 'Kubota', model: 'LX 2620' } },
+    { query: '发动机启动困难', context: kubota },
+    { query: '久保田 发动机启动困难', context: { ...tractor, model: 'LX2620' } },
+    { query: 'LX2620 发动机启动困难', context: { ...tractor, brand: '久保田' } },
+    { query: '久保田 LX2620 / LX 2620 发动机启动困难', context: kubota },
+    { query: '久保田 Err1 发动机启动困难', context: kubota },
+    { query: '久保田 故障码P0015 发动机启动困难', context: kubota },
+    { query: '故障码：P0015 发动机启动困难', context: kubota },
+    { query: '久保田 12V 发动机启动困难', context: kubota },
+  ]) expectEntry(retrieve(item.query, 100, item.context), 'KB-LX2620-003');
+  expectEntry(retrieve(`New Holland WORKMASTER 25 ${startQuery}`, 100, workmaster), 'NH-WM25-003');
+  for (const model of ['LX2620/LX2620SU', 'LX2620-LX2620SU']) {
+    const context = { ...kubota, model };
+    for (const queryModel of ['LX2620', 'LX2620SU', 'LX2620/LX2620SU', 'LX2620-LX2620SU']) {
+      expectEntry(retrieve(`久保田 ${queryModel} 发动机启动困难`, 100, context), 'KB-LX2620-003');
+    }
+  }
+  for (const [model, queryModel] of [
+    ['QY210Pro', 'QYBD-2.5SD'], ['QYBD-2.5SD', 'QY210 Pro'],
+    ['QYBD-2.5SD（QY210 Pro）', 'QY210 Pro'], ['QY210Pro', 'QYBD-2.5SD（QY210 Pro）'],
+  ]) {
+    const context = { ...tractor, brand: '千寻位置', model };
+    expectEntry(retrieve(`千耘 ${queryModel} 未定位与交接垄不准`, 100, context), 'KB-QX-QY210PRO-V01-003');
+  }
+  expectIdentityConflict('千耘 QYBD-2.5GD 未定位与交接垄不准', {
+    ...tractor, brand: '千寻位置', model: 'QY210Pro',
   });
-  assert.ok(archived(conflictingBrand).every((chunk) => chunk.brand === '纽荷兰'));
+});
+
+test('document references do not replace or conflict with the actual machine identity', () => {
+  const context = { ...tractor, brand: '久保田', model: 'LX2620' };
+  const references = [
+    'SRC-KB-LX2620-6C82063118', 'KB-LX2620-003', 'SRC-YTO-LF1504-SMLF150449010',
+    'SRC-QX-QY210PRO-V01', 'M5-111.pdf', 'SM-LF1504.49.010', '知识库/原始农机说明书/东方红/LF1504/来源记录.md',
+    'https://example.com/YTO/LF1504/manual.pdf',
+    '[东方红 LF1504说明书](https://example.com/LF1504.pdf)',
+  ];
+  for (const reference of references) {
+    expectEntry(retrieve(`参考资料 ${reference}；发动机启动困难`, 100, context), 'KB-LX2620-003');
+    expectEntry(retrieve(`参考资料 ${reference}；久保田 LX2620 发动机启动困难`, 100, context), 'KB-LX2620-003');
+    expectIdentityConflict(`参考资料 ${reference}；久保田 M5-111 发动机启动困难`, context);
+    assert.equal(retrieve(`${reference} 量子纠缠`, 100).length, 0);
+  }
+  // A filename must not swallow the real identity in surrounding unspaced text.
+  expectIdentityConflict('东方红LF1504参阅M5-111.pdf，发动机启动困难', context);
+  for (const delimiter of ['，', '；', '。', '：', ',', ';', ':', '.']) {
+    expectEntry(retrieve(`发动机启动困难${delimiter}参见LX2620.md`, 100, context), 'KB-LX2620-003');
+    expectEntry(retrieve(`参考https://example.com/M5-111.pdf${delimiter}发动机启动困难`, 100, context), 'KB-LX2620-003');
+  }
+  expectEntry(retrieve('东方红 LF1504，手册编号SM-LF1504.49.010，起动机不转', 100, {
+    ...tractor, brand: '东方红', model: 'LF1504',
+  }), 'KB-YTO-LF1504-007');
+  expectIdentityConflict('东方红 LF1504.49.011 起动机不转', { ...tractor, brand: '东方红', model: 'LF1504' });
+});
+
+test('a tractor context cannot override a non-tractor identity in the question', () => {
+  for (const machineType of ['联合收割机', '插秧机', '植保机', 'combine']) {
+    expectIdentityConflict(`${machineType} 液压提升无力`, tractor);
+    expectIdentityConflict(`${machineType} 久保田 LX2620 发动机启动困难`, {
+      ...tractor, brand: '久保田', model: 'LX2620',
+    });
+  }
+  expectIdentityConflict('拖拉机 液压提升无力', { machineType: '联合收割机' });
+  assert.equal(resolveScope('拖拉机 液压提升无力', { machineType: '农机' }).identityConflict, false);
+  expectEntry(retrieve('久保田 LX2620 拖拉机挂接播种机时发动机动力不足', 100, {
+    ...tractor, brand: '久保田', model: 'LX2620',
+  }), 'KB-LX2620-004');
+  expectEntry(retrieve('PTO接播种机时防护罩要求', 100, {
+    ...tractor, brand: '久保田', model: 'M6060',
+  }), 'KB-KB-M6060-002');
+  expectIdentityConflict('联合收割机挂接播种机时发动机动力不足', tractor);
 });
 
 test('unidentified equipment and non-tractor equipment do not receive tractor archive entries', () => {

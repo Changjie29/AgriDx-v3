@@ -11,6 +11,7 @@
  */
 import type { ChatMessage } from '../llm/types';
 import { retrieve, formatForPrompt, type KnowledgeChunk } from './retriever';
+import { resolveScope } from './scope';
 
 export interface BuildSystemPromptOptions {
   /** 用户最近一轮问题（用于检索） */
@@ -27,7 +28,9 @@ export function buildSystemPrompt(opts: BuildSystemPromptOptions): {
 } {
   const retrieved = retrieve(opts.query, 6, opts);
   const knowledgeBlock =
-    retrieved.length > 0
+    resolveScope(opts.query, opts).identityConflict
+      ? '（已填写的农机信息与问题中的类型、品牌或型号不一致。必须先请用户确认本次咨询对象，不能把任意一方视为已确认机型；不得生成诊断结论、操作步骤或维修参数。）'
+      : retrieved.length > 0
       ? formatForPrompt(retrieved)
       : '（本次未命中知识库片段；你必须明确告知用户资料不足，不要凭记忆编造参数。）';
 

@@ -1,5 +1,5 @@
 import { describeSource, type KnowledgeChunk } from './retriever';
-import type { RetrievalContext } from './scope';
+import { resolveScope, type RetrievalContext } from './scope';
 
 /** Without a model service, report retrieved evidence instead of synthesizing a diagnosis. */
 export function generateLocalKnowledgeReply(
@@ -11,11 +11,14 @@ export function generateLocalKnowledgeReply(
   const primary = retrieved[0];
 
   if (!primary) {
+    const identityNotice = resolveScope(query, opts).identityConflict
+      ? '已填写的农机信息与问题中的类型、品牌或型号不一致。请确认本次咨询对象，修改已填写信息或问题中的机型后再检索。\n'
+      : '';
     return `**【故障现象分析】**
 收到关于「${machineDesc}」的咨询：“${query}”。
 
 **【当前资料不足】**
-未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。
+${identityNotice}未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。
 
 **【安全提醒】**
 故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。`;
