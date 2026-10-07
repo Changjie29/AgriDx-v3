@@ -165,12 +165,36 @@ test('navigation-system aliases do not establish equivalence to conflicting mode
 });
 
 test('researched domestic brands without applicable entries return insufficient knowledge', () => {
-  for (const brand of ['常发', 'Changfa', '沃得', '悍沃', '黄海金马', '金马', 'Jinma', '时风', 'Shifeng']) {
+  for (const brand of ['常发', 'Changfa', '黄海金马', '金马', 'Jinma', '时风', 'Shifeng']) {
     const query = `${brand} 发动机水温过高`;
     assert.equal(retrieve(query, 100, tractor).length, 0, brand);
     assert.equal(retrieve('发动机水温过高', 100, { ...tractor, brand }).length, 0, brand);
     assert.match(generateLocalKnowledgeReply(query, [], { ...tractor, brand }), /资料不足/);
   }
+});
+
+test('Wode WF national-three manuals match exact models and refuse national-four reuse', () => {
+  const context = { ...tractor, brand: '沃得', model: 'WF1404-3' };
+  const entry = expectEntry(retrieve('磨合 牵引负荷', 100, context), 'KB-WD-WF-003');
+  assert.equal(entry.emissionStage, '国三');
+  expectEntry(retrieve('沃得 WF1404-3 国三 磨合', 100), 'KB-WD-WF-003');
+  assert.equal(retrieve('沃得 WF1404-3 国四 磨合', 100).length, 0);
+  assert.equal(retrieve('国四 磨合', 100, context).length, 0);
+  assert.equal(retrieve('沃得 WF1204-1(G4) 磨合', 100).length, 0);
+  expectEntry(retrieve('沃得 WF1604 副离合器调整', 100), 'KB-WD-WF-104');
+  expectEntry(retrieve('沃得 WF1504-2 离合器打滑', 100), 'KB-WD-WF-007');
+});
+
+test('CHCNAV NX510 navigation entries retrieve under aliases without whole-tractor equivalence', () => {
+  const entryId = 'KB-CHC-NX510-006';
+  for (const brand of ['华测', '华测导航', 'CHCNAV']) {
+    expectEntry(retrieve('开机 状态栏', 100, { ...tractor, brand, model: 'NX510' }), entryId);
+  }
+  expectEntry(retrieve('华测 NX510 开机要点', 100), entryId);
+  const found = expectEntry(retrieve('华测 NX510 开机要点', 100), entryId);
+  assert.equal(found.applicability, 'matched');
+  assert.equal(retrieve('开机 状态栏', 100, { ...tractor, brand: '鸿鹄', model: 'NX510' }).length, 0);
+  expectEntry(retrieve('鸿鹄 T70 失联 避障', 100, { ...tractor, brand: '华测', model: 'NX510' }), 'KB-CHC-NX510-008');
 });
 
 test('LF1504 emission evidence is preserved and a national-four query cannot reuse its national-three manual', () => {

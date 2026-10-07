@@ -21,6 +21,7 @@ const BRAND_ALIASES: Record<string, string[]> = {
   潍泰: ['潍泰', 'weitai'],
   约翰迪尔: ['约翰迪尔', 'john deere', 'johndeere'],
   '千寻位置 / 千耘': ['千寻位置', '千耘', 'qianxun'],
+  华测: ['华测', 'chcnav', '华测导航', 'huace'],
 };
 
 function escapeRegex(text: string): string {
