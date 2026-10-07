@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**2.2.4**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
+当前项目版本：**2.2.5**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
 
 国内资料新增按“使用/购机证据 → 报告所列型号 → 精确说明书 → 审校与检索”整理，见[型号采集优先级](知识库/整理后的知识库/农用拖拉机知识库/采集优先级/README.md)。现有3篇第三方报告、21条证据、20种型号/排放写法候选，均完成定向查找；尚未取得这些候选的新匹配完整手册，不能据此给出全国保有量排名。部分省厅正文与吉林公开搜索现已可读；总量背景、历史/展示实例和当前仍失败入口分别归档，研究资料不参与维修检索。
 
@@ -234,7 +234,7 @@ AgriDx-v2/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "2.2.4", "timestamp": "...", "knowledge": { "chunks": 174, "archivedEntries": 165 } }
+{ "ok": true, "version": "2.2.5", "timestamp": "...", "knowledge": { "chunks": 174, "archivedEntries": 165 } }
 ```
 
 ### `POST /api/chat`
@@ -306,6 +306,7 @@ AgriDx-v2/
 
 - GitHub：https://github.com/Changjie29/AgriDx-v2
 - 本地工作区：clone 仓库后在根目录执行 `npm install` 即可开发，无需额外配置路径
+- 境内免梯子部署：`agridx.xyz` 此前挂在 OpenAI ChatGPT Sites 上，其边缘拦截境内 IP；迁往香港服务器（免备案）的一键脚本与操作清单见[香港部署指南](docs/deployment/2026-10-07-hk-deployment.md)
 - 同步方式：代码和知识库提交到 `main`；运行环境需按实际更新/部署流程重新加载，GitHub推送本身不代表网站已经部署
 
 ---

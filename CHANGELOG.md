@@ -2,6 +2,14 @@
 
 每次更新按改动幅度递进，并与`package.json`和README同步。本阶段最高`2.5.0`：小修增加补丁号，新增功能或显著扩充增加次版本。日期采用上海时区；GitHub保存与网站部署分别记录。
 
+## 2.2.5 — 2026-10-07
+
+新增香港服务器生产部署套件，为把`agridx.xyz`迁出ChatGPT Sites、实现境内免梯子访问做准备；从2.2.4递增补丁号。应用逻辑与正式知识库未变（仍20来源、165条、174片段）。
+
+- 背景：线上`agridx.xyz`自定义域名挂在OpenAI ChatGPT Sites（chatgpt.site）上，其Cloudflare边缘对境内IP返回403拦截页（"unable to access chatgpt.site"），开梯子（海外出口）才可打开；拦截发生在OpenAI入口，改DNS无法绕过。10-04线上核验曾200属更早状态，不能作当前可用依据。
+- 新增`scripts/hk-deploy/setup-server.sh`：Ubuntu 22.04/24.04 一键部署（基础包、Node 22、专用运行用户、克隆仓库、装依赖/构建/裁剪、生成`server/.env`、systemd守护、Nginx反代、Let's Encrypt证书、ufw；GitHub直连不稳自动改走ghfast.top镜像，重复执行安全）；新增`update.sh`（拉码→构建→重启→健康检查）；新增[香港部署指南](docs/deployment/2026-10-07-hk-deployment.md)（购机、DNS改指向、境内验证清单、ChatGPT Sites解绑、运维与回滚）。
+- 边界：两份脚本通过`bash -n`语法检查；截至记录时尚未在真实香港服务器执行，未声称已部署上线；域名解析改动与Sites解绑属用户控制台操作。正式部署后另行按实际响应验收并记录。
+
 ## 2.2.4 — 2026-10-07
 
 修复线上对话页直达/刷新404：前端路由由BrowserRouter改为HashRouter，从2.2.3递增补丁号；维修检索逻辑与正式知识库未变（仍20来源、165条、174片段）。
