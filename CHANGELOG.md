@@ -2,6 +2,16 @@
 
 每次更新按改动幅度递进，并与`package.json`和README同步。本阶段最高`2.5.0`：小修增加补丁号，新增功能或显著扩充增加次版本。日期采用上海时区；GitHub保存与网站部署分别记录。
 
+## 2.2.4 — 2026-10-07
+
+修复线上对话页直达/刷新404：前端路由由BrowserRouter改为HashRouter，从2.2.3递增补丁号；维修检索逻辑与正式知识库未变（仍20来源、165条、174片段）。
+
+- 2.2.2线上核验确认`/chat`、`/chat?参数`、`/chat/`直达404，原因是耕知·耘诊Sites托管层不做SPA路由回退；本会话无该托管层配置接口，改从仓库侧消除对托管层重写的依赖。HashRouter下对话页地址为`/#/chat`：服务器始终只收到路径`/`，任意静态托管均可直接打开与刷新对话页，刷新不再回首页。
+- `src/index.tsx`改用HashRouter，并移除BrowserRouter时期的"刷新回首页"replaceState兜底（该兜底是为规避托管层404所加，HashRouter下会把`/#/chat`清回`/`，反而丢失对话页）。
+- 首页区块导航（多模态方案/智能体架构/应用场景）不再用`navigate('/#hash')`锚点写法——锚点会与HashRouter的路由hash冲突且不保证触发滚动；改为`navigate('/', { state: { scrollTo } })`，HomePage挂载后按state滚动到对应区块；已在首页时保持直接scrollIntoView。HeroSection页内滚动按钮不受影响。
+- 保留与边界：`server.ts`生产模式的`/chat`→index.html回退未动，仓库自带服务仍可直达`/chat`；线上干净路径`/chat`在无重写的托管上依旧404，需托管层把`/chat`重定向到`/#/chat`或配置SPA回退才可用。`/api/*`与模型路由不受影响。
+- 验证：typecheck通过；`npm run build`构建通过（既有chunk体积告警保留）；27项测试通过；lint 0错误（保留`button.tsx`既有Fast Refresh警告）。`NODE_ENV=production`隔离生产启动后，`/api/health`返回2.2.4、165条/174片段，`/`与`/chat`均200且返回本轮构建的index.html；构建产物包含HashRouter的hashchange路由逻辑。未验证agridx.xyz线上部署与浏览器渲染；GitHub推送本身不代表网站已发布。
+
 ## 2.2.3 — 2026-10-07
 
 五品牌近期国四整机手册专项查找，仅采集研究、无正式索引变更，从2.2.2递增补丁号；正式知识库仍20来源、165条、174片段。

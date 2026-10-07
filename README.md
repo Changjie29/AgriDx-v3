@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**2.2.3**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
+当前项目版本：**2.2.4**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
 
 国内资料新增按“使用/购机证据 → 报告所列型号 → 精确说明书 → 审校与检索”整理，见[型号采集优先级](知识库/整理后的知识库/农用拖拉机知识库/采集优先级/README.md)。现有3篇第三方报告、21条证据、20种型号/排放写法候选，均完成定向查找；尚未取得这些候选的新匹配完整手册，不能据此给出全国保有量排名。部分省厅正文与吉林公开搜索现已可读；总量背景、历史/展示实例和当前仍失败入口分别归档，研究资料不参与维修检索。
 
@@ -59,7 +59,7 @@ npm run dev
 ```
 
 - 网站及 API：http://localhost:3000
-- 对话页：http://localhost:3000/chat
+- 对话页：http://localhost:3000/#/chat
 - 健康检查：http://localhost:3000/api/health
 
 ### 4. 检索测试 / 类型检查 / Lint / 构建
@@ -87,7 +87,7 @@ NODE_ENV=production PORT=3000 npm start
 
 部署须包含`dist/`、`server.ts`、`server/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
 
-发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。本轮隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。后续实际线上核验已确认2.2.2、20来源/165条/174片段及型号过滤；`/chat`直达仍404，Sites前端路由待修，整站验收尚未全部通过，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
+发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/#/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。本轮隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。后续实际线上核验已确认2.2.2、20来源/165条/174片段及型号过滤；2.2.3起改用HashRouter，对话页地址为`/#/chat`，静态托管无需SPA重写即可直接打开/刷新。干净路径`/chat`仍依赖托管层重定向，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
 
 ## LLM 选择策略
 
@@ -146,7 +146,7 @@ AgriDx-v2/
 │
 ├── src/                              # 前端源码（React 19 + Vite + TypeScript）
 │   ├── index.tsx                     # 应用入口（挂载 React + Router）
-│   ├── app.tsx                      # 路由表（/ 首页、/chat 对话、* 404）
+│   ├── app.tsx                      # 路由表（/ 首页、/chat 对话、* 404；经 HashRouter 呈现为 /#/、/#/chat）
 │   ├── index.css / tailwind-theme.css / typography.css  # 样式与主题变量
 │   ├── components/
 │   │   ├── Layout.tsx               # 全局布局：顶栏导航 + 主题/语言切换 + Outlet
@@ -234,7 +234,7 @@ AgriDx-v2/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "2.2.3", "timestamp": "...", "knowledge": { "chunks": 174, "archivedEntries": 165 } }
+{ "ok": true, "version": "2.2.4", "timestamp": "...", "knowledge": { "chunks": 174, "archivedEntries": 165 } }
 ```
 
 ### `POST /api/chat`
@@ -314,7 +314,7 @@ AgriDx-v2/
 
 ## 2026-09-26 对话体验优化
 
-- 首页与对话页按路由加载，直接访问 `/chat` 不下载首页的 3D 代码。
+- 首页与对话页按路由加载，直接访问 `/#/chat` 不下载首页的 3D 代码；HashRouter 下刷新对话页保持在对话页。
 - 输入超过 2000 字符时显示计数并禁止发送；中文输入法组词时回车不发送。
 - 支持停止等待；清空或离开页面会取消前端请求，并隔离旧请求的完成回调。停止等待不保证服务端模型已经停止生成。
 - 仅保存最近 100 条用户/助手消息，恢复时过滤损坏记录和非法展示字段。
