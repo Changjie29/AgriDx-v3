@@ -720,5 +720,6 @@
     "matched_technical_evidence_answer_mode": "knowledge-grounded",
     "local_answer_mode": "local-evidence",
     "complete_generated_fact_validation_claimed": false
-  }
+  },
+  "implementation_commit": "3810774c8d036f268a5381b0a0e0b2f18f55f7d1"
 }
