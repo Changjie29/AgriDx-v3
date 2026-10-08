@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """从现有索引生成导航与统计，不下载资料、不修改来源或条目、不复制事实正文。
 
-默认只需Python标准库；--visuals额外需要matplotlib及Noto Sans CJK字体。
+默认只需Python标准库；--visuals额外需要matplotlib及可用的中文字体。
 """
 import argparse
 from collections import Counter
@@ -113,7 +113,7 @@ def generate(date, visuals):
                              s['content_group'], f"[原件／记录]({link(s['source_path'])}) · {cards}"])
     text = f'''# 现有知识库概要
 
-整理日期：{date}（上海）。本轮只整理现有资料，未增加来源、条目或手册；图表表示库内整理量，不表示市场保有量、质量评分或诊断准确率。
+索引快照日期：{date}（上海），项目版本{payload['repository_version']}。图表表示当前库内整理量，不表示市场保有量、质量评分或诊断准确率。
 
 ## 一眼看懂
 
@@ -191,7 +191,7 @@ python3 知识库/工具/生成总览.py --date {date} --visuals
 python3 知识库/工具/校验索引.py
 ```
 
-生成Markdown／JSON只需要Python标准库，绘图另需matplotlib和Noto Sans CJK字体。核验结果及本轮修正见[整理验收](整理后的知识库/农用拖拉机知识库/采集记录/20261008_现有知识库整理验收.md)。GitHub保存、本地加载和线上部署分别确认。
+生成Markdown／JSON只需要Python标准库，绘图另需matplotlib和可用的中文字体（Linux Noto Sans CJK或macOS Arial Unicode等）。各轮整理与核验结果见[采集记录目录](整理后的知识库/农用拖拉机知识库/采集记录/)，按具体记录确认范围。GitHub保存、本地加载和线上部署分别确认。
 '''
     (KB / '现有知识库概要.md').write_text(text, 'utf8')
     if visuals:
@@ -209,13 +209,32 @@ def render(data, date):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    from matplotlib.font_manager import FontProperties
+    from matplotlib import font_manager
+    from matplotlib.ft2font import FT2Font
     from matplotlib.backends.backend_pdf import PdfPages
-    font_path = Path('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
-    if not font_path.exists():
-        raise RuntimeError('绘图需Noto Sans CJK字体；请安装字体后使用--visuals')
-    font = FontProperties(fname=str(font_path))
-    # This Noto collection contains CFF outlines; Type3 avoids invalid Type42 embedding.
+    candidates = [
+        Path('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'),
+        Path('/System/Library/Fonts/Supplemental/Arial Unicode.ttf'),
+        Path('/Library/Fonts/Arial Unicode.ttf'),
+        Path('/System/Library/Fonts/STHeiti Medium.ttc'),
+    ]
+    font_path = None
+    required_glyphs = {ord(char) for char in '知识库来源索引维修边界统计／→＋·•'}
+    for candidate in candidates:
+        if not candidate.is_file():
+            continue
+        try:
+            charmap = FT2Font(str(candidate)).get_charmap()
+        except (RuntimeError, OSError):
+            continue
+        if required_glyphs <= charmap.keys():
+            font_path = candidate
+            break
+    if font_path is None:
+        raise RuntimeError('绘图需可用的中文字体；请安装Noto Sans CJK或Arial Unicode后使用--visuals')
+    font_manager.fontManager.addfont(str(font_path))
+    font = font_manager.FontProperties(fname=str(font_path))
+    # Type3 also supports the CFF outlines in Noto's font collection.
     plt.rcParams.update({'font.family': font.get_name(), 'pdf.fonttype': 3,
                          'svg.fonttype': 'path', 'axes.unicode_minus': False})
     out = KB / '可视化'
@@ -223,7 +242,7 @@ def render(data, date):
     green, muted, ink = '#277453', '#708c7d', '#243b31'
     fig = plt.figure(figsize=(13, 10), facecolor='#f8faf7')
     fig.text(.06, .95, '现有知识库 · 结构与数量', fontsize=25, color=ink)
-    fig.text(.06, .916, f'{date}  |  仅统计已入库资料，不新增来源或条目', fontsize=12, color=muted)
+    fig.text(.06, .916, f'{date}  |  项目版本{data["repository_version"]}  |  当前索引统计快照', fontsize=12, color=muted)
     t = data['totals']
     fig.text(.06, .866, f"{t['sources']} 来源     {t['archived_entries']} 归档条目     {t['knowledge_documents']} 正文文件     {t['retrieval_chunks']} 检索片段", fontsize=20, color=green)
     ax = fig.add_axes([.18, .21, .30, .58])
@@ -267,7 +286,7 @@ def render(data, date):
     svg.write_text('\n'.join(line.rstrip() for line in svg.read_text('utf8').splitlines()) + '\n', 'utf8')
     summary = plt.figure(figsize=(13, 10), facecolor='white')
     summary.text(.07, .91, '知识库概要 · 阅读与使用边界', fontsize=25, color=ink)
-    summary.text(.07, .865, f'整理日期 {date}  |  本轮未新增来源或条目', fontsize=12, color=muted)
+    summary.text(.07, .865, f'索引快照日期 {date}  |  项目版本{data["repository_version"]}', fontsize=12, color=muted)
     blocks = [
         ('怎么读', ['从知识库README进入品牌目录，再看知识卡编号段落与证据页。',
                   '机器索引只定位同一个Markdown正文，sources.json保存版本和适用限制。',
