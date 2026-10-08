@@ -106,7 +106,7 @@ NODE_ENV=production PORT=3000 npm start
 | `auto`，仅 DeepSeek Key 已设置 | DeepSeek | Gemini（需已设置 Key） |
 | `deepseek` / `gemini` | 指定模型；缺 Key 时改用另一家 | 另一家已配置模型 |
 
-主选网络、超时、鉴权、限流或无效响应失败时尝试备用。两家均不可用时返回本地资料，并在回答和界面标明降级；模型未配置与调用失败分别标明。Gemini 20 秒、DeepSeek 25 秒超时包含响应正文读取，前端等待上限 60 秒。`.env.example` 提供模型及 DeepSeek 兼容服务地址选项。无效优先配置在健康接口显示 `configValid=false`，不会静默选择另一种策略。
+主选网络、超时、鉴权、限流或无效响应失败时尝试备用。两家均不可用时返回本地资料，并在回答和界面标明降级；模型未配置与调用失败分别标明。Gemini 20 秒、DeepSeek 20 秒超时包含响应正文读取，前端等待上限 60 秒。`.env.example` 提供模型及 DeepSeek 兼容服务地址选项。无效优先配置在健康接口显示 `configValid=false`，不会静默选择另一种策略。
 
 ## RAG 工作流
 
