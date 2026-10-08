@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**2.2.4**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以实际部署为准。
+当前项目版本：**2.3.2**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
 
 国内资料新增按“使用/购机证据 → 报告所列型号 → 精确说明书 → 审校与检索”整理，见[型号采集优先级](知识库/整理后的知识库/农用拖拉机知识库/采集优先级/README.md)。现有3篇第三方报告、21条证据、20种型号/排放写法候选，均完成定向查找；尚未取得这些候选的新匹配完整手册，不能据此给出全国保有量排名。部分省厅正文与吉林公开搜索现已可读；总量背景、历史/展示实例和当前仍失败入口分别归档，研究资料不参与维修检索。
 
@@ -13,7 +13,7 @@
 - **前端**：React 19 + Vite + TypeScript + Tailwind CSS + React Router + React Three Fiber
 - **后端**：Node.js + Express + tsx（ESM）
 - **LLM**：Gemini（`gemini-3.6-flash`）/ DeepSeek（`deepseek-v4-flash`），OpenAI 兼容协议
-- **知识库**：通用 Markdown + 165 条索引化拖拉机知识，按章节提取 + 关键词重叠打分，零向量库
+- **知识库**：通用信息收集提示 + 199 条索引化拖拉机及配套系统资料，按章节提取 + 关键词重叠打分，零向量库
 - **3D**：Three.js / React Three Fiber，程序化 RoomEnvironment 光照，零 HDR 网络请求
 
 ## 快速开始
@@ -59,7 +59,7 @@ npm run dev
 ```
 
 - 网站及 API：http://localhost:3000
-- 对话页：http://localhost:3000/chat
+- 对话页：http://localhost:3000/#/chat
 - 健康检查：http://localhost:3000/api/health
 
 ### 4. 检索测试 / 类型检查 / Lint / 构建
@@ -87,7 +87,7 @@ NODE_ENV=production PORT=3000 npm start
 
 部署须包含`dist/`、`server.ts`、`server/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
 
-发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。本轮隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。后续实际线上核验已确认2.2.2、20来源/165条/174片段及型号过滤；`/chat`直达仍404，Sites前端路由待修，整站验收尚未全部通过，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
+发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/#/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。本轮隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。后续实际线上核验已确认2.2.2、20来源/165条/174片段及型号过滤；2.2.3起改用HashRouter，对话页地址为`/#/chat`，静态托管无需SPA重写即可直接打开/刷新。干净路径`/chat`仍依赖托管层重定向，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
 
 ## LLM 选择策略
 
@@ -106,7 +106,7 @@ NODE_ENV=production PORT=3000 npm start
 
 ## RAG 工作流
 
-1. 启动时扫描 `server/knowledge/` 下的通用 `.md` 文件（跳过 `00_说明/`），按 `## ` 二级标题切块；同时读取 `知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl`，按条目编号提取对应 Markdown 章节。目前为 9 个通用片段 + 165 条拖拉机条目，共 174 个片段。
+1. 启动时扫描 `server/knowledge/` 下的通用 `.md` 文件（跳过 `00_说明/`），按 `## ` 二级标题切块；同时读取 `知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl`，按条目编号提取对应 Markdown 章节。目前为 9 个信息收集片段 + 199 条归档条目，共 208 个片段。通用内容只帮助补充机型与现象，不提供维修原因、操作或参数依据。
 2. 检索结合 `machineType`、`brand`、`model`，也识别问题中可辨认的品牌与型号，过滤不相关品牌／型号及非拖拉机的归档条目；再对问题做中文 2-gram + 英文 token 化，按关键词重叠打分，标题命中权重 ×3。配置专用条目使用`entries.models`限定来源型号子集，并要求精确型号；未填该字段的条目沿用整册范围。明确CAB/ROPS或两驱/四驱与已登记范围冲突时排除条目。品牌或型号匹配不代表市场、排放、其他配置及版本已经确认。
 3. 取 top-6 片段（单块超 1200 字符截断），拼入后端独占的 system prompt。
 4. system prompt 硬性要求：
@@ -117,7 +117,7 @@ NODE_ENV=production PORT=3000 npm start
 5. 前端只发 user/assistant 历史（截最近 20 轮），不发 system message——system prompt 由后端独占。
 6. 归档条目保留来源编号、原文定位、来源链接、文档适用范围及核对状态，供外部模型和本地回复引用。仅索引中的编号条目参与检索；归档 README、待补资料、原始 HTML/PDF 不作为诊断知识自动加载。
 
-例如：填写「拖拉机／久保田／LX2620」，询问「发动机启动困难」，可检索 `KB-LX2620-003`。问题改为「东方红LF1504启动困难」而仍保留久保田字段时，停止召回并要求确认咨询对象；问题中的明确品牌、完整型号或农机类型不能被旧字段覆盖。命中归档条目时优先使用对应资料，避免与通用示例中的参数或操作混用；已指定品牌／型号但无合适资料时返回资料不足。填写 `WORKMASTER25S` 时，不会套用仅适用于 `WORKMASTER25` 的条目。未确认市场或配置时仍需依据条目的适用限制核实。
+例如：填写「拖拉机／久保田／LX2620」，询问「发动机启动困难」，可检索 `KB-LX2620-003`。问题改为「东方红LF1504启动困难」而仍保留久保田字段时，停止召回并要求确认咨询对象；问题中的明确品牌、完整型号或农机类型不能被旧字段覆盖。命中归档条目时优先使用对应资料；仅命中通用内容时说明资料不足并收集信息，不据此生成故障原因、维修步骤或参数。已指定品牌／型号但无合适资料时返回资料不足。填写 `WORKMASTER25S` 时，不会套用仅适用于 `WORKMASTER25` 的条目。未确认市场或配置时仍需依据条目的适用限制核实。
 
 ## 知识库目录
 
@@ -146,7 +146,7 @@ AgriDx-v2/
 │
 ├── src/                              # 前端源码（React 19 + Vite + TypeScript）
 │   ├── index.tsx                     # 应用入口（挂载 React + Router）
-│   ├── app.tsx                      # 路由表（/ 首页、/chat 对话、* 404）
+│   ├── app.tsx                      # 路由表（/ 首页、/chat 对话、* 404；经 HashRouter 呈现为 /#/、/#/chat）
 │   ├── index.css / tailwind-theme.css / typography.css  # 样式与主题变量
 │   ├── components/
 │   │   ├── Layout.tsx               # 全局布局：顶栏导航 + 主题/语言切换 + Outlet
@@ -234,7 +234,7 @@ AgriDx-v2/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "2.2.2", "timestamp": "...", "knowledge": { "chunks": 174, "archivedEntries": 165 } }
+{ "ok": true, "version": "2.3.2", "timestamp": "...", "knowledge": { "chunks": 208, "archivedEntries": 199 } }
 ```
 
 ### `POST /api/chat`
@@ -285,7 +285,7 @@ AgriDx-v2/
 
 **已实现**
 
-- 本地 Markdown 知识库 + 165 条拖拉机归档条目 + 品牌／型号过滤与关键词检索 RAG
+- 本地 Markdown 知识库 + 199 条拖拉机及配套系统归档条目 + 品牌／型号过滤与关键词检索 RAG
 - Gemini / DeepSeek 双 Provider，按代理自动选择 + 失败回退
 - 后端独占 system prompt，强制结构化输出与禁止编造参数
 - 可交互 3D 拖拉机模型（拖拽/缩放/自转/恢复视角）
@@ -306,6 +306,7 @@ AgriDx-v2/
 
 - GitHub：https://github.com/Changjie29/AgriDx-v2
 - 本地工作区：clone 仓库后在根目录执行 `npm install` 即可开发，无需额外配置路径
+- 境内免梯子部署：`agridx.xyz` 此前挂在 OpenAI ChatGPT Sites 上，其边缘拦截境内 IP；迁往香港服务器（免备案）的一键脚本与操作清单见[香港部署指南](docs/deployment/2026-10-07-hk-deployment.md)
 - 同步方式：代码和知识库提交到 `main`；运行环境需按实际更新/部署流程重新加载，GitHub推送本身不代表网站已经部署
 
 ---
@@ -314,7 +315,7 @@ AgriDx-v2/
 
 ## 2026-09-26 对话体验优化
 
-- 首页与对话页按路由加载，直接访问 `/chat` 不下载首页的 3D 代码。
+- 首页与对话页按路由加载，直接访问 `/#/chat` 不下载首页的 3D 代码；HashRouter 下刷新对话页保持在对话页。
 - 输入超过 2000 字符时显示计数并禁止发送；中文输入法组词时回车不发送。
 - 支持停止等待；清空或离开页面会取消前端请求，并隔离旧请求的完成回调。停止等待不保证服务端模型已经停止生成。
 - 仅保存最近 100 条用户/助手消息，恢复时过滤损坏记录和非法展示字段。

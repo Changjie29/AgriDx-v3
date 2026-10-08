@@ -1,17 +1,15 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import App from './app';
 import './index.css';
 import './tailwind-theme.css';
 import './typography.css';
 import './liquid-glass.css';
 
-// 浏览器刷新时回到首页；站内跳转和直接打开对话链接仍按正常路由处理。
-const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
-if (navigation?.type === 'reload') {
-  window.history.replaceState(null, '', import.meta.env.BASE_URL);
-}
+// 使用 HashRouter：路由挂在 URL 的 # 之后（如 /#/chat），
+// 服务器始终只收到路径 /，静态托管无需 SPA 重写即可直接打开或刷新对话页。
+// 代价是 URL 带 #；如需干净的 /chat 路径，需在托管层另行配置重定向/回退。
 
 /* ===== ResizeObserver 兜底 =====
  * 某些浏览器/嵌入环境下原生 ResizeObserver 不触发回调，导致
@@ -82,8 +80,8 @@ if (navigation?.type === 'reload') {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
 );

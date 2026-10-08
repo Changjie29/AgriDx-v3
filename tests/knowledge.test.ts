@@ -182,12 +182,37 @@ test('navigation-system aliases do not establish equivalence to conflicting mode
 });
 
 test('researched domestic brands without applicable entries return insufficient knowledge', () => {
-  for (const brand of ['常发', 'Changfa', '沃得', '悍沃', '黄海金马', '金马', 'Jinma', '时风', 'Shifeng']) {
+  for (const brand of ['常发', 'Changfa', '黄海金马', '金马', 'Jinma', '时风', 'Shifeng']) {
     const query = `${brand} 发动机水温过高`;
     assert.equal(retrieve(query, 100, tractor).length, 0, brand);
     assert.equal(retrieve('发动机水温过高', 100, { ...tractor, brand }).length, 0, brand);
     assert.match(generateLocalKnowledgeReply(query, [], { ...tractor, brand }), /资料不足/);
   }
+});
+
+test('Wode WF national-three manuals match exact models and refuse national-four reuse', () => {
+  const context = { ...tractor, brand: '沃得', model: 'WF1404-3' };
+  const entry = expectEntry(retrieve('磨合 牵引负荷', 100, context), 'KB-WD-WF-003');
+  assert.equal(entry.emissionStage, '国三');
+  expectEntry(retrieve('沃得 WF1404-3 国三 磨合', 100), 'KB-WD-WF-003');
+  assert.equal(retrieve('沃得 WF1404-3 国四 磨合', 100).length, 0);
+  assert.equal(retrieve('国四 磨合', 100, context).length, 0);
+  assert.equal(retrieve('沃得 WF1204-1(G4) 磨合', 100).length, 0);
+  expectEntry(retrieve('沃得 WF1604 副离合器调整', 100), 'KB-WD-WF-104');
+  expectEntry(retrieve('沃得 WF1504-2 离合器打滑', 100), 'KB-WD-WF-007');
+});
+
+test('CHCNAV NX510 navigation entries retrieve under aliases without whole-tractor equivalence', () => {
+  const entryId = 'KB-CHC-NX510-006';
+  for (const brand of ['华测', '华测导航', 'CHCNAV']) {
+    expectEntry(retrieve('开机 状态栏', 100, { ...tractor, brand, model: 'NX510' }), entryId);
+  }
+  expectEntry(retrieve('华测 NX510 开机要点', 100), entryId);
+  const found = expectEntry(retrieve('华测 NX510 开机要点', 100), entryId);
+  assert.equal(found.applicability, 'matched');
+  assert.equal(retrieve('开机 状态栏', 100, { ...tractor, brand: '鸿鹄', model: 'NX510' }).length, 0);
+  expectIdentityConflict('鸿鹄 T70 失联 避障', { ...tractor, brand: '华测', model: 'NX510' });
+  expectEntry(retrieve('华测 NX510 失联 避障', 100, { ...tractor, brand: '华测', model: 'NX510' }), 'KB-CHC-NX510-008');
 });
 
 test('LF1504 emission evidence is preserved and a national-four query cannot reuse its national-three manual', () => {
@@ -415,6 +440,58 @@ test('non-tractor equipment cannot receive tractor sample operations or paramete
   }
   assert.ok(retrieve('液压提升无力', 100).some((chunk) => chunk.heading === '四、液压系统故障'));
   assert.ok(retrieve('液压提升无力', 100, tractor).some((chunk) => chunk.heading === '四、液压系统故障'));
+});
+
+test('unidentified tractor questions collect information instead of returning unsourced repairs', () => {
+  const unsourcedFacts = /5[–-]10\s*分钟|10[–-]15\s*mm|82\s*℃|40[–-]80|16[–-]20\s*MPa|13\.5\s*V|预热\s*2[–-]3\s*次|每\s*(?:50|100|200|500|1000)\s*小时|拧松喷油泵放气螺塞|泵油至无气泡|清洁或更换空滤|校喷油器与喷油泵|测发电机输出|齿轮泵磨损|调节器损坏|两侧制动片磨损不均/;
+  const queries = [
+    '发动机水温过高开锅，应该怎么处理',
+    '发动机启动困难，冬季不能启动，怎么排空气',
+    '动力不足冒黑烟，是否需要换空滤',
+    '液压提升无力，正常油温和压力是多少',
+    '充电指示灯常亮，发电机正常输出电压是多少',
+    '制动跑偏转向沉重，是什么原因',
+    '保养周期是多少小时，何时更换机油和液压油',
+    '维修前安全规范，如何停机和隔离',
+  ];
+  for (const query of queries) {
+    for (const context of [{}, tractor]) {
+      const { message, retrieved } = buildSystemPrompt({ query, ...context });
+      assert.ok(retrieved.length > 0, query);
+      assert.equal(archived(retrieved).length, 0, query);
+      const reply = generateLocalKnowledgeReply(query, retrieved, context);
+      assert.match(reply, /【当前资料不足】/);
+      assert.match(reply, /【信息收集】/);
+      assert.match(reply, /不是操作／维修依据/);
+      assert.match(reply, /完整型号及后缀/);
+      assert.doesNotMatch(reply, /【初步判断】|【可能原因】|【建议排查】|【检索到的知识】|【知识依据】/);
+      for (const content of [formatForPrompt(retrieved), message.content, reply]) {
+        assert.equal(typeof content, 'string');
+        assert.doesNotMatch(content, unsourcedFacts, query);
+      }
+      assert.match(message.content, /不得据此列出或排序故障原因、生成维修／检测步骤、操作参数或保养周期/);
+      assert.match(message.content, /不能为了填满输出模板编造内容/);
+      assert.doesNotMatch(message.content, /按可能性从高到低列 2-4 条|按通用知识回答/);
+    }
+  }
+});
+
+test('verified model-specific parameters and procedures survive the generic guidance restriction', () => {
+  const query = '发动机机油油位检查';
+  const context = { ...tractor, brand: '久保田', model: 'M5-111' };
+  const { message, retrieved } = buildSystemPrompt({ query, ...context });
+  const chunk = expectEntry(retrieved, 'KB-KB-M5-005');
+  assert.equal(chunk.applicability, 'matched');
+  const reply = generateLocalKnowledgeReply(query, [chunk], context);
+  for (const content of [message.content, reply]) {
+    assert.equal(typeof content, 'string');
+    assert.match(content, /熄火后至少等5分钟/);
+    assert.match(content, /把车辆停在平整地面/);
+    for (const metadata of [chunk.entryId, chunk.sourceId, chunk.version, chunk.locator, chunk.scopeBoundary]) {
+      assert.ok(metadata && content.includes(metadata), `Missing archived evidence: ${metadata}`);
+    }
+  }
+  assert.doesNotMatch(reply, /仅命中整理者编写的信息收集提示/);
 });
 
 test('declared electric equipment cannot receive incompatible diesel tractor archive instructions', () => {

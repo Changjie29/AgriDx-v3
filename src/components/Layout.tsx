@@ -44,11 +44,12 @@ export function Layout() {
 
   const handleHashNav = (hash: string) => {
     setMobileOpen(false);
-    if (location.pathname !== '/') {
-      navigate(`/#${hash}`);
+    if (location.pathname === '/') {
+      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-      const el = document.getElementById(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // 非首页：先回首页，再由 HomePage 按 state.scrollTo 滚动到对应区块。
+      // 不用 `/#${hash}` 锚点写法，避免与 HashRouter 的路由 hash 冲突。
+      navigate('/', { state: { scrollTo: hash } });
     }
   };
 
