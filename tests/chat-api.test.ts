@@ -195,6 +195,36 @@ test('questions without applicable evidence still call the LLM with general-guid
   assert.equal(sent.messages.at(-1)?.content, query);
 });
 
+test('denied identity pauses retrieval and diagnosis even when stale form fields remain', async (t) => {
+  const body = {
+    ...identity,
+    messages: [
+      { role: 'user', content: '纽荷兰 WORKMASTER25 拖拉机启动电机不转' },
+      { role: 'user', content: '不是纽荷兰' },
+    ],
+  };
+  const local = await chat(body, '198.51.100.21');
+  assert.equal(local.status, 200);
+  assert.equal(local.body.knowledgeChunks, 0);
+  assert.match(local.body.choices?.[0]?.message.content ?? '', /需要确认机型/);
+  assert.doesNotMatch(local.body.choices?.[0]?.message.content ?? '', /NH-WM25-003/);
+
+  process.env.GEMINI_API_KEY = 'integration-gemini-secret';
+  let sent: UpstreamRequest | undefined;
+  t.mock.method(globalThis, 'fetch', async (_url: unknown, init: RequestInit) => {
+    sent = JSON.parse(init.body as string) as UpstreamRequest;
+    return upstreamAnswer('请确认拖拉机的品牌和完整型号。');
+  });
+  const assisted = await chat(body, '198.51.100.22');
+  assert.equal(assisted.status, 200);
+  assert.equal(assisted.body.knowledgeChunks, 0);
+  assert.deepEqual(assisted.body.knowledgeSources, []);
+  assert.ok(sent);
+  assert.match(sent.messages[0].content, /本次咨询对象尚待确认/);
+  assert.match(sent.messages[0].content, /暂停诊断和通用原因分析/);
+  assert.doesNotMatch(sent.messages[0].content, /NH-WM25-003/);
+});
+
 test('LLM responses carry archived source metadata and receive the server prompt plus history', async (t) => {
   process.env.GEMINI_API_KEY = 'integration-gemini-secret';
   const history = [

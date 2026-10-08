@@ -239,3 +239,80 @@ test('references stay outside equipment identity in conversation scope', () => {
   assert.equal(resolved.scope.machineType, '拖拉机');
   assert.equal(resolveScope(resolved.query, resolved.scope).identityConflict, false);
 });
+
+test('pure identity denials remain pending through follow-ups and stale request fields', () => {
+  for (const denial of ['不是久保田', '不是LX2620']) {
+    const history = [user('久保田 LX2620 拖拉机起动机不转'), user(denial)];
+    const denied = resolveDiagnosticContext(history, { brand: '久保田', model: 'LX2620' });
+    assert.equal(denied.clarificationNeeded, true, denial);
+    assert.equal(denied.scope.model, undefined, denial);
+    if (denial === '不是久保田') assert.equal(denied.scope.brand, undefined);
+    const next = resolveDiagnosticContext([
+      ...history,
+      { role: 'assistant', content: '久保田 LX2620 的资料可能适用。' },
+      user('只有热车才出现'),
+    ], { brand: '久保田', model: 'LX2620' });
+    assert.equal(next.clarificationNeeded, true, denial);
+    assert.equal(next.scope.model, undefined, denial);
+    assert.doesNotMatch(next.query, /LX2620/i);
+    assert.match(next.query, /起动机不转/);
+  }
+  const unknownBrand = resolveDiagnosticContext([user('不是ExampleBrand')], { brand: 'ExampleBrand' });
+  assert.equal(unknownBrand.clarificationNeeded, true);
+  assert.equal(unknownBrand.scope.brand, undefined);
+});
+
+test('positive replacement declarations clear only their corresponding pending identities', () => {
+  const history = [user('久保田 LX2620 拖拉机起动机不转'), user('不是久保田')];
+  const brandOnly = resolveDiagnosticContext([...history, user('东方红的')]);
+  assert.equal(brandOnly.scope.brand, '东方红');
+  assert.equal(brandOnly.clarificationNeeded, true);
+  const completed = resolveDiagnosticContext([...history, user('东方红的'), user('LF1504。')]);
+  assert.equal(completed.clarificationNeeded, false);
+  assert.equal(completed.scope.brand, '东方红');
+  assert.equal(completed.scope.model, 'lf1504');
+  assert.ok(retrieve(completed.query, 100, completed.scope).some((chunk) => chunk.entryId === 'KB-YTO-LF1504-007'));
+  const modelCorrected = resolveDiagnosticContext([
+    user('久保田 LX2620 拖拉机起动机不转'), user('不是LX2620'), user('M6060。'),
+  ]);
+  assert.equal(modelCorrected.clarificationNeeded, false);
+  assert.equal(modelCorrected.scope.model, 'm6060');
+});
+
+test('a correction without a comma selects the new brand and model', () => {
+  const corrected = resolveDiagnosticContext([
+    user('久保田 LX2620 起动机不转'),
+    user('不是久保田而是东方红LF1504'),
+  ]);
+  assert.equal(corrected.clarificationNeeded, false);
+  assert.equal(corrected.scope.brand, '东方红');
+  assert.equal(corrected.scope.model, 'lf1504');
+  assert.doesNotMatch(corrected.query, /久保田|LX2620/i);
+  assert.ok(retrieve(corrected.query, 100, corrected.scope).some((chunk) => chunk.entryId === 'KB-YTO-LF1504-007'));
+});
+
+test('colloquial brand and punctuated unknown model answers retain the original symptom', () => {
+  const known = resolveDiagnosticContext([
+    user('拖拉机启动电机不转'), user('东方红的'), user('LF1504'),
+  ]);
+  assert.match(known.query, /启动电机不转/);
+  assert.ok(retrieve(known.query, 100, known.scope).some((chunk) => chunk.entryId === 'KB-YTO-LF1504-007'));
+  const unknown = resolveDiagnosticContext([
+    user('拖拉机启动电机不转'), user('久保田'), user('RX904。'),
+  ]);
+  assert.equal(unknown.scope.model, 'RX904');
+  assert.equal(unknown.clarificationNeeded, false);
+  assert.match(unknown.query, /启动电机不转/);
+  assert.equal(retrieve(unknown.query, 100, unknown.scope).length, 0);
+});
+
+test('a denied machine type stays pending until the user supplies the new type', () => {
+  const history = [user('拖拉机液压提升无力'), user('不是拖拉机')];
+  const pending = resolveDiagnosticContext([...history, user('只有热车才出现')], { machineType: '拖拉机' });
+  assert.equal(pending.clarificationNeeded, true);
+  assert.equal(pending.scope.machineType, undefined);
+  const completed = resolveDiagnosticContext([...history, user('联合收割机')]);
+  assert.equal(completed.clarificationNeeded, false);
+  assert.equal(completed.scope.machineType, '联合收割机');
+  assert.match(completed.query, /液压提升无力/);
+});

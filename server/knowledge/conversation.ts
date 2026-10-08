@@ -11,6 +11,8 @@ export interface DiagnosticContext {
   /** Symptom plus user-declared identity and current applicability constraints. */
   query: string;
   scope: RetrievalContext;
+  /** A user has denied an identity and has not supplied its replacement yet. */
+  clarificationNeeded: boolean;
 }
 
 const MACHINE_TYPES: [RegExp, string][] = [
@@ -41,16 +43,21 @@ function withoutSelection(text: string): string {
   ).trim();
 }
 
-function identityOnly(text: string): boolean {
-  return !withoutSelection(text).replace(
-    /我的|我这台|这台|那台|这辆|那辆|品牌|牌子|型号|机型|系列|平台|欧豹|具体|就是|是|为|用的|换成|换一台|另外一台|另一台|不是|而是|不对|[\s，,。.!！?？:：;；/]/g,
+function identityOnly(text: string, model?: string): boolean {
+  const remainder = withoutSelection(text).replace(
+    /我的|我这台|这台|那台|这辆|那辆|品牌|牌子|型号|机型|系列|平台|欧豹|具体|就是|是|为|用的|换成|换一台|另外一台|另一台|不是|而是|不对|的|[\s，,。.!！?？:：;；/]/g,
     '',
   );
+  // Unknown model families are not removed by the indexed identity tokenizer.
+  // A recognized short model answer still completes the previous diagnosis.
+  return !remainder || Boolean(model && remainder.toLowerCase().replace(/[\s\-_/()（）]/g, '') ===
+    model.toLowerCase().replace(/[\s\-_/()（）]/g, ''));
 }
 
 function correctionText(text: string): string {
   // "不是久保田，是东方红" selects only the corrected declaration.
-  return text.replace(/^.*?不是[^，,；;。\n]*[，,；;]\s*(?:而是|是|换成)\s*/, '');
+  const corrected = text.replace(/^.*?不是[^，,；;。\n]*?(?:[，,；;]\s*(?:而是|是|换成)|而是)\s*/, '');
+  return corrected.trim() ? corrected : text;
 }
 
 function modelFromText(text: string, hasBrand: boolean, hasModel: boolean): string | undefined {
@@ -59,9 +66,37 @@ function modelFromText(text: string, hasBrand: boolean, hasModel: boolean): stri
   const explicit = text.match(/(?:型号|机型)\s*(?:是|为|[:：])?\s*([a-z0-9][a-z0-9.\-_ /()（）]*\d[a-z0-9.\-_ /()（）]*|\d+[a-z0-9.\-_ /()（）]*)/i)?.[1]?.trim();
   if (explicit) return explicit;
   // Short model answers are common after the user has supplied the brand.
-  const bare = text.trim();
-  if (hasBrand && !hasModel && /^(?=.*\d)[a-z0-9][a-z0-9.\-_ /()（）]*$/i.test(bare)) return bare;
+  const bare = text.trim().replace(/[，,。！!？?；;]+$/g, '').trim();
+  if (hasBrand && (!hasModel || /[a-z]/i.test(bare)) && /^(?=.*\d)[a-z0-9][a-z0-9.\-_ /()（）]*$/i.test(bare)) return bare;
   return undefined;
+}
+
+type IdentityField = 'machineType' | 'brand' | 'model';
+
+/** Denials invalidate a declaration; they are never positive equipment names. */
+function removeDeniedIdentities(text: string, scope: RetrievalContext): { text: string; denied: Set<IdentityField> } {
+  const denied = new Set<IdentityField>();
+  const clean = text.replace(/(?:不是|并非|不属于)\s*([^，,。；;!?！？\n]*)/g, (whole, fragment: string) => {
+    const identity = resolveScope(fragment, {});
+    const model = modelFromText(fragment, Boolean(scope.brand || scope.model), false);
+    const machineType = declaredMachineType(fragment);
+    const brandDenied = Boolean(identity.brand || /(?:品牌|牌子)/.test(fragment) ||
+      (scope.brand && fragment.trim().toLowerCase() === scope.brand.toLowerCase()));
+    const typeDenied = Boolean(machineType ||
+      (scope.machineType && fragment.trim().toLowerCase() === scope.machineType.toLowerCase()));
+    if (brandDenied) denied.add('brand');
+    if (model) denied.add('model');
+    if (typeDenied) denied.add('machineType');
+    return brandDenied || model || typeDenied ? '' : whole;
+  });
+  // Without an object, do not guess which proposed identity the user denied.
+  if (/^(?:不是|不是的|不对|不对的)[。！!？?]*$/.test(text.trim())) {
+    denied.add('brand');
+    denied.add('model');
+    denied.add('machineType');
+    return { text: '', denied };
+  }
+  return { text: clean, denied };
 }
 
 function isContinuation(text: string): boolean {
@@ -88,9 +123,22 @@ export function resolveDiagnosticContext(
   let configurations: string[] = [];
   let drives: string[] = [];
   let ambiguousIdentity = '';
+  const pendingIdentity = new Set<IdentityField>();
+  let currentDeclaration = '';
 
   for (const message of users) {
-    const text = correctionText(message.content.trim());
+    const corrected = correctionText(message.content.trim());
+    const declaration = removeDeniedIdentities(corrected, { ...explicitScope, ...scope });
+    const text = declaration.text;
+    currentDeclaration = text;
+    for (const field of declaration.denied) pendingIdentity.add(field);
+    if (declaration.denied.has('brand') && scope.model) pendingIdentity.add('model');
+    if (declaration.denied.has('brand') || declaration.denied.has('machineType')) {
+      delete scope.brand;
+      delete scope.model;
+      ambiguousIdentity = '';
+    } else if (declaration.denied.has('model')) delete scope.model;
+    if (declaration.denied.has('machineType')) delete scope.machineType;
     const detected = resolveScope(text, {});
     const brand = detected.brand ?? text.match(/(?:品牌|牌子)\s*(?:是|为|[:：])\s*([^\s，,。；;]{1,30})/)?.[1];
     const model = modelFromText(text, Boolean(brand || scope.brand), Boolean(scope.model));
@@ -126,15 +174,22 @@ export function resolveDiagnosticContext(
     if (brand) {
       if (scope.brand && scope.brand !== brand) delete scope.model;
       scope.brand = brand;
+      pendingIdentity.delete('brand');
     }
-    if (model) scope.model = model;
-    if (machineType) scope.machineType = machineType;
+    if (model) {
+      scope.model = model;
+      pendingIdentity.delete('model');
+    }
+    if (machineType) {
+      scope.machineType = machineType;
+      pendingIdentity.delete('machineType');
+    }
     if (detected.emissions.length) emissions = detected.emissions;
     if (detected.configurations.length) configurations = detected.configurations;
     if (detected.driveConfigurations.length) drives = detected.driveConfigurations;
 
     const body = withoutSelection(text);
-    if (!body || identityOnly(text)) continue;
+    if (!body || identityOnly(text, model)) continue;
     if (symptoms.length && isContinuation(body)) symptoms = [...symptoms.slice(-2), body];
     else symptoms = [body];
   }
@@ -144,10 +199,14 @@ export function resolveDiagnosticContext(
   // identities from the symptom text must never bypass that check.
   const declaredScope = { ...scope };
   const explicitBrand = resolveScope('', explicitScope).brand;
-  if (explicitBrand && explicitBrand !== scope.brand && !explicitScope.model?.trim()) {
+  if (explicitBrand && explicitBrand !== scope.brand && !explicitScope.model?.trim() &&
+    !pendingIdentity.has('brand') && !pendingIdentity.has('machineType')) {
     delete scope.model;
   }
   for (const field of ['machineType', 'brand', 'model'] as const) {
+    // Stale form values cannot restore an identity the user just denied.
+    if (pendingIdentity.has(field) || (field !== 'machineType' && pendingIdentity.has('machineType')) ||
+      (field === 'model' && pendingIdentity.has('brand'))) continue;
     if (explicitScope[field]?.trim()) scope[field] = explicitScope[field]!.trim();
   }
   const currentQuery = users.at(-1)?.content.trim() ?? '';
@@ -160,8 +219,9 @@ export function resolveDiagnosticContext(
       // Preserve same-turn conflicts and unknown identities in their original
       // spelling. Retired machines remain excluded; explicit corrections use
       // only the corrected declaration.
-      correctionText(currentQuery),
+      currentDeclaration,
     ].filter(Boolean).join(' '),
     scope,
+    clarificationNeeded: pendingIdentity.size > 0,
   };
 }
