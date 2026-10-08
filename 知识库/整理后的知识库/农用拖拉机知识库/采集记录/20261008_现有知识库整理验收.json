@@ -1,0 +1,149 @@
+{
+  "date_shanghai": "2026-10-08",
+  "repository_version": "2.3.2",
+  "baseline_commit": "f7d1dc3c2ccff1cda99d2a704b9309f9b7a71360",
+  "scope": "现有知识库整理、导航与可视化；没有新增来源或条目",
+  "invariants": {
+    "source_ids_unchanged": true,
+    "entries_jsonl_byte_identical": true,
+    "entries_sha256": "6095329e3a3f42aa5c397b890b8c6514df3a6ac915cb0c593bbe2700d6574676",
+    "pdf_originals_unchanged": true
+  },
+  "checks": {
+    "archive_validator": {
+      "exit_code": 0,
+      "sources": 25,
+      "entries": 199,
+      "errors": 0,
+      "external_pdf_redownloaded": false
+    },
+    "tests": {
+      "passed": 36,
+      "failed": 0,
+      "skipped": 0
+    },
+    "frontend_build": "passed",
+    "backend_build": "passed",
+    "visuals": {
+      "png": "rendered_and_inspected",
+      "svg": "generated",
+      "pdf_pages": 2,
+      "pdf": "two pages rendered and visually inspected; embedded CJK outlines"
+    },
+    "local_document_links": {
+      "checked": 367,
+      "broken": 0
+    },
+    "setup": {
+      "supported_install": "npm install --include=dev --package-lock=false --cache /workspace/.npm-cache --no-audit --no-fund",
+      "install_exit_code": 0,
+      "optional_frozen_ci_check": "failed: inherited lock missing six Rollup optional platform entries; resolution graph not rewritten",
+      "tests_and_builds_rechecked_after_install": true,
+      "post_install_start_health": {
+        "ok": true,
+        "version": "2.3.2",
+        "timestamp": "2026-10-08T07:06:06.762Z",
+        "knowledge": {
+          "chunks": 208,
+          "archivedEntries": 199
+        }
+      }
+    },
+    "dates": {
+      "jd_5e_6b_version_date": null,
+      "pdf_metadata_dates_separate": true
+    }
+  },
+  "local_production": {
+    "scope": "同步GitHub质量修复后的本地生产模式，Key显式为空；不是线上",
+    "date_shanghai": "2026-10-08",
+    "started_at_utc": "2026-10-08T07:15:44.598825+00:00",
+    "checks": [
+      {
+        "path": "/",
+        "status": 200,
+        "served_html": true
+      },
+      {
+        "path": "/chat",
+        "status": 200,
+        "served_html": true
+      },
+      {
+        "brand": "约翰迪尔",
+        "model": "5E-1004",
+        "query": "排放阶段与出版日期如何核对",
+        "status": 200,
+        "knowledgeChunks": 2,
+        "provider": "knowledge-base",
+        "expected_source": "SRC-JD-5E-D0-OMSJ34997",
+        "metadata_date_not_publication_confirmed": true
+      },
+      {
+        "brand": "约翰迪尔",
+        "model": "JD1204-A",
+        "query": "排放阶段与出版日期如何核对",
+        "status": 200,
+        "knowledgeChunks": 2,
+        "provider": "knowledge-base",
+        "expected_source": "SRC-JD-6B-L1-OMSU54855",
+        "metadata_date_not_publication_confirmed": true
+      },
+      {
+        "brand": "沃得",
+        "model": "WF1404-3",
+        "query": "国三磨合期间作业和保养",
+        "status": 200,
+        "knowledgeChunks": 5,
+        "provider": "knowledge-base",
+        "expected_source": "SRC-WD-WF1404",
+        "metadata_date_not_publication_confirmed": null
+      },
+      {
+        "brand": "沃得",
+        "model": "WF1404-3",
+        "query": "国四保养机油",
+        "status": 200,
+        "knowledgeChunks": 0,
+        "provider": "knowledge-base",
+        "expected_source": null,
+        "metadata_date_not_publication_confirmed": null
+      },
+      {
+        "brand": "东方红",
+        "model": "LY1204(G4)",
+        "query": "保养油品",
+        "status": 200,
+        "knowledgeChunks": 0,
+        "provider": "knowledge-base",
+        "expected_source": null,
+        "metadata_date_not_publication_confirmed": null
+      }
+    ],
+    "health": {
+      "ok": true,
+      "version": "2.3.2",
+      "timestamp": "2026-10-08T07:15:45.205Z",
+      "knowledge": {
+        "chunks": 208,
+        "archivedEntries": 199
+      }
+    },
+    "status": "passed",
+    "shutdown": "own_process_stopped"
+  },
+  "not_verified": [
+    "线上发布",
+    "真实外部模型调用",
+    "浏览器渲染",
+    "6份外链PDF本轮远端完整性",
+    "厂家复核／实车验证／全书审校"
+  ],
+  "retrieval_scope": "概要、图表和机器汇总不加入维修检索；正文仍通过同一编号加载",
+  "cloud_configuration": {
+    "install_and_start_draft": "saved_and_read_back",
+    "requires_publish": true,
+    "runtime_applied": false
+  },
+  "integration_note": "保留main同期合入的f7d1dc3知识质量修复，重新生成汇总并重验36测试、后端与实际问答；未由本次提交新增知识条目"
+}

@@ -1,0 +1,863 @@
+{
+  "schema_version": 1,
+  "snapshot_date_shanghai": "2026-10-08",
+  "repository_version": "2.3.2",
+  "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
+  "input_sha256": {
+    "sources.json": "ae18e928c152f2b33198d8ed641ff0c3914573681b01a051fb475c9736da5dbe",
+    "entries.jsonl": "c0e2e2d7c83cae0487aa312530daa55e605db5176972f55d1352fbdc8a26dd84"
+  },
+  "totals": {
+    "sources": 25,
+    "archived_entries": 199,
+    "knowledge_documents": 18,
+    "brand_labels": 15,
+    "generic_chunks": 9,
+    "retrieval_chunks": 208,
+    "information_or_scope_entries": 31
+  },
+  "brands": [
+    {
+      "label": "东方红",
+      "sources": 3,
+      "entries": 32
+    },
+    {
+      "label": "久保田",
+      "sources": 3,
+      "entries": 27
+    },
+    {
+      "label": "雷沃欧豹",
+      "sources": 3,
+      "entries": 25
+    },
+    {
+      "label": "约翰迪尔",
+      "sources": 3,
+      "entries": 24
+    },
+    {
+      "label": "中联",
+      "sources": 1,
+      "entries": 16
+    },
+    {
+      "label": "沃得",
+      "sources": 2,
+      "entries": 16
+    },
+    {
+      "label": "千寻位置 / 千耘",
+      "sources": 1,
+      "entries": 10
+    },
+    {
+      "label": "Barbieri",
+      "sources": 1,
+      "entries": 8
+    },
+    {
+      "label": "华测",
+      "sources": 1,
+      "entries": 8
+    },
+    {
+      "label": "纽荷兰",
+      "sources": 1,
+      "entries": 8
+    },
+    {
+      "label": "潍泰",
+      "sources": 1,
+      "entries": 7
+    },
+    {
+      "label": "雷沃",
+      "sources": 2,
+      "entries": 7
+    },
+    {
+      "label": "雷沃阿波斯",
+      "sources": 1,
+      "entries": 7
+    },
+    {
+      "label": "东风",
+      "sources": 1,
+      "entries": 2
+    },
+    {
+      "label": "鸿鹄",
+      "sources": 1,
+      "entries": 2
+    }
+  ],
+  "entry_types": {
+    "安全操作": 43,
+    "操作/维护知识": 56,
+    "维护/故障知识": 63,
+    "机型资料": 5,
+    "资料缺口": 3,
+    "资料索引": 13,
+    "系统适用边界": 2,
+    "资料核验": 8,
+    "系统安装/调试": 6
+  },
+  "source_purposes": {
+    "维护网页": 3,
+    "报道背景": 1,
+    "整机／维保PDF": 15,
+    "交机培训PDF": 4,
+    "配套导航PDF": 2
+  },
+  "entries_by_source_purpose": {
+    "整机／维保PDF": 138,
+    "维护网页": 9,
+    "报道背景": 2,
+    "交机培训PDF": 32,
+    "配套导航PDF": 18
+  },
+  "storage": {
+    "仓库网页快照": 4,
+    "仓库PDF原件": 15,
+    "PDF链接＋来源记录": 6
+  },
+  "entries_by_storage": {
+    "仓库PDF原件": 142,
+    "仓库网页快照": 11,
+    "PDF链接＋来源记录": 46
+  },
+  "verification_status_raw": {
+    "沿用既有原文核对条目": 24,
+    "已对照网页正文；未厂家复核/实车验证": 11,
+    "原件已归档；新增8条扫描正文页目视核对知识，未全书OCR/逐页审核": 2,
+    "原件已归档；新增证据页已目视核对，未全书OCR/逐页审核": 2,
+    "原件已归档；新增6条经证据页目视核对的正文概述，未全书审校": 1,
+    "原件已归档；指定正文证据页已核对，未全书逐条审核": 1,
+    "原件已归档；引用选页已目视核对，尚未全书、厂家或实车审校": 1,
+    "已核对证据页；未厂家复核/实车验证": 8,
+    "原件已归档；章节索引已核对，未全书逐条整理": 1,
+    "已核对文本及证据页图像；未厂家复核/实车验证": 15,
+    "原件图像目视核验；中文自行概述": 8,
+    "新增证据页已核对条目": 8,
+    "原文文本及页面图像已核验；中文自行概述": 14,
+    "已目视对照所列扫描证据页；未厂家复核/实车验证": 16,
+    "指定正文页文本及图像已核对；未厂家复核/实车验证": 10,
+    "原始文字层乱码；所列证据页已渲染并目视核对，未全书审校、未实车/厂家复核": 6,
+    "已目视核对扫描证据页；未全书审校、厂家复核或实车验证": 12,
+    "已目视核对所引用扫描图像及实际印刷页；仅选页审校，未作全书、厂家或实车验证": 6,
+    "2026-10-04按对应PDF页文本及图像逐条核对；仅选页，未全书审校/厂家复核/实车验证": 7,
+    "指定正文已完成文本及图像核对；独立出版日期、实车及厂家复核未完成": 6,
+    "证据选页文本/原图及实际印刷页已核对；未全书审校、厂家复核或实车验证": 6,
+    "已核对文本层证据页；未厂家复核/实车验证": 24,
+    "证据页渲染+OCR已核对；未厂家复核/实车验证": 10
+  },
+  "research": {
+    "reports": 3,
+    "evidence_records": 21,
+    "candidate_spellings": 20,
+    "included_in_repair_retrieval": false
+  },
+  "source_catalog": [
+    {
+      "source_id": "SRC-LV-TG-WEB",
+      "brand": "雷沃",
+      "model": "欧豹TG系列",
+      "version": "待核实；图片路径含2018，不作版本依据",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "仅页面所述TG系列，子型号/发动机/国三国四/序列号待核实。正文已保存，2张图片未取得。",
+      "status": "已取得正文",
+      "content_group": "维护网页",
+      "storage_group": "仓库网页快照",
+      "source_path": "知识库/原始农机说明书/雷沃/TG系列/常见故障及排除方法.html",
+      "source_url": "https://www.nongjitong.com/company/lovol/oubaotg/fault_and_elimination.html",
+      "entry_count": 5,
+      "entry_ids": [
+        "LV-TG-001",
+        "LV-TG-002",
+        "LV-TG-003",
+        "LV-TG-004",
+        "LV-TG-005"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_维保初步知识.md"
+      ]
+    },
+    {
+      "source_id": "SRC-LV-NR3-WEB",
+      "brand": "雷沃",
+      "model": "国三拖拉机",
+      "version": "待核实；图片路径含2016，不作版本依据",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "明确国三；不可用于国四。文字维护注意事项已保存，原页10张图片及视频未取得。",
+      "status": "已取得正文",
+      "content_group": "维护网页",
+      "storage_group": "仓库网页快照",
+      "source_path": "知识库/原始农机说明书/雷沃/国三/发动机日常维护与保养.html",
+      "source_url": "https://www.nongjitong.com/company/lovol/tractor_motor_maintain.html",
+      "entry_count": 2,
+      "entry_ids": [
+        "LV-NR3-001",
+        "LV-NR3-002"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_维保初步知识.md"
+      ]
+    },
+    {
+      "source_id": "SRC-DF-WINTER-20201225",
+      "brand": "东风",
+      "model": "具体系列待核实",
+      "version": "2020-12-25",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "冬季/长期存放指导，不是整机说明书；充电参数、停放制动和放水条件须以本机手册为准。",
+      "status": "已取得正文",
+      "content_group": "维护网页",
+      "storage_group": "仓库网页快照",
+      "source_path": "知识库/原始农机说明书/东风/系列待核实/拖拉机冬季保养注意事项.html",
+      "source_url": "https://www.dfamgc.com/390.html",
+      "entry_count": 2,
+      "entry_ids": [
+        "DF-WINTER-001",
+        "DF-WINTER-002"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东风_冬季维护初步知识.md"
+      ]
+    },
+    {
+      "source_id": "SRC-HH-T70-20250414",
+      "brand": "鸿鹄",
+      "model": "T70",
+      "version": "2025-04-14",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "仅用于机型识别及应用背景，不用于操作/维修参数。尚未取得正式说明书。",
+      "status": "已取得正文",
+      "content_group": "报道背景",
+      "storage_group": "仓库网页快照",
+      "source_path": "知识库/原始农机说明书/鸿鹄/T70/湖北农业农村厅_20250414.html",
+      "source_url": "https://nyt.hubei.gov.cn/bmdt/yw/szdt/202504/t20250414_5614333_slh.shtml",
+      "entry_count": 2,
+      "entry_ids": [
+        "HH-T70-001",
+        "HH-T70-002"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/鸿鹄T70_机型与资料缺口.md"
+      ]
+    },
+    {
+      "source_id": "SRC-ZL-PL-202011",
+      "brand": "中联",
+      "model": "PL系列",
+      "version": "2020-11",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "子型号/国四适用性待核实",
+      "status": "既有PDF及知识卡；本批未重复上传",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/中联/PL系列/中联PL系列拖拉机维保操作手册.pdf",
+      "source_url": "https://www.zoomlion-ag.com/whby_1.html",
+      "entry_count": 16,
+      "entry_ids": [
+        "ZL-PL-001",
+        "ZL-PL-002",
+        "ZL-PL-003",
+        "ZL-PL-004",
+        "ZL-PL-005",
+        "ZL-PL-006",
+        "ZL-PL-007",
+        "ZL-PL-008",
+        "ZL-PL-009",
+        "ZL-PL-010",
+        "ZL-PL-011",
+        "ZL-PL-012",
+        "ZL-PL-013",
+        "ZL-PL-014",
+        "ZL-PL-015",
+        "ZL-PL-016"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/拖拉机/中联/PL系列.md"
+      ]
+    },
+    {
+      "source_id": "SRC-NH-WM25-92157408",
+      "brand": "纽荷兰",
+      "model": "WORKMASTER25",
+      "version": "2023-11，92157408",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "北美版，不适用于25S；既有补充资料",
+      "status": "既有PDF及知识卡；本批未重复上传",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/纽荷兰/WORKMASTER25/NewHolland_WORKMASTER25_2023_92157408.pdf",
+      "source_url": "https://agriculture.newholland.com/en-us/nar/services-and-solutions/compact-tractor-resources",
+      "entry_count": 8,
+      "entry_ids": [
+        "NH-WM25-001",
+        "NH-WM25-002",
+        "NH-WM25-003",
+        "NH-WM25-004",
+        "NH-WM25-005",
+        "NH-WM25-006",
+        "NH-WM25-007",
+        "NH-WM25-008"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md"
+      ]
+    },
+    {
+      "source_id": "SRC-KB-LX2620-6C82063118",
+      "brand": "久保田",
+      "model": "LX2620/LX2620SU",
+      "version": "版权2023，6C820-6311-8",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。",
+      "status": "既有138页PDF；原8条保留，本轮新增7条选页文本/图像核对；CAB-only条目014/015用规格表精确型号限制；未厂家复核或实车验证",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf",
+      "source_url": "https://www.gartontractor.com/resources/manuals/kubota-lx2620-operator-manual",
+      "entry_count": 15,
+      "entry_ids": [
+        "KB-LX2620-001",
+        "KB-LX2620-002",
+        "KB-LX2620-003",
+        "KB-LX2620-004",
+        "KB-LX2620-005",
+        "KB-LX2620-006",
+        "KB-LX2620-007",
+        "KB-LX2620-008",
+        "KB-LX2620-009",
+        "KB-LX2620-010",
+        "KB-LX2620-011",
+        "KB-LX2620-012",
+        "KB-LX2620-013",
+        "KB-LX2620-014",
+        "KB-LX2620-015"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md"
+      ]
+    },
+    {
+      "source_id": "SRC-LV-TX-TRAINING",
+      "brand": "雷沃欧豹",
+      "model": "TX平台",
+      "version": "未标明（待核实）",
+      "version_date": "待核实",
+      "pdf_metadata_date": null,
+      "scope_boundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；未进行逐页内容审核；交机培训资料仅作入门参考，不能替代产品随附整机使用保养说明书；封面和目录未给出明确版本日期；2018-09是PDF创建/网站存储记录，不等于正式出版版本；扫描图片PDF未完成OCR；仅从已目视核对的正文页形成有限操作/维保条目；目录及未核对图像不作为诊断依据",
+      "status": "原件已归档；新增8条扫描正文页目视核对知识，未全书OCR/逐页审核",
+      "content_group": "交机培训PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/雷沃/TX系列/19162429_6519.pdf",
+      "source_url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "entry_count": 9,
+      "entry_ids": [
+        "KB-LV-TX-TRAINING-001",
+        "KB-LV-TX-TRAINING-002",
+        "KB-LV-TX-TRAINING-003",
+        "KB-LV-TX-TRAINING-004",
+        "KB-LV-TX-TRAINING-005",
+        "KB-LV-TX-TRAINING-006",
+        "KB-LV-TX-TRAINING-007",
+        "KB-LV-TX-TRAINING-008",
+        "KB-LV-TX-TRAINING-009"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_交机培训手册索引.md"
+      ]
+    },
+    {
+      "source_id": "SRC-LV-TD-TRAINING",
+      "brand": "雷沃欧豹",
+      "model": "TD平台",
+      "version": "未标明（待核实）",
+      "version_date": "待核实",
+      "pdf_metadata_date": null,
+      "scope_boundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；未进行逐页内容审核；交机培训资料仅作入门参考，不能替代产品随附整机使用保养说明书；封面和目录未给出明确版本日期；2018-09是PDF创建/网站存储记录，不等于正式出版版本；扫描图片PDF未完成OCR；仅从已目视核对的正文页形成有限操作/维保条目；目录及未核对图像不作为诊断依据",
+      "status": "原件已归档；新增8条扫描正文页目视核对知识，未全书OCR/逐页审核",
+      "content_group": "交机培训PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/雷沃/TD系列/19162322_3238.pdf",
+      "source_url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "entry_count": 9,
+      "entry_ids": [
+        "KB-LV-TD-TRAINING-001",
+        "KB-LV-TD-TRAINING-002",
+        "KB-LV-TD-TRAINING-003",
+        "KB-LV-TD-TRAINING-004",
+        "KB-LV-TD-TRAINING-005",
+        "KB-LV-TD-TRAINING-006",
+        "KB-LV-TD-TRAINING-007",
+        "KB-LV-TD-TRAINING-008",
+        "KB-LV-TD-TRAINING-009"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_交机培训手册索引.md"
+      ]
+    },
+    {
+      "source_id": "SRC-LV-TB-TRAINING",
+      "brand": "雷沃欧豹",
+      "model": "TB平台",
+      "version": "未标明（待核实）",
+      "version_date": "待核实",
+      "pdf_metadata_date": null,
+      "scope_boundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；未进行逐页内容审核；交机培训资料仅作入门参考，不能替代产品随附整机使用保养说明书；封面和目录未给出明确版本日期；2018-09是PDF创建/网站存储记录，不等于正式出版版本；扫描图片PDF未完成全书OCR；新增6条仅依据目视核对的选定扫描正文页，未核对正文及目录不作为诊断依据；目录将服务流程标为35，但PDF仅34页且末页为封底；原件目录标引一致性待核实。不要直接按目录页码进行诊断引用",
+      "status": "已取得完整PDF文件；本轮新增6条选页核对的安全/操作/维护事实",
+      "content_group": "交机培训PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/雷沃/TB系列/19162218_4956.pdf",
+      "source_url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "entry_count": 7,
+      "entry_ids": [
+        "KB-LV-TB-TRAINING-001",
+        "KB-LV-TB-TRAINING-002",
+        "KB-LV-TB-TRAINING-003",
+        "KB-LV-TB-TRAINING-004",
+        "KB-LV-TB-TRAINING-005",
+        "KB-LV-TB-TRAINING-006",
+        "KB-LV-TB-TRAINING-007"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_交机培训手册索引.md"
+      ]
+    },
+    {
+      "source_id": "SRC-LV-P5000-TRAINING",
+      "brand": "雷沃阿波斯",
+      "model": "P5000",
+      "version": "未标明（待核实）",
+      "version_date": "待核实",
+      "pdf_metadata_date": null,
+      "scope_boundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；未进行逐页内容审核；交机培训资料仅作入门参考，不能替代产品随附整机使用保养说明书；封面和目录未给出明确版本日期；2018-09是PDF创建/网站存储记录，不等于正式出版版本；扫描图片PDF未完成全书OCR；新增6条仅依据目视核对的选定扫描正文页，未核对正文及目录不作为诊断依据",
+      "status": "已取得完整PDF文件；本轮新增6条选页核对的安全/操作/维护事实",
+      "content_group": "交机培训PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/雷沃/P5000/19161645_3081.pdf",
+      "source_url": "https://www.nongjitong.com/company/lovol/tractor_training.html",
+      "entry_count": 7,
+      "entry_ids": [
+        "KB-LV-P5000-TRAINING-001",
+        "KB-LV-P5000-TRAINING-002",
+        "KB-LV-P5000-TRAINING-003",
+        "KB-LV-P5000-TRAINING-004",
+        "KB-LV-P5000-TRAINING-005",
+        "KB-LV-P5000-TRAINING-006",
+        "KB-LV-P5000-TRAINING-007"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_交机培训手册索引.md"
+      ]
+    },
+    {
+      "source_id": "SRC-YTO-LX-MANUAL",
+      "brand": "东方红",
+      "model": "LX1004 / LX1104 / LX1204 / LX1254 / LX1304",
+      "version": "2016-02",
+      "version_date": "2016-02",
+      "pdf_metadata_date": null,
+      "scope_boundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；仅所列证据页已目视核对，未全书逐页内容审核；前言落款2016年2月；2021-08下载路径和文件修改时间不等于新版本；网页称国三，原件排放阶段未由全书逐页核实；不作为国四后处理操作依据；LX1204和LX1304页面共用这份五机型说明书属系列共享，不应重复入库；本轮6条正文概述依图像核验，不把发动机家族、网页排放描述或相邻型号作为参数兼容证明",
+      "status": "原件已归档；新增6条经证据页目视核对的正文概述，未全书审校",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/东方红/LX系列/18151903_7577.pdf",
+      "source_url": "https://www.nongjitong.com/dealer/2013/288653.html",
+      "entry_count": 7,
+      "entry_ids": [
+        "KB-YTO-LX-MANUAL-001",
+        "KB-YTO-LX-MANUAL-002",
+        "KB-YTO-LX-MANUAL-003",
+        "KB-YTO-LX-MANUAL-004",
+        "KB-YTO-LX-MANUAL-005",
+        "KB-YTO-LX-MANUAL-006",
+        "KB-YTO-LX-MANUAL-007"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md"
+      ]
+    },
+    {
+      "source_id": "SRC-YTO-LF-MANUAL",
+      "brand": "东方红",
+      "model": "LF804S / LF904S / LF954S",
+      "version": "2017-01",
+      "version_date": "2017-01",
+      "pdf_metadata_date": null,
+      "scope_boundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；未进行逐页内容审核；前言落款2017年1月；PDF创建2017-06，2021-08上传路径不等于新版本；来源网页介绍LF804S/LF904S/LF954S/LF1004S/LF1104S，原件封面仅前三个机型；不扩展到LF1004S/LF1104S",
+      "status": "已取得完整PDF；本批新增14个核对条目，未逐页全面审核",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/东方红/LF系列/18143819_4481.pdf",
+      "source_url": "https://www.nongjitong.com/product/yto_lf904s_tractors.html",
+      "entry_count": 15,
+      "entry_ids": [
+        "KB-YTO-LF-MANUAL-001",
+        "KB-YTO-LF-MANUAL-002",
+        "KB-YTO-LF-MANUAL-003",
+        "KB-YTO-LF-MANUAL-004",
+        "KB-YTO-LF-MANUAL-005",
+        "KB-YTO-LF-MANUAL-006",
+        "KB-YTO-LF-MANUAL-007",
+        "KB-YTO-LF-MANUAL-008",
+        "KB-YTO-LF-MANUAL-009",
+        "KB-YTO-LF-MANUAL-010",
+        "KB-YTO-LF-MANUAL-011",
+        "KB-YTO-LF-MANUAL-012",
+        "KB-YTO-LF-MANUAL-013",
+        "KB-YTO-LF-MANUAL-014",
+        "KB-YTO-LF-MANUAL-015"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md"
+      ]
+    },
+    {
+      "source_id": "SRC-WT-TRACTOR-MANUAL",
+      "brand": "潍泰",
+      "model": "TT系列，参数表列24种机型（见models字段）",
+      "version": "WT-SM-4.1；纸面2020年05月第2版；原件日期与排放混杂待核实",
+      "version_date": "纸面版次2020-05，首次印刷2020-01，二者关系待核实",
+      "pdf_metadata_date": null,
+      "scope_boundary": "限TT系列及本册技术规格所列24种机型，仍需核对出厂配置；技术规格列(G4)机型，PDF第80页/纸面72页含DOC+DPF+SCR、DOC+DPF后处理型式；PDF第78页/纸面70页铭牌示例却标GB20891-2014第三阶段，故不对整册统一标记国四；纸面版次为2020年05月第2版、首次印刷为2020年01月；PDF生成2023年，内部日期关系待核实，不标成2023新版；扫描正文仅提取到公司水印；2026-10-04新增5条安全概述及1条起动操纵位置资料核验，限明确引用的扫描选页；未经核对的参数和故障表仍不生成维修数值或故障操作；起动安全章节与准备章节存在操纵位置用词差异，须核对实车配置和厂家说明，不能拼接通用流程",
+      "status": "原件已归档；已作所列选页扫描图像核对，本轮新增5条安全概述及1条资料核验；尚未全书或厂家／实车审校",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/潍泰/TT系列/潍泰拖拉机使用说明书.pdf",
+      "source_url": "https://www.weifangtaishan.com/download_Detail/weitaituolajishiyongshuomingshu.html",
+      "entry_count": 7,
+      "entry_ids": [
+        "KB-WT-TRACTOR-MANUAL-001",
+        "KB-WT-TRACTOR-MANUAL-002",
+        "KB-WT-TRACTOR-MANUAL-003",
+        "KB-WT-TRACTOR-MANUAL-004",
+        "KB-WT-TRACTOR-MANUAL-005",
+        "KB-WT-TRACTOR-MANUAL-006",
+        "KB-WT-TRACTOR-MANUAL-007"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/潍泰_说明书索引.md"
+      ]
+    },
+    {
+      "source_id": "SRC-JD-6E-G4-OMTR115296",
+      "brand": "约翰迪尔",
+      "model": "6E-1004 (G4)、6E-1204 (G4)、6E-1204-P (G4)、6E-1404 (G4)、6E-1404-P (G4)、6E-1404-L (G4)、6E-1404-PL (G4)、6E-1504-L (G4)、6E-1504-PL (G4)",
+      "version": "OMTR115296；官方目录27MAR26；封面D6",
+      "version_date": "2026-03-27（官方目录修订日期）",
+      "pdf_metadata_date": null,
+      "scope_boundary": "中国版本国四G4，仅封面列明的型号，仍需按PIN、发动机、离合器、变速箱及前桥配置匹配具体章节；封面有JAPANESE及問題D6字样，但正文为中文，官方目录语言Chinese且封面明确中国版本；保留原件，该语言模板异常待厂家核实；PDF元数据创建日期为2026-04-24，不能替代目录修订日期；章节内旧日期不是整本出版日期",
+      "status": "已取得完整PDF文件",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/约翰迪尔/6E国四/OMTR115296.pdf",
+      "source_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6E-1204",
+      "entry_count": 14,
+      "entry_ids": [
+        "KB-JD-6E-G4-OMTR115296-001",
+        "KB-JD-6E-G4-OMTR115296-002",
+        "KB-JD-6E-G4-OMTR115296-003",
+        "KB-JD-6E-G4-OMTR115296-004",
+        "KB-JD-6E-G4-OMTR115296-005",
+        "KB-JD-6E-G4-OMTR115296-006",
+        "KB-JD-6E-G4-OMTR115296-007",
+        "KB-JD-6E-G4-OMTR115296-008",
+        "KB-JD-6E-G4-OMTR115296-009",
+        "KB-JD-6E-G4-OMTR115296-010",
+        "KB-JD-6E-G4-OMTR115296-011",
+        "KB-JD-6E-G4-OMTR115296-012",
+        "KB-JD-6E-G4-OMTR115296-013",
+        "KB-JD-6E-G4-OMTR115296-014"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md"
+      ]
+    },
+    {
+      "source_id": "SRC-QX-QY210PRO-V01",
+      "brand": "千寻位置 / 千耘",
+      "model": "QYBD-2.5SD（QY210 Pro）",
+      "version": "V0.1",
+      "version_date": "2022-05-23",
+      "pdf_metadata_date": null,
+      "scope_boundary": "仅适用于该文档所载QY210 Pro系统版本及经厂家确认的配套车辆；资料为2022年初版，不代表2026年当前软硬件版本；只能辅助转向，不能作为鸿鹄T70/T200等无人拖拉机的整机运行或避障说明书；第2页型号QYBD-2.5SD与第38页三包凭证QYBD-2.5GD不一致，保留原文且待厂家核实",
+      "status": "已取得完整PDF文件",
+      "content_group": "配套导航PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/智能化配套系统/千寻/QY210Pro/165468154663987807.pdf",
+      "source_url": "https://static0.qxwz.com/cms/common/165468154663987807.pdf",
+      "entry_count": 10,
+      "entry_ids": [
+        "KB-QX-QY210PRO-V01-001",
+        "KB-QX-QY210PRO-V01-002",
+        "KB-QX-QY210PRO-V01-003",
+        "KB-QX-QY210PRO-V01-004",
+        "KB-QX-QY210PRO-V01-005",
+        "KB-QX-QY210PRO-V01-006",
+        "KB-QX-QY210PRO-V01-007",
+        "KB-QX-QY210PRO-V01-008",
+        "KB-QX-QY210PRO-V01-009",
+        "KB-QX-QY210PRO-V01-010"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/配套智能系统/千寻_QY210Pro.md"
+      ]
+    },
+    {
+      "source_id": "SRC-BARB-HYDROTRAC-4HWD-REPO",
+      "brand": "Barbieri",
+      "model": "HydroTRAC 4HWD",
+      "version": "No. Publ.: TIPO18；封面 Data di emiss.: 02.2000",
+      "version_date": "2000-02（封面发行日期）",
+      "pdf_metadata_date": null,
+      "scope_boundary": "封面共列HydroTRAC HWD与4HWD；本卡仅索引4HWD，仍须核对本机铭牌、出厂配置和附件，不能把HWD差异章节自动套用到4HWD。2000年版，不用于其他Barbieri机型或改款，也不推断中国排放阶段。正文为法语扫描；只核对所列证据页，未逐页完整审核或全书OCR。使用油品、容量、压力、周期等数值前应进一步核实原厂匹配手册。",
+      "status": "已核验既有PDF和证据页，新增8条中文概述；未新增下载原件",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/Barbieri HydroTRAC 4HWD Mini Tractor Operator's Manual PDF.pdf",
+      "source_url": "https://github.com/Changjie29/AgriDx-v2/blob/039094e0e78467d2b38b18fb3b1c995c806c72ee/%E7%9F%A5%E8%AF%86%E5%BA%93/%E5%8E%9F%E5%A7%8B%E5%86%9C%E6%9C%BA%E8%AF%B4%E6%98%8E%E4%B9%A6/Barbieri%20HydroTRAC%204HWD%20Mini%20Tractor%20Operator%27s%20Manual%20PDF.pdf",
+      "entry_count": 8,
+      "entry_ids": [
+        "KB-BARB-HYDROTRAC-4HWD-001",
+        "KB-BARB-HYDROTRAC-4HWD-002",
+        "KB-BARB-HYDROTRAC-4HWD-003",
+        "KB-BARB-HYDROTRAC-4HWD-004",
+        "KB-BARB-HYDROTRAC-4HWD-005",
+        "KB-BARB-HYDROTRAC-4HWD-006",
+        "KB-BARB-HYDROTRAC-4HWD-007",
+        "KB-BARB-HYDROTRAC-4HWD-008"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/Barbieri_HydroTRAC4HWD.md"
+      ]
+    },
+    {
+      "source_id": "SRC-YTO-LF1504-SMLF150449010",
+      "brand": "东方红",
+      "model": "LF1504",
+      "version": "SM-LF1504.49.010；封面2016-3-5／前言2017-01（日期关系待核实）",
+      "version_date": "封面2016-03-05；前言2017-01",
+      "pdf_metadata_date": null,
+      "scope_boundary": "仅本册国三LF1504及匹配出厂配置；基本型/选装型不可混用，不适用于LF1504国四或其他LF机型。封面2016-3-5与前言2017-01关系待核实，发动机引用字段不一致，须核对本车铭牌及匹配发动机手册；仅核对列明证据页，未全书审校、厂家复核或实车验证。",
+      "status": "完整PDF已取得并解析，仅归档链接和原创来源记录；指定正文页已核对",
+      "content_group": "整机／维保PDF",
+      "storage_group": "PDF链接＋来源记录",
+      "source_path": "知识库/原始农机说明书/东方红/LF1504/来源记录.md",
+      "source_url": "https://www.nongjitong.com/product/yto_lf1504_tractor.html",
+      "entry_count": 10,
+      "entry_ids": [
+        "KB-YTO-LF1504-001",
+        "KB-YTO-LF1504-002",
+        "KB-YTO-LF1504-003",
+        "KB-YTO-LF1504-004",
+        "KB-YTO-LF1504-005",
+        "KB-YTO-LF1504-006",
+        "KB-YTO-LF1504-007",
+        "KB-YTO-LF1504-008",
+        "KB-YTO-LF1504-009",
+        "KB-YTO-LF1504-010"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504.md"
+      ]
+    },
+    {
+      "source_id": "SRC-KB-M6060-3C13199724",
+      "brand": "久保田",
+      "model": "M6060 / M7060（美国版；ROPS）",
+      "version": "3C131-9972-4；独立出版日期未核实（©2013仅为版权年）",
+      "version_date": "独立出版或修订日期未核实；封面©2013为版权年",
+      "pdf_metadata_date": null,
+      "scope_boundary": "仅本册3C131-9972-4美国英语版M6060/M7060、4WD且ROPS配置；F8/R8与F12/R12部件及参数不可混用。安全章通用CAB措辞不证明整册CAB适用。未核对序列号覆盖、其他版次或国内排放，不能套用国内M7040、其他M系列或CAB版；仅核对列明选页，未全书审校、厂家复核或实车验证。",
+      "status": "完整129页PDF已取得并全部解析；指定来源及正文选页完成文本与图像核对，仅归档公开链接、原创记录与知识概述",
+      "content_group": "整机／维保PDF",
+      "storage_group": "PDF链接＋来源记录",
+      "source_path": "知识库/原始农机说明书/久保田/M6060-M7060-3C13199724/来源记录.md",
+      "source_url": "https://www.gartontractor.com/resources/manuals/kubota-m6060-m7060-rops-operator-manual",
+      "entry_count": 6,
+      "entry_ids": [
+        "KB-KB-M6060-001",
+        "KB-KB-M6060-002",
+        "KB-KB-M6060-003",
+        "KB-KB-M6060-004",
+        "KB-KB-M6060-005",
+        "KB-KB-M6060-006"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M6060_M7060_3C13199724.md"
+      ]
+    },
+    {
+      "source_id": "SRC-KB-M5-3B79199724",
+      "brand": "久保田",
+      "model": "M5-091/M5-111",
+      "version": "Code No. 3B791-9972-4；©2015为版权年，未确认出版日期",
+      "version_date": null,
+      "pdf_metadata_date": null,
+      "scope_boundary": "English (U.S.A.) 美国英语版M5-091/M5-111，手册编号3B791-9972-4；规格区分2WD/4WD及F8/R8、F12/R12、F24/R24，并包含CAB/ROPS条件。本轮只摘录不依赖CAB附件的安全与日检选页；不推定中国市场同名/近似型号兼容，不标国三或国四，未全书审校。",
+      "status": "公开经销商入口取得完整174页PDF，文件完整性及每页可解析已核对；本轮6条证据选页文本/图像核对，未全书审校、厂家复核或实车验证",
+      "content_group": "整机／维保PDF",
+      "storage_group": "PDF链接＋来源记录",
+      "source_path": "知识库/原始农机说明书/久保田/M5-091-M5-111/来源记录_3B79199724.md",
+      "source_url": "https://www.gartontractor.com/resources/manuals/kubota-m5-091-m5-111-operator-manual",
+      "entry_count": 6,
+      "entry_ids": [
+        "KB-KB-M5-001",
+        "KB-KB-M5-002",
+        "KB-KB-M5-003",
+        "KB-KB-M5-004",
+        "KB-KB-M5-005",
+        "KB-KB-M5-006"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_091_M5_111_3B79199724.md"
+      ]
+    },
+    {
+      "source_id": "SRC-WD-WF1404-1604-2021",
+      "brand": "沃得",
+      "model": "WF1404-3/WF1404-2/WF1504-2/WF1604-2",
+      "version": "未刊编号与版次；文件名2021与PDF生成日期2021-09-13不作版次依据",
+      "version_date": "待核实",
+      "pdf_metadata_date": null,
+      "scope_boundary": "国三（配套玉柴T301/T303与东方红LR4M3LR23/LR6A3LR23国三系列，全书无后处理/再生章节）；不适用于国四整机；带内部资料水印，再分发边界不明；手册编号/版次/序列号覆盖待核实",
+      "status": "已取得完整PDF并核对选页文本层；未厂家复核/实车验证",
+      "content_group": "整机／维保PDF",
+      "storage_group": "PDF链接＋来源记录",
+      "source_path": "知识库/原始农机说明书/沃得/WF系列/来源记录_WF1404-1604_2021.md",
+      "source_url": "http://njpx.njztc.com/r/cms/2021_WF.pdf",
+      "entry_count": 9,
+      "entry_ids": [
+        "KB-WD-WF-001",
+        "KB-WD-WF-002",
+        "KB-WD-WF-003",
+        "KB-WD-WF-004",
+        "KB-WD-WF-005",
+        "KB-WD-WF-006",
+        "KB-WD-WF-007",
+        "KB-WD-WF-008",
+        "KB-WD-WF-009"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/拖拉机/沃得/WF系列.md"
+      ]
+    },
+    {
+      "source_id": "SRC-WD-WF1404-1804-2022",
+      "brand": "沃得",
+      "model": "WF1404-3/WF1504-1/WF1604-1/WF1404/WF1504/WF1604/WF1804",
+      "version": "未刊编号与版次；文件名2022与PDF生成日期2022-08-15不作版次依据",
+      "version_date": "待核实",
+      "pdf_metadata_date": null,
+      "scope_boundary": "国三（配套玉柴T301/T302与东方红LR4M3LR23国三系列，全书无后处理/再生章节）；不适用于国四整机；带内部资料水印，再分发边界不明；手册编号/版次/序列号覆盖待核实",
+      "status": "已取得完整PDF并核对选页文本层；未厂家复核/实车验证",
+      "content_group": "整机／维保PDF",
+      "storage_group": "PDF链接＋来源记录",
+      "source_path": "知识库/原始农机说明书/沃得/WF系列/来源记录_WF1404-1804_2022.md",
+      "source_url": "http://njpx.njztc.com/r/cms/2022-WF1304-WF1604.pdf",
+      "entry_count": 7,
+      "entry_ids": [
+        "KB-WD-WF-101",
+        "KB-WD-WF-102",
+        "KB-WD-WF-103",
+        "KB-WD-WF-104",
+        "KB-WD-WF-105",
+        "KB-WD-WF-106",
+        "KB-WD-WF-107"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/拖拉机/沃得/WF系列.md"
+      ]
+    },
+    {
+      "source_id": "SRC-CHC-NX510-FEB2024",
+      "brand": "华测",
+      "model": "NX510 SE/Pro/Plus",
+      "version": "Feb 2024；PDF生成2024-02-22；版权2023-2024；独立印刷版次号待核实",
+      "version_date": "2024-02",
+      "pdf_metadata_date": null,
+      "scope_boundary": "英文版；覆盖NX510 SE/Pro/Plus；辅助转向需持续人工监控，系统自身不能判断障碍物；不是无人驾驶整机手册；不能用于鸿鹄T70/T200无人整机；Deutz-Fahr 5125专用安装册另行处理；序列号覆盖待核实",
+      "status": "已取得完整PDF并核对选页文本层；未厂家复核/实车验证",
+      "content_group": "配套导航PDF",
+      "storage_group": "PDF链接＋来源记录",
+      "source_path": "知识库/原始农机说明书/智能化配套系统/华测/NX510/来源记录_NX510.md",
+      "source_url": "https://support.chcnav.com/portal/en/kb/articles/nx510-user-manual",
+      "entry_count": 8,
+      "entry_ids": [
+        "KB-CHC-NX510-001",
+        "KB-CHC-NX510-002",
+        "KB-CHC-NX510-003",
+        "KB-CHC-NX510-004",
+        "KB-CHC-NX510-005",
+        "KB-CHC-NX510-006",
+        "KB-CHC-NX510-007",
+        "KB-CHC-NX510-008"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/配套智能系统/华测_NX510.md"
+      ]
+    },
+    {
+      "source_id": "SRC-JD-5E-D0-OMSJ34997",
+      "brand": "约翰迪尔",
+      "model": "5E-850/5E-854/5E-904/5E-954/5E-1000/5E-1004/5E-1100/5E-1104/5E-1200/5E-1204",
+      "version": "OMSJ34997，版本D0（CHINESE）；PDF元数据2020-04-30；独立印刷版次待核实",
+      "version_date": null,
+      "pdf_metadata_date": "2020-04-30",
+      "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实",
+      "status": "官方PDF已取得；封面与选页渲染+OCR核对；未厂家复核/实车验证",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/约翰迪尔/5E_D0/OMSJ34997.pdf",
+      "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsj34997",
+      "entry_count": 6,
+      "entry_ids": [
+        "KB-JD-5E-D0-001",
+        "KB-JD-5E-D0-002",
+        "KB-JD-5E-D0-003",
+        "KB-JD-5E-D0-004",
+        "KB-JD-5E-D0-005",
+        "KB-JD-5E-D0-006"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md"
+      ]
+    },
+    {
+      "source_id": "SRC-JD-6B-L1-OMSU54855",
+      "brand": "约翰迪尔",
+      "model": "JD954/JD1104/JD1204-A/JD1354-A/JD1404-A",
+      "version": "OMSU54855，版本L1（CHINESE）；PDF元数据2021-12-29；独立印刷版次待核实",
+      "version_date": null,
+      "pdf_metadata_date": "2021-12-29",
+      "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2021-12-29不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；封面序列号下限以下的车辆适用性待核实",
+      "status": "官方PDF已取得；封面与选页渲染+OCR核对；未厂家复核/实车验证",
+      "content_group": "整机／维保PDF",
+      "storage_group": "仓库PDF原件",
+      "source_path": "知识库/原始农机说明书/约翰迪尔/6B_L1/OMSU54855.pdf",
+      "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu54855",
+      "entry_count": 4,
+      "entry_ids": [
+        "KB-JD-6B-L1-001",
+        "KB-JD-6B-L1-002",
+        "KB-JD-6B-L1-003",
+        "KB-JD-6B-L1-004"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md"
+      ]
+    }
+  ]
+}
