@@ -182,5 +182,22 @@
     "deployment_verified": false
   },
   "external_llm_verified": false,
-  "production_deployed": false
+  "production_deployed": false,
+  "github": {
+    "repository": "Changjie29/AgriDx-v2",
+    "branch": "codex/knowledge-expand-20261008",
+    "knowledge_commit": "227b69b",
+    "delivery_commit": "7f597df60416b166150140987da8ce7df56c4b84",
+    "push_verified": true,
+    "pull_request": "https://github.com/Changjie29/AgriDx-v2/pull/2",
+    "draft": true,
+    "merged": false
+  },
+  "overview_verified": {
+    "snapshot_hashes": true,
+    "svg_xml": true,
+    "pdf_pages": 2,
+    "pdf_visual_review": true,
+    "png_visual_review": true
+  }
 }
