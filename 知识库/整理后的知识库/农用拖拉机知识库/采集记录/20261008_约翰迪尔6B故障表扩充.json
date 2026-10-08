@@ -1,0 +1,186 @@
+{
+  "date_shanghai": "2026-10-08",
+  "project_version": "2.4.1",
+  "base_commit": "b743102b0752399d0b8c0b1b1459ac04c1ac4ffb",
+  "knowledge_commit": "227b69b",
+  "source_id": "SRC-JD-6B-L1-OMSU54855",
+  "verified_pdf_pages": [
+    1,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170
+  ],
+  "verification_method": "pypdf定位、130dpi完整页图目视核对；独立复核",
+  "index_summary": {
+    "sources": 25,
+    "entries": 207,
+    "knowledge_documents": 18,
+    "retained_pdf_files": 15,
+    "link_only_pdf_sources": 6,
+    "entry_types": {
+      "安全操作": 43,
+      "操作/维护知识": 56,
+      "维护/故障知识": 71,
+      "机型资料": 5,
+      "资料缺口": 3,
+      "资料索引": 13,
+      "系统适用边界": 2,
+      "资料核验": 8,
+      "系统安装/调试": 6
+    },
+    "errors": 0
+  },
+  "index_errors": [],
+  "notes": [
+    "SRC-YTO-LF1504-SMLF150449010：本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数",
+    "SRC-KB-M6060-3C13199724：本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数",
+    "SRC-KB-M5-3B79199724：本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数",
+    "SRC-WD-WF1404-1604-2021：本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数",
+    "SRC-WD-WF1404-1804-2022：本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数",
+    "SRC-CHC-NX510-FEB2024：本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数"
+  ],
+  "tests": {
+    "command": "npm test",
+    "passed": 75,
+    "failed": 0
+  },
+  "build_server_passed": true,
+  "http": {
+    "checked_date_shanghai": "2026-10-08",
+    "version": "2.4.1",
+    "health": {
+      "ok": true,
+      "version": "2.4.1",
+      "timestamp": "2026-10-08T08:11:28.457Z",
+      "knowledge": {
+        "chunks": 216,
+        "archivedEntries": 207
+      },
+      "llm": {
+        "preference": "auto",
+        "configValid": true,
+        "configured": false,
+        "primary": null,
+        "proxyConfigured": false,
+        "providers": [
+          {
+            "provider": "gemini",
+            "model": "gemini-2.5-flash",
+            "configured": false
+          },
+          {
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "configured": false
+          }
+        ]
+      }
+    },
+    "cases": [
+      {
+        "model": "JD1204-A",
+        "question": "起动机转动但发动机不着车",
+        "expected_entry": "KB-JD-6B-L1-005",
+        "http_status": 200,
+        "knowledge_chunks": 2,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD1104",
+        "question": "起动机完全不转",
+        "expected_entry": "KB-JD-6B-L1-006",
+        "http_status": 200,
+        "knowledge_chunks": 2,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD1404-A",
+        "question": "发动机动力不足",
+        "expected_entry": "KB-JD-6B-L1-007",
+        "http_status": 200,
+        "knowledge_chunks": 1,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD954",
+        "question": "发动机过热",
+        "expected_entry": "KB-JD-6B-L1-008",
+        "http_status": 200,
+        "knowledge_chunks": 1,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD1354-A",
+        "question": "整个液压系统不工作",
+        "expected_entry": "KB-JD-6B-L1-009",
+        "http_status": 200,
+        "knowledge_chunks": 6,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD1204-A",
+        "question": "液压油过热",
+        "expected_entry": "KB-JD-6B-L1-010",
+        "http_status": 200,
+        "knowledge_chunks": 5,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD954",
+        "question": "悬挂架无法提升或提升缓慢",
+        "expected_entry": "KB-JD-6B-L1-011",
+        "http_status": 200,
+        "knowledge_chunks": 4,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD1104",
+        "question": "照明系统不工作，其他电气系统正常",
+        "expected_entry": "KB-JD-6B-L1-012",
+        "http_status": 200,
+        "knowledge_chunks": 6,
+        "provider": "knowledge-base",
+        "verified": true
+      },
+      {
+        "model": "JD1204",
+        "question": "起动机转动但发动机不着车",
+        "http_status": 200,
+        "knowledge_chunks": 0,
+        "no_new_6b_entries": true,
+        "verified": true
+      },
+      {
+        "model": "JD1404-A",
+        "question": "国四发动机过热",
+        "http_status": 200,
+        "knowledge_chunks": 0,
+        "no_new_6b_entries": true,
+        "verified": true
+      },
+      {
+        "model": "5E-1204",
+        "question": "液压油过热",
+        "http_status": 200,
+        "knowledge_chunks": 0,
+        "no_new_6b_entries": true,
+        "verified": true
+      }
+    ],
+    "external_llm_verified": false,
+    "deployment_verified": false
+  },
+  "external_llm_verified": false,
+  "production_deployed": false
+}

@@ -1,24 +1,29 @@
 {
   "schema_version": 1,
   "snapshot_date_shanghai": "2026-10-08",
-  "repository_version": "2.3.2",
+  "repository_version": "2.4.1",
   "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
   "input_sha256": {
-    "sources.json": "ae18e928c152f2b33198d8ed641ff0c3914573681b01a051fb475c9736da5dbe",
-    "entries.jsonl": "c0e2e2d7c83cae0487aa312530daa55e605db5176972f55d1352fbdc8a26dd84"
+    "sources.json": "5409a7b2018046eef60762062c3dafb3a1354ca172be0cfe8a706500baa5acfe",
+    "entries.jsonl": "cb39240132078affcc5e763ad51428a017040ecd4de3dd6166c19ab9d3cbb098"
   },
   "totals": {
     "sources": 25,
-    "archived_entries": 199,
+    "archived_entries": 207,
     "knowledge_documents": 18,
     "brand_labels": 15,
     "generic_chunks": 9,
-    "retrieval_chunks": 208,
+    "retrieval_chunks": 216,
     "information_or_scope_entries": 31
   },
   "brands": [
     {
       "label": "东方红",
+      "sources": 3,
+      "entries": 32
+    },
+    {
+      "label": "约翰迪尔",
       "sources": 3,
       "entries": 32
     },
@@ -31,11 +36,6 @@
       "label": "雷沃欧豹",
       "sources": 3,
       "entries": 25
-    },
-    {
-      "label": "约翰迪尔",
-      "sources": 3,
-      "entries": 24
     },
     {
       "label": "中联",
@@ -96,7 +96,7 @@
   "entry_types": {
     "安全操作": 43,
     "操作/维护知识": 56,
-    "维护/故障知识": 63,
+    "维护/故障知识": 71,
     "机型资料": 5,
     "资料缺口": 3,
     "资料索引": 13,
@@ -112,7 +112,7 @@
     "配套导航PDF": 2
   },
   "entries_by_source_purpose": {
-    "整机／维保PDF": 138,
+    "整机／维保PDF": 146,
     "维护网页": 9,
     "报道背景": 2,
     "交机培训PDF": 32,
@@ -124,7 +124,7 @@
     "PDF链接＋来源记录": 6
   },
   "entries_by_storage": {
-    "仓库PDF原件": 142,
+    "仓库PDF原件": 150,
     "仓库网页快照": 11,
     "PDF链接＋来源记录": 46
   },
@@ -151,7 +151,8 @@
     "指定正文已完成文本及图像核对；独立出版日期、实车及厂家复核未完成": 6,
     "证据选页文本/原图及实际印刷页已核对；未全书审校、厂家复核或实车验证": 6,
     "已核对文本层证据页；未厂家复核/实车验证": 24,
-    "证据页渲染+OCR已核对；未厂家复核/实车验证": 10
+    "证据页渲染+OCR已核对；未厂家复核/实车验证": 10,
+    "证据页130dpi渲染完整目视核对；文本定位已复核；未全书审校/厂家复核/实车验证": 8
   },
   "research": {
     "reports": 3,
@@ -842,18 +843,26 @@
       "version": "OMSU54855，版本L1（CHINESE）；PDF元数据2021-12-29；独立印刷版次待核实",
       "version_date": null,
       "pdf_metadata_date": "2021-12-29",
-      "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2021-12-29不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；封面序列号下限以下的车辆适用性待核实",
-      "status": "官方PDF已取得；封面与选页渲染+OCR核对；未厂家复核/实车验证",
+      "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2021-12-29不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；封面序列号下限以下的车辆适用性待核实；序列号下限：JD954自512125、JD1104自510023、JD1204-A自511589、JD1354-A自510201；JD1404-A须区分4045发动机自512891与6068发动机自512911；检索不自动验证实车序列号，使用前仍须确认发动机与配置",
+      "status": "官方PDF已取得；既有选页渲染+OCR核对；2026-10-08补充目视核对第1、164～170页完整图像；未全书审校/厂家复核/实车验证",
       "content_group": "整机／维保PDF",
       "storage_group": "仓库PDF原件",
       "source_path": "知识库/原始农机说明书/约翰迪尔/6B_L1/OMSU54855.pdf",
       "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu54855",
-      "entry_count": 4,
+      "entry_count": 12,
       "entry_ids": [
         "KB-JD-6B-L1-001",
         "KB-JD-6B-L1-002",
         "KB-JD-6B-L1-003",
-        "KB-JD-6B-L1-004"
+        "KB-JD-6B-L1-004",
+        "KB-JD-6B-L1-005",
+        "KB-JD-6B-L1-006",
+        "KB-JD-6B-L1-007",
+        "KB-JD-6B-L1-008",
+        "KB-JD-6B-L1-009",
+        "KB-JD-6B-L1-010",
+        "KB-JD-6B-L1-011",
+        "KB-JD-6B-L1-012"
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md"
