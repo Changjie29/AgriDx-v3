@@ -6,27 +6,43 @@ export function generateLocalKnowledgeReply(
   query: string,
   retrieved: KnowledgeChunk[],
   opts: RetrievalContext = {},
+  fallbackReason?: 'not_configured' | 'provider_unavailable',
+  displayQuery: string = query,
 ): string {
   const machineDesc = [opts.machineType, opts.brand, opts.model].filter(Boolean).join(' ') || '农机设备';
   const primary = retrieved[0];
+  const serviceNotice = fallbackReason === 'not_configured'
+    ? '**【服务状态】**\n当前未启用外部模型，本次仅提供本地资料和信息补充建议。\n\n'
+    : fallbackReason === 'provider_unavailable'
+      ? '**【服务状态】**\n外部模型本次暂不可用，已回退为本地资料回复。可稍后重试以获得模型辅助分析。\n\n'
+      : '';
+  const identityQuestions = [
+    !opts.machineType && '农机类型',
+    !opts.brand && '品牌',
+    !opts.model && '完整型号',
+  ].filter(Boolean).join('、');
 
   if (!primary) {
     const identityNotice = resolveScope(query, opts).identityConflict
       ? '已填写的农机信息与问题中的类型、品牌或型号不一致。请确认本次咨询对象，修改已填写信息或问题中的机型后再检索。\n'
       : '';
-    return `**【故障现象分析】**
-收到关于「${machineDesc}」的咨询：“${query}”。
+    return `${serviceNotice}**【故障现象分析】**
+收到关于「${machineDesc}」的咨询：“${displayQuery}”。
 
 **【当前资料不足】**
-${identityNotice}未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。
+${identityNotice}未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。
+
+**【需要补充】**
+${identityQuestions ? `- 请补充${identityQuestions}，以便匹配对应手册。\n` : ''}- 故障是在启动、行驶还是带机具作业时出现？出现前是否有保养、更换或碰撞？
+- 请记录异常位置、报警／故障代码及伴随现象，并确认出厂配置与版本。
 
 **【安全提醒】**
 故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。`;
   }
 
   if (!primary.entryId) {
-    return `**【咨询现象】**
-收到关于「${machineDesc}」的咨询：“${query}”。
+    return `${serviceNotice}**【咨询现象】**
+收到关于「${machineDesc}」的咨询：“${displayQuery}”。
 
 **【当前资料不足】**
 仅命中整理者编写的信息收集提示，未取得本次咨询所需的匹配手册证据。以下问题不是操作／维修依据，不能据此判断故障原因、提供维修步骤、操作参数或保养周期。
@@ -52,8 +68,8 @@ ${describeSource(primary)}
   const background = ['机型资料', '资料缺口', '资料索引', '资料核验', '系统适用边界'].includes(primary.entryType ?? '');
 
   // Show the best matching entry intact so its safety conditions and evidence stay together.
-  return `**【故障现象分析】**
-针对「${machineDesc}」的咨询：“${query}”。
+  return `${serviceNotice}**【故障现象分析】**
+针对「${machineDesc}」的咨询：“${displayQuery}”。
 
 **【${background ? '来源与适用信息' : '初步判断'}】**
 ${scopeNotice}${background ? '该资料仅用于来源、适用范围或资料缺口说明，不是操作／维修依据。' : ''}

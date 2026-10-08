@@ -1,0 +1,241 @@
+import assert from 'node:assert/strict';
+import { before, test } from 'node:test';
+import { resolveDiagnosticContext } from '../server/knowledge/conversation';
+import { loadKnowledgeBase, retrieve } from '../server/knowledge/retriever';
+import { resolveScope } from '../server/knowledge/scope';
+
+before(() => loadKnowledgeBase());
+
+function user(content: string) {
+  return { role: 'user', content };
+}
+
+function retrieveConversation(messages: { role: string; content: string }[]) {
+  const resolved = resolveDiagnosticContext(messages);
+  return { resolved, found: retrieve(resolved.query, 100, resolved.scope) };
+}
+
+test('colloquial symptoms retrieve their existing sections without the file preamble', () => {
+  for (const [query, heading] of [
+    ['发动机打不着火', '二、发动机启动困难 / 不能启动'],
+    ['拖拉机开锅', '一、发动机水温过高（开锅）'],
+    ['农具升不起来', '四、液压系统故障'],
+    ['拖拉机没劲', '三、动力不足 / 冒黑烟'],
+    ['有异响', '四、液压系统故障'],
+    ['方向盘很重', '六、制动与转向'],
+    ['刹车跑偏', '六、制动与转向'],
+  ]) {
+    const found = retrieve(query);
+    assert.equal(found[0]?.heading, heading, query);
+    assert.ok(found.every((chunk) => chunk.heading !== '(概述)'), query);
+  }
+  assert.equal(retrieve('我的拖拉机怎么了').length, 0);
+  assert.equal(retrieve('发动机打不着火').some((chunk) => chunk.heading.includes('水温')), false);
+});
+
+test('symptom expansion retains exact-model and emission applicability', () => {
+  const found = retrieve('东方红 LF1504 打不着火');
+  assert.ok(found.length > 0);
+  assert.ok(found.every((chunk) => chunk.sourceId === 'SRC-YTO-LF1504-SMLF150449010'));
+  assert.equal(retrieve('东方红 LF1504 国四 打不着火').length, 0);
+  assert.equal(retrieve('久保田 LX9999 打不着火').length, 0);
+});
+
+test('separate symptom, brand and model answers preserve the diagnosis', () => {
+  const { resolved, found } = retrieveConversation([
+    user('拖拉机钥匙在 START，启动电机不转'),
+    { role: 'assistant', content: '久保田 LX2620 手册可以回答这个问题吗？' },
+    user('纽荷兰'),
+    user('WORKMASTER 25'),
+  ]);
+  assert.equal(resolved.currentQuery, 'WORKMASTER 25');
+  assert.equal(resolved.scope.brand, '纽荷兰');
+  assert.equal(resolved.scope.model, 'workmaster25');
+  assert.match(resolved.query, /启动电机不转/);
+  assert.doesNotMatch(resolved.query, /久保田|LX2620/);
+  assert.equal(found[0]?.entryId, 'NH-WM25-003');
+});
+
+test('model correction within a brand excludes the previous model', () => {
+  const { resolved, found } = retrieveConversation([
+    user('久保田 LX2620 发动机启动困难'),
+    user('型号是 M6060'),
+  ]);
+  assert.equal(resolved.scope.brand, '久保田');
+  assert.equal(resolved.scope.model, 'm6060');
+  assert.doesNotMatch(resolved.query, /lx2620/i);
+  assert.ok(found.every((chunk) => chunk.sourceId !== 'SRC-KB-LX2620-6C82063118'));
+});
+
+test('brand correction clears a previous model and preserves the symptom for the new model answer', () => {
+  const { resolved, found } = retrieveConversation([
+    user('久保田 LX2620 起动机不转'),
+    user('不是久保田，是东方红'),
+    user('LF1504'),
+  ]);
+  assert.equal(resolved.scope.brand, '东方红');
+  assert.equal(resolved.scope.model, 'lf1504');
+  assert.ok(found.some((chunk) => chunk.entryId === 'KB-YTO-LF1504-007'));
+  assert.ok(found.every((chunk) => chunk.brand === '东方红'));
+});
+
+test('operating-condition follow-ups retain the symptom and latest configuration gates', () => {
+  const { resolved, found } = retrieveConversation([
+    user('久保田 M6060 变速箱油位检查'),
+    user('只有热车才出现'),
+    user('两驱'),
+  ]);
+  assert.match(resolved.query, /变速箱油位检查/);
+  assert.match(resolved.query, /热车/);
+  assert.match(resolved.query, /2WD/);
+  assert.equal(found.length, 0);
+});
+
+test('emission follow-ups replace old stage and cannot reuse incompatible manuals', () => {
+  const { resolved, found } = retrieveConversation([
+    user('东方红 LF1504 国三 起动机不转'),
+    user('国四'),
+  ]);
+  assert.match(resolved.query, /国四/);
+  assert.doesNotMatch(resolved.query, /国三/);
+  assert.equal(found.length, 0);
+});
+
+test('switching machines clears previous configuration and emission limits', () => {
+  const { resolved, found } = retrieveConversation([
+    user('沃得 WF1404-3 国三 两驱 驾驶室 发动机不能起动'),
+    user('换成纽荷兰 WORKMASTER25'),
+  ]);
+  assert.equal(resolved.scope.brand, '纽荷兰');
+  assert.equal(resolved.scope.model, 'workmaster25');
+  assert.doesNotMatch(resolved.query, /WF1404|国三|2WD|CAB/i);
+  assert.ok(found.length > 0);
+  assert.ok(found.every((chunk) => chunk.brand === '纽荷兰'));
+  const unidentified = resolveDiagnosticContext([
+    user('久保田 LX2620 拖拉机 国四 起动机不转'),
+    user('另一台拖拉机也不能启动'),
+  ]);
+  assert.equal(unidentified.scope.brand, undefined);
+  assert.equal(unidentified.scope.model, undefined);
+  assert.equal(unidentified.scope.machineType, '拖拉机');
+  assert.doesNotMatch(unidentified.query, /久保田|lx2620|国四/i);
+});
+
+test('an independent new question does not get answers from the previous symptom', () => {
+  const resolved = resolveDiagnosticContext([
+    user('纽荷兰 WORKMASTER25 发动机不能启动'),
+    user('量子纠缠'),
+  ]);
+  assert.doesNotMatch(resolved.query, /启动/);
+  assert.equal(retrieve(resolved.query, 100, resolved.scope).length, 0);
+});
+
+test('machine-type changes retain the new scope and prevent tractor archive reuse', () => {
+  const { resolved, found } = retrieveConversation([
+    user('纽荷兰 WORKMASTER25 拖拉机发动机不能起动'),
+    user('另一台联合收割机，也是打不着火'),
+  ]);
+  assert.equal(resolved.scope.machineType, '联合收割机');
+  assert.equal(resolved.scope.brand, undefined);
+  assert.equal(resolved.scope.model, undefined);
+  assert.ok(found.every((chunk) => !chunk.entryId));
+});
+
+test('unknown explicitly declared models and ambiguous brands cannot borrow applicable entries', () => {
+  const unknown = resolveDiagnosticContext([
+    user('久保田 拖拉机打不着火'),
+    user('型号是904'),
+  ]);
+  assert.equal(unknown.scope.model, '904');
+  assert.equal(retrieve(unknown.query, 100, unknown.scope).length, 0);
+  const ambiguous = resolveDiagnosticContext([
+    user('久保田 LX2620 起动机不转'),
+    user('久保田或者东方红'),
+  ]);
+  assert.equal(ambiguous.scope.brand, undefined);
+  assert.equal(retrieve(ambiguous.query, 100, ambiguous.scope).length, 0);
+});
+
+test('explicit request fields cannot hide conflicting user identities', () => {
+  const resolved = resolveDiagnosticContext([
+    user('东方红 LF1504 发动机启动困难'),
+  ], { machineType: '拖拉机', brand: '久保田', model: 'LX2620' });
+  assert.deepEqual(resolved.scope, { machineType: '拖拉机', brand: '久保田', model: 'LX2620' });
+  const found = retrieve(resolved.query, 100, resolved.scope);
+  assert.equal(found.length, 0);
+  assert.equal(resolveScope(resolved.query, resolved.scope).identityConflict, true);
+  for (const [query, explicit] of [
+    ['纽荷兰 WORKMASTER25 起动机不转', { brand: '久保田', model: 'LX2620' }],
+    ['久保田 M5-111 发动机启动困难', { brand: '久保田', model: 'LX2620' }],
+    ['联合收割机 液压提升无力', { machineType: '拖拉机' }],
+    ['拖拉机 液压提升无力', { machineType: '联合收割机' }],
+    ['纽荷兰 WORKMASTER25 起动机不转', { brand: '久保田' }],
+    ['久保田 M5-111 发动机启动困难', { model: 'LX2620' }],
+  ] as const) {
+    const conflict = resolveDiagnosticContext([user(query)], explicit);
+    assert.equal(resolveScope(conflict.query, conflict.scope).identityConflict, true, query);
+    assert.equal(retrieve(conflict.query, 100, conflict.scope).length, 0, query);
+  }
+});
+
+test('short follow-ups cannot erase a conflict with request identity fields', () => {
+  const resolved = resolveDiagnosticContext([
+    user('纽荷兰 WORKMASTER25 起动机不转'),
+    user('只有热车才出现'),
+  ], { brand: '久保田', model: 'LX2620' });
+  assert.equal(resolveScope(resolved.query, resolved.scope).identityConflict, true);
+  assert.equal(retrieve(resolved.query, 100, resolved.scope).length, 0);
+});
+
+test('correcting a model on the same machine preserves declared emission limits', () => {
+  const resolved = resolveDiagnosticContext([
+    user('久保田 LX2620 国四 ROPS 两驱 发动机启动困难'),
+    user('型号是 M6060'),
+  ]);
+  assert.equal(resolved.scope.model, 'm6060');
+  assert.match(resolved.query, /国四/);
+  assert.match(resolved.query, /ROPS/);
+  assert.match(resolved.query, /2WD/);
+  assert.equal(retrieve(resolved.query, 100, resolved.scope).length, 0);
+});
+
+test('matching aliases and explicit current identity remain compatible with conversation scope', () => {
+  const alias = resolveDiagnosticContext([user('久保田 LX2620 发动机启动困难')], { brand: 'Kubota' });
+  assert.equal(alias.scope.model, 'lx2620');
+  assert.equal(resolveScope(alias.query, alias.scope).identityConflict, false);
+  assert.ok(retrieve(alias.query, 100, alias.scope).some((chunk) => chunk.entryId === 'KB-LX2620-003'));
+  const switched = resolveDiagnosticContext([
+    user('久保田 LX2620 拖拉机发动机启动困难'),
+    user('换成纽荷兰 WORKMASTER25'),
+  ], { brand: '纽荷兰', model: 'WORKMASTER25' });
+  assert.equal(resolveScope(switched.query, switched.scope).identityConflict, false);
+  assert.doesNotMatch(switched.query, /久保田|lx2620/i);
+  assert.ok(retrieve(switched.query, 100, switched.scope).every((chunk) => chunk.brand === '纽荷兰'));
+});
+
+test('an explicitly attached implement does not replace the primary machine type', () => {
+  for (const phrase of ['拖拉机挂接播种机时', '拖拉机连接的播种机时', '拖拉机牵引播种机时']) {
+    const resolved = resolveDiagnosticContext([user(`久保田 LX2620 ${phrase}发动机动力不足`)]);
+    assert.equal(resolved.scope.machineType, '拖拉机', phrase);
+    assert.equal(resolveScope(resolved.query, resolved.scope).identityConflict, false, phrase);
+    assert.ok(retrieve(resolved.query, 100, resolved.scope).some((chunk) => chunk.entryId === 'KB-LX2620-004'), phrase);
+  }
+  const pto = resolveDiagnosticContext([
+    user('久保田 M6060 拖拉机防护罩要求'),
+    user('PTO接播种机时防护罩要求'),
+  ]);
+  assert.equal(pto.scope.machineType, '拖拉机');
+  assert.equal(resolveScope(pto.query, pto.scope).identityConflict, false);
+  assert.ok(retrieve(pto.query, 100, pto.scope).some((chunk) => chunk.entryId === 'KB-KB-M6060-002'));
+});
+
+test('references stay outside equipment identity in conversation scope', () => {
+  const resolved = resolveDiagnosticContext([
+    user('久保田 LX2620 拖拉机发动机启动困难'),
+    user('参考资料 https://example.com/东方红/LF1504/联合收割机.pdf；怎么处理'),
+  ]);
+  assert.equal(resolved.scope.brand, '久保田');
+  assert.equal(resolved.scope.model, 'lx2620');
+  assert.equal(resolved.scope.machineType, '拖拉机');
+  assert.equal(resolveScope(resolved.query, resolved.scope).identityConflict, false);
+});

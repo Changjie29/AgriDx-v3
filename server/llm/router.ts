@@ -1,40 +1,52 @@
 /**
- * LLM Router
- *
- * 选择策略（按当前网络环境）：
- *   - 检测到代理（HTTPS_PROXY / https_proxy / HTTP_PROXY / http_proxy）→ Gemini 优先
- *   - 否则                                          → DeepSeek 优先
- *   - 主选失败（网络/超时/服务端错误/鉴权 401/403）  → 自动回退另一个
- *   - 两个都失败                                    → 抛 ProviderError 给上层
- *
- * 鉴权失败也会尝试另一个 provider，方便排查 key 配置问题。
- * 日志只打印 provider 名与错误类别，绝不打印 API Key。
+ * 按配置选择 LLM，并在主选失败时尝试另一家已配置的 provider。
+ * auto 保留现有路由：配置 Gemini 时优先 Gemini，否则 DeepSeek。
+ * 显式 deepseek/gemini 只设置优先顺序；缺少主选 Key 时仍使用另一家。
+ * 状态和日志只包含配置概要与错误类别，不暴露凭据或上游响应体。
  */
 import { detectProxy } from './http';
 import { createGeminiProvider } from './gemini';
 import { createDeepSeekProvider } from './deepseek';
 import {
   ProviderError,
+  type ProviderErrorKind,
+  type ProviderName,
   type ChatMessage,
   type ChatResult,
   type Provider,
 } from './types';
 
-export interface RouteOutcome {
-  result: ChatResult;
-  /** 实际主选是谁 */
-  primary: 'gemini' | 'deepseek';
-  /** 是否发生了 fallback */
-  fellBack: boolean;
+export type ProviderPreference = 'auto' | ProviderName;
+
+export interface LlmStatus {
+  /** null 表示 LLM_PROVIDER 值无效；不返回原始环境变量。 */
+  preference: ProviderPreference | null;
+  configValid: boolean;
+  configurationError?: 'invalid_provider';
+  /** 仅表示至少一家 Key 非空，不代表联网或鉴权已验证。 */
+  configured: boolean;
+  primary: ProviderName | null;
+  proxyConfigured: boolean;
+  providers: { provider: ProviderName; model: string; configured: boolean }[];
 }
 
-function log(msg: string, extra?: unknown) {
-  // 开发日志：不打印任何 key
-  if (extra !== undefined) {
-    console.warn(`[llm] ${msg}`, extra);
-  } else {
-    console.log(`[llm] ${msg}`);
-  }
+export interface RouteOutcome {
+  result: ChatResult;
+  primary: ProviderName;
+  fellBack: boolean;
+  /** 主选失败类别；只在实际调用主选失败后回退成功时提供。 */
+  fallbackReason?: ProviderErrorKind;
+}
+
+function getPreference(): ProviderPreference | null {
+  const value = process.env.LLM_PROVIDER?.trim().toLowerCase() || 'auto';
+  return value === 'auto' || value === 'gemini' || value === 'deepseek' ? value : null;
+}
+
+function asProviderError(provider: ProviderName, error: unknown): ProviderError {
+  return error instanceof ProviderError
+    ? error
+    : new ProviderError(provider, 'unknown', 'unexpected provider error');
 }
 
 export class LlmRouter {
@@ -46,91 +58,81 @@ export class LlmRouter {
     this.deepseek = createDeepSeekProvider();
   }
 
-  /** 启动时打印一次配置状态（不泄露 key） */
+  /** 不发起联网请求；健康接口可安全暴露此概要。 */
+  getStatus(): LlmStatus {
+    const preference = getPreference();
+    const providers = [this.gemini, this.deepseek].map((provider) => ({
+      provider: provider.name,
+      model: provider.model,
+      configured: provider.isConfigured(),
+    }));
+    const configured = preference !== null && providers.some((provider) => provider.configured);
+    return {
+      preference,
+      configValid: preference !== null,
+      ...(preference === null ? { configurationError: 'invalid_provider' as const } : {}),
+      configured,
+      primary: configured ? this.pickPrimary(preference!).primary.name : null,
+      proxyConfigured: detectProxy().present,
+      providers,
+    };
+  }
+
   printConfig() {
-    const proxy = detectProxy();
-    log(
-      `provider config: gemini=${this.gemini.isConfigured() ? 'configured' : 'missing'} ` +
-        `deepseek=${this.deepseek.isConfigured() ? 'configured' : 'missing'} ` +
-        `proxy=${proxy.present ? 'detected' : 'none'}`,
+    const status = this.getStatus();
+    console.log(
+      `[llm] preference=${status.preference ?? 'invalid'} ` +
+      `gemini=${this.gemini.isConfigured() ? 'configured' : 'missing'} ` +
+      `deepseek=${this.deepseek.isConfigured() ? 'configured' : 'missing'} ` +
+      `proxy=${status.proxyConfigured ? 'detected' : 'none'} (connection unverified)`,
     );
   }
 
   hasAnyConfigured(): boolean {
-    return this.gemini.isConfigured() || this.deepseek.isConfigured();
+    return this.getStatus().configured;
   }
 
-  /**
-   * 决定本次请求的主选 provider。
-   * 规则：配置 Gemini 则优先使用 Gemini（AI Studio 云环境直连 Google）；未配置时自动降级。
-   */
-  private pickPrimary(): { primary: Provider; secondary: Provider } {
-    const proxy = detectProxy();
-    let first: Provider;
-    let second: Provider;
-
-    if (this.gemini.isConfigured() && !this.deepseek.isConfigured()) {
-      first = this.gemini;
-      second = this.deepseek;
-    } else if (this.deepseek.isConfigured() && !this.gemini.isConfigured()) {
-      first = this.deepseek;
-      second = this.gemini;
-    } else if (proxy.present || process.env.GEMINI_API_KEY) {
-      first = this.gemini;
-      second = this.deepseek;
-    } else {
-      first = this.deepseek;
-      second = this.gemini;
-    }
-
-    // 主选未配置则交换
-    if (!first.isConfigured() && second.isConfigured()) {
-      log(`primary ${first.name} not configured, using ${second.name}`);
-      [first, second] = [second, first];
-    }
+  private pickPrimary(preference: ProviderPreference): { primary: Provider; secondary: Provider } {
+    // auto 保持旧行为：两家都有 Key 时仍优先 Gemini。
+    let first = preference === 'deepseek' ? this.deepseek
+      : preference === 'gemini' ? this.gemini
+      : this.gemini.isConfigured() || detectProxy().present ? this.gemini : this.deepseek;
+    let second = first === this.gemini ? this.deepseek : this.gemini;
+    if (!first.isConfigured() && second.isConfigured()) [first, second] = [second, first];
     return { primary: first, secondary: second };
   }
 
   async chat(messages: ChatMessage[]): Promise<RouteOutcome> {
-    const { primary, secondary } = this.pickPrimary();
-
-    if (!primary.isConfigured() && !secondary.isConfigured()) {
-      throw new ProviderError(primary.name, 'unknown', 'no LLM API key configured');
+    const preference = getPreference();
+    if (preference === null) {
+      throw new ProviderError('deepseek', 'configuration', 'invalid LLM_PROVIDER');
+    }
+    const { primary, secondary } = this.pickPrimary(preference);
+    if (!primary.isConfigured()) {
+      throw new ProviderError(primary.name, 'configuration', 'no LLM API key configured');
     }
 
-    // 1) 主选
+    let primaryError: ProviderError;
     try {
       const result = await primary.chat(messages);
       return { result, primary: primary.name, fellBack: false };
-    } catch (err) {
-      if (err instanceof ProviderError) {
-        // 任何错误（含鉴权失败）都尝试另一个 provider，方便排查 key 问题
-        log(`primary ${primary.name} failed (${err.kind}), trying ${secondary.name}`, err.detail);
-      } else {
-        log(`primary ${primary.name} unexpected error`, err);
-      }
+    } catch (error) {
+      primaryError = asProviderError(primary.name, error);
+      console.warn(`[llm] primary ${primary.name} failed (${primaryError.kind})`);
     }
 
-    // 2) 回退
-    if (secondary.isConfigured()) {
-      try {
-        const result = await secondary.chat(messages);
-        return { result, primary: primary.name, fellBack: true };
-      } catch (err) {
-        if (err instanceof ProviderError) {
-          log(`secondary ${secondary.name} also failed (${err.kind})`, err.detail);
-        } else {
-          log(`secondary ${secondary.name} unexpected error`, err);
-        }
-        throw err;
-      }
+    if (!secondary.isConfigured()) throw primaryError;
+    try {
+      const result = await secondary.chat(messages);
+      return { result, primary: primary.name, fellBack: true, fallbackReason: primaryError.kind };
+    } catch (error) {
+      const secondaryError = asProviderError(secondary.name, error);
+      console.warn(`[llm] secondary ${secondary.name} failed (${secondaryError.kind})`);
+      throw secondaryError;
     }
-
-    throw new ProviderError(primary.name, 'unknown', 'both providers failed');
   }
 }
 
-/** 单例：进程内复用 */
 let singleton: LlmRouter | null = null;
 export function getLlmRouter(): LlmRouter {
   if (!singleton) {

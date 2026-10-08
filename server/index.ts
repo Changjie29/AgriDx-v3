@@ -40,6 +40,7 @@ if (proxyUrl) {
 import { loadKnowledgeBase, stats as kbStats } from './knowledge/retriever';
 import { buildSystemPrompt } from './knowledge/systemPrompt';
 import { generateLocalKnowledgeReply } from './knowledge/fallbackDiagnosis';
+import { resolveDiagnosticContext } from './knowledge/conversation';
 import { getLlmRouter } from './llm/router';
 import { ProviderError, type ChatMessage } from './llm/types';
 
@@ -90,6 +91,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
     version: APP_VERSION,
     timestamp: new Date().toISOString(),
     knowledge: kbStats(),
+    llm: llm.getStatus(),
   });
 });
 
@@ -153,28 +155,44 @@ app.post('/api/chat', async (req: Request, res: Response) => {
 
   // 取最近一条 user 问题用于 RAG 检索
   const lastUserMsg = [...history].reverse().find((m) => m.role === 'user');
-  const query = lastUserMsg?.content || '';
+  if (!lastUserMsg?.content.trim() || history.at(-1)?.role !== 'user') {
+    res.status(400).json({ error: '请提供非空的当前用户问题', code: 'bad_request' });
+    return;
+  }
+  const { query, scope, currentQuery } = resolveDiagnosticContext(history, { machineType, brand, model });
 
   // 构造 system prompt（含 RAG）
-  const { message: systemMsg, retrieved } = buildSystemPrompt({
+  const { message: systemMsg, retrieved, answerMode } = buildSystemPrompt({
     query,
-    machineType,
-    brand,
-    model,
+    currentQuery,
+    ...scope,
   });
+
+  const knowledgeSources = retrieved.map((chunk) => ({
+    entryId: chunk.entryId,
+    sourceId: chunk.sourceId,
+    source: chunk.source,
+    heading: chunk.heading,
+    locator: chunk.locator,
+    version: chunk.version,
+    applicability: chunk.applicability,
+  }));
 
   const fullMessages: ChatMessage[] = [systemMsg, ...history];
 
   try {
     if (!llm.hasAnyConfigured()) {
       // 未配置外部 API key 时，返回带来源的知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, { machineType, brand, model });
+      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'not_configured', currentQuery);
       res.json({
         choices: [{ message: { role: 'assistant', content: localReply } }],
         model: 'kb-rag-engine (本地知识引擎)',
         provider: 'knowledge-base',
         fellBack: true,
         knowledgeChunks: retrieved.length,
+        knowledgeSources,
+        answerMode: 'local-evidence',
+        fallbackReason: 'not_configured',
       });
       return;
     }
@@ -187,18 +205,23 @@ app.post('/api/chat', async (req: Request, res: Response) => {
       provider: outcome.result.provider,
       fellBack: outcome.fellBack,
       knowledgeChunks: retrieved.length,
+      knowledgeSources,
+      answerMode,
     });
   } catch (err) {
     if (err instanceof ProviderError) {
-      console.warn(`[chat] provider error: ${err.provider}/${err.kind}`, err.detail);
+      console.warn(`[chat] provider error: ${err.provider}/${err.kind}`);
       // 服务提供商错误时，返回带来源的本地知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, { machineType, brand, model });
+      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'provider_unavailable', currentQuery);
       res.json({
         choices: [{ message: { role: 'assistant', content: localReply } }],
         model: 'kb-rag-fallback (本地备用引擎)',
         provider: 'knowledge-base',
         fellBack: true,
         knowledgeChunks: retrieved.length,
+        knowledgeSources,
+        answerMode: 'local-evidence',
+        fallbackReason: 'provider_unavailable',
       });
       return;
     }

@@ -21,6 +21,13 @@ import content, { pick } from '@/data/content';
 import { useLang } from '@/hooks/useLang';
 
 type ChatProvider = 'gemini' | 'deepseek' | 'knowledge-base';
+type AnswerMode = 'knowledge-grounded' | 'general-guidance' | 'local-evidence';
+type FallbackReason = 'not_configured' | 'provider_unavailable';
+
+interface LlmHealth {
+  configured: boolean;
+  primary: 'gemini' | 'deepseek' | null;
+}
 
 interface ChatMessage {
   id: string;
@@ -28,10 +35,25 @@ interface ChatMessage {
   content: string;
   model?: string;
   provider?: ChatProvider;
+  answerMode?: AnswerMode;
+  fallbackReason?: FallbackReason;
+  knowledgeChunks?: number;
 }
 
 function isChatProvider(value: unknown): value is ChatProvider {
   return value === 'gemini' || value === 'deepseek' || value === 'knowledge-base';
+}
+
+function isAnswerMode(value: unknown): value is AnswerMode {
+  return value === 'knowledge-grounded' || value === 'general-guidance' || value === 'local-evidence';
+}
+
+function isFallbackReason(value: unknown): value is FallbackReason {
+  return value === 'not_configured' || value === 'provider_unavailable';
+}
+
+function isKnowledgeChunkCount(value: unknown): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
 }
 
 const STORAGE_KEY = '__app_srt27_chat_history';
@@ -59,6 +81,9 @@ function loadHistory(): ChatMessage[] {
           id: m.id, role: m.role, content: m.content,
           model: typeof m.model === 'string' ? m.model : undefined,
           provider: isChatProvider(m.provider) ? m.provider : undefined,
+          answerMode: isAnswerMode(m.answerMode) ? m.answerMode : undefined,
+          fallbackReason: isFallbackReason(m.fallbackReason) ? m.fallbackReason : undefined,
+          knowledgeChunks: isKnowledgeChunkCount(m.knowledgeChunks) ? m.knowledgeChunks : undefined,
         }))
       : [];
   } catch {
@@ -87,11 +112,20 @@ export default function ChatPage() {
   const providerLabel = (provider?: ChatProvider) =>
     provider === 'knowledge-base' ? t('本地知识库', 'Local knowledge base') :
     provider === 'gemini' ? 'Gemini' : provider === 'deepseek' ? 'DeepSeek' : '';
+  const answerModeLabel = (mode?: AnswerMode) =>
+    mode === 'knowledge-grounded' ? t('知识库依据 + LLM', 'Knowledge-grounded LLM answer') :
+    mode === 'general-guidance' ? t('LLM 通用建议 · 需核实', 'General LLM guidance · verify applicability') :
+    mode === 'local-evidence' ? t('本地资料答复', 'Local evidence answer') : '';
+  const fallbackLabel = (reason?: FallbackReason) =>
+    reason === 'not_configured' ? t('LLM 未配置，仅使用本地资料', 'LLM not configured; using local evidence') :
+    reason === 'provider_unavailable' ? t('模型服务暂不可用，已使用本地资料', 'Model service unavailable; using local evidence') : '';
   const [messages, setMessages] = useState<ChatMessage[]>(loadHistory);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [currentModel, setCurrentModel] = useState<string>('');
   const [currentProvider, setCurrentProvider] = useState<ChatProvider | ''>('');
+  const [currentFallbackReason, setCurrentFallbackReason] = useState<FallbackReason | undefined>();
+  const [llmHealth, setLlmHealth] = useState<LlmHealth | 'checking' | 'unknown'>('checking');
   const [machineType, setMachineType] = useState<string>(() => loadMeta().machineType);
   const [brand, setBrand] = useState<string>(() => loadMeta().brand);
   const [model, setModel] = useState<string>(() => loadMeta().model);
@@ -102,6 +136,36 @@ export default function ChatPage() {
   }, []);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8_000);
+    let active = true;
+    const checkConfiguration = async () => {
+      try {
+        const response = await fetch('/api/health', { signal: controller.signal });
+        if (!response.ok) throw new Error('Health request failed');
+        const data = await response.json();
+        if (typeof data?.llm?.configured !== 'boolean') throw new Error('Unknown LLM configuration');
+        if (active) {
+          setLlmHealth({
+            configured: data.llm.configured,
+            primary: data.llm.primary === 'gemini' || data.llm.primary === 'deepseek' ? data.llm.primary : null,
+          });
+        }
+      } catch {
+        if (active) setLlmHealth('unknown');
+      } finally {
+        window.clearTimeout(timeout);
+      }
+    };
+    void checkConfiguration();
+    return () => {
+      active = false;
+      window.clearTimeout(timeout);
+      controller.abort();
+    };
+  }, []);
 
   // 保存历史
   useEffect(() => {
@@ -134,7 +198,7 @@ export default function ChatPage() {
       if (!trimmed || trimmed.length > 2000 || requestRef.current) return;
       const controller = new AbortController();
       requestRef.current = controller;
-      const timeout = window.setTimeout(() => controller.abort(new DOMException("Timeout", "TimeoutError")), 45_000);
+      const timeout = window.setTimeout(() => controller.abort(new DOMException('Timeout', 'TimeoutError')), 60_000);
 
       const userMsg: ChatMessage = { id: generateId(), role: 'user', content: trimmed };
       const loadingMsg: ChatMessage = { id: generateId(), role: 'loading', content: '' };
@@ -159,13 +223,16 @@ export default function ChatPage() {
             brand: brand || undefined,
             model: model || undefined,
           }),
-          // 后端单请求上限约 20s，前端留足余量，避免网络异常时永久转圈
+          // 留足双模型顺序回退及网络传输时间，避免提前中止后端的回退答复。
           signal: controller.signal,
         });
 
         let reply = '';
         let modelName = '';
         let provider: ChatProvider | '' = '';
+        let answerMode: AnswerMode | undefined;
+        let fallbackReason: FallbackReason | undefined;
+        let knowledgeChunks: number | undefined;
         if (response.ok) {
           const data = await response.json();
           const result = data?.choices?.[0]?.message?.content;
@@ -173,6 +240,9 @@ export default function ChatPage() {
           reply = result;
           modelName = typeof data?.model === 'string' ? data.model : '';
           provider = isChatProvider(data?.provider) ? data.provider : '';
+          answerMode = isAnswerMode(data?.answerMode) ? data.answerMode : undefined;
+          fallbackReason = isFallbackReason(data?.fallbackReason) ? data.fallbackReason : undefined;
+          knowledgeChunks = isKnowledgeChunkCount(data?.knowledgeChunks) ? data.knowledgeChunks : undefined;
         } else {
           // 后端已脱敏，统一友好文案
           const errData = await response.json().catch(() => null);
@@ -182,6 +252,7 @@ export default function ChatPage() {
         if (requestRef.current !== controller) return;
         setCurrentModel(modelName);
         setCurrentProvider(provider);
+        setCurrentFallbackReason(fallbackReason);
 
         setMessages((prev) =>
           prev.map((m) =>
@@ -192,6 +263,9 @@ export default function ChatPage() {
                   content: reply,
                   model: modelName || undefined,
                   provider: provider || undefined,
+                  answerMode,
+                  fallbackReason,
+                  knowledgeChunks,
                 }
               : m,
           ),
@@ -200,13 +274,14 @@ export default function ChatPage() {
         if (requestRef.current !== controller) return;
         setCurrentModel('');
         setCurrentProvider('');
+        setCurrentFallbackReason(undefined);
         setMessages((prev) =>
           prev.map((m) =>
             m.id === loadingMsg.id
               ? {
                   ...m,
                   role: 'error' as const,
-                  content: t('智能诊断服务暂时无法连接，请稍后重试。', 'AI service unavailable, please try again later.'),
+                  content: t('对话请求未完成，请稍后重试；已有对话仍保留。', 'The chat request did not complete. Please retry; your previous messages are preserved.'),
                 }
               : m,
           ),
@@ -261,6 +336,7 @@ export default function ChatPage() {
     stopRequest();
     setCurrentModel('');
     setCurrentProvider('');
+    setCurrentFallbackReason(undefined);
     setMessages([]);
     setIsLoading(false);
     toast.success(t('对话已清空', 'Chat cleared'));
@@ -268,6 +344,22 @@ export default function ChatPage() {
 
   const isEmpty = messages.length === 0;
   const typeOptions = lang === 'zh' ? MACHINE_TYPES_ZH : MACHINE_TYPES_EN;
+  const serviceStatus = currentFallbackReason === 'provider_unavailable'
+    ? t('本地知识库 · LLM 暂不可用', 'Local KB · LLM temporarily unavailable')
+    : currentFallbackReason === 'not_configured'
+    ? t('本地知识库 · LLM 未配置', 'Local KB · LLM not configured')
+    : currentProvider === 'gemini' || currentProvider === 'deepseek'
+    ? t('本地知识库 + LLM', 'Local KB + LLM')
+    : typeof llmHealth === 'object' && !llmHealth.configured
+    ? t('本地知识库 · LLM 未配置', 'Local KB · LLM not configured')
+    : typeof llmHealth === 'object' && llmHealth.configured
+    ? t('本地知识库 + LLM（已配置）', 'Local KB + LLM (configured)')
+    : llmHealth === 'checking'
+    ? t('本地知识库 · 正在检查 LLM 配置', 'Local KB · checking LLM configuration')
+    : t('本地知识库 · LLM 配置状态未知', 'Local KB · LLM configuration unknown');
+  const configurationHint = typeof llmHealth === 'object' && llmHealth.configured
+    ? `${llmHealth.primary ? `${t('首选模型', 'Preferred provider')}: ${providerLabel(llmHealth.primary)}. ` : ''}${t('已配置密钥；服务可用性以实际对话结果为准。', 'An API key is configured; availability is determined by actual chat requests.')}`
+    : undefined;
 
   return (
     <div className="flex h-[calc(100dvh-5.625rem)] flex-col chat-glass">
@@ -284,8 +376,8 @@ export default function ChatPage() {
           </div>
           <div className="min-w-0">
             <div className="truncate text-sm font-semibold text-foreground">耕知·耘诊 · {t('故障诊断', 'Diagnosis')}</div>
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <span className="truncate">{t('本地知识库 + LLM', 'Local KB + LLM')}</span>
+            <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground" role="status">
+              <span title={configurationHint}>{serviceStatus}</span>
               {currentProvider && (
                 <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-accent/60 px-1.5 py-0.5 text-[11px] text-foreground">
                   <Cpu className="h-3 w-3 text-primary" />
@@ -420,9 +512,14 @@ export default function ChatPage() {
                 ) : (
                   <div className="prose prose-sm max-w-none overflow-x-auto dark:prose-invert">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
-                    {msg.role === 'assistant' && (msg.model || msg.provider) && (
-                      <div className="mt-1.5 text-right text-[11px] text-muted-foreground/70">
-                        {[providerLabel(msg.provider), msg.model].filter(Boolean).join(' · ')}
+                    {msg.role === 'assistant' && (msg.model || msg.provider || msg.answerMode || msg.fallbackReason || msg.knowledgeChunks !== undefined) && (
+                      <div className="mt-2 border-t border-border/40 pt-2 text-[11px] leading-relaxed text-muted-foreground">
+                        <div className="flex flex-wrap gap-x-2 gap-y-1">
+                          {msg.answerMode && <span>{answerModeLabel(msg.answerMode)}</span>}
+                          {msg.knowledgeChunks !== undefined && <span>{t(`知识库命中 ${msg.knowledgeChunks} 条`, `${msg.knowledgeChunks} knowledge snippets retrieved`)}</span>}
+                          {(msg.model || msg.provider) && <span>{[providerLabel(msg.provider), msg.model].filter(Boolean).join(' · ')}</span>}
+                        </div>
+                        {msg.fallbackReason && <div className="mt-1">{fallbackLabel(msg.fallbackReason)}</div>}
                       </div>
                     )}
                   </div>

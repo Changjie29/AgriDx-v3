@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**2.3.2**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
+当前项目版本：**2.4.0**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
 
 国内资料新增按“使用/购机证据 → 报告所列型号 → 精确说明书 → 审校与检索”整理，见[型号采集优先级](知识库/整理后的知识库/农用拖拉机知识库/采集优先级/README.md)。现有3篇第三方报告、21条证据、20种型号/排放写法候选，均完成定向查找；尚未取得这些候选的新匹配完整手册，不能据此给出全国保有量排名。部分省厅正文与吉林公开搜索现已可读；总量背景、历史/展示实例和当前仍失败入口分别归档，研究资料不参与维修检索。
 
@@ -14,7 +14,7 @@
 
 - **前端**：React 19 + Vite + TypeScript + Tailwind CSS + React Router + React Three Fiber
 - **后端**：Node.js + Express + tsx（ESM）
-- **LLM**：Gemini（`gemini-3.6-flash`）/ DeepSeek（`deepseek-v4-flash`），OpenAI 兼容协议
+- **LLM**：Gemini（默认 `gemini-2.5-flash`，可配置）/ DeepSeek（默认 `deepseek-v4-flash`，可配置），OpenAI 兼容协议
 - **知识库**：通用信息收集提示 + 199 条索引化拖拉机及配套系统资料，按章节提取 + 关键词重叠打分，零向量库
 - **3D**：Three.js / React Three Fiber，程序化 RoomEnvironment 光照，零 HDR 网络请求
 
@@ -36,11 +36,16 @@ npm install
 编辑 `server/.env`（**该文件永不提交到 Git**，已在 `.gitignore` 中排除）：
 
 ```env
-# Gemini（有代理环境优先使用；OAuth token 或 API key）
+# Gemini（服务端 API Key；auto 模式配置后优先使用）
 GEMINI_API_KEY=your_gemini_api_key
 
-# DeepSeek（无代理环境优先使用；sk- 开头）
+# DeepSeek（服务端 API Key；Gemini 不可用时回退）
 DEEPSEEK_API_KEY=your_deepseek_api_key
+
+# 沿用双模型；显式优先可选 deepseek / gemini
+LLM_PROVIDER=auto
+# GEMINI_MODEL=gemini-2.5-flash
+# DEEPSEEK_MODEL=deepseek-v4-flash
 
 # 服务端口（默认 3000，前后端共用）
 PORT=3000
@@ -50,9 +55,9 @@ PORT=3000
 # HTTP_PROXY=http://127.0.0.1:7890
 ```
 
-> 两个 key 都配最稳：后端按网络环境自动选主选，失败自动回退。只配一个也能跑。
+> 两个 Key 都配可保留双模型回退；只配一个也能运行。auto 模式沿用现有 Gemini 优先策略。
 > 不配置 key 也可运行本地知识检索；外部模型未配置或调用失败时使用本地知识库回复。
-> 服务启动顺序：先加载 `server/.env`，再读取 `HTTPS_PROXY/https_proxy/HTTP_PROXY/http_proxy` 决定走 Gemini 还是 DeepSeek。
+> Node 服务先加载根目录 `.env` 和 `server/.env`，再创建模型实例；Sites 生产密钥需在对应项目的运行环境中配置，不能依赖本地文件。健康接口的已配置状态只表示 Key 已设置，调用结果才证明模型可用。
 
 ### 3. 启动开发服务
 
@@ -93,33 +98,31 @@ NODE_ENV=production PORT=3000 npm start
 
 ## LLM 选择策略
 
-后端 `server/llm/router.ts` 按当前网络环境自动选 provider：
+后端 `server/llm/router.ts` 保留双模型顺序回退，并可通过 `LLM_PROVIDER` 指定优先顺序：
 
-| 环境 | 主选 | 回退 |
+| 配置 | 主选 | 回退 |
 | --- | --- | --- |
-| 检测到 `HTTPS_PROXY` / `https_proxy` / `HTTP_PROXY` / `http_proxy` | Gemini | DeepSeek |
-| 无代理变量 | DeepSeek | Gemini |
+| `auto`（默认），Gemini Key 已设置 | Gemini | DeepSeek |
+| `auto`，仅 DeepSeek Key 已设置 | DeepSeek | Gemini（需已设置 Key） |
+| `deepseek` / `gemini` | 指定模型；缺 Key 时改用另一家 | 另一家已配置模型 |
 
-- 主选未配置时自动交换。
-- 主选抛网络/超时/服务端错误时自动回退次选。
-- 鉴权错误（401/403）也会尝试另一个，方便排查 key 问题。
-- 未配置外部模型或模型调用失败时，返回本地知识库回复，前端显示「本地知识库」；资料不足时明确说明，不编造机型参数。
-- 20 秒超时。
+主选网络、超时、鉴权、限流或无效响应失败时尝试备用。两家均不可用时返回本地资料，并在回答和界面标明降级；模型未配置与调用失败分别标明。Gemini 20 秒、DeepSeek 25 秒超时包含响应正文读取，前端等待上限 60 秒。`.env.example` 提供模型及 DeepSeek 兼容服务地址选项。无效优先配置在健康接口显示 `configValid=false`，不会静默选择另一种策略。
 
 ## RAG 工作流
 
 1. 启动时扫描 `server/knowledge/` 下的通用 `.md` 文件（跳过 `00_说明/`），按 `## ` 二级标题切块；同时读取 `知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl`，按条目编号提取对应 Markdown 章节。目前为 9 个信息收集片段 + 199 条归档条目，共 208 个片段。通用内容只帮助补充机型与现象，不提供维修原因、操作或参数依据。
-2. 检索结合 `machineType`、`brand`、`model`，也识别问题中可辨认的品牌与型号，过滤不相关品牌／型号及非拖拉机的归档条目；再对问题做中文 2-gram + 英文 token 化，按关键词重叠打分，标题命中权重 ×3。配置专用条目使用`entries.models`限定来源型号子集，并要求精确型号；未填该字段的条目沿用整册范围。明确CAB/ROPS或两驱/四驱与已登记范围冲突时排除条目。品牌或型号匹配不代表市场、排放、其他配置及版本已经确认。
+2. 从最近用户消息重建故障与补充信息，短品牌／型号／工况追问保留原问题，明确换机清理旧身份与配置；独立新问题替换旧症状。检索结合 `machineType`、`brand`、`model`，也识别问题中可辨认的品牌与型号，过滤不相关品牌／型号及非拖拉机的归档条目；再对问题做中文 2-gram + 英文 token 化，扩展启动、无力、提升、异响、过热、制动、定位等常见口语同义症状，按关键词重叠打分，标题命中权重 ×3。说明概述不参与诊断召回，同义扩展仍须覆盖实际症状。配置专用条目使用`entries.models`限定来源型号子集，并要求精确型号；未填该字段的条目沿用整册范围。明确CAB/ROPS或两驱/四驱与已登记范围冲突时排除条目。品牌或型号匹配不代表市场、排放、其他配置及版本已经确认。
 3. 取 top-6 片段（单块超 1200 字符截断），拼入后端独占的 system prompt。
 4. system prompt 硬性要求：
    - 禁止编造压力/温度/电压/扭矩/故障码/零件号/油液型号等参数；
-   - 资料不足时输出【当前资料不足】并主动追问机型/工况/伴随现象；
-   - 结构化输出：【故障现象】【初步判断】【可能原因】【建议排查】【知识依据】【安全提醒】；
+   - 手册不足时仍调用已配置的 LLM，提供明确标注的【通用分析（待验证）】、低风险观察与重点追问，不能凭空补机型参数或专用维修步骤；
+   - 归档事实放在【手册依据】，模型一般原理分析另列；通用信息收集清单不作为手册证据；
+   - 已填写身份与用户描述冲突时先确认对象，不能继续套用任一机型资料；
    - 用户用什么语言问，就用什么语言答。
 5. 前端只发 user/assistant 历史（截最近 20 轮），不发 system message——system prompt 由后端独占。
 6. 归档条目保留来源编号、原文定位、来源链接、文档适用范围及核对状态，供外部模型和本地回复引用。仅索引中的编号条目参与检索；归档 README、待补资料、原始 HTML/PDF 不作为诊断知识自动加载。
 
-例如：填写「拖拉机／久保田／LX2620」，询问「发动机启动困难」，可检索 `KB-LX2620-003`。问题改为「东方红LF1504启动困难」而仍保留久保田字段时，停止召回并要求确认咨询对象；问题中的明确品牌、完整型号或农机类型不能被旧字段覆盖。命中归档条目时优先使用对应资料；仅命中通用内容时说明资料不足并收集信息，不据此生成故障原因、维修步骤或参数。已指定品牌／型号但无合适资料时返回资料不足。填写 `WORKMASTER25S` 时，不会套用仅适用于 `WORKMASTER25` 的条目。未确认市场或配置时仍需依据条目的适用限制核实。
+例如：填写「拖拉机／久保田／LX2620」，询问「发动机启动困难」，可检索 `KB-LX2620-003`。问题改为「东方红LF1504启动困难」而仍保留久保田字段时，停止召回并要求确认咨询对象；问题中的明确品牌、完整型号或农机类型不能被旧字段覆盖。命中归档条目时优先使用对应资料；仅命中通用内容时说明资料不足，不把信息收集清单当维修依据。LLM 可另列通用待验证分析并主动追问，具体参数和专用操作仍须匹配手册；没有配置 Key 时只能提供本地资料和信息收集。填写 `WORKMASTER25S` 时，不会套用仅适用于 `WORKMASTER25` 的条目。未确认市场或配置时仍需依据条目的适用限制核实。
 
 ## 知识库目录
 
@@ -189,9 +192,9 @@ AgriDx-v2/
 │   │   ├── types.ts                 # Provider 接口 / ChatResult / ProviderError
 │   │   ├── http.ts                  # fetchWithTimeout(20s) + detectProxy()
 │   │   ├── openai-compatible.ts     # 通用 OpenAI 兼容 chat/completions 工厂
-│   │   ├── gemini.ts                # Gemini provider（gemini-3.6-flash）
-│   │   ├── deepseek.ts              # DeepSeek provider（deepseek-v4-flash）
-│   │   └── router.ts                # 单例：有代理→Gemini，无代理→DeepSeek，失败 fallback
+│   │   ├── gemini.ts                # Gemini provider（GEMINI_MODEL）
+│   │   ├── deepseek.ts              # DeepSeek provider（DEEPSEEK_MODEL）
+│   │   └── router.ts                # 单例：配置优先、双模型回退、安全状态概要
 │   │
 │   └── knowledge/                   # 本地知识库 + 轻量 RAG
 │       ├── retriever.ts             # 通用 .md + 归档编号条目、适用范围过滤、关键词打分、top-K
@@ -236,7 +239,7 @@ AgriDx-v2/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "2.3.2", "timestamp": "...", "knowledge": { "chunks": 208, "archivedEntries": 199 } }
+{ "ok": true, "version": "2.4.0", "timestamp": "...", "knowledge": { "chunks": 208, "archivedEntries": 199 } }
 ```
 
 ### `POST /api/chat`
@@ -262,11 +265,13 @@ AgriDx-v2/
   "model": "deepseek-v4-flash",
   "provider": "deepseek",
   "fellBack": false,
-  "knowledgeChunks": 2
+  "knowledgeChunks": 2,
+  "answerMode": "knowledge-grounded",
+  "knowledgeSources": [{ "entryId": "...", "sourceId": "...", "locator": "..." }]
 }
 ```
 
-本地知识库回复沿用相同的 `choices` 结构，`provider` 为 `knowledge-base`、`model` 为 `kb-rag-engine (本地知识引擎)`、`fellBack` 为 `true`；`knowledgeChunks` 为本次命中的片段数。
+本地知识库回复沿用相同的 `choices` 结构，`provider` 为 `knowledge-base`、`model` 为 `kb-rag-engine (本地知识引擎)`、`fellBack` 为 `true`；`knowledgeChunks` 为本次命中的片段数；`knowledgeSources` 返回来源编号、章节、版本与定位。`answerMode` 区分 `knowledge-grounded`（有归档技术资料）、`general-guidance`（无归档技术依据的模型通用建议）、`local-evidence`（本地资料）；该标记不等于自动验证了模型每句话。`fallbackReason` 区分 `not_configured` 与 `provider_unavailable`。`/api/health.llm` 返回供应商、模型和 Key 是否已设置，不返回密钥或宣称连接已通过。
 
 服务无法生成回复时返回 HTTP 502：
 
@@ -288,7 +293,7 @@ AgriDx-v2/
 **已实现**
 
 - 本地 Markdown 知识库 + 199 条拖拉机及配套系统归档条目 + 品牌／型号过滤与关键词检索 RAG
-- Gemini / DeepSeek 双 Provider，按代理自动选择 + 失败回退
+- Gemini / DeepSeek 双 Provider，可选优先顺序 + 失败回退 + 安全配置状态
 - 后端独占 system prompt，强制结构化输出与禁止编造参数
 - 可交互 3D 拖拉机模型（拖拽/缩放/自转/恢复视角）
 - 中英双语界面、跟随系统的明暗主题

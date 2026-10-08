@@ -7,15 +7,15 @@ import type { Provider } from './types';
 
 const GEMINI_API_URL =
   'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
-
 export function createGeminiProvider(): Provider {
+  // ESM 静态 import 会先于入口 dotenv.config()，不能在模块顶层捕获模型配置。
+  const model = process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash';
   return createOpenAICompatibleProvider({
     name: 'gemini',
-    model: GEMINI_MODEL,
+    model,
     apiUrl: GEMINI_API_URL,
     apiKeyEnv: 'GEMINI_API_KEY',
     timeoutMs: 20_000,
-    selfIntro: `【模型信息】你当前由 Gemini 提供支持，运行模型名称：${GEMINI_MODEL}。当用户询问"你是什么模型/用的是什么模型/背后是哪个大模型"时，请直接如实告知模型名称，不要含糊其辞。`,
+    selfIntro: `【模型信息】你当前由 Gemini 提供支持，配置的模型名称：${model}。当用户询问"你是什么模型/用的是什么模型/背后是哪个大模型"时，请如实告知配置名称；模型别名可能由服务商映射，不能推断未返回的内部版本。`,
   });
 }

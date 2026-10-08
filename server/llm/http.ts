@@ -2,15 +2,29 @@
  * 带超时的 fetch（Node 18+ 原生 fetch）
  * 用于避免 provider 网络异常时长时间挂起。
  */
-export async function fetchWithTimeout(
+export function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs?: number,
+): Promise<Response>;
+export function fetchWithTimeout<T>(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number,
+  consumeResponse: (response: Response) => Promise<T>,
+): Promise<T>;
+export async function fetchWithTimeout<T>(
   url: string,
   init: RequestInit,
   timeoutMs = 25_000,
-): Promise<Response> {
+  consumeResponse?: (response: Response) => Promise<T>,
+): Promise<T | Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(url, { ...init, signal: controller.signal });
+    const response = await fetch(url, { ...init, signal: controller.signal });
+    // 非流式 LLM 常先返回响应头再生成正文；截止时间需要覆盖正文读取。
+    return consumeResponse ? await consumeResponse(response) : response;
   } catch (err) {
     if (err instanceof Error && err.name === 'AbortError') {
       throw new Error('timeout');

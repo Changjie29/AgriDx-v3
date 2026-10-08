@@ -26,7 +26,7 @@ export function createOpenAICompatibleProvider(opts: OpenAICompatibleOptions): P
   const { name, model, apiUrl, apiKeyEnv, timeoutMs = 25_000, selfIntro } = opts;
 
   function getKey(): string | undefined {
-    return process.env[apiKeyEnv];
+    return process.env[apiKeyEnv]?.trim() || undefined;
   }
 
   return {
@@ -39,7 +39,7 @@ export function createOpenAICompatibleProvider(opts: OpenAICompatibleOptions): P
     async chat(messages: ChatMessage[]): Promise<ChatResult> {
       const apiKey = getKey();
       if (!apiKey) {
-        throw new ProviderError(name, 'unknown', `missing ${apiKeyEnv}`);
+        throw new ProviderError(name, 'configuration', `missing ${apiKeyEnv}`);
       }
 
       // 追加模型自述（让模型被问到时如实回答自己是谁）
@@ -55,9 +55,9 @@ export function createOpenAICompatibleProvider(opts: OpenAICompatibleOptions): P
           })()
         : messages;
 
-      let response: Response;
+      let data: unknown;
       try {
-        response = await fetchWithTimeout(
+        data = await fetchWithTimeout(
           apiUrl,
           {
             method: 'POST',
@@ -73,41 +73,56 @@ export function createOpenAICompatibleProvider(opts: OpenAICompatibleOptions): P
             }),
           },
           timeoutMs,
+          async (response): Promise<unknown> => {
+            if (!response.ok) {
+              // 上游错误体可能回显凭据或提示词，仅保留状态码。
+              const detail = `HTTP ${response.status}`;
+              if (response.status === 401 || response.status === 403) {
+                throw new ProviderError(name, 'auth', detail);
+              }
+              if (response.status === 400 || response.status === 422) {
+                throw new ProviderError(name, 'bad_request', detail);
+              }
+              if (response.status === 429) throw new ProviderError(name, 'rate_limit', detail);
+              if (response.status >= 500) throw new ProviderError(name, 'server_error', detail);
+              throw new ProviderError(name, 'unknown', detail);
+            }
+            try {
+              return await response.json();
+            } catch (error) {
+              if (error instanceof Error && error.name === 'AbortError') throw error;
+              throw new ProviderError(name, 'invalid_response', 'response is not valid JSON');
+            }
+          },
         );
       } catch (err) {
+        if (err instanceof ProviderError) throw err;
         // 网络层错误（含超时）
         const kind = err instanceof Error && err.message === 'timeout' ? 'timeout' : 'network';
-        throw new ProviderError(name, kind, err instanceof Error ? err.message : String(err));
+        // 原始异常可能包含 URL、代理凭据或请求信息，不能向日志/调用方传播。
+        throw new ProviderError(name, kind, kind === 'timeout' ? 'request timed out' : 'request failed');
       }
 
-      if (!response.ok) {
-        const errText = (await response.text().catch(() => '')).slice(0, 300);
-        if (response.status === 401 || response.status === 403) {
-          throw new ProviderError(name, 'auth', errText);
-        }
-        if (response.status === 400 || response.status === 422) {
-          throw new ProviderError(name, 'bad_request', errText);
-        }
-        if (response.status >= 500) {
-          throw new ProviderError(name, 'server_error', errText);
-        }
-        throw new ProviderError(name, 'unknown', `HTTP ${response.status}: ${errText}`);
-      }
-
-      const data = (await response.json()) as {
-        choices?: { message?: { content?: string } }[];
-        model?: string;
-        usage?: ChatResult['usage'];
-      };
-      const content = data?.choices?.[0]?.message?.content?.trim();
+      const record = data && typeof data === 'object' ? data as Record<string, unknown> : {};
+      const choice = Array.isArray(record.choices) ? record.choices[0] : undefined;
+      const message = choice && typeof choice === 'object' ? choice.message : undefined;
+      const content = typeof message?.content === 'string' ? message.content.trim() : '';
       if (!content) {
-        throw new ProviderError(name, 'unknown', 'empty response');
+        throw new ProviderError(name, 'invalid_response', 'missing assistant content');
+      }
+      const usage: ChatResult['usage'] = {};
+      const rawUsage = record.usage;
+      if (rawUsage && typeof rawUsage === 'object') {
+        for (const field of ['prompt_tokens', 'completion_tokens', 'total_tokens'] as const) {
+          const value = (rawUsage as Record<string, unknown>)[field];
+          if (typeof value === 'number' && Number.isFinite(value) && value >= 0) usage[field] = value;
+        }
       }
       return {
         content,
         provider: name,
-        model: data.model || model,
-        usage: data.usage,
+        model: typeof record.model === 'string' && record.model.trim() ? record.model.trim() : model,
+        usage: Object.keys(usage).length ? usage : undefined,
       };
     },
   };

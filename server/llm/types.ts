@@ -6,6 +6,16 @@
  */
 
 export type ProviderName = 'gemini' | 'deepseek';
+export type ProviderErrorKind =
+  | 'auth'
+  | 'network'
+  | 'timeout'
+  | 'bad_request'
+  | 'server_error'
+  | 'rate_limit'
+  | 'invalid_response'
+  | 'configuration'
+  | 'unknown';
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -31,7 +41,7 @@ export interface ChatResult {
 export class ProviderError extends Error {
   constructor(
     public readonly provider: ProviderName,
-    public readonly kind: 'auth' | 'network' | 'timeout' | 'bad_request' | 'server_error' | 'unknown',
+    public readonly kind: ProviderErrorKind,
     public readonly detail?: string,
   ) {
     super(`[${provider}] ${kind}`);
@@ -42,7 +52,7 @@ export class ProviderError extends Error {
 export interface Provider {
   readonly name: ProviderName;
   readonly model: string;
-  /** 该 provider 是否配置了可用的 API Key */
+  /** 仅表示已配置非空 API Key，不代表密钥有效或上游已连通。 */
   isConfigured(): boolean;
   /** 发起一次 chat 调用；失败抛 ProviderError */
   chat(messages: ChatMessage[]): Promise<ChatResult>;
