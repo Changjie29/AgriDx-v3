@@ -24,12 +24,25 @@ const BRAND_ALIASES: Record<string, string[]> = {
   华测: ['华测', 'chcnav', '华测导航', 'huace'],
 };
 
+let indexedManualNumbers: string[] = [];
+
 function escapeRegex(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/** References identify documents, not the equipment being diagnosed. Keep scan offsets intact. */
+function withoutReferences(text: string): string {
+  let clean = text.replace(/\[[^\]\r\n]*\]\((?:https?:\/\/|\/)[^)\r\n]*\)|https?:\/\/[^\s<>，；。！？、：,;!:]+?\.(?:pdf|md)(?=\.[\u4e00-\u9fff])|https?:\/\/[^\s<>，；。！？、：,;!:]+|\b(?:SRC|KB|NH|ZL|LV|DF|HH)-[A-Z0-9-]+\b|(?:\/|知识库\/|server\/)[^\s<>，；。！？、：,;:!]+?\.(?:pdf|md)\b|(?<![a-z0-9])[a-z0-9][a-z0-9_.-]*?\.(?:pdf|md)\b/gi,
+    (reference) => ' '.repeat(reference.length));
+  for (const number of indexedManualNumbers) {
+    clean = clean.replace(new RegExp(`(?<![a-z0-9])${escapeRegex(number)}(?![a-z0-9.-])`, 'gi'),
+      (reference) => ' '.repeat(reference.length));
+  }
+  return clean;
+}
+
 function brandsIn(text: string): string[] {
-  const lower = text.toLowerCase();
+  const lower = withoutReferences(text).toLowerCase();
   return Object.entries(BRAND_ALIASES).filter(([, aliases]) => aliases.some((alias) => {
     if (/^[a-z ]+$/.test(alias)) return new RegExp(`(^|[^a-z])${alias.replace(/ /g, '\\s*')}([^a-z]|$)`).test(lower);
     return lower.includes(alias);
@@ -46,6 +59,13 @@ function normalizeModel(model: string): string {
   return model.toLowerCase().replace(/欧豹|系列|平台|拖拉机/g, '').replace(/[\s\-_/()（）]/g, '');
 }
 
+/** Only Chinese national-emission labels are aliases; Tier/Stage IV is a separate standard. */
+function normalizeNationalEmissions(text: string): string {
+  return text.replace(/国\s*(三|3|iii|Ⅲ|四|4|iv|Ⅳ)(?![a-z0-9])/gi, (_label, stage: string) =>
+    ['三', '3', 'iii'].includes(stage.normalize('NFKC').toLowerCase()) ? '国三' : '国四',
+  );
+}
+
 /** Explicit lists and parenthetical product names are aliases, never inferred submodels. */
 function declaredModels(chunk: KnowledgeChunk): string[] {
   if (chunk.models?.length) return chunk.models.map(normalizeModel);
@@ -59,6 +79,10 @@ let modelFamilies: string[] = ['workmaster', 'lx', 't', 'pl', 'tg'];
 
 /** Rebuilt on reload so source model lists drive recognition as the archive grows. */
 export function configureIndexedModels(chunks: KnowledgeChunk[]): void {
+  // Only registered manual numbers are references; dotted model suffixes remain identities.
+  indexedManualNumbers = [...new Set(chunks.flatMap((chunk) =>
+    chunk.version?.match(/\bSM-[A-Z0-9]+(?:[.-][A-Z0-9]+)+\b/gi) ?? [],
+  ))];
   indexedModels = [...new Set(chunks.flatMap(declaredModels))]
     .filter((model) => /^[a-z0-9.]+$/.test(model)).sort((a, b) => b.length - a.length);
   modelFamilies = [...new Set([
@@ -78,7 +102,9 @@ interface ModelMention {
 
 function modelMentions(text: string): ModelMention[] {
   // Preserve the existing LX2620-LX2620SU grouped alias without merging two identities.
-  const scanText = text.replace(/-(?=lx\s*\d)/gi, '/');
+  const scanText = withoutReferences(text).replace(/-(?=lx\s*\d)/gi, '/')
+    .replace(/((?:故障码|错误码|报警码|报码|\b(?:fault|error)\s+code\b)\s*[:：=]?\s*)([a-z]+\d[a-z0-9]*(?:[.-][a-z0-9]+)*)/gi,
+      (_match, label: string, code: string) => label + ' '.repeat(code.length));
   const mentions: ModelMention[] = [];
   for (const model of indexedModels) {
     const pattern = [...model].map(escapeRegex).join('[\\s\\-_/()（）]*');
@@ -93,6 +119,22 @@ function modelMentions(text: string): ModelMention[] {
   for (const match of scanText.matchAll(regex)) {
     mentions.push({ start: match.index!, end: match.index! + match[0].length, model: normalizeModel(match[0]) });
   }
+  // Unknown families require a recognized brand or an explicit model label, never a bare number.
+  const candidate = '(?:[a-z]+|\\d+[a-z]+)[\\s-]*\\d[a-z0-9]*(?:[.-]\\s*[a-z0-9]+)*(?:\\s+(?:pro|su))?(?:\\s*[(（]\\s*g\\d+\\s*[)）])?';
+  const aliases = Object.values(BRAND_ALIASES).flat().sort((a, b) => b.length - a.length)
+    .map((alias) => /^[a-z ]+$/.test(alias)
+      ? `(?<![a-z])${alias.replace(/ /g, '\\s*')}(?![a-z])` : escapeRegex(alias)).join('|');
+  for (const pattern of [
+    new RegExp(`(?:${aliases})[\\s:：-]*(${candidate})(?![a-z0-9])`, 'gi'),
+    new RegExp(`(?:型号|机型)\\s*[:：=]?\\s*(?:为|是)?\\s*(${candidate})(?![a-z0-9])`, 'gi'),
+  ]) {
+    for (const match of scanText.matchAll(pattern)) {
+      const model = normalizeModel(match[1]);
+      if (/^err\d/.test(model)) continue;
+      const start = match.index! + match[0].length - match[1].length;
+      mentions.push({ start, end: start + match[1].length, model });
+    }
+  }
   // A longer identity always wins: WORKMASTER25S must not be read as WORKMASTER25.
   const sorted = mentions.sort((a, b) => a.start - b.start || b.end - a.end);
   return sorted.filter((mention, index) => !sorted.slice(0, index).some((previous) =>
@@ -101,6 +143,7 @@ function modelMentions(text: string): ModelMention[] {
 }
 
 function modelsIn(text: string): string[] {
+  text = normalizeNationalEmissions(text);
   const models = modelMentions(text).map((mention) => mention.model);
   if (text.includes('国三')) models.push('国三');
   if (text.includes('国四') && !models.some((model) => model.endsWith('g4'))) models.push('国四');
@@ -109,7 +152,7 @@ function modelsIn(text: string): string[] {
 
 /** Identity selects eligible documents without inflating their symptom relevance. */
 export function queryWithoutIdentity(query: string): string {
-  let text = query;
+  let text = normalizeNationalEmissions(withoutReferences(query));
   for (const aliases of Object.values(BRAND_ALIASES)) {
     for (const alias of [...aliases].sort((a, b) => b.length - a.length)) {
       text = /^[a-z ]+$/.test(alias)
@@ -130,19 +173,35 @@ export interface ResolvedScope {
   configurations: ('CAB' | 'ROPS')[];
   driveConfigurations: ('2WD' | '4WD')[];
   ambiguous: boolean;
+  identityConflict: boolean;
   tractorArchive: boolean;
   genericKnowledge: boolean;
   electric: boolean;
 }
 
 export function resolveScope(query: string, context: RetrievalContext): ResolvedScope {
-  const brands = brandsIn(context.brand?.trim() || query);
+  const queryIdentity = withoutReferences(query);
+  const queryBrands = brandsIn(queryIdentity);
   const explicitBrand = context.brand?.trim();
-  const brand = explicitBrand ? canonicalBrand(explicitBrand) : brands.length === 1 ? brands[0] : undefined;
+  const contextBrands = brandsIn(explicitBrand || '');
+  const brand = explicitBrand ? canonicalBrand(explicitBrand) : queryBrands.length === 1 ? queryBrands[0] : undefined;
   const explicitModel = context.model?.trim();
-  const models = explicitModel ? declaredModels({ source: '', heading: '', text: '', model: explicitModel }) : modelsIn(query);
-  const emissions = ['国三', '国四'].filter((stage) => [query, explicitModel].some((text) => text?.includes(stage)));
-  const configurationText = [query, explicitModel].filter(Boolean).join(' ');
+  // Remove only recognized emission labels; undocumented model suffixes remain distinct identities.
+  const contextModels = explicitModel ? declaredModels({ source: '', heading: '', text: '',
+    model: normalizeNationalEmissions(explicitModel).replace(/国三|国四/g, ''),
+  }).filter(Boolean) : [];
+  const queryModels = modelsIn(queryIdentity);
+  const models = contextModels.length ? contextModels : queryModels;
+  // This pair is an explicitly documented product alias, not a shared-manual model range.
+  const modelIdentity = (model: string) => model === 'qy210pro' ? 'qybd2.5sd' : model;
+  const contextIdentities = new Set(contextModels.map(modelIdentity));
+  const modelConflict = contextIdentities.size > 0 && queryModels
+    .filter((model) => model !== '国三' && model !== '国四')
+    .some((model) => !contextIdentities.has(modelIdentity(model)));
+  const brandConflict = Boolean(explicitBrand && queryBrands.some((queryBrand) => queryBrand !== brand));
+  const emissionText = normalizeNationalEmissions([queryIdentity, explicitModel].filter(Boolean).join(' '));
+  const emissions = ['国三', '国四'].filter((stage) => emissionText.includes(stage));
+  const configurationText = [queryIdentity, explicitModel].filter(Boolean).join(' ');
   const configurations: ('CAB' | 'ROPS')[] = [];
   if (/\bcab\b|驾驶室/i.test(configurationText)) configurations.push('CAB');
   if (/\brops\b|防翻架|防翻滚架/i.test(configurationText)) configurations.push('ROPS');
@@ -150,19 +209,25 @@ export function resolveScope(query: string, context: RetrievalContext): Resolved
   if (/\b2wd\b|两驱|二驱|两轮驱动|二轮驱动/i.test(configurationText)) driveConfigurations.push('2WD');
   if (/\b4wd\b|四驱|四轮驱动/i.test(configurationText)) driveConfigurations.push('4WD');
   const type = context.machineType?.trim();
-  const tractorArchive = type
-    ? /^(拖拉机|tractor|新能源农机|new-energy|无人农机|autonomous)$/i.test(type)
-    : !/收割机|插秧机|植保机|播种机|无人机|\b(combine|transplanter|sprayer)\b/i.test(query);
-  const electric = /电动|新能源|无人|electric|autonomous|new-energy/i.test([type, explicitBrand, context.model, query].filter(Boolean).join(' ')) ||
+  const tractorContext = Boolean(type && /^(拖拉机|tractor|新能源农机|new-energy|无人农机|autonomous)$/i.test(type));
+  const nonTractor = /收割机|插秧机|植保机|播种机|无人机|\b(combine|transplanter|sprayer)\b/i;
+  const nonTractorQuery = nonTractor.test(queryIdentity);
+  const tractorArchive = type ? tractorContext : !nonTractorQuery;
+  // Clearly attached implements are not a change of the machine being discussed.
+  const queryTypeIdentity = queryIdentity.replace(/(?:挂接|连接|牵引|\bPTO\s*接)\s*(?:的\s*)?(?:收割机|插秧机|植保机|播种机|无人机|combine|transplanter|sprayer)/gi, ' ');
+  const typeConflict = Boolean(type && (tractorContext ? nonTractor.test(queryTypeIdentity)
+    : nonTractor.test(type) && /拖拉机|\btractor\b/i.test(queryTypeIdentity)));
+  const identityConflict = brandConflict || modelConflict || typeConflict;
+  const electric = /电动|新能源|无人|electric|autonomous|new-energy/i.test([type, explicitBrand, context.model, queryIdentity].filter(Boolean).join(' ')) ||
     brand === '鸿鹄' || models.includes('t70');
-  const ambiguous = !explicitBrand && brands.length > 1;
-  return { brand, models, emissions, configurations, driveConfigurations, ambiguous, tractorArchive, electric, genericKnowledge: !electric && !brand && models.length === 0 && emissions.length === 0 && !ambiguous };
+  const ambiguous = queryBrands.length > 1 || contextBrands.length > 1;
+  return { brand, models, emissions, configurations, driveConfigurations, ambiguous, identityConflict, tractorArchive, electric, genericKnowledge: tractorArchive && !identityConflict && !electric && !brand && models.length === 0 && emissions.length === 0 && !ambiguous };
 }
 
 /** Matching is identity selection, not proof of market, configuration or version applicability. */
 export function archiveApplicability(chunk: KnowledgeChunk, scope: ResolvedScope): 'matched' | 'pending' | undefined {
   const brand = canonicalBrand(chunk.brand);
-  if (!scope.tractorArchive || scope.ambiguous || (scope.brand && scope.brand !== brand)) return undefined;
+  if (!scope.tractorArchive || scope.ambiguous || scope.identityConflict || (scope.brand && scope.brand !== brand)) return undefined;
   if (scope.electric && brand !== '鸿鹄' && brand !== '千寻位置 / 千耘') return undefined;
   if (chunk.configuration && scope.configurations.some((configuration) => configuration !== chunk.configuration)) return undefined;
   if (chunk.driveConfiguration && scope.driveConfigurations.some((configuration) => configuration !== chunk.driveConfiguration)) return undefined;

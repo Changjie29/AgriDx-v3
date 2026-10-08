@@ -1,5 +1,5 @@
 import { describeSource, type KnowledgeChunk } from './retriever';
-import type { RetrievalContext } from './scope';
+import { resolveScope, type RetrievalContext } from './scope';
 
 /** Without a model service, report retrieved evidence instead of synthesizing a diagnosis. */
 export function generateLocalKnowledgeReply(
@@ -11,21 +11,44 @@ export function generateLocalKnowledgeReply(
   const primary = retrieved[0];
 
   if (!primary) {
+    const identityNotice = resolveScope(query, opts).identityConflict
+      ? '已填写的农机信息与问题中的类型、品牌或型号不一致。请确认本次咨询对象，修改已填写信息或问题中的机型后再检索。\n'
+      : '';
     return `**【故障现象分析】**
 收到关于「${machineDesc}」的咨询：“${query}”。
 
 **【当前资料不足】**
-未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。
+${identityNotice}未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。请补充品牌、完整型号、出厂配置／版本、故障代码、发生工况及伴随现象，并核对对应原厂手册。
 
 **【安全提醒】**
 故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。`;
   }
 
-  const scopeNotice = primary.entryId
-    ? primary.applicability === 'matched'
-      ? '已找到对应品牌／型号的资料；市场、配置和手册版本仍需确认。下面是来源事实摘录，不代表已确诊。'
-      : '已找到该品牌／系列的参考资料，具体车辆适用性待核实。不能直接套用操作步骤或参数。'
-    : '仅命中通用示例资料，不能据此确认具体机型的维修参数或保养周期。';
+  if (!primary.entryId) {
+    return `**【咨询现象】**
+收到关于「${machineDesc}」的咨询：“${query}”。
+
+**【当前资料不足】**
+仅命中整理者编写的信息收集提示，未取得本次咨询所需的匹配手册证据。以下问题不是操作／维修依据，不能据此判断故障原因、提供维修步骤、操作参数或保养周期。
+
+**【信息收集】**
+### ${primary.heading}
+${primary.text}
+
+**【提示来源】**
+${describeSource(primary)}
+这是信息收集清单的文件位置，不是原厂手册的证据引用。
+
+**【需要补充的资料】**
+请提供品牌、完整型号及后缀、市场／排放、配置、手册版本和已经观察到的现象或已有检测记录；取得匹配手册及具体章节后再核对。不能用其他品牌或相近机型填补缺口。
+
+**【安全提醒】**
+本清单不要求新增测量、拆检或试操作。现场安全处置请向本机厂家或具备相应资质的维修支持确认，并核对本机匹配安全规程。`;
+  }
+
+  const scopeNotice = primary.applicability === 'matched'
+    ? '已找到对应品牌／型号的资料；市场、配置和手册版本仍需确认。下面是来源事实摘录，不代表已确诊。'
+    : '已找到该品牌／系列的参考资料，具体车辆适用性待核实。不能直接套用操作步骤或参数。';
   const background = ['机型资料', '资料缺口', '资料索引', '资料核验', '系统适用边界'].includes(primary.entryType ?? '');
 
   // Show the best matching entry intact so its safety conditions and evidence stay together.

@@ -171,6 +171,8 @@ def main():
         label = entry.get('entry_id', '未知条目') if isinstance(entry, dict) else '未知条目'
         try:
             require_strings(entry, ['entry_id', 'source_id', 'brand', 'model', 'title', 'knowledge_path', 'locator', 'status', 'entry_type'], label)
+            if 'summary' in entry:
+                raise ValueError('事实正文仅在Markdown知识卡维护，条目索引不得保留summary副本')
             if label in ids or not re.fullmatch(r'[A-Z0-9][A-Z0-9-]*', label):
                 raise ValueError('条目编号重复或格式无效')
             ids.add(label)

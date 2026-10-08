@@ -10,6 +10,7 @@ import {
 } from '../server/knowledge/retriever';
 import { buildSystemPrompt } from '../server/knowledge/systemPrompt';
 import { generateLocalKnowledgeReply } from '../server/knowledge/fallbackDiagnosis';
+import { resolveScope, type RetrievalContext } from '../server/knowledge/scope';
 
 const tractor = { machineType: '拖拉机' };
 const workmaster = { ...tractor, brand: '纽荷兰', model: 'WORKMASTER25' };
@@ -25,6 +26,15 @@ function expectEntry(chunks: KnowledgeChunk[], entryId: string): KnowledgeChunk 
   return chunk;
 }
 
+function expectIdentityConflict(query: string, context: RetrievalContext) {
+  const { message, retrieved } = buildSystemPrompt({ query, ...context });
+  assert.equal(retrieved.length, 0, query);
+  assert.equal(retrieve(query, 100, context).length, 0, query);
+  assert.match(generateLocalKnowledgeReply(query, retrieved, context), /请确认本次咨询对象/);
+  assert.match(message.content, /不得生成诊断结论、操作步骤或维修参数/);
+  assert.doesNotMatch(message.content, /适用性：品牌／型号匹配/);
+}
+
 before(() => {
   loadKnowledgeBase();
 });
@@ -32,7 +42,7 @@ before(() => {
 test('indexes each archived entry exactly once and preserves the 9 existing chunks', () => {
   const indexed = fs.readFileSync('知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl', 'utf8')
     .trim().split(/\r?\n/).map((line) => JSON.parse(line) as {
-      entry_id: string; source_id: string; title: string; brand: string; model: string; models?: string[];
+      entry_id: string; source_id: string; title: string; brand: string; model: string; models?: string[]; entry_type: string;
     });
   const sources = JSON.parse(fs.readFileSync('知识库/整理后的知识库/农用拖拉机知识库/sources.json', 'utf8')) as {
     source_id: string; models?: string[];
@@ -40,8 +50,15 @@ test('indexes each archived entry exactly once and preserves the 9 existing chun
   const sourceModels = new Map(sources.map((source) => [source.source_id, source.models]));
   assert.equal(stats().archivedEntries, indexed.length);
   assert.equal(stats().chunks, indexed.length + 9);
-  const entries = indexed.map(({ entry_id, source_id, title, brand, model, models }) => {
-    const exactModel = models?.[0] ?? sourceModels.get(source_id)?.[0] ?? model;
+  const entries = indexed.map(({ entry_id, source_id, title, brand, model, models, entry_type }) => {
+    let exactModel = models?.[0] ?? sourceModels.get(source_id)?.[0] ?? model;
+    const range = sourceModels.get(source_id);
+    const titleModels = resolveScope(title, {}).models.filter((item) => !['国三', '国四'].includes(item));
+    const rangeModels = new Set(range?.flatMap((item) => resolveScope('', { model: item }).models));
+    // A manual-index title can ask about the whole documented range; repair entries stay exact.
+    if (entry_type === '资料索引' && range && titleModels.length > 1 && titleModels.every((item) => rangeModels.has(item))) {
+      exactModel = range.join('/');
+    }
     const found = retrieve(title, indexed.length, { ...tractor, brand, model: exactModel });
     const chunk = expectEntry(found, entry_id);
     assert.ok(chunk.sourceId);
@@ -194,7 +211,8 @@ test('CHCNAV NX510 navigation entries retrieve under aliases without whole-tract
   const found = expectEntry(retrieve('华测 NX510 开机要点', 100), entryId);
   assert.equal(found.applicability, 'matched');
   assert.equal(retrieve('开机 状态栏', 100, { ...tractor, brand: '鸿鹄', model: 'NX510' }).length, 0);
-  expectEntry(retrieve('鸿鹄 T70 失联 避障', 100, { ...tractor, brand: '华测', model: 'NX510' }), 'KB-CHC-NX510-008');
+  expectIdentityConflict('鸿鹄 T70 失联 避障', { ...tractor, brand: '华测', model: 'NX510' });
+  expectEntry(retrieve('华测 NX510 失联 避障', 100, { ...tractor, brand: '华测', model: 'NX510' }), 'KB-CHC-NX510-008');
 });
 
 test('LF1504 emission evidence is preserved and a national-four query cannot reuse its national-three manual', () => {
@@ -206,6 +224,51 @@ test('LF1504 emission evidence is preserved and a national-four query cannot reu
   assert.equal(retrieve('国四 起动机不转', 100, context).length, 0);
   assert.equal(retrieve('起动机不转', 100, { ...context, model: 'LF1504(G4)' }).length, 0);
   assert.equal(retrieve('国三 不能起动', 100, { ...tractor, brand: '约翰迪尔', model: '6E-1204(G4)' }).length, 0);
+});
+
+test('national-emission spellings work in queries and model fields without equating overseas standards', () => {
+  const context = { ...tractor, brand: '东方红', model: 'LF1504' };
+  const query = '起动机不转';
+  for (const stage of ['国三', '国3', '国III', '国Ⅲ', '国 iii']) {
+    expectEntry(retrieve(`东方红 LF1504 ${stage} ${query}`, 100), 'KB-YTO-LF1504-007');
+    expectEntry(retrieve(query, 100, { ...context, model: `LF1504 ${stage}` }), 'KB-YTO-LF1504-007');
+    expectEntry(retrieve(query, 100, { ...context, model: `LF1504(${stage})` }), 'KB-YTO-LF1504-007');
+    expectEntry(retrieve(`雷沃 ${stage} 发动机电气接头与传感器`, 100), 'LV-NR3-001');
+    expectEntry(retrieve('发动机电气接头与传感器', 100, {
+      ...tractor, brand: '雷沃', model: `${stage}拖拉机`,
+    }), 'LV-NR3-001');
+  }
+  for (const stage of ['国四', '国4', '国IV', '国Ⅳ', '国 iv']) {
+    const cases = [
+      { query: `东方红 LF1504 ${stage} ${query}`, context: {} },
+      { query, context: { ...context, model: `LF1504 ${stage}` } },
+      { query, context: { ...context, model: `LF1504(${stage})` } },
+      { query: `雷沃 ${stage} 发动机电气接头与传感器`, context: {} },
+      { query: `雷沃 国三拖拉机 ${stage} 发动机电气接头与传感器`, context: {} },
+      { query: '发动机电气接头与传感器', context: {
+        ...tractor, brand: '雷沃', model: `${stage}拖拉机`,
+      } },
+      { query: `${stage} 发动机电气接头与传感器`, context: {
+        ...tractor, brand: '雷沃', model: '国三拖拉机',
+      } },
+      { query: '国三拖拉机 发动机电气接头与传感器', context: {
+        ...tractor, brand: '雷沃', model: `${stage}拖拉机`,
+      } },
+    ];
+    for (const item of cases) {
+      const found = retrieve(item.query, 100, item.context);
+      assert.equal(found.length, 0, item.query);
+      const reply = generateLocalKnowledgeReply(item.query, found, item.context);
+      assert.match(reply, /未检索到与问题及已知机型相符的知识条目/);
+      assert.doesNotMatch(reply, /已找到对应品牌／型号的资料|【检索到的知识】/);
+    }
+  }
+  for (const standard of ['Tier IV', 'Stage IV']) {
+    expectEntry(retrieve(`久保田 M6060 ${standard} DPF消声器周围易燃物检查`, 100), 'KB-KB-M6060-005');
+  }
+  // Emission normalization must not erase an unsupported model suffix.
+  assert.equal(retrieve(query, 100, { ...context, model: 'LF1504-X 国III' }).length, 0);
+  assert.equal(retrieve(`东方红 LF1504-X 国III ${query}`, 100).length, 0);
 });
 
 test('ranks a model-specific starting fault ahead of the generic sample', () => {
@@ -250,21 +313,108 @@ test('does not apply WORKMASTER25 entries to WORKMASTER25S or an unsupported mod
   }
 });
 
-test('explicit machine identity prevents cross-brand and cross-model retrieval', () => {
-  const kubota = retrieve('纽荷兰 WORKMASTER25 发动机过热', 100, {
-    ...tractor, brand: '久保田', model: 'LX2620',
-  });
-  assert.ok(archived(kubota).length > 0);
-  assert.ok(archived(kubota).every((chunk) => chunk.sourceId === 'SRC-KB-LX2620-6C82063118'));
+test('conflicting query and context identities require confirmation before any retrieval', () => {
+  const kubota = { ...tractor, brand: '久保田', model: 'LX2620' };
+  const conflicts = [
+    { query: '东方红 LF1504 发动机启动困难', context: kubota },
+    { query: '纽荷兰 WORKMASTER25 发动机过热', context: kubota },
+    { query: '久保田 M5-111 发动机机油油位检查', context: kubota },
+    { query: '久保田 L2502 发动机启动困难', context: kubota },
+    { query: '型号 L2502 发动机启动困难', context: kubota },
+    { query: '机型：L2502 发动机启动困难', context: kubota },
+    { query: 'M5-111 发动机机油油位检查', context: { ...tractor, model: 'LX2620' } },
+    { query: '东方红 起动机不转', context: { ...tractor, brand: '久保田' } },
+    { query: '久保田 LX2620 发动机过热', context: { ...tractor, brand: '纽荷兰' } },
+    { query: '久保田 M7060 变速箱油位检查', context: { ...tractor, brand: '久保田', model: 'M6060' } },
+    { query: '久保田 LX2620 M5-111 发动机机油油位检查', context: kubota },
+    { query: '久保田 LX2620/LX2620SU 发动机启动困难', context: kubota },
+    { query: '久保田 M5-111 发动机启动困难', context: { ...kubota, model: 'LX2620/LX2620SU' } },
+    { query: '久保田 东方红 发动机启动困难', context: kubota },
+    { query: '东方红 LF1504-X 国III 起动机不转', context: { ...tractor, brand: '东方红', model: 'LF1504' } },
+  ];
+  for (const { query, context } of conflicts) expectIdentityConflict(query, context);
 
   const tg = retrieve('雷沃 国三 发动机电气接头与传感器', 100, {
     ...tractor, brand: '雷沃', model: '欧豹TG系列',
   });
   assert.ok(archived(tg).every((chunk) => chunk.entryId?.startsWith('LV-TG-')));
-  const conflictingBrand = retrieve('久保田 LX2620 发动机过热', 100, {
-    ...tractor, brand: '纽荷兰',
+});
+
+test('consistent aliases and subsets of an explicit manual model range remain retrievable', () => {
+  const kubota = { ...tractor, brand: '久保田', model: 'LX2620' };
+  for (const item of [
+    { query: 'Kubota LX 2620 发动机启动困难', context: kubota },
+    { query: '久保田 LX2620 发动机启动困难', context: { ...tractor, brand: 'Kubota', model: 'LX 2620' } },
+    { query: '发动机启动困难', context: kubota },
+    { query: '久保田 发动机启动困难', context: { ...tractor, model: 'LX2620' } },
+    { query: 'LX2620 发动机启动困难', context: { ...tractor, brand: '久保田' } },
+    { query: '久保田 LX2620 / LX 2620 发动机启动困难', context: kubota },
+    { query: '久保田 Err1 发动机启动困难', context: kubota },
+    { query: '久保田 故障码P0015 发动机启动困难', context: kubota },
+    { query: '故障码：P0015 发动机启动困难', context: kubota },
+    { query: '久保田 12V 发动机启动困难', context: kubota },
+  ]) expectEntry(retrieve(item.query, 100, item.context), 'KB-LX2620-003');
+  expectEntry(retrieve(`New Holland WORKMASTER 25 ${startQuery}`, 100, workmaster), 'NH-WM25-003');
+  for (const model of ['LX2620/LX2620SU', 'LX2620-LX2620SU']) {
+    const context = { ...kubota, model };
+    for (const queryModel of ['LX2620', 'LX2620SU', 'LX2620/LX2620SU', 'LX2620-LX2620SU']) {
+      expectEntry(retrieve(`久保田 ${queryModel} 发动机启动困难`, 100, context), 'KB-LX2620-003');
+    }
+  }
+  for (const [model, queryModel] of [
+    ['QY210Pro', 'QYBD-2.5SD'], ['QYBD-2.5SD', 'QY210 Pro'],
+    ['QYBD-2.5SD（QY210 Pro）', 'QY210 Pro'], ['QY210Pro', 'QYBD-2.5SD（QY210 Pro）'],
+  ]) {
+    const context = { ...tractor, brand: '千寻位置', model };
+    expectEntry(retrieve(`千耘 ${queryModel} 未定位与交接垄不准`, 100, context), 'KB-QX-QY210PRO-V01-003');
+  }
+  expectIdentityConflict('千耘 QYBD-2.5GD 未定位与交接垄不准', {
+    ...tractor, brand: '千寻位置', model: 'QY210Pro',
   });
-  assert.ok(archived(conflictingBrand).every((chunk) => chunk.brand === '纽荷兰'));
+});
+
+test('document references do not replace or conflict with the actual machine identity', () => {
+  const context = { ...tractor, brand: '久保田', model: 'LX2620' };
+  const references = [
+    'SRC-KB-LX2620-6C82063118', 'KB-LX2620-003', 'SRC-YTO-LF1504-SMLF150449010',
+    'SRC-QX-QY210PRO-V01', 'M5-111.pdf', 'SM-LF1504.49.010', '知识库/原始农机说明书/东方红/LF1504/来源记录.md',
+    'https://example.com/YTO/LF1504/manual.pdf',
+    '[东方红 LF1504说明书](https://example.com/LF1504.pdf)',
+  ];
+  for (const reference of references) {
+    expectEntry(retrieve(`参考资料 ${reference}；发动机启动困难`, 100, context), 'KB-LX2620-003');
+    expectEntry(retrieve(`参考资料 ${reference}；久保田 LX2620 发动机启动困难`, 100, context), 'KB-LX2620-003');
+    expectIdentityConflict(`参考资料 ${reference}；久保田 M5-111 发动机启动困难`, context);
+    assert.equal(retrieve(`${reference} 量子纠缠`, 100).length, 0);
+  }
+  // A filename must not swallow the real identity in surrounding unspaced text.
+  expectIdentityConflict('东方红LF1504参阅M5-111.pdf，发动机启动困难', context);
+  for (const delimiter of ['，', '；', '。', '：', ',', ';', ':', '.']) {
+    expectEntry(retrieve(`发动机启动困难${delimiter}参见LX2620.md`, 100, context), 'KB-LX2620-003');
+    expectEntry(retrieve(`参考https://example.com/M5-111.pdf${delimiter}发动机启动困难`, 100, context), 'KB-LX2620-003');
+  }
+  expectEntry(retrieve('东方红 LF1504，手册编号SM-LF1504.49.010，起动机不转', 100, {
+    ...tractor, brand: '东方红', model: 'LF1504',
+  }), 'KB-YTO-LF1504-007');
+  expectIdentityConflict('东方红 LF1504.49.011 起动机不转', { ...tractor, brand: '东方红', model: 'LF1504' });
+});
+
+test('a tractor context cannot override a non-tractor identity in the question', () => {
+  for (const machineType of ['联合收割机', '插秧机', '植保机', 'combine']) {
+    expectIdentityConflict(`${machineType} 液压提升无力`, tractor);
+    expectIdentityConflict(`${machineType} 久保田 LX2620 发动机启动困难`, {
+      ...tractor, brand: '久保田', model: 'LX2620',
+    });
+  }
+  expectIdentityConflict('拖拉机 液压提升无力', { machineType: '联合收割机' });
+  assert.equal(resolveScope('拖拉机 液压提升无力', { machineType: '农机' }).identityConflict, false);
+  expectEntry(retrieve('久保田 LX2620 拖拉机挂接播种机时发动机动力不足', 100, {
+    ...tractor, brand: '久保田', model: 'LX2620',
+  }), 'KB-LX2620-004');
+  expectEntry(retrieve('PTO接播种机时防护罩要求', 100, {
+    ...tractor, brand: '久保田', model: 'M6060',
+  }), 'KB-KB-M6060-002');
+  expectIdentityConflict('联合收割机挂接播种机时发动机动力不足', tractor);
 });
 
 test('unidentified equipment and non-tractor equipment do not receive tractor archive entries', () => {
@@ -273,6 +423,75 @@ test('unidentified equipment and non-tractor equipment do not receive tractor ar
     const found = retrieve(`纽荷兰 WORKMASTER25 ${startQuery}`, 100, { ...workmaster, machineType });
     assert.equal(archived(found).length, 0, machineType);
   }
+});
+
+test('non-tractor equipment cannot receive tractor sample operations or parameters', () => {
+  for (const machineType of ['联合收割机', '插秧机', '植保机', '播种机', 'combine', 'transplanter', 'sprayer']) {
+    for (const item of [
+      { query: '液压提升无力', context: { machineType } },
+      { query: `${machineType} 液压提升无力`, context: {} },
+    ]) {
+      const found = retrieve(item.query, 100, item.context);
+      assert.equal(found.length, 0, machineType);
+      const reply = generateLocalKnowledgeReply(item.query, found, item.context);
+      assert.match(reply, /未检索到与问题及已知机型相符的知识条目/);
+      assert.doesNotMatch(reply, /【检索到的知识】|40–80|16–20|MPa/);
+    }
+  }
+  assert.ok(retrieve('液压提升无力', 100).some((chunk) => chunk.heading === '四、液压系统故障'));
+  assert.ok(retrieve('液压提升无力', 100, tractor).some((chunk) => chunk.heading === '四、液压系统故障'));
+});
+
+test('unidentified tractor questions collect information instead of returning unsourced repairs', () => {
+  const unsourcedFacts = /5[–-]10\s*分钟|10[–-]15\s*mm|82\s*℃|40[–-]80|16[–-]20\s*MPa|13\.5\s*V|预热\s*2[–-]3\s*次|每\s*(?:50|100|200|500|1000)\s*小时|拧松喷油泵放气螺塞|泵油至无气泡|清洁或更换空滤|校喷油器与喷油泵|测发电机输出|齿轮泵磨损|调节器损坏|两侧制动片磨损不均/;
+  const queries = [
+    '发动机水温过高开锅，应该怎么处理',
+    '发动机启动困难，冬季不能启动，怎么排空气',
+    '动力不足冒黑烟，是否需要换空滤',
+    '液压提升无力，正常油温和压力是多少',
+    '充电指示灯常亮，发电机正常输出电压是多少',
+    '制动跑偏转向沉重，是什么原因',
+    '保养周期是多少小时，何时更换机油和液压油',
+    '维修前安全规范，如何停机和隔离',
+  ];
+  for (const query of queries) {
+    for (const context of [{}, tractor]) {
+      const { message, retrieved } = buildSystemPrompt({ query, ...context });
+      assert.ok(retrieved.length > 0, query);
+      assert.equal(archived(retrieved).length, 0, query);
+      const reply = generateLocalKnowledgeReply(query, retrieved, context);
+      assert.match(reply, /【当前资料不足】/);
+      assert.match(reply, /【信息收集】/);
+      assert.match(reply, /不是操作／维修依据/);
+      assert.match(reply, /完整型号及后缀/);
+      assert.doesNotMatch(reply, /【初步判断】|【可能原因】|【建议排查】|【检索到的知识】|【知识依据】/);
+      for (const content of [formatForPrompt(retrieved), message.content, reply]) {
+        assert.equal(typeof content, 'string');
+        assert.doesNotMatch(content, unsourcedFacts, query);
+      }
+      assert.match(message.content, /不得据此列出或排序故障原因、生成维修／检测步骤、操作参数或保养周期/);
+      assert.match(message.content, /不能为了填满输出模板编造内容/);
+      assert.doesNotMatch(message.content, /按可能性从高到低列 2-4 条|按通用知识回答/);
+    }
+  }
+});
+
+test('verified model-specific parameters and procedures survive the generic guidance restriction', () => {
+  const query = '发动机机油油位检查';
+  const context = { ...tractor, brand: '久保田', model: 'M5-111' };
+  const { message, retrieved } = buildSystemPrompt({ query, ...context });
+  const chunk = expectEntry(retrieved, 'KB-KB-M5-005');
+  assert.equal(chunk.applicability, 'matched');
+  const reply = generateLocalKnowledgeReply(query, [chunk], context);
+  for (const content of [message.content, reply]) {
+    assert.equal(typeof content, 'string');
+    assert.match(content, /熄火后至少等5分钟/);
+    assert.match(content, /把车辆停在平整地面/);
+    for (const metadata of [chunk.entryId, chunk.sourceId, chunk.version, chunk.locator, chunk.scopeBoundary]) {
+      assert.ok(metadata && content.includes(metadata), `Missing archived evidence: ${metadata}`);
+    }
+  }
+  assert.doesNotMatch(reply, /仅命中整理者编写的信息收集提示/);
 });
 
 test('declared electric equipment cannot receive incompatible diesel tractor archive instructions', () => {

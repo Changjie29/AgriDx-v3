@@ -1,0 +1,199 @@
+{
+  "validated_at_utc": "2026-10-06T03:06:42.524Z",
+  "version": "2.2.4",
+  "scope": "修改后本地回环API的机型冲突与正向问答验收；不代表线上部署、外部模型或全书审校",
+  "health": {
+    "ok": true,
+    "version": "2.2.4",
+    "timestamp": "2026-10-06T03:06:42.427Z",
+    "knowledge": {
+      "chunks": 174,
+      "archivedEntries": 165
+    }
+  },
+  "cases": [
+    {
+      "query": "东方红 LF1504 发动机启动困难",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "久保田 M5-111 发动机油位检查",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "YTO LF1504 起动机不转",
+      "machineType": "拖拉机",
+      "brand": "Kubota",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "LF1504 起动机不转",
+      "machineType": "拖拉机",
+      "model": "LX2620",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "久保田 LX2620 和 M5-111 发动机油位检查",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "联合收割机液压提升无力",
+      "machineType": "拖拉机",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "久保田 L2502 发动机启动困难",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "型号 L2502 发动机启动困难",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "insufficient",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 0,
+      "result": "passed"
+    },
+    {
+      "query": "Kubota LX-2620 发动机启动困难",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "KB-LX2620-003",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 6,
+      "result": "passed"
+    },
+    {
+      "query": "发动机启动困难",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "KB-LX2620-003",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 6,
+      "result": "passed"
+    },
+    {
+      "query": "New Holland WORKMASTER 25 钥匙在 START，启动电机不转",
+      "machineType": "拖拉机",
+      "brand": "纽荷兰",
+      "model": "WORKMASTER25",
+      "expected": "NH-WM25-003",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 4,
+      "result": "passed"
+    },
+    {
+      "query": "久保田 LX2620SU 发动机启动困难",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620/LX2620SU",
+      "expected": "KB-LX2620-003",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 6,
+      "result": "passed"
+    },
+    {
+      "query": "千耘 QY210 Pro 未定位与交接垄不准",
+      "machineType": "拖拉机",
+      "brand": "千寻位置",
+      "model": "QYBD-2.5SD（QY210 Pro）",
+      "expected": "KB-QX-QY210PRO-V01-003",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 2,
+      "result": "passed"
+    },
+    {
+      "query": "参照 KB-LX2620-003，发动机启动困难",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620",
+      "expected": "KB-LX2620-003",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 6,
+      "result": "passed"
+    },
+    {
+      "query": "Kubota M5-111 发动机油位检查",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M5-111",
+      "expected": "KB-KB-M5-005",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 4,
+      "result": "passed"
+    },
+    {
+      "query": "东方红 LF1504，手册编号SM-LF1504.49.010，起动机不转",
+      "machineType": "拖拉机",
+      "brand": "东方红",
+      "model": "LF1504",
+      "expected": "KB-YTO-LF1504-007",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 6,
+      "result": "passed"
+    },
+    {
+      "query": "PTO接播种机时防护罩要求",
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M6060",
+      "expected": "KB-KB-M6060-002",
+      "http_status": 200,
+      "provider": "knowledge-base",
+      "knowledge_chunks": 1,
+      "result": "passed"
+    }
+  ]
+}
