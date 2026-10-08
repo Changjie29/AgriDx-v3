@@ -42,7 +42,7 @@ def storage_group(source):
 
 
 def link(path):
-    return path.removeprefix('知识库/')
+    return path.removeprefix('知识库/').replace(' ', '%20')
 
 
 def table(headers, rows):
@@ -113,7 +113,7 @@ def generate(date, visuals):
                              s['content_group'], f"[原件／记录]({link(s['source_path'])}) · {cards}"])
     text = f'''# 现有知识库概要
 
-整理日期：{date}（上海）。本轮只整理现有资料，未增加来源、条目或手册；图表表示库内整理量，不表示市场保有量、质量评分或诊断准确率。
+整理日期：{date}（上海）。概要按当前来源及条目索引生成；新增与修正记录见采集记录。图表表示库内整理量，不表示市场保有量、质量评分或诊断准确率。
 
 ## 一眼看懂
 
@@ -191,7 +191,7 @@ python3 知识库/工具/生成总览.py --date {date} --visuals
 python3 知识库/工具/校验索引.py
 ```
 
-生成Markdown／JSON只需要Python标准库，绘图另需matplotlib和Noto Sans CJK字体。核验结果及本轮修正见[整理验收](整理后的知识库/农用拖拉机知识库/采集记录/20261008_现有知识库整理验收.md)。GitHub保存、本地加载和线上部署分别确认。
+生成Markdown／JSON只需要Python标准库，绘图另需matplotlib和Noto Sans CJK字体。历史整理核验见[整理验收](整理后的知识库/农用拖拉机知识库/采集记录/20261008_现有知识库整理验收.md)，后续更新见[采集记录](整理后的知识库/农用拖拉机知识库/采集记录/)。GitHub保存、本地加载和线上部署分别确认。
 '''
     (KB / '现有知识库概要.md').write_text(text, 'utf8')
     if visuals:
@@ -223,7 +223,7 @@ def render(data, date):
     green, muted, ink = '#277453', '#708c7d', '#243b31'
     fig = plt.figure(figsize=(13, 10), facecolor='#f8faf7')
     fig.text(.06, .95, '现有知识库 · 结构与数量', fontsize=25, color=ink)
-    fig.text(.06, .916, f'{date}  |  仅统计已入库资料，不新增来源或条目', fontsize=12, color=muted)
+    fig.text(.06, .916, f'{date}  |  统计当前已入库资料，图表不表示市场保有量', fontsize=12, color=muted)
     t = data['totals']
     fig.text(.06, .866, f"{t['sources']} 来源     {t['archived_entries']} 归档条目     {t['knowledge_documents']} 正文文件     {t['retrieval_chunks']} 检索片段", fontsize=20, color=green)
     ax = fig.add_axes([.18, .21, .30, .58])
@@ -267,7 +267,7 @@ def render(data, date):
     svg.write_text('\n'.join(line.rstrip() for line in svg.read_text('utf8').splitlines()) + '\n', 'utf8')
     summary = plt.figure(figsize=(13, 10), facecolor='white')
     summary.text(.07, .91, '知识库概要 · 阅读与使用边界', fontsize=25, color=ink)
-    summary.text(.07, .865, f'整理日期 {date}  |  本轮未新增来源或条目', fontsize=12, color=muted)
+    summary.text(.07, .865, f'整理日期 {date}  |  数量与导航来自当前索引', fontsize=12, color=muted)
     blocks = [
         ('怎么读', ['从知识库README进入品牌目录，再看知识卡编号段落与证据页。',
                   '机器索引只定位同一个Markdown正文，sources.json保存版本和适用限制。',
