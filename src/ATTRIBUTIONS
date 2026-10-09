@@ -44,3 +44,24 @@ Usage in SRT27: gearbox fault-diagnosis dataset reference. Check author instruct
 
 Repository: https://github.com/CHAOZHAO-1/HUSTTransmissionsystem-dataset
 Usage in SRT27: transmission-system fault-diagnosis dataset reference. Check author instructions and dataset terms before redistribution.
+
+## 南京农业大学工学院院徽
+
+Official source: https://coe.njau.edu.cn/xygk/yh.htm
+Image: https://coe.njau.edu.cn/__local/4/BC/DA/FCDBC0F81D01FBA438BEEE40A94_59B3FE76_DFEA.jpg
+Local file: public/images/njau-engineering-mark.jpg
+Retrieved: 2026-10-09 (Asia/Shanghai). The original two-variant image is preserved; CSS displays its left emblem. Copyright and institutional mark rights remain with their owner. Used as a linked college identifier, not a project-created logo.
+
+## Original schematic tractor
+
+Local file: public/models/tractor-detailed-v1.glb
+Generator: scripts/generate-tractor-model.mjs
+Created locally for AgriDx-v2 in this iteration. Seven component groups; schematic geometry without measured dimensions, brand identity or diagnosis mapping. No external model or textures were copied into this file.
+
+## David Brown 25D tractor — preserved previous asset
+
+Local file: public/models/tractor.glb (unchanged)
+Author: Lassi Kaukonen / thesidekick
+Source: https://sketchfab.com/3d-models/david-brown-25d-tractor-85720bad20b341ec8508ddbc84f11795
+License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+Original GLB extras retain author, source and license metadata; the previous asset remains available but is not the current default model.

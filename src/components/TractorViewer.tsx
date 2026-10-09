@@ -2,11 +2,11 @@ import { Suspense, useState, useEffect, useRef, useCallback } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Grid } from '@react-three/drei';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Loader2, MonitorPlay } from 'lucide-react';
+import { Loader2, MonitorPlay, Pause, Play, RotateCcw } from 'lucide-react';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import TractorModel from './TractorModel';
+import TractorModel, { TRACTOR_MODEL_URL, type TractorComponent } from './TractorModel';
 import { useLang } from '@/hooks/useLang';
 
 // 相机初始配置（常量避免重渲染触发重置）
@@ -17,7 +17,7 @@ const AUTO_ROTATE_SPEED = 0.8;
 
 // Canvas 配置常量：避免每次渲染创建新对象字面量导致 R3F 重建 WebGL context（滚动闪屏主因之一）
 const GL_CONFIG = { antialias: true, alpha: true } as const;
-const DPR_CONFIG: [number, number] = [1, 2];
+const DPR_CONFIG: [number, number] = [1, 1.5];
 const LIGHT_COLORS = {
   dark: { background: '#1a2420', fog: '#1a2420', cell: '#2e3a34', section: '#4a5a50' },
   light: { background: '#eef3ef', fog: '#eef3ef', cell: '#d9e3dc', section: '#c3d2c7' },
@@ -73,17 +73,33 @@ function ProgrammaticEnvironment() {
   return null;
 }
 
+type View = 'isometric' | 'front' | 'side' | 'top';
+const VIEWS: { id: View; zh: string; en: string; direction: [number, number, number] }[] = [
+  { id: 'isometric', zh: '总览', en: 'Overview', direction: [-1, .62, 1] },
+  { id: 'front', zh: '正面', en: 'Front', direction: [-1, .12, 0] },
+  { id: 'side', zh: '侧面', en: 'Side', direction: [0, .12, 1] },
+  { id: 'top', zh: '俯视', en: 'Top', direction: [.01, 1, .01] },
+];
+function ResizeFrame({ modelRef, fit }: { modelRef: React.RefObject<THREE.Object3D | null>; fit: (object: THREE.Object3D) => void }) {
+  const size = useThree(state => state.size);
+  useEffect(() => {
+    if (modelRef.current) fit(modelRef.current);
+  }, [size.width, size.height, modelRef, fit]);
+  return null;
+}
+
 /**
  * 3D 拖拉机查看器
- * - 使用 GLB 模型（David Brown 25D 拖拉机）
- * - 模型通过 import 引入，由 Vite 打包
+ * - 使用本地原创分组件拖拉机结构示意 GLB，保留旧模型原件
  * - 环境光照使用 three.js 内置 RoomEnvironment 程序化生成，零网络依赖
  * - 自动旋转：初始自动旋转，用户交互后停止，松手 3 秒后恢复自转
  * - 支持鼠标/触屏拖拽旋转、滚轮缩放
  * - WebGL 不可用时降级为占位提示
  */
-export default function TractorViewer() {
+export default function TractorViewer({ component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL }: { component?: TractorComponent; exploded?: boolean; modelUrl?: string }) {
   const lang = useLang();
+  const [view, setView] = useState<View>('isometric');
+  const [autoRotate, setAutoRotate] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglSupported, setWebglSupported] = useState(true);
   const [modelError, setModelError] = useState<string | null>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
@@ -91,6 +107,12 @@ export default function TractorViewer() {
   const autoRotateTimerRef = useRef<number | null>(null);
   // OrbitControls 尚未挂载时暂存待 fit 的模型，挂载后补做一次相机 fit
   const pendingFitRef = useRef<THREE.Object3D | null>(null);
+  const modelObjectRef = useRef<THREE.Object3D | null>(null);
+
+  useEffect(() => {
+    setModelLoaded(false);
+    setModelError(null);
+  }, [modelUrl]);
 
   // 跟随暗色模式：监听 html 上的 theme-dark/theme-light class
   const [isDark, setIsDark] = useState(
@@ -111,7 +133,10 @@ export default function TractorViewer() {
     const observer = new MutationObserver(update);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', update);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', update);
+    };
   }, []);
 
   // 通过 ref 直接启停 OrbitControls 内置自动旋转
@@ -128,9 +153,9 @@ export default function TractorViewer() {
       window.clearTimeout(autoRotateTimerRef.current);
     }
     autoRotateTimerRef.current = window.setTimeout(() => {
-      setAutoRotateByRef(true);
+      setAutoRotateByRef(autoRotate && view === 'isometric');
     }, 3000);
-  }, [setAutoRotateByRef]);
+  }, [setAutoRotateByRef, autoRotate, view]);
 
   // 用户开始交互时停止自动旋转
   const handleInteractionStart = useCallback(() => {
@@ -156,20 +181,23 @@ export default function TractorViewer() {
     controls.target.copy(target);
 
     // 按 fov 计算刚好装下模型的距离，并留 40% 留白
-    const fitDistance = maxDim / 2 / Math.tan((CAMERA_CONFIG.fov * Math.PI) / 360);
-    const distance = fitDistance * 1.5;
+    const camera = controls.object as THREE.PerspectiveCamera;
+    const verticalFov = THREE.MathUtils.degToRad(camera.fov);
+    const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * camera.aspect);
+    const radius = size.length() / 2;
+    const distance = radius / Math.sin(Math.min(verticalFov, horizontalFov) / 2) * 1.13;
 
     // 45° 俯视角
-    const dir = new THREE.Vector3(1, 0.6, 1).normalize();
+    const dir = new THREE.Vector3(...VIEWS.find(item => item.id === view)!.direction).normalize();
     const cameraPos = target.clone().add(dir.multiplyScalar(distance));
     controls.object.position.copy(cameraPos);
 
     // 根据模型大小动态设置缩放范围
     controls.minDistance = maxDim * 0.6;
-    controls.maxDistance = maxDim * 4;
+    controls.maxDistance = Math.max(maxDim * 4, distance * 1.8);
 
     controls.update();
-  }, []);
+  }, [view]);
 
   // 清理定时器
   useEffect(() => {
@@ -178,14 +206,14 @@ export default function TractorViewer() {
         window.clearTimeout(autoRotateTimerRef.current);
       }
     };
-  }, []);
+  }, [autoRotate, view]);
 
   // OrbitControls 挂载完成后开启初始自动旋转；若模型已加载但此前 fit 未执行，补做一次
   const handleControlsRef = useCallback(
     (node: OrbitControlsImpl | null) => {
       controlsRef.current = node;
       if (node) {
-        node.autoRotate = true;
+        node.autoRotate = autoRotate && view === 'isometric';
         node.autoRotateSpeed = AUTO_ROTATE_SPEED;
         if (pendingFitRef.current) {
           fitCameraToModel(pendingFitRef.current);
@@ -193,12 +221,13 @@ export default function TractorViewer() {
         }
       }
     },
-    [fitCameraToModel],
+    [fitCameraToModel, autoRotate, view],
   );
 
   const handleModelLoaded = useCallback(
     (object: THREE.Object3D) => {
       setModelLoaded(true);
+      modelObjectRef.current = object;
 
       // 模型加载后自动 fit：OrbitControls 已就绪则立即执行，否则暂存待挂载后补做
       if (controlsRef.current) {
@@ -243,6 +272,7 @@ export default function TractorViewer() {
   return (
     <div className="relative h-full w-full">
       <ErrorBoundary
+        resetKeys={[modelUrl]}
         FallbackComponent={ModelFallback}
         onError={(e: unknown) => {
           const msg = e instanceof Error ? e.message : String(e);
@@ -293,7 +323,8 @@ export default function TractorViewer() {
 
           {/* Suspense fallback 必须是 three.js 对象，不能放 HTML 元素 */}
           <Suspense fallback={<CanvasLoadingPlaceholder />}>
-            <TractorModel onLoaded={handleModelLoaded} />
+            <TractorModel onLoaded={handleModelLoaded} component={component} exploded={exploded} modelUrl={modelUrl} />
+            <ResizeFrame modelRef={modelObjectRef} fit={fitCameraToModel} />
           </Suspense>
 
           <OrbitControls
@@ -303,7 +334,7 @@ export default function TractorViewer() {
             minDistance={2}
             maxDistance={18}
             maxPolarAngle={Math.PI / 2.2}
-            minPolarAngle={0.2}
+            minPolarAngle={0.03}
             autoRotateSpeed={AUTO_ROTATE_SPEED}
             onStart={handleInteractionStart}
             onEnd={handleInteractionEnd}
@@ -321,8 +352,21 @@ export default function TractorViewer() {
         </div>
       )}
 
-      {/* 操作提示 */}
-      <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-muted-foreground/70">
+      <div className="absolute left-3 top-3 rounded-full border border-border/50 bg-card/85 px-3 py-1.5 text-[10px] text-muted-foreground backdrop-blur">
+        {modelUrl === TRACTOR_MODEL_URL
+          ? lang === 'zh' ? '原创结构示意 · 非实机 CAD' : 'Original schematic · Not machine CAD'
+          : lang === 'zh' ? '本地模型 · 尺寸待核验' : 'Local model · Dimensions unverified'}
+      </div>
+      <button type="button" onClick={() => setAutoRotate(value => !value)} aria-label={lang === 'zh' ? autoRotate ? '暂停自转' : '开启自转' : autoRotate ? 'Pause rotation' : 'Start rotation'} aria-pressed={autoRotate} className="absolute right-3 top-3 rounded-full border border-border/50 bg-card/85 p-2 text-muted-foreground backdrop-blur hover:text-primary">
+        {autoRotate ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
+      </button>
+      <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-border/50 bg-card/90 p-1 shadow-sm backdrop-blur">
+        {VIEWS.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)} className={`shrink-0 whitespace-nowrap rounded-full px-2 py-1.5 text-[11px] transition sm:px-3 ${view === item.id ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-primary'}`}>
+          {lang === 'zh' ? item.zh : item.en}
+        </button>)}
+        <button type="button" aria-label={lang === 'zh' ? '恢复模型视角' : 'Reset model view'} onClick={() => { setView('isometric'); if (modelObjectRef.current) fitCameraToModel(modelObjectRef.current); }} className="shrink-0 rounded-full p-2 text-muted-foreground hover:text-primary"><RotateCcw className="size-3" /></button>
+      </div>
+      <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-muted-foreground/70">
         {lang === 'zh' ? '拖动旋转 · 滚轮缩放' : 'Drag to rotate · Scroll to zoom'}
       </div>
     </div>

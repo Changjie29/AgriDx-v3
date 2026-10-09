@@ -1,0 +1,3133 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-09",
+  "purpose": "仅为已有知识条目的分层导航；零件关联不是故障确诊，不新增维修事实、型号或兼容性。",
+  "components": [
+    {
+      "id": "machine",
+      "name": "整机与作业安全",
+      "parts": []
+    },
+    {
+      "id": "engine",
+      "name": "发动机与进排气",
+      "parts": [
+        {
+          "id": "air-filter",
+          "name": "空气滤清器",
+          "evidence_terms": [
+            "空气滤清器",
+            "空气滤芯",
+            "空滤"
+          ]
+        },
+        {
+          "id": "turbocharger",
+          "name": "涡轮增压器",
+          "evidence_terms": [
+            "涡轮增压器"
+          ]
+        },
+        {
+          "id": "exhaust-aftertreatment",
+          "name": "排气后处理",
+          "evidence_terms": [
+            "后处理",
+            "DPF",
+            "排气"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fuel",
+      "name": "燃油系统",
+      "parts": [
+        {
+          "id": "fuel-filter",
+          "name": "燃油滤清器",
+          "evidence_terms": [
+            "燃油滤清器",
+            "燃油滤芯"
+          ]
+        },
+        {
+          "id": "water-separator",
+          "name": "油水分离器",
+          "evidence_terms": [
+            "油水分离器",
+            "燃油分离器"
+          ]
+        },
+        {
+          "id": "injector",
+          "name": "喷油器",
+          "evidence_terms": [
+            "喷油器"
+          ]
+        },
+        {
+          "id": "fuel-hose",
+          "name": "燃油管路",
+          "evidence_terms": [
+            "燃油软管",
+            "高压燃油",
+            "燃油管路",
+            "高压共轨"
+          ]
+        },
+        {
+          "id": "fuel-valve",
+          "name": "燃油阀与切断电磁阀",
+          "evidence_terms": [
+            "燃油关闭阀",
+            "燃油阀",
+            "燃油切断电磁阀"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cooling",
+      "name": "冷却系统",
+      "parts": [
+        {
+          "id": "radiator",
+          "name": "散热器与格栅",
+          "evidence_terms": [
+            "散热器",
+            "格栅",
+            "散热格栅"
+          ]
+        },
+        {
+          "id": "radiator-cap",
+          "name": "散热器盖",
+          "evidence_terms": [
+            "散热器盖",
+            "水箱盖",
+            "冷却系统加注盖"
+          ]
+        },
+        {
+          "id": "fan-belt",
+          "name": "风扇皮带与张紧器",
+          "evidence_terms": [
+            "风扇皮带",
+            "皮带与张紧器"
+          ]
+        },
+        {
+          "id": "thermostat",
+          "name": "节温器",
+          "evidence_terms": [
+            "节温器"
+          ]
+        },
+        {
+          "id": "coolant-pump",
+          "name": "冷却液泵",
+          "evidence_terms": [
+            "冷却液泵",
+            "水泵"
+          ]
+        },
+        {
+          "id": "temperature-sensor",
+          "name": "温度传感器",
+          "evidence_terms": [
+            "水温传感器",
+            "温度检测"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lubrication",
+      "name": "发动机润滑",
+      "parts": [
+        {
+          "id": "oil-dipstick",
+          "name": "机油尺",
+          "evidence_terms": [
+            "油尺"
+          ]
+        },
+        {
+          "id": "oil-pump",
+          "name": "机油泵",
+          "evidence_terms": [
+            "机油泵"
+          ]
+        },
+        {
+          "id": "oil-filter",
+          "name": "机油滤清器",
+          "evidence_terms": [
+            "滤清器堵塞",
+            "机油滤清器"
+          ]
+        },
+        {
+          "id": "oil-pressure-switch",
+          "name": "油压开关与传感器",
+          "evidence_terms": [
+            "压力开关",
+            "压力传感器"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "electrical",
+      "name": "启动与电气",
+      "parts": [
+        {
+          "id": "starter",
+          "name": "起动机",
+          "evidence_terms": [
+            "起动机",
+            "启动电机",
+            "起动电机",
+            "启动机",
+            "起动端子",
+            "起动马达"
+          ]
+        },
+        {
+          "id": "battery",
+          "name": "蓄电池",
+          "evidence_terms": [
+            "蓄电池",
+            "电池"
+          ]
+        },
+        {
+          "id": "wiring",
+          "name": "线束与接头",
+          "evidence_terms": [
+            "线束",
+            "线缆",
+            "接线",
+            "电缆",
+            "接头",
+            "控制线路",
+            "接线端"
+          ]
+        },
+        {
+          "id": "fuse",
+          "name": "保险丝",
+          "evidence_terms": [
+            "保险丝"
+          ]
+        },
+        {
+          "id": "ignition-switch",
+          "name": "钥匙开关与启动联锁",
+          "evidence_terms": [
+            "钥匙开关",
+            "联锁",
+            "起动安全开关"
+          ]
+        },
+        {
+          "id": "brush",
+          "name": "起动机碳刷与换向器",
+          "evidence_terms": [
+            "碳刷",
+            "整流子",
+            "换向器"
+          ]
+        },
+        {
+          "id": "instrument-panel",
+          "name": "仪表与警告灯",
+          "evidence_terms": [
+            "警告灯",
+            "警灯",
+            "报警",
+            "仪表面板",
+            "主警告灯"
+          ]
+        },
+        {
+          "id": "fuel-sensor",
+          "name": "燃油传感器",
+          "evidence_terms": [
+            "燃油传感器"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transmission",
+      "name": "传动与离合",
+      "parts": [
+        {
+          "id": "clutch-friction",
+          "name": "离合器摩擦片与压盘",
+          "evidence_terms": [
+            "摩擦片",
+            "摩擦部件",
+            "摩擦件",
+            "离合器片",
+            "压盘"
+          ]
+        },
+        {
+          "id": "clutch-spring",
+          "name": "离合器弹簧",
+          "evidence_terms": [
+            "弹簧"
+          ]
+        },
+        {
+          "id": "clutch-release",
+          "name": "离合器分离机构",
+          "evidence_terms": [
+            "分离机构",
+            "分离杠杆",
+            "分离轴承",
+            "副离合器三爪",
+            "三爪"
+          ]
+        },
+        {
+          "id": "clutch-pedal",
+          "name": "离合器踏板与行程",
+          "evidence_terms": [
+            "踏板",
+            "行程"
+          ]
+        },
+        {
+          "id": "gears",
+          "name": "齿轮与啮合套",
+          "evidence_terms": [
+            "啮合套",
+            "齿轮端面"
+          ]
+        },
+        {
+          "id": "differential-lock",
+          "name": "差速锁",
+          "evidence_terms": [
+            "差速锁"
+          ]
+        },
+        {
+          "id": "transmission-filter",
+          "name": "静液压传动油滤芯",
+          "evidence_terms": [
+            "静液压传动油滤芯"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hydraulics",
+      "name": "液压与三点悬挂",
+      "parts": [
+        {
+          "id": "hydraulic-filter",
+          "name": "液压滤油器",
+          "evidence_terms": [
+            "滤油器",
+            "液压滤清器",
+            "液压过滤",
+            "吸油滤芯",
+            "液压油滤清器"
+          ]
+        },
+        {
+          "id": "hydraulic-pump",
+          "name": "液压泵",
+          "evidence_terms": [
+            "液压泵",
+            "油泵失效"
+          ]
+        },
+        {
+          "id": "hydraulic-hose",
+          "name": "液压管路与接头",
+          "evidence_terms": [
+            "吸油管路",
+            "吸油侧连接",
+            "管路连接",
+            "快换接头",
+            "高压泄漏",
+            "高压喷射",
+            "拆管",
+            "拆接管路",
+            "液压软管",
+            "钢管"
+          ]
+        },
+        {
+          "id": "hydraulic-valve",
+          "name": "液压阀件",
+          "evidence_terms": [
+            "回油阀",
+            "主阀",
+            "单向阀",
+            "多路阀",
+            "选择控制阀",
+            "辅助方向阀"
+          ]
+        },
+        {
+          "id": "hydraulic-seal",
+          "name": "液压密封与O形圈",
+          "evidence_terms": [
+            "O 形圈",
+            "O形圈"
+          ]
+        },
+        {
+          "id": "hydraulic-cylinder",
+          "name": "液压油缸",
+          "evidence_terms": [
+            "油缸"
+          ]
+        },
+        {
+          "id": "hitch-control",
+          "name": "提升控制与传感器",
+          "evidence_terms": [
+            "提升限位",
+            "下降速度",
+            "角度传感器",
+            "提升按钮",
+            "提升指令",
+            "提升杆",
+            "提升器",
+            "反馈联动"
+          ]
+        },
+        {
+          "id": "hydraulic-cooler",
+          "name": "液压油冷却器",
+          "evidence_terms": [
+            "冷却器"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "steering",
+      "name": "转向系统",
+      "parts": [
+        {
+          "id": "steering-pump",
+          "name": "转向齿轮泵",
+          "evidence_terms": [
+            "恒流齿轮泵"
+          ]
+        },
+        {
+          "id": "steering-valve",
+          "name": "转向阀件",
+          "evidence_terms": [
+            "单向阀",
+            "安全阀",
+            "优先阀"
+          ]
+        },
+        {
+          "id": "steering-cylinder",
+          "name": "转向油缸与管路",
+          "evidence_terms": [
+            "油缸",
+            "油管",
+            "管路进气"
+          ]
+        },
+        {
+          "id": "steering-pins",
+          "name": "转向主销与球销",
+          "evidence_terms": [
+            "主销",
+            "球销",
+            "枢轴销",
+            "主轴"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brakes",
+      "name": "制动系统",
+      "parts": [
+        {
+          "id": "brake-friction",
+          "name": "制动摩擦片",
+          "evidence_terms": [
+            "摩擦片"
+          ]
+        },
+        {
+          "id": "brake-pedal",
+          "name": "制动踏板与联锁",
+          "evidence_terms": [
+            "制动踏板",
+            "联锁",
+            "连锁",
+            "锁联"
+          ]
+        },
+        {
+          "id": "brake-valve",
+          "name": "制动泵与平衡阀",
+          "evidence_terms": [
+            "制动泵",
+            "平衡阀",
+            "节流阀"
+          ]
+        },
+        {
+          "id": "brake-hose",
+          "name": "制动管路",
+          "evidence_terms": [
+            "制动管",
+            "管路进气",
+            "管路有空气"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chassis",
+      "name": "前桥与轮胎",
+      "parts": [
+        {
+          "id": "tyre",
+          "name": "轮胎",
+          "evidence_terms": [
+            "轮胎",
+            "胎压",
+            "气压",
+            "前胎",
+            "后轮"
+          ]
+        },
+        {
+          "id": "wheel-rim",
+          "name": "轮辋",
+          "evidence_terms": [
+            "轮辋"
+          ]
+        },
+        {
+          "id": "wheel-bearing",
+          "name": "轮系轴承",
+          "evidence_terms": [
+            "轴承"
+          ]
+        },
+        {
+          "id": "front-axle",
+          "name": "前桥",
+          "evidence_terms": [
+            "前桥"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pto",
+      "name": "动力输出与机具",
+      "parts": [
+        {
+          "id": "pto-shaft",
+          "name": "动力输出轴与护罩",
+          "evidence_terms": [
+            "动力输出轴",
+            "PTO",
+            "动力输出传动轴",
+            "传动轴",
+            "轴罩",
+            "防护罩",
+            "轴帽"
+          ]
+        },
+        {
+          "id": "pto-clutch",
+          "name": "动力输出离合器",
+          "evidence_terms": [
+            "PTO离合器",
+            "动力输出离合器",
+            "后 PTO",
+            "副离合器"
+          ]
+        },
+        {
+          "id": "pto-brake",
+          "name": "动力输出制动装置",
+          "evidence_terms": [
+            "动力输出制动"
+          ]
+        },
+        {
+          "id": "pto-piston",
+          "name": "动力输出活塞",
+          "evidence_terms": [
+            "活塞"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cab",
+      "name": "驾驶室与防翻保护",
+      "parts": [
+        {
+          "id": "cab-filter",
+          "name": "驾驶室空调滤芯",
+          "evidence_terms": [
+            "驾驶室空调滤芯",
+            "新风滤网",
+            "内循环",
+            "空调滤芯"
+          ]
+        },
+        {
+          "id": "condenser",
+          "name": "空调冷凝器",
+          "evidence_terms": [
+            "冷凝器"
+          ]
+        },
+        {
+          "id": "rops",
+          "name": "防翻架与安全带",
+          "evidence_terms": [
+            "防翻架",
+            "安全带",
+            "ROPS",
+            "翻车防护架"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "navigation",
+      "name": "配套导航与自动转向",
+      "parts": [
+        {
+          "id": "gnss-antenna",
+          "name": "定位天线",
+          "evidence_terms": [
+            "天线"
+          ]
+        },
+        {
+          "id": "navigation-controller",
+          "name": "导航控制器",
+          "evidence_terms": [
+            "控制器"
+          ]
+        },
+        {
+          "id": "navigation-wiring",
+          "name": "导航线束与接头",
+          "evidence_terms": [
+            "线束",
+            "接头",
+            "线缆"
+          ]
+        },
+        {
+          "id": "steering-actuator",
+          "name": "自动转向电机与传动",
+          "evidence_terms": [
+            "电机",
+            "联轴器",
+            "齿轮传动"
+          ]
+        },
+        {
+          "id": "angle-sensor",
+          "name": "转向角度传感器",
+          "evidence_terms": [
+            "角度传感器"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "documents",
+      "name": "资料范围与核验",
+      "parts": []
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "KB-LX2620-001",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-003",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "fuel-hose"
+          ]
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery",
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-004",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-005",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "fan-belt"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-006",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-007",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "instrument-panel"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-008",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "instrument-panel",
+            "fuel-sensor"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "temperature-sensor"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-001",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-003",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery",
+            "wiring",
+            "ignition-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-004",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "fuel-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-005",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-006",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "fan-belt"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-007",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-pump",
+            "oil-filter",
+            "oil-pressure-switch"
+          ]
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "instrument-panel"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "NH-WM25-008",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-001",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-003",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-004",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-005",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap",
+            "fan-belt",
+            "thermostat",
+            "temperature-sensor"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-006",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-pump",
+            "oil-pressure-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-007",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-hose",
+            "hydraulic-valve",
+            "hydraulic-cooler"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-008",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "LV-TG-001",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre",
+            "wheel-rim",
+            "front-axle"
+          ]
+        },
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "LV-TG-002",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-rim",
+            "wheel-bearing"
+          ]
+        },
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-pins"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "LV-TG-003",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "LV-TG-004",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap",
+            "temperature-sensor"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "LV-TG-005",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-spring",
+            "clutch-pedal",
+            "clutch-release"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "LV-NR3-001",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "LV-NR3-002",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "DF-WINTER-001",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "DF-WINTER-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "HH-T70-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "HH-T70-002",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TB-TRAINING-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-P5000-TRAINING-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LX-MANUAL-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WT-TRACTOR-MANUAL-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-002",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        },
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "water-separator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-003",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "instrument-panel"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-004",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "ignition-switch"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-005",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-001",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-002",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": [
+            "gnss-antenna",
+            "navigation-controller",
+            "navigation-wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-003",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": [
+            "gnss-antenna"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-004",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-006",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-007",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-008",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-hose"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-009",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-010",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        },
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-pins"
+          ]
+        },
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-011",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-012",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-013",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap",
+            "fan-belt",
+            "thermostat",
+            "coolant-pump",
+            "temperature-sensor"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-014",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-hose",
+            "hydraulic-valve",
+            "hitch-control",
+            "hydraulic-cooler"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-005",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-006",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-007",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-008",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": [
+            "gnss-antenna"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-009",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-QX-QY210PRO-V01-010",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": [
+            "gnss-antenna"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-002",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-003",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-004",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-005",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-006",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-007",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "transmission-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-BARB-HYDROTRAC-4HWD-008",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-009",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "differential-lock"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-010",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-011",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-012",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-013",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-014",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-clutch",
+            "pto-brake",
+            "pto-piston"
+          ]
+        },
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-015",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery",
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-016",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre",
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-002",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-003",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-004",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-005",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-006",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-007",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery",
+            "wiring",
+            "brush"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-008",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery",
+            "wiring",
+            "brush"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-009",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-spring",
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-010",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-pedal",
+            "clutch-release",
+            "gears"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-011",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-pump",
+            "steering-valve",
+            "steering-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-012",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-pump",
+            "hydraulic-hose",
+            "hydraulic-valve",
+            "hydraulic-seal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-013",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-seal",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-014",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-015",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-friction",
+            "brake-valve",
+            "brake-hose"
+          ]
+        },
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-002",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-003",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "differential-lock"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-004",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-005",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-006",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-007",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-008",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TX-TRAINING-009",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-002",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "rops"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-003",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-004",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-005",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-006",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-007",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-008",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TD-TRAINING-009",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-002",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-003",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-004",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-005",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-006",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "water-separator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-007",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery",
+            "wiring",
+            "brush"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-008",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-009",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-valve",
+            "steering-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF1504-010",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LX-MANUAL-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LX-MANUAL-003",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LX-MANUAL-004",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LX-MANUAL-005",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LX-MANUAL-006",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-pump",
+            "hydraulic-hose",
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LX-MANUAL-007",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-friction",
+            "brake-valve",
+            "brake-hose"
+          ]
+        },
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TB-TRAINING-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TB-TRAINING-003",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TB-TRAINING-004",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TB-TRAINING-005",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "differential-lock"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TB-TRAINING-006",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-TB-TRAINING-007",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-P5000-TRAINING-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-P5000-TRAINING-003",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-P5000-TRAINING-004",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-P5000-TRAINING-005",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-P5000-TRAINING-006",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LV-P5000-TRAINING-007",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WT-TRACTOR-MANUAL-002",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WT-TRACTOR-MANUAL-003",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WT-TRACTOR-MANUAL-004",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WT-TRACTOR-MANUAL-005",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WT-TRACTOR-MANUAL-006",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WT-TRACTOR-MANUAL-007",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-009",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-010",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-011",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse",
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-012",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-013",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-014",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-LX2620-015",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "condenser"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M6060-001",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "rops"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M6060-002",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M6060-003",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M6060-004",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M6060-005",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M6060-006",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M5-001",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M5-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        },
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M5-003",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M5-004",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M5-005",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-KB-M5-006",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-002",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-003",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-004",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-005",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-006",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-release"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-007",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-spring",
+            "clutch-pedal",
+            "clutch-release"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-008",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-rim",
+            "wheel-bearing"
+          ]
+        },
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-pins",
+            "steering-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-009",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-101",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-102",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-103",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-104",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-release"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-105",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-spring",
+            "clutch-pedal",
+            "clutch-release"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-106",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-WD-WF-107",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-002",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-003",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-004",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-005",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-006",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-007",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": [
+            "navigation-controller",
+            "navigation-wiring",
+            "steering-actuator",
+            "angle-sensor"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-CHC-NX510-008",
+      "components": [
+        {
+          "component_id": "navigation",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-003",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-004",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "rops"
+          ]
+        },
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-005",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-006",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-003",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-004",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-OMAL232272-001",
+      "components": [
+        {
+          "component_id": "documents",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-OMAL232272-002",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-OMAL232272-003",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-OMAL232272-004",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-OMAL232272-005",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-OMAL232272-006",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-016",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery",
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-017",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator-cap"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-018",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "differential-lock"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-019",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-020",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-021",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-MANUAL-022",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    }
+  ]
+}

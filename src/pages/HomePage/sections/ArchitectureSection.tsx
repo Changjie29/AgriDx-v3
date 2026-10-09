@@ -20,12 +20,12 @@ export default function ArchitectureSection() {
         <div className="section-heading mb-12">
           <div className="section-eyebrow">{t('耕知·耘诊如何工作', 'How Gengzhi · Yunzhen Works')}</div>
           <h2 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
-            {t('四层技术链路 · 端到端诊断闭环', 'Four-Layer Pipeline · End-to-End Loop')}
+            {t('把每条建议，连回资料依据。', 'Connect every recommendation to evidence.')}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground md:text-base">
             {t(
-              '从感知数据采集到最终维修决策，四层架构层层递进，确保诊断准确、可解释、可验证',
-              'From sensing to repair decisions, four layers ensure accurate, explainable and verifiable diagnosis.',
+              '输入机况、检索适用知识、组织诊断建议，并区分本地证据与模型通用建议。诊断效果仍需现场与人工复核。',
+              'Describe operating conditions, retrieve applicable knowledge, and organize guidance while distinguishing local evidence from general model advice. Outcomes still require on-site review.',
             )}
           </p>
         </div>

@@ -21,7 +21,7 @@ export default function TechRouteSection() {
         {/* 标题 */}
         <div className="section-heading mb-12">
           <h2 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
-            {t('六步诊断管线 · 全流程自动化', 'Six-Step Pipeline · Fully Automated')}
+            {t('从“发生了什么”，走向“下一步”。', 'From “what happened” to “what comes next”.')}
           </h2>
         </div>
 
@@ -29,7 +29,7 @@ export default function TechRouteSection() {
         <div className="relative">
           {/* 桌面端时间线 */}
           <div className="hidden md:block overflow-x-auto pb-4">
-            <div className="flex items-start min-w-[780px]">
+            <div className="flex items-start min-w-[640px]">
               {content.TECH_ROUTE_STEPS.map((step, i) => {
                 const Icon = ICON_MAP[step.icon] || Database;
                 return (

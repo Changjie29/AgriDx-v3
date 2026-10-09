@@ -8,6 +8,8 @@ import '@sohumsuthar/liquid-glass/css/liquid-glass-core.css';
 import '@sohumsuthar/liquid-glass/css/liquid-glass-effects.css';
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
 const ChatPage = lazy(() => import('@/pages/ChatPage/ChatPage'));
+const KnowledgePage = lazy(() => import('@/pages/KnowledgePage/KnowledgePage'));
+const ModelPage = lazy(() => import('@/pages/ModelPage/ModelPage'));
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 
 export default function App() {
@@ -23,6 +25,8 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="chat" element={<ChatPage />} />
+        <Route path="knowledge" element={<KnowledgePage />} />
+        <Route path="models" element={<ModelPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

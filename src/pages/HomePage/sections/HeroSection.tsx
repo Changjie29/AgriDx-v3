@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Database, ShieldCheck, Box, Wheat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import TractorViewer from '@/components/TractorViewer';
@@ -17,7 +17,7 @@ export default function HeroSection() {
           <div className="hero-copy">
             <div className="hero-affiliation">
               <Wheat size={18} strokeWidth={1.5} />
-              <span>{t('南京农业大学 · 耕知·耘诊', 'Nanjing Agricultural University · Gengzhi · Yunzhen')}</span>
+              <span>{t('南京农业大学工学院 · 农机智能诊断', 'College of Engineering, NAU · Machinery diagnosis')}</span>
             </div>
             <h1 className="hero-title text-foreground">
               <span>{pick(h.title1, lang)}</span>
@@ -29,16 +29,17 @@ export default function HeroSection() {
               <Button size="lg" onClick={() => navigate('/chat')} className="hero-cta-primary gap-3">
                 {pick(h.ctaPrimary, lang)}<ArrowRight size={17} />
               </Button>
-              <button className="hero-text-link" onClick={() => document.getElementById('multimodal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+              <Link className="hero-text-link" to="/knowledge">
                 {pick(h.ctaSecondary, lang)}<ArrowRight size={16} />
-              </button>
+              </Link>
             </div>
+            <div className="hero-evidence-note"><span className="status-dot" />{t('以资料适用范围为边界 · 缺口明确标注', 'Source-aware guidance · visible knowledge gaps')}</div>
           </div>
           <figure className="hero-model-visual">
             <div className="hero-model-stage"><TractorViewer /></div>
             <figcaption className="hero-model-caption">
-              <span>{t('农业装备 · 交互式模型', 'Agricultural machinery · Interactive model')}</span>
-              <Box size={15} strokeWidth={1.5} />
+              <span>{t('农业装备 · 交互式结构示意', 'Agricultural machinery · Interactive structure')}</span>
+              <Link to="/models" className="inline-flex items-center gap-2 text-primary">{t('进入模型工坊', 'Model studio')}<ArrowRight size={15} /></Link>
             </figcaption>
           </figure>
         </div>

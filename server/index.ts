@@ -43,8 +43,11 @@ import { generateLocalKnowledgeReply } from './knowledge/fallbackDiagnosis';
 import { resolveDiagnosticContext } from './knowledge/conversation';
 import { getLlmRouter } from './llm/router';
 import { ProviderError, type ChatMessage } from './llm/types';
+import { getKnowledgeCatalog, loadKnowledgeCatalog } from './knowledge/catalog';
+import type { CatalogFilters } from '../shared/knowledge-catalog';
 
 loadKnowledgeBase();
+loadKnowledgeCatalog();
 const llm = getLlmRouter();
 
 const app = express();
@@ -93,6 +96,33 @@ app.get('/api/health', (_req: Request, res: Response) => {
     knowledge: kbStats(),
     llm: llm.getStatus(),
   });
+});
+
+// ---- 可追溯分层知识目录（只读） ----
+app.get('/api/knowledge/catalog', (req: Request, res: Response) => {
+  const filters: CatalogFilters = {};
+  for (const field of ['brand', 'model', 'component', 'part'] as const) {
+    const value = req.query[field];
+    if (value !== undefined && (typeof value !== 'string' || !value.trim() || value.length > 100)) {
+      res.status(400).json({ error: '目录筛选须为非空文本（各上限100字符）', code: 'bad_request' });
+      return;
+    }
+    if (typeof value === 'string') filters[field] = value.trim();
+  }
+  if ((filters.model && !filters.brand) || (filters.component && !filters.model) || (filters.part && !filters.component)) {
+    res.status(400).json({ error: '请依次选择品牌、完整型号、组件和零部件', code: 'bad_request' });
+    return;
+  }
+  try {
+    res.json(getKnowledgeCatalog(filters));
+  } catch (error) {
+    if (error instanceof RangeError) {
+      res.status(404).json({ error: error.message, code: 'knowledge_not_found' });
+      return;
+    }
+    console.error('[catalog] unexpected error:', error);
+    res.status(500).json({ error: '知识目录暂时无法读取，请稍后重试', code: 'catalog_unavailable' });
+  }
 });
 
 // ---- /api/chat ----
@@ -233,7 +263,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
 
 // ---- 3D 模型 ----
 app.get('/api/model/tractor', (_req: Request, res: Response) => {
-  const modelPath = path.resolve(process.cwd(), 'public/models/tractor.glb');
+  const modelPath = path.resolve(process.cwd(), 'public/models/tractor-detailed-v1.glb');
   res.sendFile(modelPath, (err) => {
     if (err) res.status(404).json({ error: '模型文件不存在' });
   });

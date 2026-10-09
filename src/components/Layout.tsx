@@ -8,15 +8,15 @@ import { useLang, setLang } from '@/hooks/useLang';
 
 const NAV_ZH = [
   { label: '首页', path: '/' },
-  { label: '多模态方案', hash: 'multimodal' },
-  { label: '智能体架构', hash: 'architecture' },
-  { label: '应用场景', hash: 'scenarios' },
+  { label: '农机知识', path: '/knowledge' },
+  { label: '模型工坊', path: '/models' },
+  { label: '研究依据', hash: 'research' },
 ];
 const NAV_EN = [
   { label: 'Home', path: '/' },
-  { label: 'Multimodal', hash: 'multimodal' },
-  { label: 'Architecture', hash: 'architecture' },
-  { label: 'Scenarios', hash: 'scenarios' },
+  { label: 'Knowledge', path: '/knowledge' },
+  { label: 'Model studio', path: '/models' },
+  { label: 'Research', hash: 'research' },
 ];
 
 export function Layout() {
@@ -32,6 +32,11 @@ export function Layout() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setMobileOpen(false);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
+  useEffect(() => {
     document.documentElement.classList.remove('theme-light', 'theme-dark');
     document.documentElement.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
     // 液态玻璃库使用 html.dark 切换暗色材质
@@ -40,7 +45,7 @@ export function Layout() {
   }, [theme]);
 
   const NAV_ITEMS = lang === 'zh' ? NAV_ZH : NAV_EN;
-  const chatLabel = lang === 'zh' ? '智能体对话' : 'Agent Chat';
+  const chatLabel = lang === 'zh' ? '诊断工作台' : 'Diagnosis';
 
   const handleHashNav = (hash: string) => {
     setMobileOpen(false);
@@ -67,17 +72,12 @@ export function Layout() {
           contentClassName="flex min-h-16 w-full items-center justify-between gap-2 px-3 md:px-5"
         >
           {/* Logo */}
-          <NavLink to="/" className="flex items-center gap-2">
-            <div className="glass-icon flex h-8 w-8 items-center justify-center text-primary transition-transform hover:scale-105">
-              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="2">
-                <circle cx="7" cy="16" r="3" />
-                <circle cx="17" cy="16" r="3" />
-                <path d="M4 16V10l8-4 8 4v6" />
-                <path d="M12 6v10" />
-              </svg>
-            </div>
-            <span className="font-serif text-lg font-bold text-foreground">耕知·耘诊</span>
-          </NavLink>
+          <div className="brand-lockup flex items-center gap-3">
+            <a href="https://coe.njau.edu.cn/xygk/yh.htm" target="_blank" rel="noreferrer" className="college-mark" aria-label={lang === 'zh' ? '南京农业大学工学院官方院徽' : 'Official College of Engineering emblem, NAU'}>
+              <img src="/images/njau-engineering-mark.jpg" alt={lang === 'zh' ? '南京农业大学工学院院徽' : 'College of Engineering, NAU emblem'} width="857" height="411" />
+            </a>
+            <NavLink to="/" className="brand-wordmark" aria-label={lang === 'zh' ? '耕知·耘诊首页' : 'Gengzhi · Yunzhen home'}><strong>耕知·耘诊</strong><span>{lang === 'zh' ? '农机诊断工作台' : 'Machinery diagnosis'}</span></NavLink>
+          </div>
 
           {/* 桌面端导航 */}
           <nav className="hidden items-center gap-6 lg:flex">

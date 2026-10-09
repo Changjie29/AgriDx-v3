@@ -6,55 +6,50 @@ export type Lang = 'zh' | 'en';
 const content = {
   HERO: {
     eyebrow: {
-      zh: '本地知识库 · LLM 推理 · 可解释诊断',
-      en: 'Local KB · LLM Reasoning · Explainable Diagnostics',
+      zh: '耕知为根，耘诊有据',
+      en: 'Know the machine. Ground the diagnosis.',
     },
-    title1: { zh: '农业机械', en: 'Agricultural' },
-    titleHighlight: { zh: '智能故障诊断', en: 'Machinery Diagnosis' },
-    title2: { zh: '与维修决策平台', en: 'and Repair Platform' },
+    title1: { zh: '读懂农机故障，', en: 'Understand the fault.' },
+    titleHighlight: { zh: '让每一步都有据。', en: 'Ground every step.' },
+    title2: { zh: '农机知识与故障诊断平台', en: 'Agricultural knowledge & diagnosis' },
     desc: {
-      zh: '耕知·耘诊由南京农业大学团队研发，融合本地维修知识与大语言模型，为农业机械提供结构化故障分析、排查流程与安全维修建议。',
-      en: 'Gengzhi · Yunzhen is developed by a Nanjing Agricultural University team. It combines local repair knowledge and language models to provide structured fault analysis, troubleshooting and safety guidance for agricultural machinery.',
+      zh: '农忙时的一次熄火、一声异响，都需要清楚的下一步。耕知·耘诊从品牌与机型出发，把分散的农机资料连成可追溯的排查路径，帮助你理解故障、核对依据、制定处置方案。',
+      en: 'A stalled engine or an unusual sound needs a clear next step. Gengzhi · Yunzhen connects machine-specific documents to traceable troubleshooting, helping you understand symptoms, check evidence and plan action.',
     },
     ctaPrimary: { zh: '开始诊断', en: 'Start Diagnosis' },
-    ctaSecondary: { zh: '了解系统能力', en: 'See Capabilities' },
-    stats: [
-      { value: 'Online', label: { zh: '服务在线', en: 'Service Online' } },
-      { value: 'RAG', label: { zh: '本地知识库检索', en: 'Local KB Retrieval' } },
-      { value: '3D', label: { zh: '可交互农机模型', en: 'Interactive 3D Model' } },
-    ],
+    ctaSecondary: { zh: '浏览农机知识', en: 'Explore machine knowledge' },
   },
   PAIN_POINTS: [
     {
       icon: 'AlertTriangle',
-      title: { zh: '经验诊断响应滞后', en: 'Slow Experience-based Response' },
+      title: { zh: '农忙窗口短，排查要有顺序', en: 'A short work window needs a clear sequence' },
       desc: {
-        zh: '传统农机故障依赖资深技术员经验判断，下乡响应慢，故障排查周期长，作业窗口期损失大。',
-        en: 'Traditional diagnosis relies on experienced technicians; slow off-field response and long troubleshooting cause major operational losses.',
+        zh: '启动困难、动力下降、提升无力，先看什么、何时停机？按现象与适用资料组织排查建议，让现场判断有清楚的起点。',
+        en: 'Hard starts, low power or weak lift: what comes first, and when should work stop? Symptoms and applicable evidence give troubleshooting a clear starting point.',
       },
     },
     {
       icon: 'Brain',
-      title: { zh: '只判断不解释', en: 'Labels Without Explanation' },
+      title: { zh: '故障不是标签，要看影响链', en: 'Follow the effect, beyond a fault label' },
       desc: {
-        zh: '传统诊断方法仅输出故障类别，缺乏机理分析与可解释性，维修人员难以理解与信任诊断结果。',
-        en: 'Traditional methods output only a fault label without mechanism analysis, making results hard to understand and trust.',
+        zh: '沿“零部件 → 组件 → 整机表现”整理故障原因与处置策略，逐步建立影响关系。资料没有说明的关联，清楚标记待核实。',
+        en: 'Organize symptoms and strategies along parts, components and whole-machine behavior. Relationships not supported by sources stay marked for verification.',
       },
     },
     {
       icon: 'ScanLine',
-      title: { zh: '维修资料分散', en: 'Scattered Repair Manuals' },
+      title: { zh: '资料很多，关键是适不适用', en: 'The right document for the right machine' },
       desc: {
-        zh: '维修手册散落在不同品牌、机型、PDF 与纸质资料中，现场查阅耗时，参数容易记错。',
-        en: 'Repair manuals are scattered across brands, models, PDFs and paper; on-site lookup is slow and parameters are easily misremembered.',
+        zh: '按品牌、型号、组件与零部件浏览资料，保留出处、定位与适用范围。系列资料和未确认机型分别提示，避免把相似机型当作同一机型。',
+        en: 'Browse by brand, model, component and part with sources and applicability. Series-wide and unconfirmed models remain visibly distinct.',
       },
     },
   ],
   CAPABILITY_STATS: [
-    { label: { zh: 'LLM 提供商', en: 'LLM Provider' }, value: 'Gemini / DeepSeek' },
-    { label: { zh: '知识库', en: 'Knowledge Base' }, value: 'Local Markdown' },
-    { label: { zh: '输出', en: 'Output' }, value: 'Structured MD' },
-    { label: { zh: '部署', en: 'Deploy' }, value: 'Local / Edge' },
+    { label: { zh: '知识组织', en: 'Knowledge structure' }, value: { zh: '品牌 → 型号 → 部件', en: 'Brand → model → part' } },
+    { label: { zh: '证据约束', en: 'Evidence boundary' }, value: { zh: '来源 · 定位 · 适用范围', en: 'Source · locator · scope' } },
+    { label: { zh: '诊断输出', en: 'Diagnostic guidance' }, value: { zh: '表现 · 排查 · 策略', en: 'Symptoms · checks · action' } },
+    { label: { zh: '推进目标', en: 'Next horizon' }, value: { zh: '从零部件到整机', en: 'Parts to whole machines' } },
   ],
   MULTIMODAL_SIGNALS: [
     {
@@ -123,19 +118,19 @@ const content = {
       index: '03',
       name: { zh: '推理层', en: 'Reasoning' },
       icon: 'Cpu',
-      desc: { zh: 'LLM Provider 按网络环境自动选择', en: 'Provider picked by network' },
+      desc: { zh: '依据已配置模型与资料组织建议', en: 'Configured models & evidence' },
       points: [
-        { zh: '有代理 → Gemini 优先', en: 'Proxy → Gemini first' },
-        { zh: '无代理 → DeepSeek 优先', en: 'No proxy → DeepSeek first' },
-        { zh: '失败自动回退', en: 'Auto fallback' },
-        { zh: '严格禁止编造参数', en: 'No fabricated params' },
+        { zh: '优先使用适用知识片段', en: 'Applicable knowledge first' },
+        { zh: '模型服务按配置选择', en: 'Provider selected by configuration' },
+        { zh: '服务不可用时返回本地资料', en: 'Local evidence if service unavailable' },
+        { zh: '资料不足与待核实项明示', en: 'Show gaps and uncertainty' },
       ],
     },
     {
       index: '04',
       name: { zh: '输出层', en: 'Output' },
       icon: 'ShieldCheck',
-      desc: { zh: '结构化诊断与安全建议', en: 'Structured diagnosis & safety' },
+      desc: { zh: '区分证据、建议与待核实项', en: 'Evidence, guidance & uncertainty' },
       points: [
         { zh: '现象/原因/排查/依据', en: 'Symptom/causes/steps/evidence' },
         { zh: '安全提醒', en: 'Safety warnings' },
@@ -165,18 +160,16 @@ const content = {
       icon: 'RefreshCcw',
       title: { zh: '数字孪生闭环（规划中）', en: 'Digital Twin Loop (Planned)' },
       desc: {
-        zh: '未来将建立关键部件数字孪生，把实时运行数据与诊断结论闭环校验。',
-        en: 'Future: digital twins of key parts for closed-loop verification.',
+        zh: '研究方向：建立关键部件数字孪生，探索运行数据与诊断结论的校验。当前没有实时数字孪生。',
+        en: 'Research direction: use key-component twins to compare operating data with diagnosis. No real-time digital twin is implemented.',
       },
     },
   ],
   TECH_ROUTE_STEPS: [
-    { icon: 'Database', title: { zh: '故障描述', en: 'Symptom Input' }, desc: { zh: '用户自然语言描述', en: 'Natural language' } },
-    { icon: 'Waves', title: { zh: '知识检索', en: 'KB Retrieval' }, desc: { zh: '本地知识库切块', en: 'Local KB chunks' } },
-    { icon: 'GitMerge', title: { zh: 'Prompt 组装', en: 'Prompt Build' }, desc: { zh: 'system + 历史 + RAG', en: 'system + history + RAG' } },
-    { icon: 'Bot', title: { zh: 'LLM 推理', en: 'LLM Reasoning' }, desc: { zh: 'Gemini / DeepSeek', en: 'Gemini / DeepSeek' } },
-    { icon: 'Cpu', title: { zh: '结构化输出', en: 'Structured' }, desc: { zh: 'Markdown 诊断报告', en: 'Markdown report' } },
-    { icon: 'FileText', title: { zh: '安全建议', en: 'Safety' }, desc: { zh: '维修注意事项', en: 'Repair warnings' } },
+    { icon: 'Database', title: { zh: '描述机况', en: 'Describe the machine' }, desc: { zh: '机型、表现与发生工况', en: 'Model, symptoms & conditions' } },
+    { icon: 'Waves', title: { zh: '核对资料', en: 'Check applicable evidence' }, desc: { zh: '适用范围与原始依据', en: 'Scope & source documents' } },
+    { icon: 'Bot', title: { zh: '分步排查', en: 'Troubleshoot step by step' }, desc: { zh: '原因线索与安全处置', en: 'Causes & safe action' } },
+    { icon: 'FileText', title: { zh: '复核效果', en: 'Review the outcome' }, desc: { zh: '现场验证与人工判断', en: 'On-site checks & judgment' } },
   ],
   SCENARIOS: [
     {
@@ -231,18 +224,15 @@ const content = {
   CLOSING_CTA: {
     title: { zh: '现在就体验智能故障诊断', en: 'Try Intelligent Fault Diagnosis Now' },
     desc: {
-      zh: '描述故障现象，本地知识库 + LLM 会给出结构化的原因分析、排查步骤与安全建议。',
-      en: 'Describe the symptom and the local KB + LLM will give structured causes, steps and safety advice.',
+      zh: '先告诉我们品牌、机型和发生工况。把故障现象与资料依据连起来，从清楚的排查起点开始。',
+      en: 'Start with your brand, model and operating conditions. Connect symptoms to applicable evidence and take a clear first step.',
     },
     buttonText: { zh: '开始诊断', en: 'Start Diagnosis' },
   },
   FOOTER_REFERENCES: [
     { name: { zh: '南京农业大学农机智能诊断团队', en: 'NAU Agricultural Machinery Diagnosis Team' }, href: '#' },
-    { name: { zh: '太仓市「农小修」农机服务平台', en: 'Taicang NongXiaoxiu Platform' }, href: '#' },
-    { name: { zh: '本地知识库 Markdown', en: 'Local Knowledge Base' }, href: '#' },
-    { name: { zh: 'Gemini API', en: 'Gemini API' }, href: '#' },
-    { name: { zh: 'DeepSeek API', en: 'DeepSeek API' }, href: '#' },
-    { name: { zh: 'Three.js / React Three Fiber', en: 'Three.js / R3F' }, href: '#' },
+    { name: { zh: '农机资料与适用范围', en: 'Machine documents & applicability' }, href: '/#/knowledge' },
+    { name: { zh: '项目迭代与验证记录', en: 'Project changes & validation' }, href: 'https://github.com/Changjie29/AgriDx-v2/blob/main/CHANGELOG.md' },
   ],
   CHAT_QUICK_QUESTIONS: [
     { zh: '拖拉机发动机水温过高怎么办？', en: 'Tractor engine overheating, what to do?' },
@@ -251,7 +241,7 @@ const content = {
     { zh: '联合收割机脱粒滚筒堵塞如何处理？', en: 'How to clear a combine drum blockage?' },
   ],
   CHAT_WELCOME: {
-    title: { zh: '耕知·耘诊 · 农业机械智能诊断平台', en: 'Gengzhi · Yunzhen · Agricultural Machinery Diagnosis' },
+    title: { zh: '耕知·耘诊 · 农机诊断工作台', en: 'Gengzhi · Yunzhen · Machinery Diagnosis Workspace' },
     desc: {
       zh: '您好！我是面向农机装备的故障诊断智能体。请描述故障现象（可附农机类型/品牌/型号），我会基于本地知识库给出结构化诊断与维修建议。',
       en: 'Hello! Describe the symptom (optionally with type/brand/model); I will use the local knowledge base to give structured diagnosis and repair advice.',

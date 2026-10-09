@@ -1,0 +1,121 @@
+import assert from 'node:assert/strict';
+import http from 'node:http';
+import { after, before, test } from 'node:test';
+import type { KnowledgeCatalog } from '../shared/knowledge-catalog';
+import { loadArchive } from '../server/knowledge/archive';
+import { getKnowledgeCatalog, loadKnowledgeCatalog } from '../server/knowledge/catalog';
+
+process.env.NODE_ENV = 'test';
+process.env.GEMINI_API_KEY = '';
+process.env.DEEPSEEK_API_KEY = '';
+process.env.LLM_PROVIDER = 'auto';
+
+const archive = loadArchive().chunks;
+const catalog = loadKnowledgeCatalog();
+const { default: app } = await import('../server/index');
+let server: http.Server;
+let port: number;
+
+before(async () => {
+  await new Promise<void>((resolve) => { server = app.listen(0, '127.0.0.1', resolve); });
+  const address = server.address();
+  assert.ok(address && typeof address !== 'string');
+  port = address.port;
+});
+after(async () => {
+  if (server) await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
+});
+
+test('catalogue counts only archived entries and exposes the expansion target as planned', () => {
+  assert.equal(catalog.totals.entries, archive.length);
+  assert.equal(catalog.totals.mappedEntries, archive.length);
+  assert.equal(catalog.totals.sources, new Set(archive.map((chunk) => chunk.sourceId)).size);
+  assert.equal(catalog.totals.faultEntries, archive.filter((chunk) => chunk.entryType === '维护/故障知识').length);
+  assert.equal(catalog.expansion.status, 'planned');
+  assert.equal(catalog.expansion.targetLabel, '1w+');
+  assert.equal(catalog.expansion.countingUnit, 'pending');
+  assert.equal(catalog.selected, undefined);
+  assert.ok(catalog.limitations.some((line) => line.includes('尚未实现')));
+  assert.ok(catalog.limitations.some((line) => line.includes('分层计数不可相加')));
+  assert.ok(Buffer.byteLength(JSON.stringify(catalog)) < 300_000, 'directory does not duplicate the fact bodies');
+});
+
+test('part browsing returns original evidence paragraphs and their applicability limits', () => {
+  const selected = getKnowledgeCatalog({ brand: '东方红', model: 'LF804S', component: 'electrical', part: 'starter' }).selected!;
+  assert.deepEqual(selected.entries.map((entry) => entry.entryId), ['KB-YTO-LF-MANUAL-007', 'KB-YTO-LF-MANUAL-008']);
+  for (const entry of selected.entries) {
+    const chunk = archive.find((item) => item.entryId === entry.entryId)!;
+    assert.equal(entry.content, chunk.text);
+    assert.equal(entry.sourceId, chunk.sourceId);
+    assert.equal(entry.sourceUrl, chunk.sourceUrl);
+    assert.equal(entry.locator, chunk.locator);
+    assert.equal(entry.version, chunk.version);
+    assert.equal(entry.scopeBoundary, chunk.scopeBoundary);
+    assert.match(entry.locator, /PDF.*66/);
+    assert.match(entry.scopeBoundary, /LF804S/);
+  }
+});
+
+test('catalogue preserves exact CAB subsets and never exposes their entries to SU configurations', () => {
+  const cab = getKnowledgeCatalog({ brand: '久保田', model: 'LX2620HSDC', component: 'cab' }).selected!;
+  assert.ok(cab.entries.some((entry) => entry.entryId === 'KB-LX2620-014' && entry.configuration === 'CAB'));
+  const su = getKnowledgeCatalog({ brand: '久保田', model: 'LX2620SUHSD', component: 'cab' }).selected!;
+  assert.equal(su.entries.length, 0);
+  assert.ok(su.gaps.some((line) => line.includes('没有归档条目')));
+  assert.throws(() => getKnowledgeCatalog({ brand: '久保田', model: 'LX2620HSDCX' }), RangeError);
+  assert.throws(() => getKnowledgeCatalog({ brand: '东方红', model: 'LF1504(G4)' }), RangeError);
+});
+
+test('series ranges, missing manuals and navigation systems remain distinct from whole-machine coverage', () => {
+  const series = catalog.brands.find((brand) => brand.name === '雷沃')!.models.find((model) => model.name === '欧豹TG系列')!;
+  assert.equal(series.scope, 'series');
+  const unknown = catalog.brands.find((brand) => brand.name === '东风')!.models[0];
+  assert.equal(unknown.scope, 'pending');
+  const t70 = getKnowledgeCatalog({ brand: '鸿鹄', model: 'T70' }).selected!;
+  assert.equal(t70.entries.filter((entry) => entry.entryType === '维护/故障知识').length, 0);
+  assert.ok(t70.gaps.some((line) => line.includes('不提供对应维修事实')));
+  const navigation = catalog.brands.find((brand) => brand.name === '华测')!.models.find((model) => model.name === 'NX510')!;
+  assert.equal(navigation.machineType, '配套导航系统');
+  assert.ok(navigation.components.every((component) => ['navigation', 'documents'].includes(component.id)));
+  assert.throws(() => getKnowledgeCatalog({ brand: '鸿鹄', model: 'NX510' }), RangeError);
+});
+
+test('every advertised part has matching evidence and counts are independently deduplicated', () => {
+  for (const brand of catalog.brands) {
+    for (const model of brand.models) {
+      const modelEntries = getKnowledgeCatalog({ brand: brand.name, model: model.name }).selected!.entries;
+      assert.equal(model.entryCount, modelEntries.length);
+      assert.equal(model.sourceCount, new Set(modelEntries.map((entry) => entry.sourceId)).size);
+      for (const component of model.components) {
+        for (const part of component.parts) {
+          const partEntries = getKnowledgeCatalog({ brand: brand.name, model: model.name, component: component.id, part: part.id }).selected!.entries;
+          assert.equal(part.entryCount, partEntries.length);
+          assert.equal(part.faultCount, partEntries.filter((entry) => entry.entryType === '维护/故障知识').length);
+          assert.ok(partEntries.length > 0);
+        }
+      }
+    }
+  }
+});
+
+test('read-only catalogue HTTP API rejects malformed hierarchy filters and unknown parts', async () => {
+  for (const query of ['model=LF804S', 'component=electrical', 'part=starter', 'brand=a&brand=b', 'brand=']) {
+    const response = await fetch(`http://127.0.0.1:${port}/api/knowledge/catalog?${query}`);
+    assert.equal(response.status, 400, query);
+    assert.equal((await response.json() as { code: string }).code, 'bad_request');
+  }
+  const query = new URLSearchParams({ brand: '东方红', model: 'LF804S', component: 'electrical', part: 'unknown-part' });
+  const response = await fetch(`http://127.0.0.1:${port}/api/knowledge/catalog?${query}`);
+  assert.equal(response.status, 404);
+  assert.equal((await response.json() as { code: string }).code, 'knowledge_not_found');
+});
+
+test('catalogue HTTP selection serves source-backed content without asking an external model', async () => {
+  const query = new URLSearchParams({ brand: '纽荷兰', model: 'WORKMASTER25', component: 'cooling', part: 'radiator' });
+  const response = await fetch(`http://127.0.0.1:${port}/api/knowledge/catalog?${query}`);
+  assert.equal(response.status, 200);
+  const result = await response.json() as KnowledgeCatalog;
+  assert.equal(result.selected!.entries[0].entryId, 'NH-WM25-006');
+  assert.match(result.selected!.entries[0].content, /立即停止发动机/);
+  assert.equal(result.selected!.entries[0].sourceId, 'SRC-NH-WM25-92157408');
+});

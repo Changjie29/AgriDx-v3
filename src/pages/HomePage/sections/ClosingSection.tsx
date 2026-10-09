@@ -60,14 +60,14 @@ export default function ClosingSection() {
               </div>
               <p className="mt-3 max-w-sm text-sm text-muted-foreground">
                 {t(
-                  '面向农机装备的多模态故障诊断智能体，融合感知信号、大语言模型与结构仿真，为农业生产提供专业、可靠、可解释的故障诊断服务。',
-                  'A multimodal fault-diagnosis agent for agricultural machinery, fusing sensing, LLMs and structural simulation for professional, reliable and explainable diagnostics.',
+                  '耕知沉淀农机知识，耘诊连接故障与依据。从机型、组件到零部件，让诊断路径更清楚，让资料边界看得见。',
+                  'Gengzhi organizes machinery knowledge; Yunzhen connects symptoms to evidence. From models and components to parts, make troubleshooting clearer and knowledge boundaries visible.',
                 )}
               </p>
             </div>
 
             <div>
-              <h4 className="mb-3 font-serif text-sm font-semibold text-foreground">{t('参考来源', 'References')}</h4>
+              <h4 className="mb-3 font-serif text-sm font-semibold text-foreground">{t('项目与资料', 'Project & documents')}</h4>
               <ul className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 {content.FOOTER_REFERENCES.map((ref) => (
                   <li key={pick(ref.name, lang)}>
@@ -90,7 +90,7 @@ export default function ClosingSection() {
 
           <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-border/50 pt-6 text-xs text-muted-foreground/70 md:flex-row">
             <div>{t('© 2026 耕知·耘诊 · 农业机械智能诊断平台', '© 2026 Gengzhi · Yunzhen · Agricultural Machinery Diagnosis')} · v{version}</div>
-            <div>{t('所有数据仅供演示参考 · 实际诊断请结合专业技术人员判断', 'Data for demo only · consult qualified technicians for real diagnosis')}</div>
+            <div>{t('资料覆盖持续完善 · 现场处置请结合专业人员复核', 'Coverage is growing · review on-site actions with a qualified technician')}</div>
           </div>
         </div>
       </footer>

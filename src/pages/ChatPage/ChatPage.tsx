@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 import { LiquidGlass } from '@sohumsuthar/liquid-glass';
+import { Link, useLocation } from 'react-router-dom';
 import content, { pick } from '@/data/content';
 import { useLang } from '@/hooks/useLang';
 
@@ -107,6 +108,8 @@ function loadMeta(): { machineType: string; brand: string; model: string } {
 }
 
 export default function ChatPage() {
+  const location = useLocation();
+  const handoff = location.state as { machineType?: unknown; brand?: unknown; model?: unknown; question?: unknown } | null;
   const lang = useLang();
   const t = useCallback((zh: string, en: string) => (lang === 'zh' ? zh : en), [lang]);
   const providerLabel = (provider?: ChatProvider) =>
@@ -120,15 +123,15 @@ export default function ChatPage() {
     reason === 'not_configured' ? t('LLM 未配置，仅使用本地资料', 'LLM not configured; using local evidence') :
     reason === 'provider_unavailable' ? t('模型服务暂不可用，已使用本地资料', 'Model service unavailable; using local evidence') : '';
   const [messages, setMessages] = useState<ChatMessage[]>(loadHistory);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(() => typeof handoff?.question === 'string' ? handoff.question.slice(0, 2000) : '');
   const [isLoading, setIsLoading] = useState(false);
   const [currentModel, setCurrentModel] = useState<string>('');
   const [currentProvider, setCurrentProvider] = useState<ChatProvider | ''>('');
   const [currentFallbackReason, setCurrentFallbackReason] = useState<FallbackReason | undefined>();
   const [llmHealth, setLlmHealth] = useState<LlmHealth | 'checking' | 'unknown'>('checking');
-  const [machineType, setMachineType] = useState<string>(() => loadMeta().machineType);
-  const [brand, setBrand] = useState<string>(() => loadMeta().brand);
-  const [model, setModel] = useState<string>(() => loadMeta().model);
+  const [machineType, setMachineType] = useState<string>(() => typeof handoff?.machineType === 'string' ? (MACHINE_TYPES_ZH.includes(handoff.machineType) ? handoff.machineType : '') : loadMeta().machineType);
+  const [brand, setBrand] = useState<string>(() => typeof handoff?.brand === 'string' ? handoff.brand.slice(0, 100) : loadMeta().brand);
+  const [model, setModel] = useState<string>(() => typeof handoff?.model === 'string' ? handoff.model.slice(0, 100) : loadMeta().model);
   const requestRef = useRef<AbortController | null>(null);
   useEffect(() => () => {
     requestRef.current?.abort();
@@ -375,7 +378,7 @@ export default function ChatPage() {
             <Bot className="h-4 w-4" />
           </div>
           <div className="min-w-0">
-            <div className="truncate text-sm font-semibold text-foreground">耕知·耘诊 · {t('故障诊断', 'Diagnosis')}</div>
+            <div className="truncate text-sm font-semibold text-foreground">耕知·耘诊 · {t('诊断工作台', 'Diagnosis workspace')}</div>
             <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground" role="status">
               <span title={configurationHint}>{serviceStatus}</span>
               {currentProvider && (
@@ -418,24 +421,16 @@ export default function ChatPage() {
       {/* 消息列表 */}
       <div className="min-h-0 flex-1 overflow-y-auto" role="log" aria-label={t('诊断对话', 'Diagnosis conversation')} aria-live="polite">
         <div className="mx-auto max-w-3xl px-4 py-6 md:px-6">
-          {/* 空状态 / 欢迎态 */}
-          {isEmpty && (
-            <div className="flex flex-col items-center py-8 text-center">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Sparkles className="h-7 w-7" />
-              </div>
-              <h2 className="font-serif text-xl font-bold text-foreground">{pick(content.CHAT_WELCOME.title, lang)}</h2>
-              <p className="mt-2 max-w-md text-sm text-muted-foreground">{pick(content.CHAT_WELCOME.desc, lang)}</p>
-
               {/* 农机信息选择（可选） */}
-              <div className="mt-6 w-full max-w-xl rounded-xl border border-border/60 bg-card p-4 text-left">
-                <div className="mb-2 text-xs font-medium text-wheat">{t('农机信息（可选，帮助检索）', 'Machine info (optional, improves retrieval)')}</div>
+              <div className="mb-6 w-full rounded-xl border border-border/60 bg-card p-4 text-left">
+                <div className="mb-3 flex items-center justify-between gap-3 text-xs font-medium text-primary"><span>{t('诊断上下文 · 请核对现场铭牌', 'Machine context · check the machine plate')}</span><Link to="/knowledge" className="underline underline-offset-4">{t('浏览适用资料', 'Browse evidence')}</Link></div>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                   <select
                     aria-label={t('农机类型', 'Machine type')}
                     value={machineType}
                     onChange={(e) => setMachineType(e.target.value)}
-                    className="h-9 rounded-md border border-border bg-background px-2 text-sm text-foreground"
+                    disabled={isLoading}
+                    className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground disabled:opacity-60"
                   >
                     <option value="">{t('类型', 'Type')}</option>
                     {typeOptions.map((v, index) => (
@@ -448,7 +443,8 @@ export default function ChatPage() {
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
                     placeholder={t('品牌（选填）', 'Brand (optional)')}
-                    className="h-9 rounded-md border border-border bg-background px-2 text-sm text-foreground"
+                    disabled={isLoading}
+                    className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground disabled:opacity-60"
                   />
                   <input
                     aria-label={t('型号', 'Model')}
@@ -456,10 +452,23 @@ export default function ChatPage() {
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
                     placeholder={t('型号（选填）', 'Model (optional)')}
-                    className="h-9 rounded-md border border-border bg-background px-2 text-sm text-foreground"
+                    disabled={isLoading}
+                    className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground disabled:opacity-60"
                   />
                 </div>
+
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{t('完整型号与配置帮助限定资料范围；系列资料不能直接代替具体机型。带入的问题仅预填，由你确认后发送。', 'The complete model and configuration define applicability. Series documents do not replace specific-model evidence. Imported questions are drafts for you to review and send.')}</p>
               </div>
+
+          {/* 空状态 / 欢迎态 */}
+          {isEmpty && (
+            <div className="flex flex-col items-center py-8 text-center">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Sparkles className="h-7 w-7" />
+              </div>
+              <h2 className="font-serif text-xl font-bold text-foreground">{pick(content.CHAT_WELCOME.title, lang)}</h2>
+              <p className="mt-2 max-w-md text-sm text-muted-foreground">{pick(content.CHAT_WELCOME.desc, lang)}</p>
+
 
               {/* 快捷提问按钮 */}
               <div className="mt-6 w-full">
