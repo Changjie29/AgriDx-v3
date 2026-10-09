@@ -39,7 +39,7 @@ if (proxyUrl) {
 // ---- 知识库 & LLM ----
 import { loadKnowledgeBase, stats as kbStats } from './knowledge/retriever';
 import { buildSystemPrompt } from './knowledge/systemPrompt';
-import { generateLocalKnowledgeReply } from './knowledge/fallbackDiagnosis';
+import { generateLocalKnowledgeReply, localReplySummary } from './knowledge/fallbackDiagnosis';
 import { resolveDiagnosticContext } from './knowledge/conversation';
 import { getLlmRouter } from './llm/router';
 import { ProviderError, type ChatMessage } from './llm/types';
@@ -189,7 +189,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     res.status(400).json({ error: '请提供非空的当前用户问题', code: 'bad_request' });
     return;
   }
-  const { query, scope, currentQuery, clarificationNeeded } = resolveDiagnosticContext(history, { machineType, brand, model });
+  const { query, scope, currentQuery, symptomQuery, clarificationNeeded } = resolveDiagnosticContext(history, { machineType, brand, model });
 
   // 构造 system prompt（含 RAG）
   const { message: systemMsg, retrieved, answerMode } = buildSystemPrompt({
@@ -224,6 +224,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
         knowledgeSources,
         answerMode: 'local-evidence',
         fallbackReason: 'not_configured',
+        localSummary: localReplySummary(symptomQuery, retrieved, scope, 'not_configured', clarificationNeeded),
       });
       return;
     }
@@ -253,6 +254,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
         knowledgeSources,
         answerMode: 'local-evidence',
         fallbackReason: 'provider_unavailable',
+        localSummary: localReplySummary(symptomQuery, retrieved, scope, 'provider_unavailable', clarificationNeeded),
       });
       return;
     }

@@ -39,6 +39,7 @@ interface ChatMessage {
   answerMode?: AnswerMode;
   fallbackReason?: FallbackReason;
   knowledgeChunks?: number;
+  localSummary?: string;
 }
 
 function isChatProvider(value: unknown): value is ChatProvider {
@@ -80,6 +81,7 @@ function loadHistory(): ChatMessage[] {
           typeof m.content === 'string' && (m.role === 'user' || m.role === 'assistant')
         ).slice(-100).map((m) => ({
           id: m.id, role: m.role, content: m.content,
+          localSummary: typeof m.localSummary === 'string' && m.localSummary.length <= 4000 ? m.localSummary : undefined,
           model: typeof m.model === 'string' ? m.model : undefined,
           provider: isChatProvider(m.provider) ? m.provider : undefined,
           answerMode: isAnswerMode(m.answerMode) ? m.answerMode : undefined,
@@ -236,11 +238,13 @@ export default function ChatPage() {
         let answerMode: AnswerMode | undefined;
         let fallbackReason: FallbackReason | undefined;
         let knowledgeChunks: number | undefined;
+        let localSummary: string | undefined;
         if (response.ok) {
           const data = await response.json();
           const result = data?.choices?.[0]?.message?.content;
           if (typeof result !== 'string' || !result.trim()) throw new Error('Empty response');
           reply = result;
+          localSummary = data.provider === 'knowledge-base' && typeof data.localSummary === 'string' && data.localSummary.length <= 4000 ? data.localSummary : undefined;
           modelName = typeof data?.model === 'string' ? data.model : '';
           provider = isChatProvider(data?.provider) ? data.provider : '';
           answerMode = isAnswerMode(data?.answerMode) ? data.answerMode : undefined;
@@ -264,6 +268,7 @@ export default function ChatPage() {
                   ...m,
                   role: reply && response.ok ? ('assistant' as const) : ('error' as const),
                   content: reply,
+                  localSummary,
                   model: modelName || undefined,
                   provider: provider || undefined,
                   answerMode,
@@ -520,7 +525,13 @@ export default function ChatPage() {
                   <div className="whitespace-pre-wrap">{msg.content}</div>
                 ) : (
                   <div className="prose prose-sm max-w-none overflow-x-auto dark:prose-invert">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.localSummary || msg.content}</ReactMarkdown>
+                    {msg.localSummary && (
+                      <details className="mt-3 rounded-lg border border-border/50 p-3">
+                        <summary className="cursor-pointer text-sm">{t('查看完整资料与适用限制', 'View full evidence and applicability')}</summary>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                      </details>
+                    )}
                     {msg.role === 'assistant' && (msg.model || msg.provider || msg.answerMode || msg.fallbackReason || msg.knowledgeChunks !== undefined) && (
                       <div className="mt-2 border-t border-border/40 pt-2 text-[11px] leading-relaxed text-muted-foreground">
                         <div className="flex flex-wrap gap-x-2 gap-y-1">

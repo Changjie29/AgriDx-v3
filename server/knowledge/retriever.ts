@@ -141,7 +141,7 @@ const SYMPTOM_ALIASES = [
   ['打不着', '打不着火', '不着车', '不能着车', '打不着车', '无法启动', '无法起动', '不能启动', '不能起动', '启动不了', '起动不了', '启动困难', '起动困难', '不着火'],
   ['启动马达', '起动马达', '启动电机', '起动机'],
   ['开锅', '水温过高', '水温高', '发动机过热'],
-  ['动力不足', '没劲', '没力气', '无力', '加速无力', '牵引无力'],
+  ['动力不足', '没劲', '没力气', '加速无力', '牵引无力'],
   ['升不起来', '升不起', '提不起来', '提升无力', '提升不起', '提升失效', '举不起来'],
   ['掉下来', '自己下降', '农具沉降', '自行下降'],
   ['异响', '响声', '噪声', '噪音', '异常声音'],
@@ -184,6 +184,10 @@ function scoreChunk(chunk: KnowledgeChunk, queryTokens: Map<string, number>, gro
   // A shared component name or an incidental bigram does not establish that
   // a clearly stated symptom is covered (打不着 must not match 打不开).
   if (groups.length && !groups.some((group) => group.some((term) => haystack.includes(term)))) return 0;
+  // Engine power loss after warming up is not starter torque or implement lift weakness.
+  const powerLoss = groups.some(group => group.includes('动力不足'));
+  const startingSymptom = groups.some(group => group.includes('启动') || group.includes('起动机') || group.includes('打不着'));
+  if (powerLoss && !startingSymptom && /启动机|起动机|启动电机|起动电机|启动马达|起动马达/.test(heading)) return 0;
   let score = 0;
   for (const [t, weight] of queryTokens) {
     if (haystack.includes(t)) {

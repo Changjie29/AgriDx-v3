@@ -15,6 +15,7 @@ let port: number;
 
 interface ChatResponse {
   code?: string;
+  localSummary?: string;
   provider?: string;
   model?: string;
   fellBack?: boolean;
@@ -125,6 +126,7 @@ test('the chat API returns archived facts with source IDs, page references and a
   const response = await chat({ messages, ...identity });
   assert.equal(response.status, 200);
   assert.equal(response.body.provider, 'knowledge-base');
+  assert.ok(response.body.localSummary && response.body.localSummary.length < 1000);
   assert.ok(response.body.knowledgeChunks && response.body.knowledgeChunks > 0);
   const reply = response.body.choices?.[0]?.message.content;
   assert.ok(reply);

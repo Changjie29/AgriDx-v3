@@ -8,6 +8,7 @@ export interface DiagnosticHistoryMessage {
 export interface DiagnosticContext {
   /** Latest user text, for the answer to address the current turn. */
   currentQuery: string;
+  symptomQuery: string;
   /** Symptom plus user-declared identity and current applicability constraints. */
   query: string;
   scope: RetrievalContext;
@@ -212,6 +213,7 @@ export function resolveDiagnosticContext(
   const currentQuery = users.at(-1)?.content.trim() ?? '';
   return {
     currentQuery,
+    symptomQuery: symptoms.join(' ').replace(/请区分本地资料依据和模型补充分析[。.]?/g, '').trim(),
     query: [
       scope.brand, scope.model, scope.machineType,
       declaredScope.brand, declaredScope.model, declaredScope.machineType,

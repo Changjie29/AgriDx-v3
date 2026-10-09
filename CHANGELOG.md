@@ -2,6 +2,14 @@
 
 每次更新按改动幅度递进，并与`package.json`和README同步。用户最新要求本阶段低于`2.5.0`、保持`2.4.x`，本轮新增功能按指定上限沿用补丁递进；一般小修增加补丁号，新增功能或显著扩充增加次版本。日期采用上海时区；GitHub保存与网站部署分别记录。
 
+## 2.4.5 — 2026-10-09
+
+- 在AgriDx-v3修复热车动力不足误检起动机无力，补充品牌后保留症状摘要。
+- 本地回复默认简短，完整证据和适用限制折叠保留；模型提示词增加精简和故障阶段边界。没有配置模型时不声称模型已参与。
+- 版本、README和锁文件同步；保留已有院徽及其他团队改动。
+- 对应实现提交主题：`fix(diagnosis): improve symptom relevance and concise evidence replies`。本地94项测试通过（取消代理后以node --import tsx --test运行），前后端构建通过，lint无错误，保留既有Fast Refresh及Three.js体积提示。未进行真实模型或浏览器视觉验收。
+- 当前账号读取已有Sites项目返回project_not_found，未部署；GitHub保存不代表网站已更新。[配置与验收](docs/iterations/2026-10-09-v3-diagnosis-coordination.md)。
+
 ## 2.4.4 — 2026-10-09
 
 修正左上角工学院院徽的跳转目标和主题对应，从2.4.3递进补丁号，保持2.4.x。
