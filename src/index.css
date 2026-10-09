@@ -27,7 +27,8 @@
 .brand-wordmark strong { font-size: 18px; font-weight: 650; letter-spacing: -.04em; }
 .brand-wordmark > span { font-size: 10px; letter-spacing: .1em; color: var(--muted-foreground); }
 .college-mark { display: block; width: 45px; height: 45px; overflow: hidden; flex: none; border-radius: 50%; background: #fff; }
-.college-mark img { height: 100%; width: auto; max-width: none; }
+.college-mark img { height: 100%; width: 100%; object-fit: cover; object-position: left; }
+.college-mark-dark img { object-position: right; }
 .glass-home .hero-title { font-size: clamp(2.25rem, 4.1vw, 3.3rem); line-height: 1.22; }
 .hero-evidence-note { display: flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 11px; color: var(--muted-foreground); }
 .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }

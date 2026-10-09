@@ -73,7 +73,7 @@ export function Layout() {
         >
           {/* Logo */}
           <div className="brand-lockup flex items-center gap-3">
-            <a href="https://coe.njau.edu.cn/xygk/yh.htm" target="_blank" rel="noreferrer" className="college-mark" aria-label={lang === 'zh' ? '南京农业大学工学院官方院徽' : 'Official College of Engineering emblem, NAU'}>
+            <a href="https://coe.njau.edu.cn/" target="_blank" rel="noopener noreferrer" className={cn('college-mark', theme === 'dark' && 'college-mark-dark')} aria-label={lang === 'zh' ? '南京农业大学工学院官网首页' : 'College of Engineering, NAU official homepage'}>
               <img src="/images/njau-engineering-mark.jpg" alt={lang === 'zh' ? '南京农业大学工学院院徽' : 'College of Engineering, NAU emblem'} width="857" height="411" />
             </a>
             <NavLink to="/" className="brand-wordmark" aria-label={lang === 'zh' ? '耕知·耘诊首页' : 'Gengzhi · Yunzhen home'}><strong>耕知·耘诊</strong><span>{lang === 'zh' ? '农机诊断工作台' : 'Machinery diagnosis'}</span></NavLink>
