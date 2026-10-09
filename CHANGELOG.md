@@ -12,7 +12,7 @@
 - 新模型工坊支持本地四视角照片整理、JSON清单导出与资源内嵌GLB导入，连接官方混元/Blender流程说明。照片重建服务未接入，magic工具待确认。
 - 用户完成Figma登录后，同一2.4.3迭代继续建立[可编辑界面初稿](https://www.figma.com/design/ewGYhGwx5rdfu5ubKbKpZS)：首页、农机知识、模型工坊三个桌面页面及375px知识页，保留学院标识、组件资料缺口和来源边界；建立本地导航、部分覆盖卡、视角按钮及设计变量。Starter MCP额度限制阻止后续编辑与截图，手机稿末尾覆盖卡文字和排布尚需修正，初稿待最终布局验收，详情见[Figma交接记录](docs/design/2026-10-09-figma-handoff.md)。未接入Code Connect或自动双向同步，未改变网页运行代码或执行部署。
 - 本地验证：90项测试全部通过，前后端构建、索引0错误、lint无错误；已有Fast Refresh及Three.js块体积警告保留。17项本地生产HTTP检查、桌面与375px知识/模型/双语暗色浏览器验证、诊断预填、GLB导入与照片清单下载通过。真实外部LLM、实车效果与照片重建未验收。
-- [逐项改动、截图与边界](docs/iterations/2026-10-09-nine-priorities.md)随本轮提交保存；对应实现提交[51e881e](https://github.com/Changjie29/AgriDx-v2/commit/51e881e96812c756e06565eae4049698a5e7e8b6)；引用随同一2.4.3范围的日志提交维护。未执行网站部署，GitHub推送不表示线上已更新。
+- [逐项改动、截图与边界](docs/iterations/2026-10-09-nine-priorities.md)随本轮提交保存；对应实现提交[51e881e](https://github.com/Changjie29/AgriDx-v2/commit/51e881e96812c756e06565eae4049698a5e7e8b6)，Figma初稿交接与截图记录见[dc8eb23](https://github.com/Changjie29/AgriDx-v2/commit/dc8eb23aa19d23defdda1d8cd1a28e22365a55cb)；引用随同一2.4.3范围的日志提交维护。未执行网站部署，GitHub推送不表示线上已更新。
 
 ## 2.4.2 — 2026-10-09
 
