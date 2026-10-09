@@ -1,0 +1,725 @@
+{
+  "date_shanghai": "2026-10-08",
+  "repository_version": "2.4.1",
+  "baseline_commit": "a615f95575a46966e3aef90d79f6285b3957aa39",
+  "scope": "用户授权恢复核验式整理与扩充；附带修正实际不可用的Gemini默认模型",
+  "changes": {
+    "new_sources": 1,
+    "new_entries": 13,
+    "new_retained_pdf_files": 0,
+    "new_link_record_pdf_sources": 1,
+    "new_entry_types": {
+      "安全操作": 10,
+      "操作/维护知识": 2,
+      "资料核验": 1
+    },
+    "previous_199_entry_objects_unchanged": true,
+    "full_manual_review": false
+  },
+  "index_validation": {
+    "summary": {
+      "sources": 26,
+      "entries": 212,
+      "knowledge_documents": 19,
+      "retained_pdf_files": 15,
+      "link_only_pdf_sources": 7,
+      "entry_types": {
+        "安全操作": 53,
+        "操作/维护知识": 58,
+        "维护/故障知识": 63,
+        "机型资料": 5,
+        "资料缺口": 3,
+        "资料索引": 13,
+        "系统适用边界": 2,
+        "资料核验": 9,
+        "系统安装/调试": 6
+      },
+      "errors": 0
+    },
+    "errors": [],
+    "new_external_pdf": {
+      "source_id": "SRC-JD-6M-OMAL232272-03AUG2026",
+      "path": "知识库/原始农机说明书/约翰迪尔/6M_OMAL232272/来源记录.md",
+      "sha256_matches": true,
+      "bytes_matches": true,
+      "actual_bytes": 2183,
+      "referenced_pdf_pages": 292,
+      "manual_sha256": "ce79c6663f1d625ec090f8760d213ec4c573a1c7ce587dae875d0ea0e49ba6e0",
+      "external_pdf_verified": true
+    },
+    "previous_six_external_pdfs_redownloaded": false
+  },
+  "checks": {
+    "tests": {
+      "passed": 83,
+      "failed": 0,
+      "skipped": 0,
+      "new_scope_regressions": 2,
+      "incoming_default_model_test_expected_value_updated": true
+    },
+    "server_build": "passed",
+    "client_build": "passed; existing >500kB homepage chunk warning",
+    "markdown_links": {
+      "local_markdown_links_checked": 387,
+      "broken_links": []
+    },
+    "overview": "input SHA256 matched; SVG XML parsed; two PDF pages rendered and visually read"
+  },
+  "current_instance_service": {
+    "local_health": {
+      "ok": true,
+      "version": "2.4.1",
+      "timestamp": "2026-10-08T08:44:30.226Z",
+      "knowledge": {
+        "chunks": 221,
+        "archivedEntries": 212
+      },
+      "llm": {
+        "preference": "auto",
+        "configValid": true,
+        "configured": false,
+        "primary": null,
+        "proxyConfigured": true,
+        "providers": [
+          {
+            "provider": "gemini",
+            "model": "gemini-3.8-flash",
+            "configured": false
+          },
+          {
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "configured": false
+          }
+        ]
+      }
+    },
+    "gemini_health": {
+      "ok": true,
+      "version": "2.4.1",
+      "timestamp": "2026-10-08T08:44:30.777Z",
+      "knowledge": {
+        "chunks": 221,
+        "archivedEntries": 212
+      },
+      "llm": {
+        "preference": "gemini",
+        "configValid": true,
+        "configured": true,
+        "primary": "gemini",
+        "proxyConfigured": true,
+        "providers": [
+          {
+            "provider": "gemini",
+            "model": "gemini-3.8-flash",
+            "configured": true
+          },
+          {
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "configured": true
+          }
+        ]
+      }
+    },
+    "deepseek_health": {
+      "ok": true,
+      "version": "2.4.1",
+      "timestamp": "2026-10-08T08:44:43.783Z",
+      "knowledge": {
+        "chunks": 221,
+        "archivedEntries": 212
+      },
+      "llm": {
+        "preference": "deepseek",
+        "configValid": true,
+        "configured": true,
+        "primary": "deepseek",
+        "proxyConfigured": true,
+        "providers": [
+          {
+            "provider": "gemini",
+            "model": "gemini-3.8-flash",
+            "configured": true
+          },
+          {
+            "provider": "deepseek",
+            "model": "deepseek-v4-flash",
+            "configured": true
+          }
+        ]
+      }
+    },
+    "static_html_checks": [
+      "/",
+      "/chat"
+    ],
+    "cases": [
+      {
+        "case": "6M-G4-supported",
+        "mode": "local",
+        "model_context": "6M-2104(G4)",
+        "query": "高压共轨燃油管能自己拆吗",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 3,
+        "source_ids": [
+          "SRC-JD-6M-OMAL232272-03AUG2026"
+        ],
+        "entry_ids": [
+          "KB-JD-6M-OMAL232272-006"
+        ],
+        "knowledge_sources": [
+          {
+            "entryId": "KB-JD-6M-OMAL232272-006",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-006｜不得自行断开高压共轨燃油部件",
+            "locator": "PDF第29页；印刷05-16",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6M-OMAL232272-005",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-005｜液压泄漏检查与高压喷射伤害防护",
+            "locator": "PDF第29页；印刷05-16",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6M-OMAL232272-004",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-004｜冷却系统卸盖须停机冷却并缓慢卸压",
+            "locator": "PDF第27页；印刷05-14",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          }
+        ],
+        "expected": "KB-JD-6M-OMAL232272-006",
+        "passed": true,
+        "response_sha256": "c8b6074d37fbb04ad2827ed171a0d5cbfea81c7a2546b1d02736cd473e1f3393"
+      },
+      {
+        "case": "6M-bare-refused",
+        "mode": "local",
+        "model_context": "6M-2104",
+        "query": "高压共轨燃油管能自己拆吗",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 0,
+        "source_ids": [],
+        "entry_ids": [],
+        "knowledge_sources": [],
+        "expected": 0,
+        "passed": true,
+        "response_sha256": "f9b758c5c68864c26b47177dce456fabb998bb42dbedcdc4d14e8d67b37cc9bf"
+      },
+      {
+        "case": "6M-G3-refused",
+        "mode": "local",
+        "model_context": "6M-2104(G3)",
+        "query": "高压共轨燃油管能自己拆吗",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 0,
+        "source_ids": [],
+        "entry_ids": [],
+        "knowledge_sources": [],
+        "expected": 0,
+        "passed": true,
+        "response_sha256": "7b9b320b87c3017d67215359752a8850583de1ef401d0a93416ce86c4dd108df"
+      },
+      {
+        "case": "LF-4WD-supported",
+        "mode": "local",
+        "model_context": "LF804S",
+        "query": "四驱更改轮距后验证前轮极限位置无干涉",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 4,
+        "source_ids": [
+          "SRC-YTO-LF-MANUAL"
+        ],
+        "entry_ids": [
+          "KB-YTO-LF-MANUAL-021"
+        ],
+        "knowledge_sources": [
+          {
+            "entryId": "KB-YTO-LF-MANUAL-021",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-021｜更改轮距后先验证前轮极限位置无干涉",
+            "locator": "第四章第二节九、轮距的调整，四轮驱动型前轮距及注意事项，图4-11c；PDF第29页／印刷第23页",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-019",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-019｜前轮驱动与硬路面运输的使用边界",
+            "locator": "第四章第二节八、前轮驱动的操纵及注意事项；PDF第28、29页／印刷第22、23页",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-004",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-004｜柴油机起动需等待预热并限制连续尝试",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；第四章第二节，一、柴油机的启动；PDF 第 25 页／印刷第 19 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-014",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-014｜高压滤油器维护先停机冷却并收集废油",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；附录七，高压滤油器保养内容；PDF 第 78 页／印刷第 72 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          }
+        ],
+        "expected": "KB-YTO-LF-MANUAL-021",
+        "passed": true,
+        "response_sha256": "b6ce0ccbc7441ade3060277532718e12d77f7aa76f1ca544de464e6d35f5f9bb"
+      },
+      {
+        "case": "LF-2WD-excludes-4WD",
+        "mode": "local",
+        "model_context": "LF804S",
+        "query": "两驱更改轮距后验证前轮极限位置无干涉",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 2,
+        "source_ids": [
+          "SRC-YTO-LF-MANUAL"
+        ],
+        "entry_ids": [
+          "KB-YTO-LF-MANUAL-004"
+        ],
+        "knowledge_sources": [
+          {
+            "entryId": "KB-YTO-LF-MANUAL-004",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-004｜柴油机起动需等待预热并限制连续尝试",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；第四章第二节，一、柴油机的启动；PDF 第 25 页／印刷第 19 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-014",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-014｜高压滤油器维护先停机冷却并收集废油",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；附录七，高压滤油器保养内容；PDF 第 78 页／印刷第 72 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          }
+        ],
+        "expected": "!KB-YTO-LF-MANUAL-021",
+        "passed": true,
+        "response_sha256": "d123ea75779d500a2cd266826e5dc816b2e9e8ce0f9608dc6e6f2f2fad6dae81"
+      },
+      {
+        "case": "LF-CAB-supported",
+        "mode": "local",
+        "model_context": "LF804S",
+        "query": "驾驶室清洗机罩待冷却使用低压水",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 6,
+        "source_ids": [
+          "SRC-YTO-LF-MANUAL"
+        ],
+        "entry_ids": [
+          "KB-YTO-LF-MANUAL-022"
+        ],
+        "knowledge_sources": [
+          {
+            "entryId": "KB-YTO-LF-MANUAL-022",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-022｜清洗机罩与驾驶室需待冷却并使用低压水",
+            "locator": "第五章第二节技术维护保养操作，驾驶室保养之（2）驾驶室和机罩的维护、（3）驾驶室内部的维护保养；PDF第59页／印刷第53页",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-001",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-001｜东方红LF804S/LF904S/LF954S拖拉机使用保养说明书原件与适用范围",
+            "locator": "PDF第1页及已核对的目录/末页；详见sources.json.verified_pdf_pages",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-002",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-002｜每班检查清单与冷却散热入口",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；第五章第一节，一、每班技术保养；PDF 第 46 页／印刷第 40 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-014",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-014｜高压滤油器维护先停机冷却并收集废油",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；附录七，高压滤油器保养内容；PDF 第 78 页／印刷第 72 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-019",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-019｜前轮驱动与硬路面运输的使用边界",
+            "locator": "第四章第二节八、前轮驱动的操纵及注意事项；PDF第28、29页／印刷第22、23页",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-006",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-006｜液压快换接头连接前停机落具并卸压",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；第四章第三节，四、液压输出阀及其操纵；PDF 第 41 页／印刷第 35 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          }
+        ],
+        "expected": "KB-YTO-LF-MANUAL-022",
+        "passed": true,
+        "response_sha256": "669d864335bde5fc5a3461be553999208ffe9cd5a52e2ec89d9956b3dd022c42"
+      },
+      {
+        "case": "LF-ROPS-excludes-CAB",
+        "mode": "local",
+        "model_context": "LF804S",
+        "query": "ROPS防翻架配置清洗机罩待冷却使用低压水",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 6,
+        "source_ids": [
+          "SRC-YTO-LF-MANUAL"
+        ],
+        "entry_ids": [
+          "KB-YTO-LF-MANUAL-001"
+        ],
+        "knowledge_sources": [
+          {
+            "entryId": "KB-YTO-LF-MANUAL-001",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-001｜东方红LF804S/LF904S/LF954S拖拉机使用保养说明书原件与适用范围",
+            "locator": "PDF第1页及已核对的目录/末页；详见sources.json.verified_pdf_pages",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-002",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-002｜每班检查清单与冷却散热入口",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；第五章第一节，一、每班技术保养；PDF 第 46 页／印刷第 40 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-014",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-014｜高压滤油器维护先停机冷却并收集废油",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；附录七，高压滤油器保养内容；PDF 第 78 页／印刷第 72 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-019",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-019｜前轮驱动与硬路面运输的使用边界",
+            "locator": "第四章第二节八、前轮驱动的操纵及注意事项；PDF第28、29页／印刷第22、23页",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-006",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-006｜液压快换接头连接前停机落具并卸压",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；第四章第三节，四、液压输出阀及其操纵；PDF 第 41 页／印刷第 35 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-YTO-LF-MANUAL-011",
+            "sourceId": "SRC-YTO-LF-MANUAL",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md",
+            "heading": "KB-YTO-LF-MANUAL-011｜转向沉重先查油位、漏油、进气与油液状态",
+            "locator": "- 证据：SRC-YTO-LF-MANUAL；第六章第一节，表6-5，第2项；PDF 第 65 页／印刷第 59 页。",
+            "version": "2017-01",
+            "applicability": "matched"
+          }
+        ],
+        "expected": "!KB-YTO-LF-MANUAL-022",
+        "passed": true,
+        "response_sha256": "207aa259dabfd0839e114d7d5759b356fafda3ccc295b0a5a9adb9f4207ca965"
+      },
+      {
+        "case": "old-WF-G4-refused",
+        "mode": "local",
+        "model_context": "WF1404-3",
+        "query": "国四保养机油",
+        "provider": "knowledge-base",
+        "response_model": "kb-rag-engine (本地知识引擎)",
+        "fell_back": true,
+        "fallback_reason": "not_configured",
+        "answer_mode": "local-evidence",
+        "knowledge_chunks": 0,
+        "source_ids": [],
+        "entry_ids": [],
+        "knowledge_sources": [],
+        "expected": 0,
+        "passed": true,
+        "response_sha256": "2543fd60313b3c0a7ed89ced74bb033f15ab101becc3f794993fddbcbfbda047"
+      },
+      {
+        "case": "new-6M-real-Gemini",
+        "mode": "gemini",
+        "model_context": "6M-2104(G4)",
+        "query": "只依据本机型已检索手册说明：高压共轨燃油部件能自行拆修吗？注明来源编号、版次与页码，不补造压力数值。",
+        "provider": "gemini",
+        "response_model": "gemini-3.8-flash",
+        "fell_back": false,
+        "fallback_reason": null,
+        "answer_mode": "knowledge-grounded",
+        "knowledge_chunks": 5,
+        "source_ids": [
+          "SRC-JD-6M-OMAL232272-03AUG2026"
+        ],
+        "entry_ids": [
+          "KB-JD-6M-OMAL232272-006"
+        ],
+        "knowledge_sources": [
+          {
+            "entryId": "KB-JD-6M-OMAL232272-006",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-006｜不得自行断开高压共轨燃油部件",
+            "locator": "PDF第29页；印刷05-16",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6M-OMAL232272-005",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-005｜液压泄漏检查与高压喷射伤害防护",
+            "locator": "PDF第29页；印刷05-16",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6M-OMAL232272-001",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-001｜操作手册用途与地区及车辆配置边界",
+            "locator": "PDF第36页；印刷10A-1",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6M-OMAL232272-002",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-002｜保养前停机隔离动力并可靠支撑升起部件",
+            "locator": "PDF第25页；印刷05-12",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6M-OMAL232272-004",
+            "sourceId": "SRC-JD-6M-OMAL232272-03AUG2026",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md",
+            "heading": "KB-JD-6M-OMAL232272-004｜冷却系统卸盖须停机冷却并缓慢卸压",
+            "locator": "PDF第27页；印刷05-14",
+            "version": "OMAL232272；03AUG2026；中文中国版本",
+            "applicability": "matched"
+          }
+        ],
+        "expected": "SRC-JD-6M-OMAL232272-03AUG2026",
+        "passed": true,
+        "response_sha256": "401848bcf7c195ccf367206d19f8d818c3efb02c3ccbdf4dcb1a51597e19165e"
+      },
+      {
+        "case": "6E-real-DeepSeek",
+        "mode": "deepseek",
+        "model_context": "6E-1204 (G4)",
+        "query": "每日维护的四项检查有哪些？只依据已检索手册回答并注明来源。",
+        "provider": "deepseek",
+        "response_model": "deepseek-flash",
+        "fell_back": false,
+        "fallback_reason": null,
+        "answer_mode": "knowledge-grounded",
+        "knowledge_chunks": 6,
+        "source_ids": [
+          "SRC-JD-6E-G4-OMTR115296"
+        ],
+        "entry_ids": [
+          "KB-JD-6E-G4-OMTR115296-002"
+        ],
+        "knowledge_sources": [
+          {
+            "entryId": "KB-JD-6E-G4-OMTR115296-002",
+            "sourceId": "SRC-JD-6E-G4-OMTR115296",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md",
+            "heading": "KB-JD-6E-G4-OMTR115296-002｜每日维护的四项检查",
+            "locator": "PDF第134页；印刷200A-1",
+            "version": "OMTR115296；官方目录27MAR26；封面D6",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6E-G4-OMTR115296-009",
+            "sourceId": "SRC-JD-6E-G4-OMTR115296",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md",
+            "heading": "KB-JD-6E-G4-OMTR115296-009｜道路行驶前联锁制动踏板并检查灯光",
+            "locator": "PDF第120页；印刷100-1，在公路上行驶及遵守最高限速",
+            "version": "OMTR115296；官方目录27MAR26；封面D6",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6E-G4-OMTR115296-005",
+            "sourceId": "SRC-JD-6E-G4-OMTR115296",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md",
+            "heading": "KB-JD-6E-G4-OMTR115296-005｜维护与故障章节导航",
+            "locator": "PDF第6～9、13、134～173、174～188页",
+            "version": "OMTR115296；官方目录27MAR26；封面D6",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6E-G4-OMTR115296-007",
+            "sourceId": "SRC-JD-6E-G4-OMTR115296",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md",
+            "heading": "KB-JD-6E-G4-OMTR115296-007｜连接或清理PTO农具前停止传动",
+            "locator": "PDF第17页；印刷00A-4，远离正在旋转的传动机构",
+            "version": "OMTR115296；官方目录27MAR26；封面D6",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6E-G4-OMTR115296-010",
+            "sourceId": "SRC-JD-6E-G4-OMTR115296",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md",
+            "heading": "KB-JD-6E-G4-OMTR115296-010｜前桥和三点悬挂润滑周期随工况与配置变化",
+            "locator": "PDF第131、135～136页；印刷200-1、200B-1～200B-2",
+            "version": "OMTR115296；官方目录27MAR26；封面D6",
+            "applicability": "matched"
+          },
+          {
+            "entryId": "KB-JD-6E-G4-OMTR115296-014",
+            "sourceId": "SRC-JD-6E-G4-OMTR115296",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md",
+            "heading": "KB-JD-6E-G4-OMTR115296-014｜整个液压系统不工作与液压油过热分开排查",
+            "locator": "PDF第181页；印刷300-8，液压系统故障排除",
+            "version": "OMTR115296；官方目录27MAR26；封面D6",
+            "applicability": "matched"
+          }
+        ],
+        "expected": "SRC-JD-6E-G4-OMTR115296",
+        "passed": true,
+        "response_sha256": "0356e84a714cc809d5c0b6f4dce1f431eaa37688463ae53fbe760fcd838efb18"
+      }
+    ],
+    "owned_services_stopped": true,
+    "browser_rendering_verified": false,
+    "online_deployment_verified": false
+  },
+  "real_model_calls": {
+    "gemini": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "fell_back": false,
+      "source_id": "SRC-JD-6M-OMAL232272-03AUG2026"
+    },
+    "deepseek": {
+      "provider": "deepseek",
+      "response_model": "deepseek-flash",
+      "fell_back": false
+    },
+    "earlier_default_gemini_attempt": {
+      "http_status": 404,
+      "fallback_provider": "deepseek",
+      "fallback_succeeded": true
+    },
+    "key_values_saved": false
+  },
+  "cloud_configuration": {
+    "saved_field": "start_skill",
+    "status": "saved draft",
+    "readback_matched": true,
+    "requires_publish": true,
+    "both_saved_secret_bindings_present": true,
+    "start_skill_current_version": "2.4.1",
+    "draft_revision": 29
+  },
+  "not_verified": [
+    "全书事实审校",
+    "厂家复核",
+    "实车验证及诊断准确率",
+    "浏览器渲染",
+    "agridx.xyz发布或香港生产主机",
+    "旧Git stash未恢复，不能把保留stash当作当前功能未合并；当前协调来自GitHub2.4.0"
+  ],
+  "retention": "旧来源/条目及未完成模型协调stash保留；PDF/页图与含完整模型答复的临时检查日志未提交，来源记录/PDF哈希分开",
+  "pre_sync_validation": {
+    "repository_version": "2.3.3（仅本地整合阶段，未发布此版本）",
+    "tests_passed": 38,
+    "actual_gemini_and_deepseek_checks": true,
+    "note": "最终主线保留并合入同时出现的2.4.0；以下为重新执行的2.4.1验收，旧响应哈希未复用。"
+  },
+  "integration_baseline_commit": "41ce9bc8718073976913b2e5c37ab4394e2d272b",
+  "online_read_only_check": {
+    "url": "https://agridx.xyz/api/health",
+    "http_status": 403,
+    "body_not_saved": true
+  },
+  "current_model_behavior": {
+    "configuration_variable": "LLM_PROVIDER",
+    "ignored_legacy_variable": "LLM_PRIMARY_PROVIDER",
+    "zero_archive_facts_llm_call_allowed_by_current_main": true,
+    "zero_evidence_answer_mode": "general-guidance",
+    "matched_technical_evidence_answer_mode": "knowledge-grounded",
+    "local_answer_mode": "local-evidence",
+    "complete_generated_fact_validation_claimed": false
+  },
+  "implementation_commit": "3810774c8d036f268a5381b0a0e0b2f18f55f7d1"
+}

@@ -237,5 +237,39 @@
     "版本03AUG26是本次官方目录字段；2023热度数据与2026目录版次分开，不补造新闻中的年款/配置。"
   ],
   "network_and_integrity": "继承代理并验证TLS。仅新OMAL232272公开PDF请求一次，返回HTTP500、36字节错误JSON。没有PDF哈希/页数/末页解析或封面审校结果；未重复旧5E/6B失败下载。",
-  "retention_note": "长期归档原创说明、官方链接、目录响应哈希/字节数、参数及取得状态；原始HTML和错误JSON只暂存研究目录。不加入来源/事实索引，待取得手册正文后再核实。"
+  "retention_note": "长期归档原创说明、官方链接、目录响应哈希/字节数、参数及取得状态；原始HTML和错误JSON只暂存研究目录。不加入来源/事实索引，待取得手册正文后再核实。",
+  "followups": [
+    {
+      "checked_at_shanghai": "2026-10-08",
+      "actual_acquisition": {
+        "publication": "OMAL232272",
+        "checked_at_shanghai": "2026-10-08T16:13:05.599566+08:00",
+        "request_url": "https://techpubs.deere.com/api/download/free",
+        "request_body": {
+          "downloadId": 599456,
+          "publicationType": "Operator's Manual",
+          "productName": "OMAL232272",
+          "marketingCode": ""
+        },
+        "status": 200,
+        "content_type": "application/pdf",
+        "response_url": "https://techpubs.deere.com/api/download/free",
+        "bytes": 17014524,
+        "sha256": "ce79c6663f1d625ec090f8760d213ec4c573a1c7ce587dae875d0ea0e49ba6e0",
+        "is_pdf": true
+      },
+      "paper_models": [
+        "6M-1654(G4)",
+        "6M-1854(G4)",
+        "6M-2104(G4)"
+      ],
+      "paper_market": "中国版本",
+      "paper_edition_date": "2026-08-03",
+      "pdf_pages": 292,
+      "source_id": "SRC-JD-6M-OMAL232272-03AUG2026",
+      "new_exact_model_entries": 6,
+      "report_bare_model_equivalence": "未确认；2023裸6M-2104不设为已接入维修检索",
+      "collection_record": "../../采集记录/20261008_知识库继续扩充与模型验证.md"
+    }
+  ]
 }

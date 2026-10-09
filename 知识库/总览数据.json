@@ -1,31 +1,31 @@
 {
   "schema_version": 1,
-  "snapshot_date_shanghai": "2026-10-08",
-  "repository_version": "2.4.1",
+  "snapshot_date_shanghai": "2026-10-09",
+  "repository_version": "2.4.2",
   "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
   "input_sha256": {
-    "sources.json": "5409a7b2018046eef60762062c3dafb3a1354ca172be0cfe8a706500baa5acfe",
-    "entries.jsonl": "cb39240132078affcc5e763ad51428a017040ecd4de3dd6166c19ab9d3cbb098"
+    "sources.json": "c8bab37af012b66e5a0296263abc08e462831c80c721f6679ea1936b7ad91d0c",
+    "entries.jsonl": "0d4c52d6c695c923d42697f8b617bef9719c9febfb8ffcbcd22afbedace15ed0"
   },
   "totals": {
-    "sources": 25,
-    "archived_entries": 207,
-    "knowledge_documents": 18,
+    "sources": 26,
+    "archived_entries": 228,
+    "knowledge_documents": 19,
     "brand_labels": 15,
     "generic_chunks": 9,
-    "retrieval_chunks": 216,
-    "information_or_scope_entries": 31
+    "retrieval_chunks": 237,
+    "information_or_scope_entries": 32
   },
   "brands": [
     {
-      "label": "东方红",
-      "sources": 3,
-      "entries": 32
+      "label": "约翰迪尔",
+      "sources": 4,
+      "entries": 46
     },
     {
-      "label": "约翰迪尔",
+      "label": "东方红",
       "sources": 3,
-      "entries": 32
+      "entries": 39
     },
     {
       "label": "久保田",
@@ -94,25 +94,25 @@
     }
   ],
   "entry_types": {
-    "安全操作": 43,
-    "操作/维护知识": 56,
-    "维护/故障知识": 71,
+    "安全操作": 53,
+    "操作/维护知识": 58,
+    "维护/故障知识": 79,
     "机型资料": 5,
     "资料缺口": 3,
     "资料索引": 13,
     "系统适用边界": 2,
-    "资料核验": 8,
+    "资料核验": 9,
     "系统安装/调试": 6
   },
   "source_purposes": {
     "维护网页": 3,
     "报道背景": 1,
-    "整机／维保PDF": 15,
+    "整机／维保PDF": 16,
     "交机培训PDF": 4,
     "配套导航PDF": 2
   },
   "entries_by_source_purpose": {
-    "整机／维保PDF": 146,
+    "整机／维保PDF": 167,
     "维护网页": 9,
     "报道背景": 2,
     "交机培训PDF": 32,
@@ -121,12 +121,12 @@
   "storage": {
     "仓库网页快照": 4,
     "仓库PDF原件": 15,
-    "PDF链接＋来源记录": 6
+    "PDF链接＋来源记录": 7
   },
   "entries_by_storage": {
-    "仓库PDF原件": 150,
+    "仓库PDF原件": 165,
     "仓库网页快照": 11,
-    "PDF链接＋来源记录": 46
+    "PDF链接＋来源记录": 52
   },
   "verification_status_raw": {
     "沿用既有原文核对条目": 24,
@@ -152,7 +152,10 @@
     "证据选页文本/原图及实际印刷页已核对；未全书审校、厂家复核或实车验证": 6,
     "已核对文本层证据页；未厂家复核/实车验证": 24,
     "证据页渲染+OCR已核对；未厂家复核/实车验证": 10,
-    "证据页130dpi渲染完整目视核对；文本定位已复核；未全书审校/厂家复核/实车验证": 8
+    "已核对所列文本及PDF页图；未全书审校、厂家复核或实车验证": 6,
+    "已同时阅读可提取文字和对应PDF图像；仅核对所列证据页，未全书审校、厂家或实车验证。": 7,
+    "证据页130dpi渲染完整目视核对；文本定位已复核；未全书审校/厂家复核/实车验证": 8,
+    "证据页150dpi完整渲染目视核对；文本定位已复核；未全书审校/厂家复核/实车验证": 8
   },
   "research": {
     "reports": 3,
@@ -498,12 +501,12 @@
       "version_date": "2017-01",
       "pdf_metadata_date": null,
       "scope_boundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；未进行逐页内容审核；前言落款2017年1月；PDF创建2017-06，2021-08上传路径不等于新版本；来源网页介绍LF804S/LF904S/LF954S/LF1004S/LF1104S，原件封面仅前三个机型；不扩展到LF1004S/LF1104S",
-      "status": "已取得完整PDF；本批新增14个核对条目，未逐页全面审核",
+      "status": "完整原件既有；当前22条，其中本轮新增7条经文本与证据页图像核对；未全书、厂家或实车验证",
       "content_group": "整机／维保PDF",
       "storage_group": "仓库PDF原件",
       "source_path": "知识库/原始农机说明书/东方红/LF系列/18143819_4481.pdf",
       "source_url": "https://www.nongjitong.com/product/yto_lf904s_tractors.html",
-      "entry_count": 15,
+      "entry_count": 22,
       "entry_ids": [
         "KB-YTO-LF-MANUAL-001",
         "KB-YTO-LF-MANUAL-002",
@@ -519,7 +522,14 @@
         "KB-YTO-LF-MANUAL-012",
         "KB-YTO-LF-MANUAL-013",
         "KB-YTO-LF-MANUAL-014",
-        "KB-YTO-LF-MANUAL-015"
+        "KB-YTO-LF-MANUAL-015",
+        "KB-YTO-LF-MANUAL-016",
+        "KB-YTO-LF-MANUAL-017",
+        "KB-YTO-LF-MANUAL-018",
+        "KB-YTO-LF-MANUAL-019",
+        "KB-YTO-LF-MANUAL-020",
+        "KB-YTO-LF-MANUAL-021",
+        "KB-YTO-LF-MANUAL-022"
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md"
@@ -817,20 +827,28 @@
       "version": "OMSJ34997，版本D0（CHINESE）；PDF元数据2020-04-30；独立印刷版次待核实",
       "version_date": null,
       "pdf_metadata_date": "2020-04-30",
-      "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实",
-      "status": "官方PDF已取得；封面与选页渲染+OCR核对；未厂家复核/实车验证",
+      "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实；本轮故障表部件项仅在实车具备相应结构时核查，不据候选项目推定涡轮或其他发动机配置",
+      "status": "官方PDF已取得；既有选页渲染+OCR核对；2026-10-09补充目视核对第1、137～143页完整图像；未全书审校/厂家复核/实车验证",
       "content_group": "整机／维保PDF",
       "storage_group": "仓库PDF原件",
       "source_path": "知识库/原始农机说明书/约翰迪尔/5E_D0/OMSJ34997.pdf",
       "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsj34997",
-      "entry_count": 6,
+      "entry_count": 14,
       "entry_ids": [
         "KB-JD-5E-D0-001",
         "KB-JD-5E-D0-002",
         "KB-JD-5E-D0-003",
         "KB-JD-5E-D0-004",
         "KB-JD-5E-D0-005",
-        "KB-JD-5E-D0-006"
+        "KB-JD-5E-D0-006",
+        "KB-JD-5E-D0-007",
+        "KB-JD-5E-D0-008",
+        "KB-JD-5E-D0-009",
+        "KB-JD-5E-D0-010",
+        "KB-JD-5E-D0-011",
+        "KB-JD-5E-D0-012",
+        "KB-JD-5E-D0-013",
+        "KB-JD-5E-D0-014"
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md"
@@ -866,6 +884,32 @@
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md"
+      ]
+    },
+    {
+      "source_id": "SRC-JD-6M-OMAL232272-03AUG2026",
+      "brand": "约翰迪尔",
+      "model": "6M-1654(G4) / 6M-1854(G4) / 6M-2104(G4)",
+      "version": "OMAL232272；03AUG2026；中文中国版本",
+      "version_date": "2026-08-03",
+      "pdf_metadata_date": "创建2026-08-10；修改2026-08-11（均仅PDF元数据）",
+      "scope_boundary": "仅封面6M-1654(G4)、6M-1854(G4)、6M-2104(G4)及中国版本；G4后缀保留原文，整册排放法规未独立确认；PIN、发动机、变速、选装与后续改装须匹配；CAB/ROPS、2WD/4WD整册范围未全面核验；不扩展2023报告裸6M-2104或非G4版；操作及日常维护信息不替代详细技术维修手册；仅所列证据页核对，未全书、厂家或实车验证",
+      "status": "已取得完整PDF；6条自行概述经选页文本与图像核对，未全书审校",
+      "content_group": "整机／维保PDF",
+      "storage_group": "PDF链接＋来源记录",
+      "source_path": "知识库/原始农机说明书/约翰迪尔/6M_OMAL232272/来源记录.md",
+      "source_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=2104",
+      "entry_count": 6,
+      "entry_ids": [
+        "KB-JD-6M-OMAL232272-001",
+        "KB-JD-6M-OMAL232272-002",
+        "KB-JD-6M-OMAL232272-003",
+        "KB-JD-6M-OMAL232272-004",
+        "KB-JD-6M-OMAL232272-005",
+        "KB-JD-6M-OMAL232272-006"
+      ],
+      "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md"
       ]
     }
   ]

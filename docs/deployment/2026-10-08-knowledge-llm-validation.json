@@ -1,0 +1,218 @@
+{
+  "target": "https://agridx.xyz",
+  "checkedAt": "2026-10-08T08:22:21.055Z",
+  "sourceCommit": "903eb68175666fd1a76a459aee2da3564ac36ff1",
+  "checks": [
+    {
+      "name": "health",
+      "status": 200,
+      "health": {
+        "ok": true,
+        "version": "2.4.0",
+        "timestamp": "2026-10-08T08:22:22.007Z",
+        "knowledge": {
+          "chunks": 208,
+          "archivedEntries": 199,
+          "sources": 25
+        },
+        "llm": {
+          "preference": "auto",
+          "configValid": true,
+          "configured": false,
+          "primary": null,
+          "proxyConfigured": false,
+          "providers": [
+            {
+              "provider": "gemini",
+              "model": "gemini-2.5-flash",
+              "configured": false
+            },
+            {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash",
+              "configured": false
+            }
+          ]
+        },
+        "release": {
+          "sourceRepository": "Changjie29/AgriDx-v2",
+          "sourceBranch": "main",
+          "sourceCommit": "903eb68175666fd1a76a459aee2da3564ac36ff1"
+        }
+      }
+    },
+    {
+      "name": "frontend",
+      "status": 200,
+      "entry": "/assets/index-BRQxe0w2.js",
+      "exactBuildMatch": true
+    },
+    {
+      "name": "spa-chat-page GET /chat",
+      "status": 200
+    },
+    {
+      "name": "spa-chat-page HEAD /chat",
+      "status": 200
+    },
+    {
+      "name": "spa-chat-page GET /chat/",
+      "status": 200
+    },
+    {
+      "name": "spa-chat-page HEAD /chat/",
+      "status": 200
+    },
+    {
+      "name": "spa-chat-page GET /chat?mode=diagnosis",
+      "status": 200
+    },
+    {
+      "name": "spa-chat-page HEAD /chat?mode=diagnosis",
+      "status": 200
+    },
+    {
+      "name": "/models/tractor.glb",
+      "status": 200,
+      "contentType": "application/octet-stream"
+    },
+    {
+      "name": "/api/model/tractor",
+      "status": 200,
+      "contentType": "application/octet-stream"
+    },
+    {
+      "name": "workmaster25-start-hit",
+      "status": 200,
+      "knowledgeChunks": 4,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "john-deere-g4-hit",
+      "status": 200,
+      "knowledgeChunks": 3,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "unknown-model",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "workmaster25s-exclusion",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "lf1504-national-three-hit",
+      "status": 200,
+      "knowledgeChunks": 2,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "lf1504-national-four-conflict",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "john-deere-national-three-conflict",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "us-manual-national-four-conflict",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "lx2620-cab-hit",
+      "status": 200,
+      "knowledgeChunks": 6,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "lx2620-rops-cab-conflict",
+      "status": 200,
+      "knowledgeChunks": 2,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "m6060-cab-rops-conflict",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "m6060-rops-four-drive-hit",
+      "status": 200,
+      "knowledgeChunks": 6,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "m6060-two-drive-conflict",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "m5-mixed-drive-allowed",
+      "status": 200,
+      "knowledgeChunks": 2,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "multi-turn-brand-model",
+      "status": 200,
+      "knowledgeChunks": 2,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "identity-denial",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "no-evidence-reports-local-mode",
+      "status": 200,
+      "knowledgeChunks": 0,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "latest-navigation-source",
+      "status": 200,
+      "knowledgeChunks": 4,
+      "provider": "knowledge-base"
+    },
+    {
+      "name": "invalid-input",
+      "status": 400
+    }
+  ],
+  "passed": true,
+  "localValidation": {
+    "regressionsPassed": 81,
+    "workerBundleTestsPassed": 13,
+    "archiveErrors": 0,
+    "providerCalls": "mocked; no live LLM verification"
+  },
+  "sitesPublication": {
+    "projectId": "appgprj_6ab5efd42cc48191a3bee1276e02c952",
+    "siteSourceCommit": "e607951e00e8cc14372da162e3bfbe64159de68b",
+    "versionId": "appgprj_6ab5efd42cc48191a3bee1276e02c952~appgver_04391f3b2a8881918f6d80c3cf0c2b49",
+    "versionNumber": 15,
+    "deploymentId": "appgdep_6ac75405f378819188c6df06be40c2f7",
+    "status": "succeeded",
+    "url": "https://agridx.z3464715478.chatgpt.site",
+    "runtimeEnvironmentRevision": 0,
+    "firstDeploymentId": "appgdep_6ac7520f42d08191a7a521514d065ab3",
+    "updatedAt": "2026-10-08T08:28:04.508616+00:00",
+    "archiveSha256": "17ad541ef4c46cf0067ca98769b1b0c6b790662f7901505684bec29fbd029339",
+    "sameRuntimeAsValidatedVersion14": true
+  }
+}

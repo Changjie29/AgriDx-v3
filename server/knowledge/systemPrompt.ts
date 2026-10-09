@@ -24,6 +24,8 @@ export interface BuildSystemPromptOptions {
   /** 由当前用户问题与相关历史补充重建的检索问题 */
   query: string;
   currentQuery?: string;
+  /** 已否定的机型信息尚未补齐，先确认对象，暂停诊断。 */
+  clarificationNeeded?: boolean;
   /** 可选：用户声明的农机类型/品牌/型号（前端可空） */
   machineType?: string;
   brand?: string;
@@ -35,11 +37,12 @@ export function buildSystemPrompt(opts: BuildSystemPromptOptions): {
   retrieved: KnowledgeChunk[];
   answerMode: 'knowledge-grounded' | 'general-guidance';
 } {
-  const retrieved = retrieve(opts.query, 6, opts);
+  const needsIdentityConfirmation = Boolean(opts.clarificationNeeded || resolveScope(opts.query, opts).identityConflict);
+  const retrieved = needsIdentityConfirmation ? [] : retrieve(opts.query, 6, opts);
   const answerMode = hasDiagnosticEvidence(retrieved) ? 'knowledge-grounded' : 'general-guidance';
   const knowledgeBlock =
-    resolveScope(opts.query, opts).identityConflict
-      ? '（已填写的农机信息与问题中的类型、品牌或型号不一致。必须先请用户确认本次咨询对象，不能把任意一方视为已确认机型；不得生成诊断结论、操作步骤或维修参数。）'
+    needsIdentityConfirmation
+      ? '（用户否定了此前机型信息，或已填写信息与当前问题不一致。必须先请用户确认本次咨询对象；不得重新引用已否定机型的资料，不得生成诊断结论、操作步骤或维修参数，也不得提供通用原因分析。）'
       : retrieved.length > 0
       ? formatForPrompt(retrieved)
       : '（本次未命中适用的知识库片段。可以提供明确标注的通用原理分析和信息采集建议；没有原厂手册依据，不得编造型号参数或专用操作。）';
@@ -81,7 +84,7 @@ export function buildSystemPrompt(opts: BuildSystemPromptOptions): {
 **【安全提醒】** 与本次故障相关的简短提醒。
 
 # 本次证据情况
-${answerMode === 'knowledge-grounded' ? '检索到了归档技术资料；每项建议仍需确认片段是否直接支持及机型适用性。' : '当前没有可直接支持维修结论的归档技术资料。必须明确【当前资料不足】，但仍提供标注为待验证的通用分析与必要追问。'}
+${needsIdentityConfirmation ? '本次咨询对象尚待确认。仅简短确认已知故障并追问被否定或冲突的农机信息，暂停诊断和通用原因分析。确认后继续此前故障。' : answerMode === 'knowledge-grounded' ? '检索到了归档技术资料；每项建议仍需确认片段是否直接支持及机型适用性。' : '当前没有可直接支持维修结论的归档技术资料。必须明确【当前资料不足】，但仍提供标注为待验证的通用分析与必要追问。'}
 
 # 当前问题与检索上下文
 当前用户消息：${opts.currentQuery ?? opts.query}

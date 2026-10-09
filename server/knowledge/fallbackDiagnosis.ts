@@ -8,6 +8,7 @@ export function generateLocalKnowledgeReply(
   opts: RetrievalContext = {},
   fallbackReason?: 'not_configured' | 'provider_unavailable',
   displayQuery: string = query,
+  clarificationNeeded: boolean = false,
 ): string {
   const machineDesc = [opts.machineType, opts.brand, opts.model].filter(Boolean).join(' ') || '农机设备';
   const primary = retrieved[0];
@@ -21,6 +22,10 @@ export function generateLocalKnowledgeReply(
     !opts.brand && '品牌',
     !opts.model && '完整型号',
   ].filter(Boolean).join('、');
+
+  if (clarificationNeeded) {
+    return `${serviceNotice}**【需要确认机型】**\n你已否定此前的机型信息，本次暂停引用旧机型资料。请确认${identityQuestions || '本次咨询的农机类型、品牌和完整型号'}；确认后继续此前故障咨询。`;
+  }
 
   if (!primary) {
     const identityNotice = resolveScope(query, opts).identityConflict

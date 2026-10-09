@@ -159,12 +159,13 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     res.status(400).json({ error: '请提供非空的当前用户问题', code: 'bad_request' });
     return;
   }
-  const { query, scope, currentQuery } = resolveDiagnosticContext(history, { machineType, brand, model });
+  const { query, scope, currentQuery, clarificationNeeded } = resolveDiagnosticContext(history, { machineType, brand, model });
 
   // 构造 system prompt（含 RAG）
   const { message: systemMsg, retrieved, answerMode } = buildSystemPrompt({
     query,
     currentQuery,
+    clarificationNeeded,
     ...scope,
   });
 
@@ -183,7 +184,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
   try {
     if (!llm.hasAnyConfigured()) {
       // 未配置外部 API key 时，返回带来源的知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'not_configured', currentQuery);
+      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'not_configured', currentQuery, clarificationNeeded);
       res.json({
         choices: [{ message: { role: 'assistant', content: localReply } }],
         model: 'kb-rag-engine (本地知识引擎)',
@@ -212,7 +213,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     if (err instanceof ProviderError) {
       console.warn(`[chat] provider error: ${err.provider}/${err.kind}`);
       // 服务提供商错误时，返回带来源的本地知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'provider_unavailable', currentQuery);
+      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'provider_unavailable', currentQuery, clarificationNeeded);
       res.json({
         choices: [{ message: { role: 'assistant', content: localReply } }],
         model: 'kb-rag-fallback (本地备用引擎)',

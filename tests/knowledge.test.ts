@@ -573,6 +573,29 @@ test('T70 material remains background information and never produces diesel repa
   assert.doesNotMatch(reply, /拔出机油尺|柴油滤芯|喷油泵|检查燃油箱油量|疑似属于|测量系统工作压力/);
 });
 
+test('6M Chinese manual requires the documented G4 suffix and refuses report bare models', () => {
+  const query = '高压共轨燃油管能自己拆吗';
+  const context = { ...tractor, brand: '约翰迪尔' };
+  for (const model of ['6M-1654(G4)', '6M-1854(G4)', '6M-2104(G4)']) {
+    const found = archived(retrieve(query, 100, { ...context, model }));
+    expectEntry(found, 'KB-JD-6M-OMAL232272-006');
+    assert.ok(found.every((chunk) => chunk.sourceId === 'SRC-JD-6M-OMAL232272-03AUG2026'));
+  }
+  for (const model of ['6M-2104', '6M-2104(G3)', '6M-2304(G4)']) {
+    assert.equal(archived(retrieve(query, 100, { ...context, model })).length, 0, model);
+  }
+});
+
+test('LF manual additions preserve four-wheel-drive and cab-only maintenance limits', () => {
+  const context = { ...tractor, brand: '东方红', model: 'LF804S' };
+  expectEntry(retrieve('四驱更改轮距后验证前轮极限位置无干涉', 100, context), 'KB-YTO-LF-MANUAL-021');
+  assert.ok(!retrieve('两驱更改轮距后验证前轮极限位置无干涉', 100, context)
+    .some((chunk) => chunk.entryId === 'KB-YTO-LF-MANUAL-021'));
+  expectEntry(retrieve('驾驶室清洗机罩待冷却使用低压水', 100, context), 'KB-YTO-LF-MANUAL-022');
+  assert.ok(!retrieve('ROPS防翻架配置清洗机罩待冷却使用低压水', 100, context)
+    .some((chunk) => chunk.entryId === 'KB-YTO-LF-MANUAL-022'));
+});
+
 test('reloading the index is idempotent and the original generic retrieval remains available', () => {
   const initial = stats();
   const first = loadKnowledgeBase();

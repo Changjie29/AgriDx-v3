@@ -66,7 +66,7 @@ test('blank model values use existing defaults and status exposes no keys or pro
   assert.equal(status.primary, 'gemini');
   assert.equal(status.proxyConfigured, true);
   assert.deepEqual(status.providers, [
-    { provider: 'gemini', model: 'gemini-2.5-flash', configured: true },
+    { provider: 'gemini', model: 'gemini-3.8-flash', configured: true },
     { provider: 'deepseek', model: 'deepseek-v4-flash', configured: true },
   ]);
   assert.doesNotMatch(JSON.stringify(status), /secret-|connected/);
