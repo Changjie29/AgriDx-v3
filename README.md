@@ -1,6 +1,8 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**2.4.5**。本阶段保持`2.4.x`，版本低于`2.5.0`。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
+当前项目版本：**3.0.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+
+v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
 国内资料新增按“使用/购机证据 → 报告所列型号 → 精确说明书 → 审校与检索”整理，见[型号采集优先级](知识库/整理后的知识库/农用拖拉机知识库/采集优先级/README.md)。现有3篇第三方报告、21条证据、20种型号/排放写法候选，均完成定向查找；新增6M-1654(G4)/1854(G4)/2104(G4)中国版手册，报告裸6M-2104与本册后缀及实车版本的关系仍待核实，不能据此给出全国保有量排名。部分省厅正文与吉林公开搜索现已可读；总量背景、历史/展示实例和当前仍失败入口分别归档，研究资料不参与维修检索。
 
@@ -146,7 +148,7 @@ server/knowledge/
 ## 项目结构
 
 ```
-AgriDx-v2/
+AgriDx-v3/
 ├── public/                          # 静态公共资源（构建时原样拷贝到 dist/）
 │   └── models/
 │       ├── tractor-detailed-v1.glb   # 当前原创分组件结构示意（/api/model/tractor 返回同一文件）
@@ -233,20 +235,22 @@ AgriDx-v2/
 ├── tsconfig.node.json               # Vite/Node 侧 TS 配置
 ├── eslint.config.mjs                # ESLint 配置
 ├── components.json                  # shadcn/ui 配置
+├── CONTRIBUTING.md                  # 四人协作、分支、验证与统一发布约定
 └── README.md
 ```
 
 ## Git 分支
 
-- **`main`**：稳定版本，日常开发与部署都基于此分支。所有同步脚本（rsync + git push）都推到 `main`。
-- 目前仓库只有 `main` 一个分支。后续如需要独立开发新功能，可从 `main` 切 `feature/<功能名>` 分支，合并后删除，不长期保留展示性分支。
+- **`main`**：共同维护的稳定主线，也是统一部署来源。协作者从最新`main`创建自己的功能或修复分支，通过PR说明改动与验证结果，审阅后合入。
+- 人工开发可使用`feature/<用户名>/<主题>`或`fix/<用户名>/<主题>`，Codex任务默认使用`codex/`前缀。提交前刷新远端并检查差异，按新旧版本与任务意图进行更新性覆盖或合并，保留无关成果；合并完成后可删除对应任务分支。
+- 个人分支推送和打开PR不触发网站发布。完成验证并合入主线的更新按当前部署约定统一发布，详见[贡献指南](CONTRIBUTING.md)。
 
 ## API
 
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "2.4.2", "timestamp": "...", "knowledge": { "chunks": 221, "archivedEntries": 212 } }
+{ "ok": true, "version": "3.0.0", "timestamp": "...", "knowledge": { "chunks": 221, "archivedEntries": 212 } }
 ```
 
 ### `POST /api/chat`
@@ -328,11 +332,13 @@ AgriDx-v2/
 
 ## GitHub保存与部署约定
 
-- GitHub：https://github.com/Changjie29/AgriDx-v2
-- 本地工作区：clone 仓库后在根目录执行 `npm install` 即可开发，无需额外配置路径
-- 现有公开站点`agridx.xyz`仍使用OpenAI ChatGPT Sites；香港迁移脚本尚未执行，作为备用方案保存在[香港部署指南](docs/deployment/2026-10-07-hk-deployment.md)。境内访问限制以实际网络核验为准。
-- 同步方式：完成用户授权的修改及必要验证后，默认将代码和知识库提交并推送到`AgriDx-v2/main`。2026-10-10最新要求为**v2只保存GitHub，后续v3再部署**，替换此前默认继续部署的约定；不再发起网站部署，也不自行恢复自动发布任务。用户明确要求暂缓提交或仅在本地修改时按其要求执行。
-- 2.4.5实现已保存GitHub；停止部署要求到达时，此前发出的Sites请求已经执行，回执为版本19成功。之后未再发起部署，亦未执行回滚发布；实际状态与验证边界见[本轮保存与发布记录](docs/deployment/2026-10-10-liquid-glass-status.md)。
+- GitHub：[Changjie29/AgriDx-v3](https://github.com/Changjie29/AgriDx-v3)。v2保留在[原仓库](https://github.com/Changjie29/AgriDx-v2)，本轮不修改v2。
+- 本地工作区：clone v3仓库后在根目录执行`npm ci`即可开发，无需额外配置路径；`.env`和`server/.env`按本机配置，不进入Git。
+- 团队：Changjie29（admin），jianshiting920-web、jingxinnie0414-dev、bai1022（write）。截至2026-10-10已核对仓库现有权限；具体任务按各次PR约定，不预设个人职责。
+- 用户2026-10-10最新要求：**本轮v3完成必要验证后部署，近期v3更新完成验证后也默认部署现有GPT/Sites站点，后续由用户安排转到腾讯服务器。** 本约定仅适用于v3，v2继续只保存GitHub。用户明确要求暂缓提交、仅本地修改或暂停部署时按其要求执行。
+- 现有公开站点`agridx.xyz`使用OpenAI ChatGPT Sites；v3沿用该站点统一发布。本轮初始化的检查与发布状态见[3.0.0日志](CHANGELOG.md#300--2026-10-10)，进行中的工作不计作已上线。香港脚本与[旧部署指南](docs/deployment/2026-10-07-hk-deployment.md)保留作历史准备资料，未作为本轮迁移方案执行。
+- 每次推送前对比远端与本地改动，按新旧版本及任务意图判断更新性覆盖，保留无关成果；本次允许按差异覆盖v3的旧v2基线。主线合入、GitHub保存和Sites部署分别记录；本地构建或Git推送本身不证明已发布，不启用旧定时拉取/自动重启脚本。
+- v2的2.4.5历史保存与Sites版本19回执保留在[原记录](docs/deployment/2026-10-10-liquid-glass-status.md)，不能作为v3发布验收结果。
 
 ---
 
