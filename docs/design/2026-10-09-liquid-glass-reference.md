@@ -44,6 +44,6 @@
 - 320px英文原先菜单右缘超出边界，现隐藏副标题并收紧品牌组，头部scrollWidth=clientWidth=298px，全部工具按钮完整显示。320px模型六个操作均为44×44px，375px亦可操作。
 - 首页省去完整dock时默认保持静止，避免失去暂停入口后的持续自转；仍支持拖拽查看。减少动态、减少透明度、无背景滤镜及关闭玻璃的回退经过源码检查，本轮未通过系统设置分别现场触发，未做Safari/Firefox或真实设备FPS测试。
 - Figma知识卡修正见[协同记录](2026-10-09-figma-handoff.md)，为2.4.3基线的修复；当前2.4.5网页效果尚未同步到Figma。截图记录不代表完整Figma长页验收。
-- 实现已保存到GitHub：[8a50900](https://github.com/Changjie29/AgriDx-v2/commit/8a50900dd33391d5a600fa156cd84fa63cdd7056)。用户最新要求v2仅存GitHub、v3再部署；已停止后续发布。此前发出的请求返回Sites版本19成功，未另做线上HTTP/浏览器验收，详情见[真实状态记录](../deployment/2026-10-10-liquid-glass-status.md)。本地截图仍仅证明本地浏览器状态。
+- 实现已保存到GitHub：[8a50900](https://github.com/Changjie29/AgriDx-v2/commit/8a50900dd33391d5a600fa156cd84fa63cdd7056)。原公开站点发布正在准备，部署成功后另记线上验收；不以本地构建或GitHub推送代替线上部署成功证明。
 
 本地浏览器截图：[桌面首页](2026-10-09-liquid-glass/home-desktop.png) · [桌面模型控件](2026-10-09-liquid-glass/model-desktop.jpg) · [375px知识页](2026-10-09-liquid-glass/knowledge-mobile.jpg) · [320px英文暗色](2026-10-09-liquid-glass/model-320-dark-en.png) · [375px英文模型](2026-10-09-liquid-glass/model-mobile-dark-en.png) · [375px首页](2026-10-09-liquid-glass/home-mobile.png)

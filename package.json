@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "tsx server.ts",
     "start": "tsx server.ts",
-    "build": "npm run build:client",
+    "build": "npm run build:sites",
     "build:client": "tsc -b tsconfig.app.json && vite build",
     "build:server": "tsc -p tsconfig.server.json",
     "preview": "vite preview",
     "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc -b tsconfig.app.json --noEmit",
-    "lint": "eslint . --cache --cache-location node_modules/.eslintcache --report-unused-disable-directives"
+    "lint": "eslint . --cache --cache-location node_modules/.eslintcache --report-unused-disable-directives",
+    "build:sites": "node scripts/build-sites.mjs",
+    "test:sites": "node --test --test-isolation=none sites/worker.test.mjs",
+    "verify:sites": "node scripts/verify-sites.mjs https://agridx.xyz"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.14",
@@ -59,7 +62,8 @@
     "sharp": "^0.35.4",
     "typescript": "~5.9",
     "typescript-eslint": "^8",
-    "vite": "^7"
+    "vite": "^7",
+    "esbuild": "^0.28.0"
   },
   "engines": {
     "node": ">=22.19.0"

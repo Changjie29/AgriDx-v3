@@ -1,0 +1,616 @@
+[
+  {
+    "id": "workmaster25-start-hit",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "纽荷兰",
+      "model": "WORKMASTER25",
+      "messages": [
+        {
+          "role": "user",
+          "content": "钥匙在 START，启动电机不转"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 4,
+      "sourceIds": [
+        "SRC-NH-WM25-92157408"
+      ],
+      "entryIds": [
+        "NH-WM25-003",
+        "NH-WM25-004",
+        "NH-WM25-001",
+        "NH-WM25-007"
+      ],
+      "primaryEntryId": "NH-WM25-003",
+      "primarySourceId": "SRC-NH-WM25-92157408",
+      "primaryHeading": "NH-WM25-003｜钥匙在 START，启动电机不转",
+      "requiredEntries": [
+        "NH-WM25-003"
+      ],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "NH-WM25-003",
+        "SRC-NH-WM25-92157408",
+        "SRC-NH-WM25-92157408",
+        "PDF 第 175 页",
+        "启动联锁条件未满足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "john-deere-g4-hit",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "约翰迪尔",
+      "model": "6E-1204(G4)",
+      "messages": [
+        {
+          "role": "user",
+          "content": "不能起动应先区分起动机是否转动"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 3,
+      "sourceIds": [
+        "SRC-JD-6E-G4-OMTR115296"
+      ],
+      "entryIds": [
+        "KB-JD-6E-G4-OMTR115296-004",
+        "KB-JD-6E-G4-OMTR115296-006",
+        "KB-JD-6E-G4-OMTR115296-002"
+      ],
+      "primaryEntryId": "KB-JD-6E-G4-OMTR115296-004",
+      "primarySourceId": "SRC-JD-6E-G4-OMTR115296",
+      "primaryHeading": "KB-JD-6E-G4-OMTR115296-004｜不能起动应先区分起动机是否转动",
+      "requiredEntries": [
+        "KB-JD-6E-G4-OMTR115296-004"
+      ],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "KB-JD-6E-G4-OMTR115296-004",
+        "SRC-JD-6E-G4-OMTR115296"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "unknown-model",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "纽荷兰",
+      "model": "WORKMASTER35",
+      "messages": [
+        {
+          "role": "user",
+          "content": "钥匙在 START，启动电机不转"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 0,
+      "sourceIds": [],
+      "entryIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null,
+      "requiredEntries": [],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "未检索到",
+        "当前资料不足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "workmaster25s-exclusion",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "纽荷兰",
+      "model": "WORKMASTER25S",
+      "messages": [
+        {
+          "role": "user",
+          "content": "钥匙在 START，启动电机不转"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 0,
+      "sourceIds": [],
+      "entryIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null,
+      "requiredEntries": [],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "未检索到",
+        "当前资料不足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "lf1504-national-three-hit",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "东方红",
+      "model": "LF1504",
+      "messages": [
+        {
+          "role": "user",
+          "content": "东方红 LF1504 国三 起动机不转"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 2,
+      "sourceIds": [
+        "SRC-YTO-LF1504-SMLF150449010"
+      ],
+      "entryIds": [
+        "KB-YTO-LF1504-007",
+        "KB-YTO-LF1504-003"
+      ],
+      "primaryEntryId": "KB-YTO-LF1504-007",
+      "primarySourceId": "SRC-YTO-LF1504-SMLF150449010",
+      "primaryHeading": "KB-YTO-LF1504-007｜起动机不转与转动无力要分开记录",
+      "requiredEntries": [
+        "KB-YTO-LF1504-007"
+      ],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "KB-YTO-LF1504-007",
+        "SRC-YTO-LF1504-SMLF150449010"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "lf1504-national-four-conflict",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "东方红",
+      "model": "LF1504",
+      "messages": [
+        {
+          "role": "user",
+          "content": "国四 起动机不转"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 0,
+      "sourceIds": [],
+      "entryIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null,
+      "requiredEntries": [],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "未检索到",
+        "当前资料不足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "john-deere-national-three-conflict",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "约翰迪尔",
+      "model": "6E-1204(G4)",
+      "messages": [
+        {
+          "role": "user",
+          "content": "国三 不能起动"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 0,
+      "sourceIds": [],
+      "entryIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null,
+      "requiredEntries": [],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "未检索到",
+        "当前资料不足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "us-manual-national-four-conflict",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M6060",
+      "messages": [
+        {
+          "role": "user",
+          "content": "国四 DPF消声器周围易燃物检查"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 0,
+      "sourceIds": [],
+      "entryIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null,
+      "requiredEntries": [],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "未检索到",
+        "当前资料不足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "lx2620-cab-hit",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620HSDC",
+      "messages": [
+        {
+          "role": "user",
+          "content": "CAB驾驶室内循环与新风滤网清洁条件 空调冷凝器滤网"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 6,
+      "sourceIds": [
+        "SRC-KB-LX2620-6C82063118"
+      ],
+      "entryIds": [
+        "KB-LX2620-014",
+        "KB-LX2620-015",
+        "KB-LX2620-010",
+        "KB-LX2620-002",
+        "KB-LX2620-009",
+        "KB-LX2620-004"
+      ],
+      "primaryEntryId": "KB-LX2620-014",
+      "primarySourceId": "SRC-KB-LX2620-6C82063118",
+      "primaryHeading": "KB-LX2620-014｜CAB驾驶室内循环与新风滤网清洁条件",
+      "requiredEntries": [
+        "KB-LX2620-014",
+        "KB-LX2620-015"
+      ],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "KB-LX2620-014",
+        "SRC-KB-LX2620-6C82063118"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "lx2620-rops-cab-conflict",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "LX2620HSDC",
+      "messages": [
+        {
+          "role": "user",
+          "content": "ROPS防翻架 内循环与新风滤网 空调冷凝器"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 2,
+      "sourceIds": [
+        "SRC-KB-LX2620-6C82063118"
+      ],
+      "entryIds": [
+        "KB-LX2620-010",
+        "KB-LX2620-002"
+      ],
+      "primaryEntryId": "KB-LX2620-010",
+      "primarySourceId": "SRC-KB-LX2620-6C82063118",
+      "primaryHeading": "KB-LX2620-010｜散热格栅与滤网清洁的停机和装复条件",
+      "requiredEntries": [],
+      "forbiddenEntries": [
+        "KB-LX2620-014",
+        "KB-LX2620-015"
+      ],
+      "replyMustContainForKnowledgeProvider": [
+        "KB-LX2620-010",
+        "SRC-KB-LX2620-6C82063118"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "m6060-cab-rops-conflict",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M6060",
+      "messages": [
+        {
+          "role": "user",
+          "content": "M6060 CAB ROPS位置与安全带使用条件"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 0,
+      "sourceIds": [],
+      "entryIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null,
+      "requiredEntries": [],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "未检索到",
+        "当前资料不足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "m6060-rops-four-drive-hit",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M6060",
+      "messages": [
+        {
+          "role": "user",
+          "content": "久保田 M6060 四驱 ROPS位置与安全带使用条件"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 6,
+      "sourceIds": [
+        "SRC-KB-M6060-3C13199724"
+      ],
+      "entryIds": [
+        "KB-KB-M6060-001",
+        "KB-KB-M6060-003",
+        "KB-KB-M6060-002",
+        "KB-KB-M6060-004",
+        "KB-KB-M6060-006",
+        "KB-KB-M6060-005"
+      ],
+      "primaryEntryId": "KB-KB-M6060-001",
+      "primarySourceId": "SRC-KB-M6060-3C13199724",
+      "primaryHeading": "KB-KB-M6060-001｜ROPS位置与安全带使用条件",
+      "requiredEntries": [
+        "KB-KB-M6060-001"
+      ],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "KB-KB-M6060-001",
+        "SRC-KB-M6060-3C13199724"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "m6060-two-drive-conflict",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M6060",
+      "messages": [
+        {
+          "role": "user",
+          "content": "2WD DPF消声器周围易燃物检查"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 0,
+      "sourceIds": [],
+      "entryIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null,
+      "requiredEntries": [],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "未检索到",
+        "当前资料不足"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "m5-mixed-drive-allowed",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "久保田",
+      "model": "M5-091",
+      "messages": [
+        {
+          "role": "user",
+          "content": "久保田 M5-091 2WD 禁止短接起动端子"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "knowledgeChunks": 2,
+      "sourceIds": [
+        "SRC-KB-M5-3B79199724"
+      ],
+      "entryIds": [
+        "KB-KB-M5-001",
+        "KB-KB-M5-005"
+      ],
+      "primaryEntryId": "KB-KB-M5-001",
+      "primarySourceId": "SRC-KB-M5-3B79199724",
+      "primaryHeading": "KB-KB-M5-001｜起动必须在驾驶座，禁止短接起动端子",
+      "requiredEntries": [
+        "KB-KB-M5-001"
+      ],
+      "forbiddenEntries": [],
+      "replyMustContainForKnowledgeProvider": [
+        "KB-KB-M5-001",
+        "SRC-KB-M5-3B79199724"
+      ],
+      "note": "knowledgeChunks must match exactly. Source IDs and entry IDs are expected retrieval evidence; local knowledge-base replies cite only the primary entry. LLM responses may phrase evidence differently."
+    }
+  },
+  {
+    "id": "multi-turn-brand-model",
+    "request": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "拖拉机启动电机不转"
+        },
+        {
+          "role": "user",
+          "content": "东方红的"
+        },
+        {
+          "role": "user",
+          "content": "LF1504。"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "replyMustContainForKnowledgeProvider": [
+        "KB-YTO-LF1504-007",
+        "SRC-YTO-LF1504-SMLF150449010"
+      ],
+      "knowledgeChunks": 2,
+      "entryIds": [
+        "KB-YTO-LF1504-007",
+        "KB-YTO-LF1504-003"
+      ],
+      "sourceIds": [
+        "SRC-YTO-LF1504-SMLF150449010"
+      ],
+      "primaryEntryId": "KB-YTO-LF1504-007",
+      "primarySourceId": "SRC-YTO-LF1504-SMLF150449010",
+      "primaryHeading": "KB-YTO-LF1504-007｜起动机不转与转动无力要分开记录"
+    }
+  },
+  {
+    "id": "identity-denial",
+    "request": {
+      "brand": "纽荷兰",
+      "model": "WORKMASTER25",
+      "messages": [
+        {
+          "role": "user",
+          "content": "纽荷兰 WORKMASTER25 拖拉机启动电机不转"
+        },
+        {
+          "role": "user",
+          "content": "不是纽荷兰"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "replyMustContainForKnowledgeProvider": [
+        "需要确认机型"
+      ],
+      "forbiddenEntries": [
+        "NH-WM25-003"
+      ],
+      "knowledgeChunks": 0,
+      "entryIds": [],
+      "sourceIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null
+    }
+  },
+  {
+    "id": "no-evidence-reports-local-mode",
+    "request": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "插秧机作业时苗盘卡住"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "replyMustContainForKnowledgeProvider": [
+        "当前资料不足",
+        "当前未启用外部模型"
+      ],
+      "knowledgeChunks": 0,
+      "entryIds": [],
+      "sourceIds": [],
+      "primaryEntryId": null,
+      "primarySourceId": null,
+      "primaryHeading": null
+    }
+  },
+  {
+    "id": "latest-navigation-source",
+    "request": {
+      "machineType": "拖拉机",
+      "brand": "华测",
+      "model": "NX510",
+      "messages": [
+        {
+          "role": "user",
+          "content": "开机 状态栏"
+        }
+      ]
+    },
+    "expected": {
+      "status": 200,
+      "replyMustContainForKnowledgeProvider": [
+        "KB-CHC-NX510-006"
+      ],
+      "forbiddenEntries": [
+        "KB-HONGHU-T70-001"
+      ],
+      "knowledgeChunks": 4,
+      "entryIds": [
+        "KB-CHC-NX510-006",
+        "KB-CHC-NX510-001",
+        "KB-CHC-NX510-003",
+        "KB-CHC-NX510-007"
+      ],
+      "sourceIds": [
+        "SRC-CHC-NX510-FEB2024"
+      ],
+      "primaryEntryId": "KB-CHC-NX510-006",
+      "primarySourceId": "SRC-CHC-NX510-FEB2024",
+      "primaryHeading": "KB-CHC-NX510-006｜开机与快速启用要点"
+    }
+  }
+]

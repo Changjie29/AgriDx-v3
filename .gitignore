@@ -8,3 +8,10 @@ dist-server
 .env
 server/.env
 *.tsbuildinfo
+
+# Checkout-local Sites build and tooling state
+.sites-runtime/
+.wrangler/
+.next/
+next-env.d.ts
+.outputs/
