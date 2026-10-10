@@ -9,10 +9,10 @@
 - 同步源：[AgriDx-v2 `38f5bbba0f484505525a69ebbe394cc6c8601ee0`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)；v3原复制基线：[`4046aa8ff85aaee757dfec1e378953ee311757c9`](https://github.com/Changjie29/AgriDx-v3/commit/4046aa8ff85aaee757dfec1e378953ee311757c9)。同步液态玻璃导航、模型操作栏、四级知识筛选、回退规则、320px英文溢出修正，以及对应最终截图、验证与v2停止部署历史记录；基于现有React/Vite/Express架构，不新增维修事实。
 - 初始化项目版本为3.0.0，更新当前仓库入口、版本说明和协作规则；知识库保留26来源、212条归档条目、221片段及原有来源/适用范围。v2提交链接、历史部署记录和资源署名保留原出处，本轮不修改v2。
 - Changjie29（admin）与jianshiting920-web、jingxinnie0414-dev、bai1022（write）共同改进，2026-10-10已核对v3现有仓库权限；新增贡献指南，采用个人分支、PR审阅和主线统一发布，不预设个人职责。现有未合并[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)（`fix/diagnosis-coordination`）未纳入初始化，保持独立待审。
-- 用户最新授权本轮v3部署；近期v3更新验证完成后默认部署现有GPT/Sites站点，后续由用户安排转到腾讯服务器。v2仍只保存GitHub，旧定时拉取和自动重启流程不启用。
+- 用户先授权本轮GPT/Sites部署，后说明域名正在迁往腾讯，并明确停止发布、继续及时同步v3 GitHub；当前暂停GPT/Sites与腾讯发布，不改DNS或仓库权限/规则，协作规则待后续明确要求。v2仍只保存GitHub，旧定时拉取和自动重启流程不启用。
 - 本轮本地验证：90项测试、类型检查、lint、前后端构建通过，知识索引校验0错误，保留既有警告；文档本地链接与差异检查通过。本地生产HTTP烟测通过：健康接口3.0.0、212条/221片段，首页与JS/CSS返回200，知识目录及来源页正常；WORKMASTER25返回来源和页码，未知型号资料不足、否定旧机型要求重新确认。测试服务禁用外部模型密钥并已停止，未验收真实外部LLM或实车效果。同步脚本语法与主分支拒绝保护、差异检查通过。
-- 本轮GitHub保存与对应提交：进行中，实际推送后补充。
-- 本轮GPT/Sites发布及线上验收：进行中，取得实际回执与运行结果后补充；当前记录不表示v3已上线。
+- GitHub保存：初始化实现[`b87b4da`](https://github.com/Changjie29/AgriDx-v3/commit/b87b4daa416396bf0926f95ad4f73c578344033b)经[PR #2](https://github.com/Changjie29/AgriDx-v3/pull/2)合入主线`4c805bd`；遵循已有PR规则。当前约定与发布回执随同一3.0.0范围补充保存，不另升版。
+- 停止发布要求之前，Sites版本20于上海2026-10-10 13:25:08返回`succeeded`，15项Worker测试通过，发布来源明确指向v3主线及3.0.0；后续不再发布。自定义域名迁移中的线上检查未通过，腾讯部署与真实外部模型未验收，不能据Sites回执宣称腾讯上线。源码、发布ID和验证边界见[3.0.0保存与发布记录](docs/deployment/2026-10-10-v3-initial-status.md)。
 
 ## 2.4.5 — 2026-10-10
 
