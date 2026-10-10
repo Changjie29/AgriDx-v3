@@ -7,7 +7,7 @@
 set -euo pipefail
 
 APP_DIR="/opt/agridx"
-REPO_MIRROR="https://ghfast.top/https://github.com/Changjie29/AgriDx-v2.git"
+REPO_MIRROR="https://ghfast.top/https://github.com/Changjie29/AgriDx-v3.git"
 
 cd "$APP_DIR"
 

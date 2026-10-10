@@ -232,7 +232,7 @@ const content = {
   FOOTER_REFERENCES: [
     { name: { zh: '南京农业大学农机智能诊断团队', en: 'NAU Agricultural Machinery Diagnosis Team' }, href: '#' },
     { name: { zh: '农机资料与适用范围', en: 'Machine documents & applicability' }, href: '/#/knowledge' },
-    { name: { zh: '项目迭代与验证记录', en: 'Project changes & validation' }, href: 'https://github.com/Changjie29/AgriDx-v2/blob/main/CHANGELOG.md' },
+    { name: { zh: '项目迭代与验证记录', en: 'Project changes & validation' }, href: 'https://github.com/Changjie29/AgriDx-v3/blob/main/CHANGELOG.md' },
   ],
   CHAT_QUICK_QUESTIONS: [
     { zh: '拖拉机发动机水温过高怎么办？', en: 'Tractor engine overheating, what to do?' },

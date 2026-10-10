@@ -39,6 +39,8 @@ if (proxyUrl) {
 // ---- 知识库 & LLM ----
 import { loadKnowledgeBase, stats as kbStats } from './knowledge/retriever';
 import { buildSystemPrompt } from './knowledge/systemPrompt';
+import { decideCoordination, coordinationConfig, isDiagnosisMode, ROUTE_MESSAGES, type DiagnosisMode } from './knowledge/coordination';
+import { hasIndexedReference, referenceVerification } from './knowledge/evidence';
 import { generateLocalKnowledgeReply, localReplySummary } from './knowledge/fallbackDiagnosis';
 import { resolveDiagnosticContext } from './knowledge/conversation';
 import { getLlmRouter } from './llm/router';
@@ -95,6 +97,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
     knowledge: kbStats(),
     llm: llm.getStatus(),
+    coordination: coordinationConfig(),
   });
 });
 
@@ -127,16 +130,12 @@ app.get('/api/knowledge/catalog', (req: Request, res: Response) => {
 
 // ---- /api/chat ----
 interface ChatRequestBody {
+  diagnosisMode?: DiagnosisMode;
   messages?: ChatMessage[];
   machineType?: string;
   brand?: string;
   model?: string;
 }
-
-const USER_FRIENDLY_ERROR =
-  process.env.NODE_ENV === 'production'
-    ? '智能诊断服务暂时无法连接，请稍后重试。'
-    : '智能诊断服务暂时无法连接，请稍后重试。';
 
 app.post('/api/chat', async (req: Request, res: Response) => {
   if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
@@ -148,6 +147,10 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     value !== undefined && (typeof value !== 'string' || value.length > 100),
   )) {
     res.status(400).json({ error: '农机类型、品牌和型号必须为字符串（各上限 100 字符）', code: 'bad_request' });
+    return;
+  }
+  if (body.diagnosisMode !== undefined && !isDiagnosisMode(body.diagnosisMode)) {
+    res.status(400).json({ error: '回答模式无效', code: 'bad_request' });
     return;
   }
   const { messages } = body;
@@ -207,60 +210,49 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     locator: chunk.locator,
     version: chunk.version,
     applicability: chunk.applicability,
+    status: chunk.status,
+    referenceVerification: referenceVerification(chunk.status),
+    sourceIndexed: hasIndexedReference(chunk),
   }));
 
   const fullMessages: ChatMessage[] = [systemMsg, ...history];
 
+  const coordination = decideCoordination({ query, currentQuery, scope, retrieved, clarificationNeeded,
+    requestedMode: body.diagnosisMode, llmConfigured: llm.hasAnyConfigured(), llmConfigValid: llm.getStatus().configValid });
+  const sendLocal = (providerFailed = false) => {
+    const route = providerFailed ? { ...coordination, route: 'local' as const, reason: 'provider_unavailable' as const } : coordination;
+    const fallbackReason = providerFailed ? 'provider_unavailable' : route.reason === 'llm_not_configured' ? 'not_configured' : undefined;
+    const needsClarification = route.route === 'clarify';
+    const clarification = route.reason === 'identity_required'
+      ? '**【需要补充】** 请提供品牌和铭牌上的完整型号，再核对故障码或参数。不能用其他型号的数据代替。'
+      : '**【需要确认机型】** 请确认本次设备的品牌和完整型号；确认前暂停引用冲突资料。';
+    const localReply = needsClarification ? clarification : generateLocalKnowledgeReply(query, retrieved, scope, fallbackReason, symptomQuery || currentQuery, false);
+    const summary = needsClarification ? clarification : localReplySummary(symptomQuery, retrieved, scope, fallbackReason ?? 'local_selected');
+    res.json({
+      choices: [{ message: { role: 'assistant', content: localReply } }],
+      model: 'kb-rag-engine (本地知识引擎)', provider: 'knowledge-base',
+      fellBack: Boolean(fallbackReason), ...(fallbackReason ? { fallbackReason } : {}),
+      knowledgeChunks: retrieved.length, knowledgeSources, answerMode: 'local-evidence',
+      localSummary: summary, coordination: route, coordinationMessage: ROUTE_MESSAGES[route.reason],
+    });
+  };
+  if (coordination.route !== 'ai') {
+    sendLocal();
+    return;
+  }
   try {
-    if (!llm.hasAnyConfigured()) {
-      // 未配置外部 API key 时，返回带来源的知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'not_configured', currentQuery, clarificationNeeded);
-      res.json({
-        choices: [{ message: { role: 'assistant', content: localReply } }],
-        model: 'kb-rag-engine (本地知识引擎)',
-        provider: 'knowledge-base',
-        fellBack: true,
-        knowledgeChunks: retrieved.length,
-        knowledgeSources,
-        answerMode: 'local-evidence',
-        fallbackReason: 'not_configured',
-        localSummary: localReplySummary(symptomQuery, retrieved, scope, 'not_configured', clarificationNeeded),
-      });
-      return;
-    }
-
     const outcome = await llm.chat(fullMessages);
-    // 返回 OpenAI 兼容结构 + 附加 provider/model/knowledge 元信息
     res.json({
       choices: [{ message: { role: 'assistant', content: outcome.result.content } }],
-      model: outcome.result.model,
-      provider: outcome.result.provider,
-      fellBack: outcome.fellBack,
-      knowledgeChunks: retrieved.length,
-      knowledgeSources,
-      answerMode,
+      model: outcome.result.model, provider: outcome.result.provider, fellBack: outcome.fellBack,
+      knowledgeChunks: retrieved.length, knowledgeSources, answerMode,
+      coordination, coordinationMessage: ROUTE_MESSAGES[coordination.reason],
     });
   } catch (err) {
-    if (err instanceof ProviderError) {
-      console.warn(`[chat] provider error: ${err.provider}/${err.kind}`);
-      // 服务提供商错误时，返回带来源的本地知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'provider_unavailable', currentQuery, clarificationNeeded);
-      res.json({
-        choices: [{ message: { role: 'assistant', content: localReply } }],
-        model: 'kb-rag-fallback (本地备用引擎)',
-        provider: 'knowledge-base',
-        fellBack: true,
-        knowledgeChunks: retrieved.length,
-        knowledgeSources,
-        answerMode: 'local-evidence',
-        fallbackReason: 'provider_unavailable',
-        localSummary: localReplySummary(symptomQuery, retrieved, scope, 'provider_unavailable', clarificationNeeded),
-      });
-      return;
-    }
-    console.error('[chat] unexpected error:', err);
-    res.status(502).json({ error: USER_FRIENDLY_ERROR, code: 'llm_unavailable' });
+    console.warn('[chat] model call failed:', err instanceof ProviderError ? err.kind : 'unknown');
+    sendLocal(true);
   }
+
 });
 
 // ---- 3D 模型 ----

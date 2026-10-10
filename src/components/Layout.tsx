@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { Menu, X, MessageSquare, Sun, Moon, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LiquidGlass } from '@sohumsuthar/liquid-glass';
+import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useLang, setLang } from '@/hooks/useLang';
 
@@ -30,6 +31,10 @@ export function Layout() {
   const lang = useLang();
   const location = useLocation();
   const navigate = useNavigate();
+  const reducedMotion = useReducedMotion();
+  const indicatorTransition = reducedMotion
+    ? { duration: 0 }
+    : { type: 'spring' as const, stiffness: 410, damping: 34, mass: 0.7 };
 
   useEffect(() => {
     setMobileOpen(false);
@@ -50,7 +55,7 @@ export function Layout() {
   const handleHashNav = (hash: string) => {
     setMobileOpen(false);
     if (location.pathname === '/') {
-      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById(hash)?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
     } else {
       // 非首页：先回首页，再由 HomePage 按 state.scrollTo 滚动到对应区块。
       // 不用 `/#${hash}` 锚点写法，避免与 HashRouter 的路由 hash 冲突。
@@ -65,11 +70,10 @@ export function Layout() {
       <header className="site-header sticky top-0 z-50 w-full">
         <LiquidGlass
           variant="regular"
-          interactive
           lens
           lensOptions={{ bezel: 7, refraction: 0.32, dispersion: 0.8 }}
           className="site-nav-glass"
-          contentClassName="flex min-h-16 w-full items-center justify-between gap-2 px-3 md:px-5"
+          contentClassName="site-nav-content flex min-h-16 w-full items-center justify-between gap-2 px-3 md:px-5"
         >
           {/* Logo */}
           <div className="brand-lockup flex items-center gap-3">
@@ -80,16 +84,16 @@ export function Layout() {
           </div>
 
           {/* 桌面端导航 */}
-          <nav className="hidden items-center gap-6 lg:flex">
+          <nav className="site-navigation hidden items-center gap-1 lg:flex" aria-label={lang === 'zh' ? '主导航' : 'Main navigation'}>
             {NAV_ITEMS.map((item) =>
               item.hash ? (
                 <button
+                  type="button"
                   key={item.hash}
                   onClick={() => handleHashNav(item.hash!)}
-                  className="group relative text-sm text-muted-foreground transition-colors hover:text-primary"
+                  className="site-nav-item press-control text-muted-foreground"
                 >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-primary transition-all duration-300 group-hover:w-full" />
+                  <span className="site-nav-label">{item.label}</span>
                 </button>
               ) : (
                 <NavLink
@@ -98,26 +102,21 @@ export function Layout() {
                   end={item.path === '/'}
                   className={({ isActive }) =>
                     cn(
-                      'group relative text-sm transition-colors hover:text-primary',
-                      isActive ? 'text-primary font-semibold' : 'text-muted-foreground',
+                      'site-nav-item press-control',
+                      isActive ? 'is-active text-primary font-semibold' : 'text-muted-foreground',
                     )
                   }
                 >
                   {({ isActive }) => (
                     <>
-                      {item.label}
-                      <span
-                        className={cn(
-                          'absolute -bottom-1 left-0 h-0.5 rounded-full bg-primary transition-all duration-300',
-                          isActive ? 'w-full' : 'w-0 group-hover:w-full',
-                        )}
-                      />
+                      {isActive && <motion.span className="site-nav-indicator" layoutId="desktop-nav-selection" transition={indicatorTransition} aria-hidden="true" />}
+                      <span className="site-nav-label">{item.label}</span>
                     </>
                   )}
                 </NavLink>
               ),
             )}
-            <Button asChild size="sm" className="gap-1.5">
+            <Button asChild size="sm" className="site-diagnosis-button press-control ml-2 gap-1.5">
               <NavLink to="/chat">
                 <MessageSquare className="h-4 w-4" />
                 {chatLabel}
@@ -126,27 +125,30 @@ export function Layout() {
           </nav>
 
           {/* 右侧工具按钮（主题 + 语言 + 移动端菜单） */}
-          <div className="flex items-center gap-2">
+          <div className="site-tools flex items-center gap-2">
             <button
+              type="button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:bg-accent hover:text-primary hover:scale-105"
-              aria-label="切换主题"
-              title={theme === 'dark' ? '切到亮色' : '切到暗色'}
+              className="site-tool-button lg-nav-btn press-control flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground"
+              aria-label={lang === 'zh' ? '切换主题' : 'Switch theme'}
+              title={theme === 'dark' ? (lang === 'zh' ? '切到亮色' : 'Use light theme') : (lang === 'zh' ? '切到暗色' : 'Use dark theme')}
             >
               {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
             <button
+              type="button"
               onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
-              className="flex h-9 items-center gap-1 rounded-full border border-border px-3 text-xs font-medium text-muted-foreground transition-all hover:bg-accent hover:text-primary hover:scale-105"
-              aria-label="切换语言"
+              className="site-tool-button lg-nav-btn press-control flex h-9 items-center gap-1 rounded-full border border-border px-3 text-xs font-medium text-muted-foreground"
+              aria-label={lang === 'zh' ? '切换语言' : 'Switch language'}
             >
               <Globe className="h-4 w-4" />
               {lang === 'zh' ? 'EN' : '中'}
             </button>
             <button
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-border lg:hidden"
+              type="button"
+              className="site-tool-button lg-nav-btn press-control flex h-9 w-9 items-center justify-center rounded-full border border-border lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="菜单"
+              aria-label={lang === 'zh' ? '菜单' : 'Menu'}
               aria-expanded={mobileOpen}
               aria-controls="mobile-navigation"
             >
@@ -157,14 +159,15 @@ export function Layout() {
 
         {/* 移动端导航抽屉（非玻璃，避免玻璃嵌套失效） */}
         {mobileOpen && (
-          <div id="mobile-navigation" className="mt-2 rounded-2xl border border-border/60 bg-card/90 shadow-lg backdrop-blur-xl lg:hidden">
-            <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3">
+          <div id="mobile-navigation" className="site-mobile-menu mt-2 rounded-2xl border border-border/60 bg-card shadow-lg lg:hidden">
+            <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-3 py-3" aria-label={lang === 'zh' ? '移动端主导航' : 'Mobile navigation'}>
               {NAV_ITEMS.map((item) =>
                 item.hash ? (
                   <button
+                    type="button"
                     key={item.hash}
                     onClick={() => handleHashNav(item.hash!)}
-                    className="rounded-md px-3 py-2 text-left text-sm text-muted-foreground hover:bg-accent hover:text-primary"
+                    className="site-mobile-item press-control rounded-xl px-3 py-3 text-left text-sm text-muted-foreground hover:bg-accent hover:text-primary"
                   >
                     {item.label}
                   </button>
@@ -176,16 +179,16 @@ export function Layout() {
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive }) =>
                       cn(
-                        'rounded-md px-3 py-2 text-sm transition-colors',
-                        isActive ? 'bg-accent text-primary font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-primary',
+                        'site-mobile-item press-control rounded-xl px-3 py-3 text-sm transition-colors',
+                        isActive ? 'text-primary font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-primary',
                       )
                     }
                   >
-                    {item.label}
+                    {({ isActive }) => <>{isActive && <motion.span className="site-mobile-indicator" layoutId="mobile-nav-selection" transition={indicatorTransition} aria-hidden="true" />}<span className="site-nav-label">{item.label}</span></>}
                   </NavLink>
                 ),
               )}
-              <Button asChild size="sm" className="mt-2 gap-1.5">
+              <Button asChild size="sm" className="press-control mt-2 gap-1.5">
                 <NavLink to="/chat" onClick={() => setMobileOpen(false)}>
                   <MessageSquare className="h-4 w-4" />
                   {chatLabel}

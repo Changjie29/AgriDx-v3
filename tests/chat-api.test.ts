@@ -16,6 +16,8 @@ let port: number;
 interface ChatResponse {
   code?: string;
   localSummary?: string;
+  coordination?: { route: string; reason: string; requestedMode: string; effectiveMode: string; evidenceLevel: string };
+  coordinationMessage?: string;
   provider?: string;
   model?: string;
   fellBack?: boolean;
@@ -34,11 +36,15 @@ beforeEach(() => {
   process.env.GEMINI_API_KEY = '';
   process.env.DEEPSEEK_API_KEY = '';
   process.env.LLM_PROVIDER = 'auto';
+  delete process.env.DIAGNOSIS_MODE;
+  delete process.env.ALLOW_EXTERNAL_AI;
 });
 afterEach(() => {
   process.env.GEMINI_API_KEY = '';
   process.env.DEEPSEEK_API_KEY = '';
   process.env.LLM_PROVIDER = 'auto';
+  delete process.env.DIAGNOSIS_MODE;
+  delete process.env.ALLOW_EXTERNAL_AI;
 });
 
 before(async () => {
@@ -221,10 +227,9 @@ test('denied identity pauses retrieval and diagnosis even when stale form fields
   assert.equal(assisted.status, 200);
   assert.equal(assisted.body.knowledgeChunks, 0);
   assert.deepEqual(assisted.body.knowledgeSources, []);
-  assert.ok(sent);
-  assert.match(sent.messages[0].content, /本次咨询对象尚待确认/);
-  assert.match(sent.messages[0].content, /暂停诊断和通用原因分析/);
-  assert.doesNotMatch(sent.messages[0].content, /NH-WM25-003/);
+  assert.equal(sent, undefined, 'identity conflict must never call external AI');
+  assert.equal(assisted.body.provider, 'knowledge-base');
+  assert.match(assisted.body.choices?.[0]?.message.content ?? '', /需要确认机型/);
 });
 
 test('LLM responses carry archived source metadata and receive the server prompt plus history', async (t) => {
@@ -291,6 +296,8 @@ test('two unavailable LLMs return a source-grounded local response with an expli
   assert.equal(response.body.answerMode, 'local-evidence');
   assert.equal(response.body.fellBack, true);
   assert.equal(response.body.fallbackReason, 'provider_unavailable');
+  assert.equal(response.body.coordination?.route, 'local');
+  assert.equal(response.body.coordination?.reason, 'provider_unavailable');
   assert.ok((response.body.knowledgeChunks ?? 0) > 0);
   assert.match(response.body.choices?.[0]?.message.content ?? '', /NH-WM25-003/);
   assert.ok(response.body.knowledgeSources?.some((source) => source.sourceId === 'SRC-NH-WM25-92157408'));
@@ -380,4 +387,144 @@ test('invalid provider preference is visible in health and gracefully serves loc
   assert.equal(response.body.answerMode, 'local-evidence');
   assert.match(response.body.choices?.[0]?.message.content ?? '', /NH-WM25-003/);
   assert.equal(fetch.mock.callCount(), 0);
+});
+
+test('mode validation and knowledge-only produce zero external requests even with a key', async (t) => {
+  process.env.GEMINI_API_KEY = 'integration-fake';
+  const spy = t.mock.method(globalThis, 'fetch', async () => { throw new Error('External request forbidden'); });
+  for (const diagnosisMode of [null, 'invalid', {}, 1]) {
+    assert.equal((await chat({ messages, ...identity, diagnosisMode }, '198.51.100.81')).status, 400);
+  }
+  const result = await chat({ messages, ...identity, diagnosisMode: 'knowledge_only' }, '198.51.100.82');
+  assert.equal(result.body.coordination?.reason, 'local_requested');
+  assert.equal(result.body.provider, 'knowledge-base');
+  assert.equal(result.body.fellBack, false);
+  assert.equal(result.body.fallbackReason, undefined);
+  assert.doesNotMatch(result.body.localSummary ?? '', /连接失败|未启用大模型/);
+  assert.equal(spy.mock.callCount(), 0);
+});
+
+test('server external-AI disable overrides explicit AI-assisted requests', async (t) => {
+  process.env.GEMINI_API_KEY = 'integration-fake';
+  process.env.ALLOW_EXTERNAL_AI = 'false';
+  const spy = t.mock.method(globalThis, 'fetch', async () => { throw new Error('External request forbidden'); });
+  const result = await chat({ messages, ...identity, diagnosisMode: 'ai_assisted' }, '198.51.100.83');
+  assert.equal(result.body.coordination?.effectiveMode, 'knowledge_only');
+  assert.equal(result.body.coordination?.reason, 'server_local_only');
+  assert.equal(spy.mock.callCount(), 0);
+});
+
+test('AI-assisted without a key safely returns local evidence with an explicit reason', async (t) => {
+  const spy = t.mock.method(globalThis, 'fetch', async () => { throw new Error('No key should not call upstream'); });
+  const result = await chat({ messages, ...identity, diagnosisMode: 'ai_assisted' }, '198.51.100.84');
+  assert.equal(result.body.coordination?.reason, 'llm_not_configured');
+  assert.equal(result.body.fallbackReason, 'not_configured');
+  assert.equal(result.body.fellBack, true);
+  assert.equal(spy.mock.callCount(), 0);
+});
+
+test('AI-assisted sends retrieved evidence to a mock model and returns the decision', async (t) => {
+  process.env.GEMINI_API_KEY = 'integration-fake';
+  const spy = t.mock.method(globalThis, 'fetch', async (_url: unknown, init: RequestInit) => {
+    const sent = JSON.parse(init.body as string) as UpstreamRequest;
+    assert.match(sent.messages[0].content, /NH-WM25-003/);
+    assert.match(sent.messages[0].content, /通用分析（待验证）/);
+    return upstreamAnswer('【手册依据】引用资料。\n【通用分析（待验证）】等待补充。');
+  });
+  const result = await chat({ messages, ...identity, diagnosisMode: 'ai_assisted' }, '198.51.100.85');
+  assert.equal(result.body.coordination?.route, 'ai');
+  assert.equal(result.body.coordination?.reason, 'ai_requested');
+  assert.equal(result.body.provider, 'gemini');
+  assert.equal(spy.mock.callCount(), 1);
+});
+
+for (const phase of ['headers', 'body'] as const) {
+  test(`API ${phase} timeout returns local evidence without exposing upstream details`, async t => {
+    process.env.GEMINI_API_KEY = 'integration-timeout-secret';
+    t.mock.method(console, 'warn', () => {});
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    let started!: () => void;
+    const pending = new Promise<void>(resolve => { started = resolve; });
+    const spy = t.mock.method(globalThis, 'fetch', async (_url: unknown, init: RequestInit) => {
+      const stall = () => new Promise<never>((_resolve, reject) => {
+        init.signal?.addEventListener('abort', () => reject(new DOMException('sensitive-timeout-detail', 'AbortError')), { once: true });
+        started();
+      });
+      if (phase === 'headers') return stall();
+      return { ok: true, json: stall } as unknown as Response;
+    });
+    const request = chat({ ...identity, messages, diagnosisMode: 'ai_assisted' }, phase === 'headers' ? '198.51.100.90' : '198.51.100.91');
+    await pending;
+    t.mock.timers.tick(25_000);
+    const response = await request;
+    assert.equal(response.status, 200);
+    assert.equal(response.body.provider, 'knowledge-base');
+    assert.equal(response.body.fallbackReason, 'provider_unavailable');
+    assert.equal(response.body.coordination?.route, 'local');
+    assert.equal(response.body.coordination?.reason, 'provider_unavailable');
+    assert.ok(response.body.knowledgeSources?.some(x => x.entryId === 'NH-WM25-003'));
+    assert.equal(spy.mock.callCount(), 1);
+    assert.doesNotMatch(JSON.stringify(response.body), /sensitive-timeout-detail|integration-timeout-secret/);
+  });
+}
+
+const failures = [
+  { name: 'authentication', respond: () => new Response('sensitive-upstream-detail', { status: 401 }) },
+  { name: 'rate limit', respond: () => new Response('sensitive-upstream-detail', { status: 429 }) },
+  { name: 'server failure', respond: () => new Response('sensitive-upstream-detail', { status: 503 }) },
+  { name: 'network', respond: () => { throw new Error('sensitive-upstream-detail'); } },
+  { name: 'malformed JSON', respond: () => new Response('sensitive-upstream-detail') },
+  { name: 'empty answer', respond: () => upstreamAnswer(' ') },
+];
+for (const [index, failure] of failures.entries()) {
+  test(`API ${failure.name} failure with no backup preserves local citations`, async t => {
+    process.env.GEMINI_API_KEY = 'integration-failure-secret';
+    const warnings: string[] = [];
+    t.mock.method(console, 'warn', (...values: unknown[]) => { warnings.push(values.join(' ')); });
+    const spy = t.mock.method(globalThis, 'fetch', async () => failure.respond());
+    const response = await chat({ ...identity, messages, diagnosisMode: 'auto' }, `198.51.100.${100 + index}`);
+    assert.equal(response.status, 200);
+    assert.equal(response.body.provider, 'knowledge-base');
+    assert.equal(response.body.fellBack, true);
+    assert.equal(response.body.fallbackReason, 'provider_unavailable');
+    assert.equal(response.body.coordination?.reason, 'provider_unavailable');
+    assert.equal(response.body.answerMode, 'local-evidence');
+    assert.match(response.body.choices?.[0]?.message.content ?? '', /SRC-NH-WM25-92157408/);
+    assert.ok(response.body.localSummary);
+    assert.equal(spy.mock.callCount(), 1);
+    assert.doesNotMatch(JSON.stringify(response.body) + warnings.join(' '), /sensitive-upstream-detail|integration-failure-secret/);
+  });
+}
+
+test('API whitespace credentials in every mode avoid upstream calls and preserve source review metadata', async t => {
+  process.env.GEMINI_API_KEY = ' \n ';
+  process.env.DEEPSEEK_API_KEY = ' ';
+  const spy = t.mock.method(globalThis, 'fetch', async () => { throw new Error('No upstream calls allowed'); });
+  for (const diagnosisMode of ['auto', 'knowledge_only', 'ai_assisted']) {
+    const response = await chat({ ...identity, messages, diagnosisMode }, '198.51.100.110');
+    assert.equal(response.status, 200);
+    assert.equal(response.body.coordination?.route, 'local');
+    assert.equal(response.body.coordination?.reason, diagnosisMode === 'knowledge_only' ? 'local_requested' : 'llm_not_configured');
+    const sources = response.body.knowledgeSources as { sourceIndexed: boolean; status: string; referenceVerification: string }[];
+    assert.ok(sources.length > 0);
+    assert.ok(sources.every(x => x.sourceIndexed && x.status && x.referenceVerification));
+  }
+  assert.equal(spy.mock.callCount(), 0);
+});
+
+test('API configuration health and server defaults cannot be bypassed by client mode', async t => {
+  process.env.GEMINI_API_KEY = 'integration-config-secret';
+  const spy = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Invalid configuration must not call AI'); });
+  for (const value of ['knowledge_only', 'invalid']) {
+    process.env.DIAGNOSIS_MODE = value;
+    const health = await requestJson<{ coordination: { defaultMode: string; configValid: boolean; allowExternalAi: boolean } }>('/api/health');
+    assert.equal(health.body.coordination.allowExternalAi, false);
+    assert.equal(health.body.coordination.defaultMode, 'knowledge_only');
+    assert.equal(health.body.coordination.configValid, value === 'knowledge_only');
+    const response = await chat({ ...identity, messages, diagnosisMode: 'ai_assisted' }, '198.51.100.111');
+    assert.equal(response.status, 200);
+    assert.equal(response.body.coordination?.effectiveMode, 'knowledge_only');
+    assert.equal(response.body.coordination?.reason, value === 'knowledge_only' ? 'server_local_only' : 'invalid_config');
+  }
+  assert.equal(spy.mock.callCount(), 0);
 });

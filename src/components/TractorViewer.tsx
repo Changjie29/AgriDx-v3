@@ -8,6 +8,8 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import TractorModel, { TRACTOR_MODEL_URL, type TractorComponent } from './TractorModel';
 import { useLang } from '@/hooks/useLang';
+import { LiquidGlass } from '@sohumsuthar/liquid-glass';
+import '@/control-glass.css';
 
 // 相机初始配置（常量避免重渲染触发重置）
 const CAMERA_CONFIG = { position: [6.5, 4, 6.5] as [number, number, number], fov: 40 };
@@ -96,10 +98,11 @@ function ResizeFrame({ modelRef, fit }: { modelRef: React.RefObject<THREE.Object
  * - 支持鼠标/触屏拖拽旋转、滚轮缩放
  * - WebGL 不可用时降级为占位提示
  */
-export default function TractorViewer({ component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL }: { component?: TractorComponent; exploded?: boolean; modelUrl?: string }) {
+export default function TractorViewer({ component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL, controls = false }: { component?: TractorComponent; exploded?: boolean; modelUrl?: string; controls?: boolean }) {
   const lang = useLang();
   const [view, setView] = useState<View>('isometric');
-  const [autoRotate, setAutoRotate] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  // 无控制栏的首页预览保持静止，避免移除暂停入口后出现无法停止的自转。
+  const [autoRotate, setAutoRotate] = useState(() => controls && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglSupported, setWebglSupported] = useState(true);
   const [modelError, setModelError] = useState<string | null>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
@@ -357,15 +360,18 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
           ? lang === 'zh' ? '原创结构示意 · 非实机 CAD' : 'Original schematic · Not machine CAD'
           : lang === 'zh' ? '本地模型 · 尺寸待核验' : 'Local model · Dimensions unverified'}
       </div>
-      <button type="button" onClick={() => setAutoRotate(value => !value)} aria-label={lang === 'zh' ? autoRotate ? '暂停自转' : '开启自转' : autoRotate ? 'Pause rotation' : 'Start rotation'} aria-pressed={autoRotate} className="absolute right-3 top-3 rounded-full border border-border/50 bg-card/85 p-2 text-muted-foreground backdrop-blur hover:text-primary">
-        {autoRotate ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
-      </button>
-      <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-border/50 bg-card/90 p-1 shadow-sm backdrop-blur">
-        {VIEWS.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)} className={`shrink-0 whitespace-nowrap rounded-full px-2 py-1.5 text-[11px] transition sm:px-3 ${view === item.id ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-primary'}`}>
-          {lang === 'zh' ? item.zh : item.en}
-        </button>)}
-        <button type="button" aria-label={lang === 'zh' ? '恢复模型视角' : 'Reset model view'} onClick={() => { setView('isometric'); if (modelObjectRef.current) fitCameraToModel(modelObjectRef.current); }} className="shrink-0 rounded-full p-2 text-muted-foreground hover:text-primary"><RotateCcw className="size-3" /></button>
-      </div>
+      {controls && <div className="model-control-shell" role="group" aria-label={lang === 'zh' ? '模型视角与旋转控制' : 'Model view and rotation controls'}><LiquidGlass variant="regular" className="model-control-glass lg-blur-only" contentClassName="model-control-content">
+        <button type="button" onClick={() => setAutoRotate(value => !value)} aria-label={lang === 'zh' ? autoRotate ? '暂停自转' : '开启自转' : autoRotate ? 'Pause rotation' : 'Start rotation'} aria-pressed={autoRotate} className="model-icon-button">
+          {autoRotate ? <Pause size={16} /> : <Play size={16} />}
+        </button>
+        <div className="model-view-segment" role="group" aria-label={lang === 'zh' ? '选择模型视角' : 'Select model view'}>
+          <span className="model-view-indicator" aria-hidden="true" style={{ transform: `translateX(${VIEWS.findIndex(item => item.id === view) * 100}%)` }} />
+          {VIEWS.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)} className="model-view-button">
+            {lang === 'zh' ? item.zh : item.en}
+          </button>)}
+        </div>
+        <button type="button" aria-label={lang === 'zh' ? '恢复模型视角' : 'Reset model view'} onClick={() => { setView('isometric'); if (modelObjectRef.current) fitCameraToModel(modelObjectRef.current); }} className="model-icon-button"><RotateCcw size={16} /></button>
+      </LiquidGlass></div>}
       <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-muted-foreground/70">
         {lang === 'zh' ? '拖动旋转 · 滚轮缩放' : 'Drag to rotate · Scroll to zoom'}
       </div>

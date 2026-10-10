@@ -5,6 +5,8 @@ import remarkGfm from 'remark-gfm';
 import { useLang } from '@/hooks/useLang';
 import { useKnowledgeCatalog } from '@/hooks/useKnowledgeCatalog';
 import type { CatalogEntry } from '@shared/knowledge-catalog';
+import { LiquidGlass } from '@sohumsuthar/liquid-glass';
+import '@/control-glass.css';
 
 const INFORMATION_TYPES = new Set(['资料索引', '资料核验', '机型资料', '资料缺口', '系统适用边界']);
 
@@ -53,7 +55,8 @@ export default function KnowledgePage() {
         ].map(([value, label]) => <div key={String(label)}><strong>{typeof value === 'number' ? value.toLocaleString() : '—'}</strong><span>{label}</span></div>)}
       </div>
 
-      <section className="catalog-browser" aria-labelledby="catalog-select-heading">
+      <section className="catalog-filter-section" aria-labelledby="catalog-select-heading">
+        <LiquidGlass variant="regular" className="catalog-browser catalog-filter-glass lg-blur-only" contentClassName="catalog-filter-content">
         <div className="catalog-browser-top"><h2 id="catalog-select-heading"><Search size={18} />{t('找到你的农机', 'Find your machine')}</h2><button onClick={() => setParams({})} className="catalog-reset">{t('重置选择', 'Reset selection')}</button></div>
         <div className="catalog-selectors">
           <label><span>01 {t('品牌', 'Brand')}</span><select aria-label={t('知识浏览品牌', 'Knowledge brand')} value={brand?.id || ''} onChange={event => updateFilter('brand', event.target.value)} disabled={loading}><option value="">{t('选择品牌', 'Choose a brand')}</option>{catalog?.brands.map(item => <option key={item.id} value={item.id}>{item.name} · {item.entryCount}{t(' 条', ' entries')}</option>)}</select></label>
@@ -61,6 +64,7 @@ export default function KnowledgePage() {
           <label><span>03 {t('组件', 'Component')}</span><select aria-label={t('知识浏览组件', 'Knowledge component')} value={component?.id || ''} onChange={event => updateFilter('component', event.target.value)} disabled={!model || loading}><option value="">{t('查看全部组件', 'All components')}</option>{model?.components.map(item => <option key={item.id} value={item.id}>{item.name} · {item.entryCount ? t(`${item.entryCount} 条`, `${item.entryCount} entries`) : t('待补资料', 'Missing evidence')}</option>)}</select></label>
           <label><span>04 {t('零部件', 'Part')}</span><select aria-label={t('知识浏览零部件', 'Knowledge part')} value={part?.id || ''} onChange={event => updateFilter('part', event.target.value)} disabled={!component || !component.parts.length || loading}><option value="">{component && !component.parts.length ? t('待细分零部件', 'Parts not yet identified') : t('查看全部零部件', 'All identified parts')}</option>{component?.parts.map(item => <option key={item.id} value={item.id}>{item.name} · {item.entryCount}{t(' 条', ' entries')}</option>)}</select></label>
         </div>
+        </LiquidGlass>
       </section>
 
       {loading && <div className="catalog-state" role="status"><Loader2 className="animate-spin" size={24} /><p>{t('读取适用资料与覆盖范围…', 'Loading documents and coverage…')}</p></div>}

@@ -22,6 +22,8 @@ export interface KnowledgeChunk {
   text: string;
   entryId?: string;
   sourceId?: string;
+  /** Bound by the archive loader after checking the entry, source and section. */
+  indexedReference?: Readonly<{ entryId: string; sourceId: string }>;
   brand?: string;
   model?: string;
   models?: string[];

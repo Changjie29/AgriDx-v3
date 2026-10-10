@@ -11,7 +11,7 @@
 #   2) 域名 A 记录已指向本机公网 IP（改完 DNS 再跑本脚本）。
 #
 # 完成后验证：
-#   curl -s https://agridx.xyz/api/health          # 应返回版本 2.2.5 与知识库计数
+#   curl -s https://agridx.xyz/api/health          # 应返回 package.json 当前版本与知识库计数
 #   curl -s -o /dev/null -w '%{http_code}\n' https://agridx.xyz/   # 200
 # =============================================================
 set -euo pipefail
@@ -21,9 +21,9 @@ EMAIL="${2:-}"
 
 APP_DIR="/opt/agridx"
 APP_USER="agridx"
-REPO_URL="https://github.com/Changjie29/AgriDx-v2.git"
+REPO_URL="https://github.com/Changjie29/AgriDx-v3.git"
 # 若 GitHub 直连不稳，可改用镜像：
-REPO_MIRROR="https://ghfast.top/https://github.com/Changjie29/AgriDx-v2.git"
+REPO_MIRROR="https://ghfast.top/https://github.com/Changjie29/AgriDx-v3.git"
 PORT=3000
 
 [ "$(id -u)" -eq 0 ] || { echo "请用 sudo 运行：sudo bash $0 $DOMAIN"; exit 1; }

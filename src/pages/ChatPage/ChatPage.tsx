@@ -22,6 +22,9 @@ import content, { pick } from '@/data/content';
 import { useLang } from '@/hooks/useLang';
 
 type ChatProvider = 'gemini' | 'deepseek' | 'knowledge-base';
+type DiagnosisMode = 'auto' | 'knowledge_only' | 'ai_assisted';
+const isDiagnosisMode = (value: unknown): value is DiagnosisMode => value === 'auto' || value === 'knowledge_only' || value === 'ai_assisted';
+
 type AnswerMode = 'knowledge-grounded' | 'general-guidance' | 'local-evidence';
 type FallbackReason = 'not_configured' | 'provider_unavailable';
 
@@ -40,6 +43,7 @@ interface ChatMessage {
   fallbackReason?: FallbackReason;
   knowledgeChunks?: number;
   localSummary?: string;
+  coordinationMessage?: string;
 }
 
 function isChatProvider(value: unknown): value is ChatProvider {
@@ -81,6 +85,7 @@ function loadHistory(): ChatMessage[] {
           typeof m.content === 'string' && (m.role === 'user' || m.role === 'assistant')
         ).slice(-100).map((m) => ({
           id: m.id, role: m.role, content: m.content,
+          coordinationMessage: typeof m.coordinationMessage === 'string' && m.coordinationMessage.length < 500 ? m.coordinationMessage : undefined,
           localSummary: typeof m.localSummary === 'string' && m.localSummary.length <= 4000 ? m.localSummary : undefined,
           model: typeof m.model === 'string' ? m.model : undefined,
           provider: isChatProvider(m.provider) ? m.provider : undefined,
@@ -129,6 +134,8 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentModel, setCurrentModel] = useState<string>('');
   const [currentProvider, setCurrentProvider] = useState<ChatProvider | ''>('');
+  const [diagnosisMode, setDiagnosisMode] = useState<DiagnosisMode>('auto');
+  const [externalAllowed, setExternalAllowed] = useState(true);
   const [currentFallbackReason, setCurrentFallbackReason] = useState<FallbackReason | undefined>();
   const [llmHealth, setLlmHealth] = useState<LlmHealth | 'checking' | 'unknown'>('checking');
   const [machineType, setMachineType] = useState<string>(() => typeof handoff?.machineType === 'string' ? (MACHINE_TYPES_ZH.includes(handoff.machineType) ? handoff.machineType : '') : loadMeta().machineType);
@@ -153,6 +160,8 @@ export default function ChatPage() {
         const data = await response.json();
         if (typeof data?.llm?.configured !== 'boolean') throw new Error('Unknown LLM configuration');
         if (active) {
+          if (isDiagnosisMode(data?.coordination?.defaultMode)) setDiagnosisMode(data.coordination.defaultMode);
+          if (data?.coordination?.allowExternalAi === false) { setExternalAllowed(false); setDiagnosisMode('knowledge_only'); }
           setLlmHealth({
             configured: data.llm.configured,
             primary: data.llm.primary === 'gemini' || data.llm.primary === 'deepseek' ? data.llm.primary : null,
@@ -224,6 +233,7 @@ export default function ChatPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             messages: [...historyForApi, { role: 'user' as const, content: trimmed }],
+            diagnosisMode,
             machineType: machineType || undefined,
             brand: brand || undefined,
             model: model || undefined,
@@ -239,11 +249,13 @@ export default function ChatPage() {
         let fallbackReason: FallbackReason | undefined;
         let knowledgeChunks: number | undefined;
         let localSummary: string | undefined;
+        let coordinationMessage: string | undefined;
         if (response.ok) {
           const data = await response.json();
           const result = data?.choices?.[0]?.message?.content;
           if (typeof result !== 'string' || !result.trim()) throw new Error('Empty response');
           reply = result;
+          coordinationMessage = typeof data.coordinationMessage === 'string' && data.coordinationMessage.length < 500 ? data.coordinationMessage : undefined;
           localSummary = data.provider === 'knowledge-base' && typeof data.localSummary === 'string' && data.localSummary.length <= 4000 ? data.localSummary : undefined;
           modelName = typeof data?.model === 'string' ? data.model : '';
           provider = isChatProvider(data?.provider) ? data.provider : '';
@@ -269,6 +281,7 @@ export default function ChatPage() {
                   role: reply && response.ok ? ('assistant' as const) : ('error' as const),
                   content: reply,
                   localSummary,
+                  coordinationMessage,
                   model: modelName || undefined,
                   provider: provider || undefined,
                   answerMode,
@@ -304,7 +317,7 @@ export default function ChatPage() {
         }
       }
     },
-    [messages, machineType, brand, model, t],
+    [messages, machineType, brand, model, diagnosisMode, t],
   );
 
   const handleSubmit = useCallback(
@@ -525,6 +538,7 @@ export default function ChatPage() {
                   <div className="whitespace-pre-wrap">{msg.content}</div>
                 ) : (
                   <div className="prose prose-sm max-w-none overflow-x-auto dark:prose-invert">
+                    {msg.coordinationMessage && <p className="text-xs text-muted-foreground">{msg.coordinationMessage}</p>}
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.localSummary || msg.content}</ReactMarkdown>
                     {msg.localSummary && (
                       <details className="mt-3 rounded-lg border border-border/50 p-3">
@@ -564,6 +578,19 @@ export default function ChatPage() {
         contentClassName="border-t border-border/60 px-4 py-4 md:px-6"
       >
         <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
+          <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
+            <label htmlFor="diagnosis-mode">{t('回答方式', 'Answer mode')}</label>
+            <select id="diagnosis-mode" value={diagnosisMode} disabled={isLoading || !externalAllowed || llmHealth === 'checking'}
+              onChange={e => { if (isDiagnosisMode(e.target.value)) setDiagnosisMode(e.target.value); }}
+              className="rounded-md border border-border bg-background px-2 py-1">
+              <option value="auto">{t('自动协调', 'Automatic')}</option>
+              <option value="knowledge_only">{t('仅知识库', 'Knowledge only')}</option>
+              <option value="ai_assisted">{t('AI 辅助', 'AI assisted')}</option>
+            </select>
+            <span className="text-xs text-muted-foreground">{!externalAllowed
+              ? t('网站已关闭外部 AI', 'External AI is disabled for this site')
+              : t('未配置 AI 时自动返回本地资料', 'Returns local evidence when AI is not configured')}</span>
+          </div>
           <div className="flex items-end gap-2">
             <Textarea
               aria-label={t('故障描述', 'Fault description')}

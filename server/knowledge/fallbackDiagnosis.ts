@@ -97,11 +97,11 @@ ${describeSource(primary)}
 /** Short default view; the complete quotation and applicability conditions remain expandable. */
 export function localReplySummary(
   symptom: string, retrieved: KnowledgeChunk[], scope: RetrievalContext,
-  reason: 'not_configured' | 'provider_unavailable', clarificationNeeded = false,
+  reason: 'not_configured' | 'provider_unavailable' | 'local_selected', clarificationNeeded = false,
 ): string {
   const status = reason === 'not_configured'
     ? '当前未启用大模型，本次只有本地检索，没有模型补充分析。'
-    : '大模型本次连接失败，暂时展示本地检索结果。';
+    : reason === 'local_selected' ? '本次直接使用本地资料，未调用外部 AI。' : '大模型本次连接失败，暂时展示本地检索结果。';
   const known = [scope.brand, scope.model].filter(Boolean).join(' ');
   const plain = (value: string) => value.replace(/[\r\n]+/g, ' ').replace(/[<>]/g, '');
   const primary = retrieved.find(chunk => chunk.entryId);
