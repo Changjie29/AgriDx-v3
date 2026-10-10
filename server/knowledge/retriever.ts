@@ -106,7 +106,7 @@ export function loadKnowledgeBase(): { fileCount: number; chunkCount: number } {
       if (rel.replace(/\\/g, '/').startsWith('00_说明/')) continue;
       const abs = path.join(KB_ROOT, rel);
       const content = fs.readFileSync(abs, 'utf-8');
-      chunks.push(...splitByHeading(rel, content));
+      chunks.push(...splitByHeading(rel.replace(/\\/g, '/'), content));
       fileCount++;
     }
   } catch (e) {

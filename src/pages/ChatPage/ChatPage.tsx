@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
+import { useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
 import { Send, Trash2, Loader2, Bot, User, Sparkles, Cpu, Square } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -21,95 +21,14 @@ import { Link, useLocation } from 'react-router-dom';
 import content, { pick } from '@/data/content';
 import { useLang } from '@/hooks/useLang';
 
-type ChatProvider = 'gemini' | 'deepseek' | 'knowledge-base';
-type AnswerMode = 'knowledge-grounded' | 'general-guidance' | 'local-evidence';
-type FallbackReason = 'not_configured' | 'provider_unavailable';
-
-interface LlmHealth {
-  configured: boolean;
-  primary: 'gemini' | 'deepseek' | null;
-}
-
-interface ChatMessage {
-  id: string;
-  role: 'user' | 'assistant' | 'error' | 'loading';
-  content: string;
-  model?: string;
-  provider?: ChatProvider;
-  answerMode?: AnswerMode;
-  fallbackReason?: FallbackReason;
-  knowledgeChunks?: number;
-}
-
-function isChatProvider(value: unknown): value is ChatProvider {
-  return value === 'gemini' || value === 'deepseek' || value === 'knowledge-base';
-}
-
-function isAnswerMode(value: unknown): value is AnswerMode {
-  return value === 'knowledge-grounded' || value === 'general-guidance' || value === 'local-evidence';
-}
-
-function isFallbackReason(value: unknown): value is FallbackReason {
-  return value === 'not_configured' || value === 'provider_unavailable';
-}
-
-function isKnowledgeChunkCount(value: unknown): value is number {
-  return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
-}
-
-const STORAGE_KEY = '__app_srt27_chat_history';
-const META_KEY = '__app_srt27_chat_meta';
-
-// 农机类型选项（轻量，不强制）
-const MACHINE_TYPES_ZH = ['拖拉机', '联合收割机', '插秧机', '植保机', '新能源农机', '无人农机', '其他'];
-const MACHINE_TYPES_EN = ['Tractor', 'Combine', 'Transplanter', 'Sprayer', 'New-energy', 'Autonomous', 'Other'];
-
-function generateId() {
-  return `msg_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-}
-
-function loadHistory(): ChatMessage[] {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return [];
-    const parsed = JSON.parse(saved);
-    // 关闭页面时若正在请求，localStorage 里可能残留 loading/error 占位消息；恢复时丢弃
-    return Array.isArray(parsed)
-      ? parsed.filter((m): m is ChatMessage =>
-          m !== null && typeof m === 'object' && typeof m.id === 'string' &&
-          typeof m.content === 'string' && (m.role === 'user' || m.role === 'assistant')
-        ).slice(-100).map((m) => ({
-          id: m.id, role: m.role, content: m.content,
-          model: typeof m.model === 'string' ? m.model : undefined,
-          provider: isChatProvider(m.provider) ? m.provider : undefined,
-          answerMode: isAnswerMode(m.answerMode) ? m.answerMode : undefined,
-          fallbackReason: isFallbackReason(m.fallbackReason) ? m.fallbackReason : undefined,
-          knowledgeChunks: isKnowledgeChunkCount(m.knowledgeChunks) ? m.knowledgeChunks : undefined,
-        }))
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-function loadMeta(): { machineType: string; brand: string; model: string } {
-  try {
-    const meta = localStorage.getItem(META_KEY);
-    if (!meta) return { machineType: '', brand: '', model: '' };
-    const m = JSON.parse(meta);
-    return {
-      machineType: typeof m?.machineType === 'string' ? (MACHINE_TYPES_ZH[MACHINE_TYPES_EN.indexOf(m.machineType)] || m.machineType) : '',
-      brand: typeof m?.brand === 'string' ? m.brand : '',
-      model: typeof m?.model === 'string' ? m.model : '',
-    };
-  } catch {
-    return { machineType: '', brand: '', model: '' };
-  }
-}
+import type { AnswerMode, ChatProvider, FallbackReason } from '@shared/chat';
+import { MACHINE_TYPES_ZH, MACHINE_TYPES_EN } from '@/features/chat/session';
+import { useChatSession } from '@/features/chat/useChatSession';
+import { useLlmHealth } from '@/features/chat/useLlmHealth';
 
 export default function ChatPage() {
   const location = useLocation();
-  const handoff = location.state as { machineType?: unknown; brand?: unknown; model?: unknown; question?: unknown } | null;
+  const handoff: unknown = location.state;
   const lang = useLang();
   const t = useCallback((zh: string, en: string) => (lang === 'zh' ? zh : en), [lang]);
   const providerLabel = (provider?: ChatProvider) =>
@@ -122,66 +41,15 @@ export default function ChatPage() {
   const fallbackLabel = (reason?: FallbackReason) =>
     reason === 'not_configured' ? t('LLM 未配置，仅使用本地资料', 'LLM not configured; using local evidence') :
     reason === 'provider_unavailable' ? t('模型服务暂不可用，已使用本地资料', 'Model service unavailable; using local evidence') : '';
-  const [messages, setMessages] = useState<ChatMessage[]>(loadHistory);
-  const [input, setInput] = useState(() => typeof handoff?.question === 'string' ? handoff.question.slice(0, 2000) : '');
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentModel, setCurrentModel] = useState<string>('');
-  const [currentProvider, setCurrentProvider] = useState<ChatProvider | ''>('');
-  const [currentFallbackReason, setCurrentFallbackReason] = useState<FallbackReason | undefined>();
-  const [llmHealth, setLlmHealth] = useState<LlmHealth | 'checking' | 'unknown'>('checking');
-  const [machineType, setMachineType] = useState<string>(() => typeof handoff?.machineType === 'string' ? (MACHINE_TYPES_ZH.includes(handoff.machineType) ? handoff.machineType : '') : loadMeta().machineType);
-  const [brand, setBrand] = useState<string>(() => typeof handoff?.brand === 'string' ? handoff.brand.slice(0, 100) : loadMeta().brand);
-  const [model, setModel] = useState<string>(() => typeof handoff?.model === 'string' ? handoff.model.slice(0, 100) : loadMeta().model);
-  const requestRef = useRef<AbortController | null>(null);
-  useEffect(() => () => {
-    requestRef.current?.abort();
-    requestRef.current = null;
-  }, []);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 8_000);
-    let active = true;
-    const checkConfiguration = async () => {
-      try {
-        const response = await fetch('/api/health', { signal: controller.signal });
-        if (!response.ok) throw new Error('Health request failed');
-        const data = await response.json();
-        if (typeof data?.llm?.configured !== 'boolean') throw new Error('Unknown LLM configuration');
-        if (active) {
-          setLlmHealth({
-            configured: data.llm.configured,
-            primary: data.llm.primary === 'gemini' || data.llm.primary === 'deepseek' ? data.llm.primary : null,
-          });
-        }
-      } catch {
-        if (active) setLlmHealth('unknown');
-      } finally {
-        window.clearTimeout(timeout);
-      }
-    };
-    void checkConfiguration();
-    return () => {
-      active = false;
-      window.clearTimeout(timeout);
-      controller.abort();
-    };
-  }, []);
-
-  // 保存历史
-  useEffect(() => {
-    try {
-      if (messages.length > 0) localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.filter((m) => m.role === 'user' || m.role === 'assistant').slice(-100)));
-      else localStorage.removeItem(STORAGE_KEY);
-    } catch { /* ignore */ }
-  }, [messages]);
-  useEffect(() => {
-    try {
-      localStorage.setItem(META_KEY, JSON.stringify({ machineType, brand, model }));
-    } catch { /* ignore */ }
-  }, [machineType, brand, model]);
+  const focusInput = useCallback(() => textareaRef.current?.focus(), []);
+  const {
+    messages, input, setInput, isLoading, currentModel, currentProvider, currentFallbackReason,
+    machineType, setMachineType, brand, setBrand, model, setModel,
+    sendMessage, stopRequest, handleClear,
+  } = useChatSession({ handoff, translate: t, focusInput });
+  const llmHealth = useLlmHealth();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -194,113 +62,6 @@ export default function ChatPage() {
     const timer = window.setTimeout(() => textareaRef.current?.focus(), 100);
     return () => window.clearTimeout(timer);
   }, []);
-
-  const sendMessage = useCallback(
-    async (text: string) => {
-      const trimmed = text.trim();
-      if (!trimmed || trimmed.length > 2000 || requestRef.current) return;
-      const controller = new AbortController();
-      requestRef.current = controller;
-      const timeout = window.setTimeout(() => controller.abort(new DOMException('Timeout', 'TimeoutError')), 60_000);
-
-      const userMsg: ChatMessage = { id: generateId(), role: 'user', content: trimmed };
-      const loadingMsg: ChatMessage = { id: generateId(), role: 'loading', content: '' };
-
-      setMessages((prev) => [...prev, userMsg, loadingMsg]);
-      setInput('');
-      setIsLoading(true);
-
-      try {
-        // 前端只发 user/assistant 历史；system prompt 由后端构造
-        const historyForApi = messages
-          .filter((m) => m.role === 'user' || m.role === 'assistant')
-          .slice(-20)
-          .map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }));
-
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            messages: [...historyForApi, { role: 'user' as const, content: trimmed }],
-            machineType: machineType || undefined,
-            brand: brand || undefined,
-            model: model || undefined,
-          }),
-          // 留足双模型顺序回退及网络传输时间，避免提前中止后端的回退答复。
-          signal: controller.signal,
-        });
-
-        let reply = '';
-        let modelName = '';
-        let provider: ChatProvider | '' = '';
-        let answerMode: AnswerMode | undefined;
-        let fallbackReason: FallbackReason | undefined;
-        let knowledgeChunks: number | undefined;
-        if (response.ok) {
-          const data = await response.json();
-          const result = data?.choices?.[0]?.message?.content;
-          if (typeof result !== 'string' || !result.trim()) throw new Error('Empty response');
-          reply = result;
-          modelName = typeof data?.model === 'string' ? data.model : '';
-          provider = isChatProvider(data?.provider) ? data.provider : '';
-          answerMode = isAnswerMode(data?.answerMode) ? data.answerMode : undefined;
-          fallbackReason = isFallbackReason(data?.fallbackReason) ? data.fallbackReason : undefined;
-          knowledgeChunks = isKnowledgeChunkCount(data?.knowledgeChunks) ? data.knowledgeChunks : undefined;
-        } else {
-          // 后端已脱敏，统一友好文案
-          const errData = await response.json().catch(() => null);
-          reply = (typeof errData?.error === 'string' && errData.error) || t('智能诊断服务暂时无法连接，请稍后重试。', 'AI service unavailable, please try again later.');
-        }
-
-        if (requestRef.current !== controller) return;
-        setCurrentModel(modelName);
-        setCurrentProvider(provider);
-        setCurrentFallbackReason(fallbackReason);
-
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === loadingMsg.id
-              ? {
-                  ...m,
-                  role: reply && response.ok ? ('assistant' as const) : ('error' as const),
-                  content: reply,
-                  model: modelName || undefined,
-                  provider: provider || undefined,
-                  answerMode,
-                  fallbackReason,
-                  knowledgeChunks,
-                }
-              : m,
-          ),
-        );
-      } catch {
-        if (requestRef.current !== controller) return;
-        setCurrentModel('');
-        setCurrentProvider('');
-        setCurrentFallbackReason(undefined);
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === loadingMsg.id
-              ? {
-                  ...m,
-                  role: 'error' as const,
-                  content: t('对话请求未完成，请稍后重试；已有对话仍保留。', 'The chat request did not complete. Please retry; your previous messages are preserved.'),
-                }
-              : m,
-          ),
-        );
-        toast.error(t('对话服务暂不可用', 'Chat service unavailable'));
-      } finally {
-        window.clearTimeout(timeout);
-        if (requestRef.current === controller) {
-          requestRef.current = null;
-          setIsLoading(false);
-          setTimeout(() => textareaRef.current?.focus(), 0);
-        }
-      }
-    },
-    [messages, machineType, brand, model, t],
-  );
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {
@@ -326,24 +87,6 @@ export default function ChatPage() {
     },
     [sendMessage],
   );
-
-  const stopRequest = useCallback(() => {
-    requestRef.current?.abort();
-    requestRef.current = null;
-    setIsLoading(false);
-    setMessages((prev) => prev.filter((m) => m.role !== 'loading'));
-    textareaRef.current?.focus();
-  }, []);
-
-  const handleClear = useCallback(() => {
-    stopRequest();
-    setCurrentModel('');
-    setCurrentProvider('');
-    setCurrentFallbackReason(undefined);
-    setMessages([]);
-    setIsLoading(false);
-    toast.success(t('对话已清空', 'Chat cleared'));
-  }, [t, stopRequest]);
 
   const isEmpty = messages.length === 0;
   const typeOptions = lang === 'zh' ? MACHINE_TYPES_ZH : MACHINE_TYPES_EN;

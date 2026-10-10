@@ -20,7 +20,7 @@ v3由Changjie29与另外三位协作者共同改进。初始3.0.0基线来自Agr
 1. 从v3最新`main`开始，创建自己的任务分支，例如`feature/your-name/topic`或`fix/your-name/topic`；Codex分支默认使用`codex/`前缀。`main`作为共同维护的稳定主线，个人分支通过PR审阅合入。
 2. 使用`npm ci`安装锁定依赖、`npm run dev`启动。API Key仅配置在本机环境或忽略的`.env`、`server/.env`中；无Key也可验证本地知识检索。不要提交密钥、`node_modules/`、`dist/`或临时输出。
 3. 基于现有架构完成范围明确的改动。提交前运行对应验证并检查`git diff --check`，只暂存任务相关文件；更新前刷新远端并检查差异，按版本和任务意图进行更新性覆盖或合并，保留无关成果，不强制推送。
-4. 将任务分支推送到v3并创建PR，说明具体问题、改后行为、实际检查和未验收部分；审阅后合入`main`。`scripts/sync.sh`仅推送当前个人分支中已提交的内容，不自动暂存、提交或部署，并拒绝在`main`执行。遇到冲突先对照diff与双方意图，确定哪些内容保留、哪些由新版本覆盖，再完成合并。
+4. 将任务分支推送到v3并创建PR，说明具体问题、改后行为、实际检查和未验收部分；审阅后合入`main`。`npm run sync`（旧入口`bash scripts/sync.sh`）仅推送当前个人分支中已提交的内容，不自动暂存、提交或部署，并拒绝在`main`执行。遇到冲突先对照diff与双方意图，确定哪些内容保留、哪些由新版本覆盖，再完成合并。
 5. 按最终合入范围协调`package.json`版本、锁文件根版本、README和CHANGELOG：小修升补丁，显著功能或资料扩充升次版本；同轮修正不重复机械升版。历史手册版次、能力定义版本和依赖版本独立维护。
 
 ## 必要验证
@@ -28,13 +28,12 @@ v3由Changjie29与另外三位协作者共同改进。初始3.0.0基线来自Agr
 代码改动按实际范围执行相关检查，主线合入前完成项目基础验证：
 
 ```bash
-npm test
-npm run typecheck
-npm run lint
-npm run build
-npm run build:server
+npm ci
+npm run verify
 git diff --check
 ```
+
+Windows PowerShell 使用`npm.cmd ci`和`npm.cmd run verify`。`verify`覆盖版本一致性、前后端与Vite配置类型、测试、Lint和完整构建；单项命令保留。模块边界见[架构说明](docs/architecture.md)。
 
 界面或交互修改补充桌面与移动浏览器验证；检索修改补充已知型号、未知型号及适用范围冲突的实际问答。真实外部模型调用、生产运行和线上发布分别记录，模拟测试不当作真实服务验收。
 

@@ -1,0 +1,33 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { isMain, main, rootDir } from './lib/process.mjs';
+
+export function validateVersionState({ packageJson, lockJson, readme, changelog }) {
+  const version = packageJson.version;
+  if (typeof version !== 'string' || !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version)) {
+    throw new Error('package.json 必须使用规范的 X.Y.Z 项目版本。');
+  }
+  const recorded = [
+    ['package-lock.json', lockJson.version],
+    ['package-lock.json 根包', lockJson.packages?.['']?.version],
+    ['README 当前版本', readme.match(/当前项目版本[：:]\s*\*\*(\d+\.\d+\.\d+)\*\*/)?.[1]],
+    ['CHANGELOG 最新版本', changelog.match(/^##\s+(\d+\.\d+\.\d+)\b/m)?.[1]],
+  ];
+  for (const [source, actual] of recorded) {
+    if (actual !== version) throw new Error(`${source} 的版本 ${actual ?? '缺失'} 与 ${version} 不一致。`);
+  }
+  return version;
+}
+
+export function checkVersion() {
+  const read = (name) => readFileSync(path.join(rootDir, name), 'utf8');
+  const version = validateVersionState({
+    packageJson: JSON.parse(read('package.json')),
+    lockJson: JSON.parse(read('package-lock.json')),
+    readme: read('README.md'),
+    changelog: read('CHANGELOG.md'),
+  });
+  console.log(`[version] ${version}：package、锁文件、README 与最新日志一致。`);
+}
+
+if (isMain(import.meta.url)) main(checkVersion, 'version');

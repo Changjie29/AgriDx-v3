@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.0.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.0.1**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -25,13 +25,15 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 ### 环境要求
 
 - Node.js ≥ 22.19.0（建议24 LTS）
-- npm ≥ 10
+- npm ≥ 10；本地推荐与 CI 使用 `.node-version` 中的 Node 24
 
 ### 1. 安装依赖
 
 ```bash
-npm install
+npm ci
 ```
+
+若本机 npm 镜像缺少平台包，可仅对本次安装使用 `npm ci --registry=https://registry.npmjs.org`；无需修改全局 npm 配置。
 
 ### 2. 配置 API Key
 
@@ -76,16 +78,19 @@ npm run dev
 ### 4. 检索测试 / 类型检查 / Lint / 构建
 
 ```bash
-npm test            # 知识索引、适用范围过滤、检索与回复回归测试
-npm run typecheck   # 前端 tsc
-npm run lint        # eslint
-npm run build       # 前端类型检查与构建
-npm run build:server # 后端编译检查
+npm run verify       # 版本、前后端类型、测试、Lint 与完整构建
+# 可按需单独运行：
+npm test             # 知识、诊断、API、会话与维护脚本回归
+npm run typecheck    # 前端、Vite 配置与后端类型
+npm run lint
+npm run build        # 前端与后端完整构建
+npm run build:client # 单独构建前端
+npm run build:server # 单独编译后端
 ```
 
 ## 生产部署与验收
 
-以下保留生产运行说明。当前按用户2026-10-10最新要求暂停发布，本轮不连接服务器或执行迁移；完成验证后的改动继续及时保存到v3 GitHub。
+以下保留生产运行说明；后端编译产物仅用于编译验证，生产入口仍为 `tsx server.ts`。当前按用户2026-10-10最新要求暂停发布，本轮不连接服务器或执行迁移；完成验证后的改动继续及时保存到v3 GitHub。
 
 在仓库根目录使用Node.js ≥ 22.19.0（建议24 LTS）。先安装完整依赖并构建前端，再仅保留运行依赖：
 
@@ -98,7 +103,7 @@ NODE_ENV=production PORT=3000 npm start
 
 `npm start`使用运行依赖中的`tsx`执行TypeScript服务入口。启动时必须设置`NODE_ENV=production`，否则会进入需要Vite的开发模式；若主机已固定生产模式，可在进程管理器配置该变量。配置API Key请使用服务器环境变量或既有`server/.env`，不要写入前端或Git。
 
-部署须包含`dist/`、`server.ts`、`server/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
+部署须包含`dist/`、`server.ts`、`server/`、`shared/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
 
 发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/#/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。历史隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。2026-10-04的历史线上核验确认2.2.2、20来源/165条/174片段及型号过滤；2.2.3起改用HashRouter，对话页地址为`/#/chat`，静态托管无需SPA重写即可直接打开/刷新。干净路径`/chat`仍依赖托管层重定向，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
 
@@ -125,7 +130,7 @@ NODE_ENV=production PORT=3000 npm start
    - 归档事实放在【手册依据】，模型一般原理分析另列；通用信息收集清单不作为手册证据；
    - 已填写身份与用户描述冲突时先确认对象，不能继续套用任一机型资料；
    - 用户用什么语言问，就用什么语言答。
-5. 前端只发 user/assistant 历史（截最近 20 轮），不发 system message——system prompt 由后端独占。
+5. 前端只发 user/assistant 历史（保留最近 20 条消息，再附加当前问题），不发 system message——system prompt 由后端独占。
 6. 归档条目保留来源编号、原文定位、来源链接、文档适用范围及核对状态，供外部模型和本地回复引用。仅索引中的编号条目参与检索；归档 README、待补资料、原始 HTML/PDF 不作为诊断知识自动加载。
 
 例如：填写「拖拉机／久保田／LX2620」，询问「发动机启动困难」，可检索 `KB-LX2620-003`。问题改为「东方红LF1504启动困难」而仍保留久保田字段时，停止召回并要求确认咨询对象；问题中的明确品牌、完整型号或农机类型不能被旧字段覆盖。命中归档条目时优先使用对应资料；仅命中通用内容时说明资料不足，不把信息收集清单当维修依据。LLM 可另列通用待验证分析并主动追问，具体参数和专用操作仍须匹配手册；没有配置 Key 时只能提供本地资料和信息收集。填写 `WORKMASTER25S` 时，不会套用仅适用于 `WORKMASTER25` 的条目。未确认市场或配置时仍需依据条目的适用限制核实。
@@ -149,97 +154,30 @@ server/knowledge/
 
 ## 项目结构
 
-```
+```text
 AgriDx-v3/
-├── public/                          # 静态公共资源（构建时原样拷贝到 dist/）
-│   └── models/
-│       ├── tractor-detailed-v1.glb   # 当前原创分组件结构示意（/api/model/tractor 返回同一文件）
-│       ├── tractor-detailed-v1.json  # 网格/三角面/字节元数据
-│       └── tractor.glb              # 保留旧模型与原作者许可信息
-│
-├── src/                              # 前端源码（React 19 + Vite + TypeScript）
-│   ├── index.tsx                     # 应用入口（挂载 React + Router）
-│   ├── app.tsx                      # 路由表（首页、对话、知识、模型；经 HashRouter 呈现为 /#/…）
-│   ├── index.css / tailwind-theme.css / typography.css  # 样式与主题变量
-│   ├── components/
-│   │   ├── Layout.tsx               # 全局布局：顶栏导航 + 主题/语言切换 + Outlet
-│   │   ├── TractorViewer.tsx       # 3D 查看器（R3F Canvas + OrbitControls + 自转）
-│   │   ├── TractorModel.tsx         # GLB 模型加载（useGLTF + clone 克隆处理）、居中缩放贴地
-│   │   ├── SectionDivider.tsx      # 绿色装饰分割线（leaf/dots/line 三种）
-│   │   └── ui/                     # shadcn/ui 基础组件（button/card/dialog/textarea）
-│   ├── pages/
-│   │   ├── HomePage/
-│   │   │   ├── HomePage.tsx         # 首页组装（按顺序拼接 8 个 section）
-│   │   │   └── sections/            # 首页各区块
-│   │   │       ├── HeroSection.tsx          # 首屏：标题 + CTA + 3D 模型
-│   │   │       ├── PainPointsSection.tsx    # 行业痛点 + 真实能力卡片
-│   │   │       ├── MultimodalSection.tsx    # 多模态信号（标注规划中）
-│   │   │       ├── ArchitectureSection.tsx   # 真实四层架构
-│   │   │       ├── SimulationSection.tsx     # 3D 已实现 / FEA 与数字孪生规划中
-│   │   │       ├── TechRouteSection.tsx      # 六步技术流程
-│   │   │       ├── ScenariosSection.tsx      # 拖拉机/收割机/更广农机
-│   │   │       └── ClosingSection.tsx       # 底部 CTA
-│   │   ├── ChatPage/
-│   │   │   └── ChatPage.tsx         # 对话页：历史/快捷提问/农机信息选择器/Provider 显示
-│   │   ├── KnowledgePage/           # 品牌→型号→组件→零部件、原文与来源/缺口
-│   │   ├── ModelPage/               # 组件示意、本地照片清单与GLB导入
-│   │   └── NotFoundPage/
-│   │       └── NotFoundPage.tsx     # 404
-│   ├── data/
-│   │   └── content.ts               # 全部页面文案（中英双语）+ pick() 工具
-│   ├── hooks/
-│   │   ├── useLang.ts               # 中英双语切换（useSyncExternalStore）
-│   │   └── use-mobile.ts            # 响应式断点 hook
-│   └── lib/
-│       └── utils.ts                 # cn() 类名合并
-│
-├── server/                           # 后端（Node.js + Express + tsx，ESM）
-│   ├── dev.ts                       # 开发入口（tsx watch 启动 index.ts）
-│   ├── index.ts                     # Express 路由：安全中间件/限流/health/chat/model
-│   ├── .env                         # 本地环境变量（永不提交 Git）
-│   │
-│   ├── llm/                         # LLM Provider 层（按代理自动选模型）
-│   │   ├── types.ts                 # Provider 接口 / ChatResult / ProviderError
-│   │   ├── http.ts                  # fetchWithTimeout(20s) + detectProxy()
-│   │   ├── openai-compatible.ts     # 通用 OpenAI 兼容 chat/completions 工厂
-│   │   ├── gemini.ts                # Gemini provider（GEMINI_MODEL）
-│   │   ├── deepseek.ts              # DeepSeek provider（DEEPSEEK_MODEL）
-│   │   └── router.ts                # 单例：配置优先、双模型回退、安全状态概要
-│   │
-│   └── knowledge/                   # 本地知识库 + 轻量 RAG
-│       ├── catalog.ts               # 从归档原文与人工关联生成分层目录（只读API）
-│       ├── retriever.ts             # 通用 .md + 归档编号条目、适用范围过滤、关键词打分、top-K
-│       ├── systemPrompt.ts          # buildSystemPrompt（后端独占 system prompt）
-│       ├── 00_说明/                 # 目录约定（不参与检索）
-│       ├── 01_通用原理/             # 发动机/冷却/润滑/液压/电气/传动...
-│       ├── 02_农机类型/             # 拖拉机/收割机/插秧机...
-│       ├── 03_新能源农机/           # 电动/混动农机
-│       ├── 04_智能农机/             # 无人化/自动驾驶
-│       ├── 05_故障代码/             # 各品牌故障码表
-│       ├── 06_品牌资料/             # 东方红/雷沃/久保田/约翰迪尔...
-│       ├── 07_具体型号/             # 具体型号维修手册
-│       └── 99_待整理/              # 未分类资料
-│
-├── shared/                           # 前后端共享类型
-│   ├── plugin-types.ts              # 插件/扩展类型定义
-│   └── capabilities/                # 能力声明
-│
-├── scripts/
-│   ├── dev.mjs                      # 同时启动前端 Vite + 后端 tsx
-│   ├── build.sh                    # 先 build:client 再 build:server
-│   └── cloud-pull.sh               # 云电脑上执行的 git pull 脚本
-│
-├── index.html                        # Vite HTML 入口
-├── package.json                     # 依赖与 scripts（dev/typecheck/lint/build）
-├── vite.config.ts                   # Vite 配置（开发服务默认 3000，由 Express 加载前端中间件）
-├── tsconfig.app.json                # 前端 TS 配置
-├── tsconfig.server.json             # 后端 TS 配置
-├── tsconfig.node.json               # Vite/Node 侧 TS 配置
-├── eslint.config.mjs                # ESLint 配置
-├── components.json                  # shadcn/ui 配置
-├── CONTRIBUTING.md                  # 四人协作、分支、验证与GitHub同步约定
-└── README.md
+├── src/                 # React 页面、组件与样式
+│   ├── pages/           # 页面布局与路由视图
+│   ├── features/chat/   # 会话、历史存储、请求与健康状态
+│   ├── hooks/           # 语言、响应式与知识目录 hooks
+│   └── lib/             # 共用 API 客户端与界面工具
+├── server/              # HTTP 装配、路由、诊断用例、知识与 LLM
+├── shared/              # 前后端协议类型、知识目录与能力声明
+├── 知识库/              # 归档原文、索引、来源与整理工具
+├── public/              # 模型与静态资源，保留原署名
+├── scripts/             # 跨平台检查、构建、测试与工作分支同步
+├── tests/               # 诊断、知识边界、API、会话与维护脚本回归
+├── docs/architecture.md # 模块职责、请求链路与维护规则
+├── .github/workflows/ci.yml # Ubuntu / Windows 完整检查，不部署
+├── .node-version        # 本地推荐与 CI 的 Node 24
+├── server.ts            # 统一开发/生产入口；生产仍使用 tsx
+└── CONTRIBUTING.md      # 四人协作、版本与 PR 流程
 ```
+
+模块职责与开发入口见[架构说明](docs/architecture.md)。单个检查仍可独立执行；合入前推荐使用 `npm run verify`，统一验证版本元数据、前后端与 Vite 配置类型、回归测试、Lint 和完整构建。Windows PowerShell 使用 `npm.cmd`。
+
+`npm run sync` 只推送当前工作分支中已经提交的内容；先自行提交本轮相关文件，保持工作区干净。它拒绝 `main`、`master`、远端默认分支与 detached HEAD，不附带标签、不自动提交或部署。
+
 
 ## Git 分支
 
@@ -252,7 +190,7 @@ AgriDx-v3/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "3.0.0", "timestamp": "...", "knowledge": { "chunks": 221, "archivedEntries": 212 } }
+{ "ok": true, "version": "3.0.1", "timestamp": "...", "knowledge": { "chunks": 221, "archivedEntries": 212 } }
 ```
 
 ### `POST /api/chat`
@@ -295,8 +233,8 @@ AgriDx-v3/
 ## 安全
 
 - API Key 仅存于 `server/.env`，前端/构建产物/Git 均不出现。
-- CORS 白名单仅允许本地开发源；生产可按需扩展。
-- 所有外部 LLM 请求经 `undici` 的 `ProxyAgent` 走系统代理。
+- 当前 CORS 沿用开放源配置；来源限制须结合实际部署环境另行配置。
+- 检测到代理变量时，外部 LLM 请求经 `undici` 的 `ProxyAgent`；未配置代理时使用直连。
 - `/api/chat` 每 IP 每分钟 30 次限流。
 - 错误日志只打印 provider 名与错误类别，绝不打印 key。
 - Markdown 渲染使用 `react-markdown`（默认不执行 HTML/JS）。

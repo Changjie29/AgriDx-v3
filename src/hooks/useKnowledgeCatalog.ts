@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { KnowledgeCatalog } from '@shared/knowledge-catalog';
+import { requestKnowledgeCatalog } from '@/features/knowledge/catalog-api';
 
 export function useKnowledgeCatalog(query = '') {
   const [catalog, setCatalog] = useState<KnowledgeCatalog | null>(null);
@@ -14,10 +15,7 @@ export function useKnowledgeCatalog(query = '') {
     setFailed(false);
     const load = async () => {
       try {
-        const response = await fetch(`/api/knowledge/catalog${query ? `?${query}` : ''}`, { signal: controller.signal });
-        if (!response.ok) throw new Error('Catalog request failed');
-        const data: KnowledgeCatalog = await response.json();
-        if (!Array.isArray(data.brands) || !data.totals) throw new Error('Invalid catalog');
+        const data = await requestKnowledgeCatalog(query, controller.signal);
         if (active) setCatalog(data);
       } catch {
         if (active) setFailed(true);
