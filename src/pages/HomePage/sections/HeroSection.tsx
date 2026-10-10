@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import TractorViewer from '@/components/TractorViewer';
 import content, { pick } from '@/data/content';
 import { useLang } from '@/hooks/useLang';
+import { LiquidGlass } from '@sohumsuthar/liquid-glass';
 
 export default function HeroSection() {
   const navigate = useNavigate();
@@ -39,7 +40,9 @@ export default function HeroSection() {
             <div className="hero-model-stage"><TractorViewer /></div>
             <figcaption className="hero-model-caption">
               <span>{t('农业装备 · 交互式结构示意', 'Agricultural machinery · Interactive structure')}</span>
-              <Link to="/models" className="inline-flex items-center gap-2 text-primary">{t('进入模型工坊', 'Model studio')}<ArrowRight size={15} /></Link>
+              <LiquidGlass variant="regular" className="hero-model-entry lg-blur-only" contentClassName="hero-model-entry-content">
+                <Link to="/models" className="hero-model-entry-link press-control"><span>{t('进入模型工坊', 'Model studio')}</span><ArrowRight size={15} /></Link>
+              </LiquidGlass>
             </figcaption>
           </figure>
         </div>
