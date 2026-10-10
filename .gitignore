@@ -8,3 +8,9 @@ dist-server
 .env
 server/.env
 *.tsbuildinfo
+
+# Private diagnostic memory, including SQLite WAL/SHM files
+server/data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

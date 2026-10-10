@@ -92,3 +92,31 @@ ${describeSource(primary)}
 **【安全提醒】**
 遵守本机手册的停机与安全隔离规程；不要绕过安全联锁、带压拆修或在悬空机具下作业。高温、高压、电池高压和无人作业相关检查应交具备相应资质的人员处理。`;
 }
+
+
+/** Short default view; the complete quotation and applicability conditions remain expandable. */
+export function localReplySummary(
+  symptom: string, retrieved: KnowledgeChunk[], scope: RetrievalContext,
+  reason: 'not_configured' | 'provider_unavailable' | 'local_selected', clarificationNeeded = false,
+): string {
+  const status = reason === 'not_configured'
+    ? '当前未启用大模型，本次只有本地检索，没有模型补充分析。'
+    : reason === 'local_selected' ? '本次直接使用本地资料，未调用外部 AI。' : '大模型本次连接失败，暂时展示本地检索结果。';
+  const known = [scope.brand, scope.model].filter(Boolean).join(' ');
+  const plain = (value: string) => value.replace(/[\r\n]+/g, ' ').replace(/[<>]/g, '');
+  const primary = retrieved.find(chunk => chunk.entryId);
+  const intro = `**【继续确认】** ${known ? `已记下：${plain(known)}。` : ''}当前关注：${plain(symptom).slice(0, 180) || '故障现象待补充'}。`;
+  if (clarificationNeeded || resolveScope(symptom, scope).identityConflict) {
+    return `**【服务状态】** ${status}\n\n${intro}\n\n请确认本次设备的品牌与完整型号，确认前暂停引用机型资料。`;
+  }
+  const evidence = primary
+    ? `找到候选章节“${plain(primary.heading)}”，尚未确认适用于你的车辆或支持本次故障判断。展开下方资料可核对原文、页码及限制；不要直接据此换件。`
+    : '未找到能直接支持本次诊断的匹配手册。信息收集提示不作为维修依据。';
+  const questions = [
+    !scope.model ? '能提供铭牌上的完整型号或照片吗？暂时不知道也可以。' : '是否有报警或故障码？请提供原文。',
+    /动力不足|没劲|没力气/.test(symptom)
+      ? '热车后是发动机转速也上不去，还是转速正常但行驶／牵引无力？只描述已经观察到的现象即可。'
+      : '问题在什么工况下出现，有哪些同时发生的现象？',
+  ];
+  return `**【服务状态】** ${status}\n\n${intro}\n\n**【本地资料】** ${evidence}\n\n**【先确认两点】**\n${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}\n\n**【提醒】** 不必为回答问题新增试车或拆检；出现危险征兆时停止作业并联系专业维修人员。`;
+}

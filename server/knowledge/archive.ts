@@ -2,9 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { KnowledgeChunk } from './retriever';
 import { configureIndexedModels } from './scope';
+import { isArchiveId } from './evidence';
 
 const ARCHIVE_ROOT = path.resolve(process.cwd(), '知识库/整理后的知识库');
-const INDEX_ROOT = path.join(ARCHIVE_ROOT, '农用拖拉机知识库');
 const ENTRY_TYPES = ['维护/故障知识', '操作/维护知识', '安全操作', '系统安装/调试',
   '系统适用边界', '资料索引', '资料核验', '机型资料', '资料缺口'];
 
@@ -46,13 +46,15 @@ function requireStrings(value: unknown, fields: string[], label: string): void {
 }
 
 /** Only indexed entry sections are loaded; raw manuals, READMEs and pending lists are excluded. */
-export function loadArchive(): { chunks: KnowledgeChunk[]; fileCount: number } {
+export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChunk[]; fileCount: number } {
+  const INDEX_ROOT = path.join(archiveRoot, '农用拖拉机知识库');
   const sources: unknown = JSON.parse(fs.readFileSync(path.join(INDEX_ROOT, 'sources.json'), 'utf8'));
   if (!Array.isArray(sources)) throw new Error('sources.json 必须是数组');
   const sourceMap = new Map<string, ArchiveSource>();
   for (const value of sources) {
     requireStrings(value, ['source_id', 'path', 'url', 'version', 'scope_boundary'], 'sources.json');
     const source = value as ArchiveSource;
+    if (!isArchiveId(source.source_id)) throw new Error(`来源编号无效：${source.source_id}`);
     if (source.models !== undefined && (!Array.isArray(source.models) || !source.models.length ||
       source.models.some((model) => typeof model !== 'string' || !model.trim()))) {
       throw new Error(`知识来源机型列表无效：${source.source_id}`);
@@ -78,6 +80,7 @@ export function loadArchive(): { chunks: KnowledgeChunk[]; fileCount: number } {
     const value: unknown = JSON.parse(line);
     requireStrings(value, ['entry_id', 'source_id', 'brand', 'model', 'title', 'knowledge_path', 'locator', 'status', 'entry_type'], 'entries.jsonl');
     const entry = value as ArchiveEntry;
+    if (!isArchiveId(entry.entry_id) || !isArchiveId(entry.source_id)) throw new Error(`知识条目编号无效：${entry.entry_id}`);
     if (!ENTRY_TYPES.includes(entry.entry_type!)) throw new Error(`知识条目类别无效：${entry.entry_id}`);
     if (entry.emission_stage !== undefined && !['国三', '国四'].includes(entry.emission_stage)) {
       throw new Error(`知识条目排放阶段无效：${entry.entry_id}`);
@@ -101,8 +104,8 @@ export function loadArchive(): { chunks: KnowledgeChunk[]; fileCount: number } {
     }
 
     const file = path.resolve(process.cwd(), entry.knowledge_path);
-    const relative = path.relative(ARCHIVE_ROOT, file);
-    const realRelative = path.relative(fs.realpathSync(ARCHIVE_ROOT), fs.realpathSync(file));
+    const relative = path.relative(archiveRoot, file);
+    const realRelative = path.relative(fs.realpathSync(archiveRoot), fs.realpathSync(file));
     if ([relative, realRelative].some((rel) => rel.startsWith(`..${path.sep}`) || rel === '..' || path.isAbsolute(rel)) || !file.endsWith('.md')) {
       throw new Error(`知识文档必须位于整理后的知识库内：${entry.entry_id}`);
     }
@@ -129,6 +132,7 @@ export function loadArchive(): { chunks: KnowledgeChunk[]; fileCount: number } {
       text: section.text,
       entryId: entry.entry_id,
       sourceId: entry.source_id,
+      indexedReference: Object.freeze({ entryId: entry.entry_id, sourceId: entry.source_id }),
       brand: entry.brand,
       model: entry.model,
       models: entry.models ? [...entry.models] : source.models ? [...source.models] : undefined,

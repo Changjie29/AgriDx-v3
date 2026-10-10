@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo, type FormEvent, type KeyboardEvent } from 'react';
 import { Send, Trash2, Loader2, Bot, User, Sparkles, Cpu, Square } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -20,8 +20,13 @@ import { LiquidGlass } from '@sohumsuthar/liquid-glass';
 import { Link, useLocation } from 'react-router-dom';
 import content, { pick } from '@/data/content';
 import { useLang } from '@/hooks/useLang';
+import { useDiagnosticMemory } from '@/hooks/useDiagnosticMemory';
+import type { DeviceProfile, MemoryDevice, SessionDetail } from '../../../shared/memory';
 
 type ChatProvider = 'gemini' | 'deepseek' | 'knowledge-base';
+type DiagnosisMode = 'auto' | 'knowledge_only' | 'ai_assisted';
+const isDiagnosisMode = (value: unknown): value is DiagnosisMode => value === 'auto' || value === 'knowledge_only' || value === 'ai_assisted';
+
 type AnswerMode = 'knowledge-grounded' | 'general-guidance' | 'local-evidence';
 type FallbackReason = 'not_configured' | 'provider_unavailable';
 
@@ -39,6 +44,8 @@ interface ChatMessage {
   answerMode?: AnswerMode;
   fallbackReason?: FallbackReason;
   knowledgeChunks?: number;
+  localSummary?: string;
+  coordinationMessage?: string;
 }
 
 function isChatProvider(value: unknown): value is ChatProvider {
@@ -80,6 +87,8 @@ function loadHistory(): ChatMessage[] {
           typeof m.content === 'string' && (m.role === 'user' || m.role === 'assistant')
         ).slice(-100).map((m) => ({
           id: m.id, role: m.role, content: m.content,
+          coordinationMessage: typeof m.coordinationMessage === 'string' && m.coordinationMessage.length < 500 ? m.coordinationMessage : undefined,
+          localSummary: typeof m.localSummary === 'string' && m.localSummary.length <= 4000 ? m.localSummary : undefined,
           model: typeof m.model === 'string' ? m.model : undefined,
           provider: isChatProvider(m.provider) ? m.provider : undefined,
           answerMode: isAnswerMode(m.answerMode) ? m.answerMode : undefined,
@@ -127,11 +136,29 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentModel, setCurrentModel] = useState<string>('');
   const [currentProvider, setCurrentProvider] = useState<ChatProvider | ''>('');
+  const [diagnosisMode, setDiagnosisMode] = useState<DiagnosisMode>('auto');
+  const [externalAllowed, setExternalAllowed] = useState(true);
   const [currentFallbackReason, setCurrentFallbackReason] = useState<FallbackReason | undefined>();
   const [llmHealth, setLlmHealth] = useState<LlmHealth | 'checking' | 'unknown'>('checking');
   const [machineType, setMachineType] = useState<string>(() => typeof handoff?.machineType === 'string' ? (MACHINE_TYPES_ZH.includes(handoff.machineType) ? handoff.machineType : '') : loadMeta().machineType);
   const [brand, setBrand] = useState<string>(() => typeof handoff?.brand === 'string' ? handoff.brand.slice(0, 100) : loadMeta().brand);
   const [model, setModel] = useState<string>(() => typeof handoff?.model === 'string' ? handoff.model.slice(0, 100) : loadMeta().model);
+  const [deviceName, setDeviceName] = useState('我的设备');
+  const [hours, setHours] = useState('');
+  const [deviceNotes, setDeviceNotes] = useState('');
+  const [progress, setProgress] = useState('');
+  const restoreMemory = useCallback((detail: SessionDetail | null) => {
+    setMessages(detail?.messages || []); setProgress(detail?.progress || '');
+    setCurrentModel(''); setCurrentProvider(''); setCurrentFallbackReason(undefined);
+  }, []);
+  const selectMemoryDevice = useCallback((device: MemoryDevice | null) => {
+    setDeviceName(device?.name || '我的设备'); setHours(device?.hours === null || device?.hours === undefined ? '' : String(device.hours));
+    setDeviceNotes(device?.notes || '');
+    setMachineType(device?.machineType || ''); setBrand(device?.brand || ''); setModel(device?.model || '');
+  }, []);
+  const memory = useDiagnosticMemory(restoreMemory, selectMemoryDevice, !handoff?.question && !handoff?.model && !handoff?.brand);
+  const profile: DeviceProfile = useMemo(() => ({ name: deviceName.trim(), machineType, brand: brand.trim(), model: model.trim(),
+    hours: hours.trim() ? Number(hours) : null, notes: deviceNotes.trim() }), [deviceName, machineType, brand, model, hours, deviceNotes]);
   const requestRef = useRef<AbortController | null>(null);
   useEffect(() => () => {
     requestRef.current?.abort();
@@ -151,6 +178,8 @@ export default function ChatPage() {
         const data = await response.json();
         if (typeof data?.llm?.configured !== 'boolean') throw new Error('Unknown LLM configuration');
         if (active) {
+          if (isDiagnosisMode(data?.coordination?.defaultMode)) setDiagnosisMode(data.coordination.defaultMode);
+          if (data?.coordination?.allowExternalAi === false) { setExternalAllowed(false); setDiagnosisMode('knowledge_only'); }
           setLlmHealth({
             configured: data.llm.configured,
             primary: data.llm.primary === 'gemini' || data.llm.primary === 'deepseek' ? data.llm.primary : null,
@@ -198,7 +227,8 @@ export default function ChatPage() {
   const sendMessage = useCallback(
     async (text: string) => {
       const trimmed = text.trim();
-      if (!trimmed || trimmed.length > 2000 || requestRef.current) return;
+      if (!trimmed || trimmed.length > 2000 || requestRef.current || memory.busy) return;
+      if (!memory.ready) { toast.error(t('请等待记忆服务就绪或点击重试', 'Wait for memory service or retry')); return; }
       const controller = new AbortController();
       requestRef.current = controller;
       const timeout = window.setTimeout(() => controller.abort(new DOMException('Timeout', 'TimeoutError')), 60_000);
@@ -211,17 +241,22 @@ export default function ChatPage() {
       setIsLoading(true);
 
       try {
+        const remembered = await memory.prepare(profile);
+        if (requestRef.current !== controller) return;
         // 前端只发 user/assistant 历史；system prompt 由后端构造
         const historyForApi = messages
           .filter((m) => m.role === 'user' || m.role === 'assistant')
-          .slice(-20)
+          .slice(-38)
           .map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }));
 
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            sessionId: remembered.id,
+            revision: remembered.revision,
             messages: [...historyForApi, { role: 'user' as const, content: trimmed }],
+            diagnosisMode,
             machineType: machineType || undefined,
             brand: brand || undefined,
             model: model || undefined,
@@ -236,11 +271,16 @@ export default function ChatPage() {
         let answerMode: AnswerMode | undefined;
         let fallbackReason: FallbackReason | undefined;
         let knowledgeChunks: number | undefined;
+        let localSummary: string | undefined;
+        let coordinationMessage: string | undefined;
         if (response.ok) {
           const data = await response.json();
           const result = data?.choices?.[0]?.message?.content;
           if (typeof result !== 'string' || !result.trim()) throw new Error('Empty response');
           reply = result;
+          if (data.memory && requestRef.current === controller) memory.updateSession(data.memory);
+          coordinationMessage = typeof data.coordinationMessage === 'string' && data.coordinationMessage.length < 500 ? data.coordinationMessage : undefined;
+          localSummary = data.provider === 'knowledge-base' && typeof data.localSummary === 'string' && data.localSummary.length <= 4000 ? data.localSummary : undefined;
           modelName = typeof data?.model === 'string' ? data.model : '';
           provider = isChatProvider(data?.provider) ? data.provider : '';
           answerMode = isAnswerMode(data?.answerMode) ? data.answerMode : undefined;
@@ -264,6 +304,8 @@ export default function ChatPage() {
                   ...m,
                   role: reply && response.ok ? ('assistant' as const) : ('error' as const),
                   content: reply,
+                  localSummary,
+                  coordinationMessage,
                   model: modelName || undefined,
                   provider: provider || undefined,
                   answerMode,
@@ -273,7 +315,7 @@ export default function ChatPage() {
               : m,
           ),
         );
-      } catch {
+      } catch (error) {
         if (requestRef.current !== controller) return;
         setCurrentModel('');
         setCurrentProvider('');
@@ -289,7 +331,7 @@ export default function ChatPage() {
               : m,
           ),
         );
-        toast.error(t('对话服务暂不可用', 'Chat service unavailable'));
+        toast.error(error instanceof Error && error.name !== 'AbortError' && error.message !== 'Empty response' ? error.message : t('对话服务暂不可用', 'Chat service unavailable'));
       } finally {
         window.clearTimeout(timeout);
         if (requestRef.current === controller) {
@@ -299,7 +341,7 @@ export default function ChatPage() {
         }
       }
     },
-    [messages, machineType, brand, model, t],
+    [messages, machineType, brand, model, diagnosisMode, t, memory, profile],
   );
 
   const handleSubmit = useCallback(
@@ -335,15 +377,17 @@ export default function ChatPage() {
     textareaRef.current?.focus();
   }, []);
 
-  const handleClear = useCallback(() => {
+  const handleClear = async () => {
     stopRequest();
+    try { await memory.clear(); }
+    catch (error) { toast.error(error instanceof Error ? error.message : t('清空失败，请重试', 'Could not clear. Retry.')); return; }
     setCurrentModel('');
     setCurrentProvider('');
     setCurrentFallbackReason(undefined);
     setMessages([]);
     setIsLoading(false);
     toast.success(t('对话已清空', 'Chat cleared'));
-  }, [t, stopRequest]);
+  };
 
   const isEmpty = messages.length === 0;
   const typeOptions = lang === 'zh' ? MACHINE_TYPES_ZH : MACHINE_TYPES_EN;
@@ -398,7 +442,7 @@ export default function ChatPage() {
         </div>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="secondary" size="sm" className="gap-1.5 shrink-0" aria-label={t('清空对话', 'Clear conversation')} disabled={isEmpty}>
+            <Button variant="secondary" size="sm" className="gap-1.5 shrink-0" aria-label={t('清空对话', 'Clear conversation')} disabled={isEmpty || isLoading || memory.busy || !memory.ready}>
               <Trash2 className="h-4 w-4" />
               <span className="hidden sm:inline">{t('清空对话', 'Clear')}</span>
             </Button>
@@ -407,7 +451,7 @@ export default function ChatPage() {
             <AlertDialogHeader>
               <AlertDialogTitle>{t('确认清空对话？', 'Clear all messages?')}</AlertDialogTitle>
               <AlertDialogDescription>
-                {t('清空后当前所有对话记录将被删除，且无法恢复。', 'All current messages will be deleted and cannot be recovered.')}
+                {t('清空本次诊断的对话、历史节选与检查进度，设备档案会保留。清空后无法恢复。', 'Delete this diagnosis transcript, excerpts and progress. The device profile stays. This cannot be undone.')}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -458,6 +502,38 @@ export default function ChatPage() {
                 </div>
 
               <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{t('完整型号与配置帮助限定资料范围；系列资料不能直接代替具体机型。带入的问题仅预填，由你确认后发送。', 'The complete model and configuration define applicability. Series documents do not replace specific-model evidence. Imported questions are drafts for you to review and send.')}</p>
+              <details className="mt-4 border-t border-border/60 pt-3" open>
+                <summary className="cursor-pointer text-sm font-medium">{t('诊断记忆', 'Diagnosis memory')} · {memory.ready ? t('已连接', 'Connected') : t('未就绪', 'Not ready')}</summary>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{t('档案与对话保存到后端，重新打开可继续；同一浏览器使用，清除浏览器身份或换设备后需另行恢复。检查结果是用户报告，模型猜测不会自动成为已确认故障。', 'Profiles and chats are saved on the server for this browser. Clearing browser identity or using another browser requires separate recovery. Check results are user reports; model guesses do not become confirmed faults.')}</p>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  <select aria-label={t('选择设备档案', 'Select device profile')} value={memory.deviceId} disabled={isLoading || memory.busy || !memory.ready}
+                    onChange={(e) => memory.selectDevice(e.target.value)} className="h-10 min-w-0 rounded-md border border-border bg-background px-3 text-sm">
+                    <option value="">{t('新设备（独立档案）', 'New device (separate profile)')}</option>
+                    {memory.devices.map((d) => <option key={d.id} value={d.id}>{d.name} · {d.model || d.brand}</option>)}
+                  </select>
+                  <select aria-label={t('继续历史诊断', 'Resume diagnosis')} value={memory.session?.id || ''} disabled={isLoading || memory.busy || !memory.ready}
+                    onChange={(e) => { if (e.target.value) void memory.restore(e.target.value); }} className="h-10 min-w-0 rounded-md border border-border bg-background px-3 text-sm">
+                    <option value="">{t('继续历史诊断…', 'Resume a diagnosis…')}</option>
+                    {memory.sessions.map((s) => <option key={s.id} value={s.id}>{memory.devices.find((d) => d.id === s.deviceId)?.name} · {s.title}</option>)}
+                  </select>
+                  <label className="text-xs">{t('设备名称（区分不同车辆）', 'Device name (identify the vehicle)')}<input maxLength={100} value={deviceName} onChange={(e) => setDeviceName(e.target.value)} disabled={isLoading || memory.busy} className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3 text-sm" /></label>
+                  <label className="text-xs">{t('使用小时数（选填）', 'Operating hours (optional)')}<input type="number" min="0" max="1000000" step="any" value={hours} onChange={(e) => setHours(e.target.value)} disabled={isLoading || memory.busy} className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3 text-sm" /></label>
+                </div>
+                <label className="mt-3 block text-xs">{t('设备维护记录（用户提供）', 'Maintenance notes (user reported)')}<Textarea value={deviceNotes} maxLength={2000} onChange={(e) => setDeviceNotes(e.target.value)} disabled={isLoading || memory.busy} className="mt-1" rows={2} /></label>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <Button variant="secondary" size="sm" disabled={isLoading || memory.busy || !memory.ready || !deviceName.trim()} onClick={() => void memory.action(async () => { await memory.saveProfile(profile); })}>{t('保存设备档案', 'Save device profile')}</Button>
+                  <Button variant="secondary" size="sm" disabled={isLoading || memory.busy || !memory.ready} onClick={memory.newDiagnosis}>{t('新建诊断', 'New diagnosis')}</Button>
+                  <Button variant="ghost" size="sm" disabled={isLoading || memory.busy || !memory.deviceId} onClick={() => { if (window.confirm(t('删除此设备及其全部诊断记录？无法恢复。', 'Delete this device and all its diagnoses? This cannot be undone.'))) void memory.deleteDevice(); }}>{t('删除设备及记录', 'Delete device and records')}</Button>
+                </div>
+                <label className="mt-3 block text-xs">{t('本次检查进度（已检查项目、结果、待检查项）', 'Progress (checks done, results, remaining checks)')}<Textarea value={progress} maxLength={2000} onChange={(e) => setProgress(e.target.value)} disabled={isLoading || memory.busy || !memory.session} placeholder={t('例如：电瓶已检查正常；下一步检查接线。', 'Example: Battery checked, reported normal; wiring check pending.')} className="mt-1" rows={2} /></label>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <Button variant="secondary" size="sm" disabled={isLoading || memory.busy || !memory.session || progress.trim() === memory.session.progress} onClick={() => void memory.saveProgress(progress)}>{t('保存检查进度', 'Save progress')}</Button>
+                  <Button variant="ghost" size="sm" disabled={isLoading || memory.busy || !memory.session} onClick={() => { if (window.confirm(t('删除本次诊断及检查进度？设备档案保留。', 'Delete this diagnosis and progress? Keep the device profile.'))) void memory.deleteDiagnosis(); }}>{t('删除本次诊断', 'Delete diagnosis')}</Button>
+                </div>
+                {memory.session?.summary && <details className="mt-3 text-xs"><summary className="cursor-pointer">{t('查看历史用户报告节选', 'Older user report excerpts')}</summary><p className="mt-2 whitespace-pre-wrap text-muted-foreground">{memory.session.summary}</p></details>}
+                {memory.error && <p role="alert" className="mt-2 text-xs text-destructive">{memory.error}</p>}
+                {!memory.ready && <Button variant="secondary" size="sm" className="mt-2" onClick={memory.retry}>{t('重试连接记忆', 'Retry memory connection')}</Button>}
+              </details>
               </div>
 
           {/* 空状态 / 欢迎态 */}
@@ -520,7 +596,14 @@ export default function ChatPage() {
                   <div className="whitespace-pre-wrap">{msg.content}</div>
                 ) : (
                   <div className="prose prose-sm max-w-none overflow-x-auto dark:prose-invert">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                    {msg.coordinationMessage && <p className="text-xs text-muted-foreground">{msg.coordinationMessage}</p>}
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.localSummary || msg.content}</ReactMarkdown>
+                    {msg.localSummary && (
+                      <details className="mt-3 rounded-lg border border-border/50 p-3">
+                        <summary className="cursor-pointer text-sm">{t('查看完整资料与适用限制', 'View full evidence and applicability')}</summary>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                      </details>
+                    )}
                     {msg.role === 'assistant' && (msg.model || msg.provider || msg.answerMode || msg.fallbackReason || msg.knowledgeChunks !== undefined) && (
                       <div className="mt-2 border-t border-border/40 pt-2 text-[11px] leading-relaxed text-muted-foreground">
                         <div className="flex flex-wrap gap-x-2 gap-y-1">
@@ -553,6 +636,19 @@ export default function ChatPage() {
         contentClassName="border-t border-border/60 px-4 py-4 md:px-6"
       >
         <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
+          <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
+            <label htmlFor="diagnosis-mode">{t('回答方式', 'Answer mode')}</label>
+            <select id="diagnosis-mode" value={diagnosisMode} disabled={isLoading || !externalAllowed || llmHealth === 'checking'}
+              onChange={e => { if (isDiagnosisMode(e.target.value)) setDiagnosisMode(e.target.value); }}
+              className="rounded-md border border-border bg-background px-2 py-1">
+              <option value="auto">{t('自动协调', 'Automatic')}</option>
+              <option value="knowledge_only">{t('仅知识库', 'Knowledge only')}</option>
+              <option value="ai_assisted">{t('AI 辅助', 'AI assisted')}</option>
+            </select>
+            <span className="text-xs text-muted-foreground">{!externalAllowed
+              ? t('网站已关闭外部 AI', 'External AI is disabled for this site')
+              : t('未配置 AI 时自动返回本地资料', 'Returns local evidence when AI is not configured')}</span>
+          </div>
           <div className="flex items-end gap-2">
             <Textarea
               aria-label={t('故障描述', 'Fault description')}
@@ -574,7 +670,7 @@ export default function ChatPage() {
             ) : <Button
               type="submit"
               size="icon"
-              disabled={!input.trim() || input.trim().length > 2000}
+              disabled={!input.trim() || input.trim().length > 2000 || !memory.ready || memory.busy}
               className="shrink-0"
               aria-label={t('发送', 'Send')}
             >

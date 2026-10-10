@@ -39,12 +39,18 @@ if (proxyUrl) {
 // ---- 知识库 & LLM ----
 import { loadKnowledgeBase, stats as kbStats } from './knowledge/retriever';
 import { buildSystemPrompt } from './knowledge/systemPrompt';
-import { generateLocalKnowledgeReply } from './knowledge/fallbackDiagnosis';
+import { decideCoordination, coordinationConfig, isDiagnosisMode, ROUTE_MESSAGES, type DiagnosisMode } from './knowledge/coordination';
+import { hasIndexedReference, referenceVerification } from './knowledge/evidence';
+import { generateLocalKnowledgeReply, localReplySummary } from './knowledge/fallbackDiagnosis';
 import { resolveDiagnosticContext } from './knowledge/conversation';
 import { getLlmRouter } from './llm/router';
 import { ProviderError, type ChatMessage } from './llm/types';
 import { getKnowledgeCatalog, loadKnowledgeCatalog } from './knowledge/catalog';
 import type { CatalogFilters } from '../shared/knowledge-catalog';
+import { memoryRouter, memoryOwner, memoryFailure, sameOrigin, revisionFrom } from './memory/routes';
+import { getMemoryStore, MemoryError, validId, summarizeReports } from './memory/store';
+import { recentMessages, memoryPrompt } from './memory/context';
+import type { SessionDetail, MemoryMessage } from '../shared/memory';
 
 loadKnowledgeBase();
 loadKnowledgeCatalog();
@@ -68,6 +74,7 @@ app.use((_req, res, next) => {
 app.use(cors());
 
 app.use(express.json({ limit: '256kb' }));
+app.use('/api/memory', memoryRouter);
 
 // ---- 限流：每 IP 每分钟 30 次 /api/chat ----
 const rateBucket = new Map<string, { count: number; reset: number }>();
@@ -95,6 +102,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
     knowledge: kbStats(),
     llm: llm.getStatus(),
+    coordination: coordinationConfig(),
   });
 });
 
@@ -127,18 +135,17 @@ app.get('/api/knowledge/catalog', (req: Request, res: Response) => {
 
 // ---- /api/chat ----
 interface ChatRequestBody {
+  sessionId?: string;
+  revision?: number;
+  diagnosisMode?: DiagnosisMode;
   messages?: ChatMessage[];
   machineType?: string;
   brand?: string;
   model?: string;
 }
+const activeMemoryRequests = new Set<string>();
 
-const USER_FRIENDLY_ERROR =
-  process.env.NODE_ENV === 'production'
-    ? '智能诊断服务暂时无法连接，请稍后重试。'
-    : '智能诊断服务暂时无法连接，请稍后重试。';
-
-app.post('/api/chat', async (req: Request, res: Response) => {
+app.post('/api/chat', sameOrigin, async (req: Request, res: Response) => {
   if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
     res.status(400).json({ error: '请求体必须为 JSON 对象', code: 'bad_request' });
     return;
@@ -150,10 +157,14 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     res.status(400).json({ error: '农机类型、品牌和型号必须为字符串（各上限 100 字符）', code: 'bad_request' });
     return;
   }
+  if (body.diagnosisMode !== undefined && !isDiagnosisMode(body.diagnosisMode)) {
+    res.status(400).json({ error: '回答模式无效', code: 'bad_request' });
+    return;
+  }
   const { messages } = body;
-  const machineType = body.machineType?.trim();
-  const brand = body.brand?.trim();
-  const model = body.model?.trim();
+  let machineType = body.machineType?.trim();
+  let brand = body.brand?.trim();
+  let model = body.model?.trim();
 
   // 输入校验
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -178,9 +189,9 @@ app.post('/api/chat', async (req: Request, res: Response) => {
   }
 
   // 前端不应发送 system；如发送，丢弃（后端拥有最终 system prompt）
-  const history = messages
+  let history = messages
     .filter((m) => m.role === 'user' || m.role === 'assistant')
-    .slice(-20) // 最多保留 20 轮，避免无限增长
+    .slice(body.sessionId ? -40 : -20) // 首轮迁移本地记录；后续以保存的记录为准
     .map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }));
 
   // 取最近一条 user 问题用于 RAG 检索
@@ -189,76 +200,127 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     res.status(400).json({ error: '请提供非空的当前用户问题', code: 'bad_request' });
     return;
   }
-  const { query, scope, currentQuery, clarificationNeeded } = resolveDiagnosticContext(history, { machineType, brand, model });
-
-  // 构造 system prompt（含 RAG）
-  const { message: systemMsg, retrieved, answerMode } = buildSystemPrompt({
-    query,
-    currentQuery,
-    clarificationNeeded,
-    ...scope,
-  });
-
-  const knowledgeSources = retrieved.map((chunk) => ({
-    entryId: chunk.entryId,
-    sourceId: chunk.sourceId,
-    source: chunk.source,
-    heading: chunk.heading,
-    locator: chunk.locator,
-    version: chunk.version,
-    applicability: chunk.applicability,
-  }));
-
-  const fullMessages: ChatMessage[] = [systemMsg, ...history];
-
-  try {
-    if (!llm.hasAnyConfigured()) {
-      // 未配置外部 API key 时，返回带来源的知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'not_configured', currentQuery, clarificationNeeded);
-      res.json({
-        choices: [{ message: { role: 'assistant', content: localReply } }],
-        model: 'kb-rag-engine (本地知识引擎)',
-        provider: 'knowledge-base',
-        fellBack: true,
-        knowledgeChunks: retrieved.length,
-        knowledgeSources,
-        answerMode: 'local-evidence',
-        fallbackReason: 'not_configured',
-      });
-      return;
-    }
-
-    const outcome = await llm.chat(fullMessages);
-    // 返回 OpenAI 兼容结构 + 附加 provider/model/knowledge 元信息
-    res.json({
-      choices: [{ message: { role: 'assistant', content: outcome.result.content } }],
-      model: outcome.result.model,
-      provider: outcome.result.provider,
-      fellBack: outcome.fellBack,
-      knowledgeChunks: retrieved.length,
-      knowledgeSources,
-      answerMode,
-    });
-  } catch (err) {
-    if (err instanceof ProviderError) {
-      console.warn(`[chat] provider error: ${err.provider}/${err.kind}`);
-      // 服务提供商错误时，返回带来源的本地知识摘录
-      const localReply = generateLocalKnowledgeReply(query, retrieved, scope, 'provider_unavailable', currentQuery, clarificationNeeded);
-      res.json({
-        choices: [{ message: { role: 'assistant', content: localReply } }],
-        model: 'kb-rag-fallback (本地备用引擎)',
-        provider: 'knowledge-base',
-        fellBack: true,
-        knowledgeChunks: retrieved.length,
-        knowledgeSources,
-        answerMode: 'local-evidence',
-        fallbackReason: 'provider_unavailable',
-      });
-      return;
-    }
-    console.error('[chat] unexpected error:', err);
-    res.status(502).json({ error: USER_FRIENDLY_ERROR, code: 'llm_unavailable' });
+  let remembered: SessionDetail | undefined;
+  let owner = '';
+  let diagnosticHistory = history;
+  if (body.sessionId !== undefined) {
+    try {
+      if (!validId(body.sessionId)) throw new MemoryError(400, 'bad_request', '诊断记录编号格式错误');
+      const revision = revisionFrom(body.revision);
+      owner = memoryOwner(req, res);
+      remembered = getMemoryStore().session(owner, body.sessionId);
+      if (remembered.revision !== revision) throw new MemoryError(409, 'memory_conflict', '诊断记录已更新，请重新载入后继续');
+      if (activeMemoryRequests.has(body.sessionId)) throw new MemoryError(409, 'memory_busy', '本次诊断正在回答，请等待后再继续');
+      if (remembered.messages.length >= 2000) throw new MemoryError(409, 'memory_limit', '本次诊断记录已达上限，请新建诊断');
+      if (remembered.messages.length && /换一台|另一台|另外一台|现在换成/.test(lastUserMsg.content)) {
+        throw new MemoryError(409, 'memory_device_changed', '诊断另一台设备时，请选择或新建设备档案并新建诊断，避免混用检查结果');
+      }
+      for (const field of ['machineType', 'brand', 'model'] as const) {
+        if (body[field] !== undefined && body[field]?.trim() !== remembered.device[field]) {
+          throw new MemoryError(409, 'memory_device_changed', '设备信息已改变，请先保存设备档案或为另一台设备新建诊断');
+        }
+      }
+      ({ machineType, brand, model } = remembered.device);
+      // A saved session owns its history. Client-supplied old assistant turns
+      // cannot rewrite it. The first turn can migrate the visible local history.
+      diagnosticHistory = remembered.messages.length
+        ? [...remembered.messages.map((m) => ({ role: m.role, content: m.content })), lastUserMsg]
+        : history;
+      history = recentMessages(diagnosticHistory) as typeof history;
+      activeMemoryRequests.add(body.sessionId);
+      res.set('Cache-Control', 'no-store');
+    } catch (error) { memoryFailure(error, res); return; }
   }
+  try {
+    const { query, scope, currentQuery, symptomQuery, clarificationNeeded } = resolveDiagnosticContext(diagnosticHistory, { machineType, brand, model });
+
+    // 构造 system prompt（含 RAG）
+    const { message: systemMsg, retrieved, answerMode } = buildSystemPrompt({
+      query,
+      currentQuery,
+      clarificationNeeded,
+      ...scope,
+    });
+
+    const knowledgeSources = retrieved.map((chunk) => ({
+      entryId: chunk.entryId,
+      sourceId: chunk.sourceId,
+      source: chunk.source,
+      heading: chunk.heading,
+      locator: chunk.locator,
+      version: chunk.version,
+      applicability: chunk.applicability,
+      status: chunk.status,
+      referenceVerification: referenceVerification(chunk.status),
+      sourceIndexed: hasIndexedReference(chunk),
+    }));
+
+    const priorReports = remembered ? getMemoryStore().priorReports(owner, remembered.deviceId, remembered.id, symptomQuery) : [];
+    if (remembered) systemMsg.content += memoryPrompt({ ...remembered, summary: summarizeReports(diagnosticHistory) }, priorReports);
+    const fullMessages: ChatMessage[] = [systemMsg, ...history];
+    const finish = (payload: Record<string, unknown>) => {
+      // A stopped/disconnected request must not recreate or mutate forgotten data.
+      if (res.destroyed) return;
+      if (remembered) {
+        const content = (payload.choices as { message: { content: string } }[])[0].message.content;
+        const assistant: Omit<MemoryMessage, 'id' | 'role' | 'createdAt'> = { content };
+        for (const field of ['model', 'provider', 'localSummary', 'coordinationMessage', 'answerMode', 'fallbackReason', 'knowledgeChunks'] as const) {
+          if (payload[field] !== undefined) Object.assign(assistant, { [field]: payload[field] });
+        }
+        const imported = remembered.messages.length ? [] : diagnosticHistory.slice(0, -1);
+        payload.memory = getMemoryStore().appendTurn(owner, remembered.id, remembered.revision, lastUserMsg.content, assistant, imported);
+        payload.relatedMemoryReports = priorReports;
+      }
+      res.json(payload);
+    };
+
+    const coordination = decideCoordination({ query, currentQuery, scope, retrieved, clarificationNeeded,
+      requestedMode: body.diagnosisMode, llmConfigured: llm.hasAnyConfigured(), llmConfigValid: llm.getStatus().configValid });
+    const sendLocal = (providerFailed = false) => {
+      const route = providerFailed ? { ...coordination, route: 'local' as const, reason: 'provider_unavailable' as const } : coordination;
+      const fallbackReason = providerFailed ? 'provider_unavailable' : route.reason === 'llm_not_configured' ? 'not_configured' : undefined;
+      const needsClarification = route.route === 'clarify';
+      const clarification = route.reason === 'identity_required'
+        ? '**【需要补充】** 请提供品牌和铭牌上的完整型号，再核对故障码或参数。不能用其他型号的数据代替。'
+        : '**【需要确认机型】** 请确认本次设备的品牌和完整型号；确认前暂停引用冲突资料。';
+      const localReply = needsClarification ? clarification : generateLocalKnowledgeReply(query, retrieved, scope, fallbackReason, symptomQuery || currentQuery, false);
+      const memoryNote = remembered?.progress && !needsClarification
+        ? `**【已记录的检查进度 · 用户报告，待核实】**\n${remembered.progress}\n\n以下为资料排查清单，请优先处理未完成项目；已完成项目仅在结果变化或需要复核时再检查。\n\n` : '';
+      const priorNote = priorReports.length && !needsClarification
+        ? `**【同一设备的历史检查报告 · 待核实】**\n${priorReports.map((r) => `${r.updatedAt.slice(0, 10)}：${r.progress}`).join('\n')}\n\n以上是历史用户报告，不代表本次已检查或当前仍正常。\n\n` : '';
+      const summary = memoryNote + priorNote + (needsClarification ? clarification : localReplySummary(symptomQuery, retrieved, scope, fallbackReason ?? 'local_selected'));
+      finish({
+        choices: [{ message: { role: 'assistant', content: memoryNote + priorNote + localReply } }],
+        model: 'kb-rag-engine (本地知识引擎)', provider: 'knowledge-base',
+        fellBack: Boolean(fallbackReason), ...(fallbackReason ? { fallbackReason } : {}),
+        knowledgeChunks: retrieved.length, knowledgeSources, answerMode: 'local-evidence',
+        localSummary: summary.slice(0, 4000), coordination: route, coordinationMessage: ROUTE_MESSAGES[route.reason],
+      });
+    };
+    if (coordination.route !== 'ai') {
+      sendLocal();
+      return;
+    }
+    let outcome;
+    try { outcome = await llm.chat(fullMessages); }
+    catch (err) {
+      console.warn('[chat] model call failed:', err instanceof ProviderError ? err.kind : 'unknown');
+      sendLocal(true);
+      return;
+    }
+    finish({
+      choices: [{ message: { role: 'assistant', content: outcome.result.content } }],
+      model: outcome.result.model, provider: outcome.result.provider, fellBack: outcome.fellBack,
+      knowledgeChunks: retrieved.length, knowledgeSources, answerMode,
+      coordination, coordinationMessage: ROUTE_MESSAGES[coordination.reason],
+    });
+  } catch (error) {
+    if (remembered) memoryFailure(error, res);
+    else throw error;
+  } finally {
+    if (remembered) activeMemoryRequests.delete(remembered.id);
+  }
+
 });
 
 // ---- 3D 模型 ----

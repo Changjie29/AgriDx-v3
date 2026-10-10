@@ -316,3 +316,18 @@ test('a denied machine type stays pending until the user supplies the new type',
   assert.equal(completed.scope.machineType, '联合收割机');
   assert.match(completed.query, /液压提升无力/);
 });
+
+test('screenshot regression: hot engine power loss plus brand must not become starter weakness', () => {
+  const { resolved, found } = retrieveConversation([
+    user('拖拉机热车后动力不足，型号暂时不知道。请区分本地资料依据和模型补充分析。'),
+    user('品牌是东方红'),
+  ]);
+  assert.match(resolved.symptomQuery, /热车后动力不足/);
+  assert.equal(resolved.scope.brand, '东方红');
+  assert.ok(found.every(chunk => !/启动机|起动机|启动电机/.test(chunk.heading)));
+});
+
+test('explicit starter weakness still retrieves the corresponding archived entry', () => {
+  const { found } = retrieveConversation([user('东方红 LF904S 起动机转动无力')]);
+  assert.ok(found.some(chunk => /启动机|起动机/.test(chunk.heading)));
+});

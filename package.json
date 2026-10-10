@@ -1,6 +1,6 @@
 {
   "name": "agri-fault-diagnosis",
-  "version": "3.0.0",
+  "version": "3.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "build:client": "tsc -b tsconfig.app.json && vite build",
     "build:server": "tsc -p tsconfig.server.json",
     "preview": "vite preview",
-    "test": "tsx --test tests/*.test.ts",
+    "test": "node --import tsx --test tests/*.test.ts",
     "typecheck": "tsc -b tsconfig.app.json --noEmit",
     "lint": "eslint . --cache --cache-location node_modules/.eslintcache --report-unused-disable-directives"
   },
