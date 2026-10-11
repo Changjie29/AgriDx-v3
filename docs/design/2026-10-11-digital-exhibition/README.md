@@ -45,10 +45,10 @@
 
 本地启动：`npm ci` 后执行 `npm run dev`，默认访问 `http://localhost:3000/`。测试环境使用 `PORT=3100`，未验收真实外部 LLM、传感器或实车效果。
 
-本地实现提交：`c983d3a01bfc1412f6be1543d7c387ed852078f3`，版本 3.1.0。
+实现提交：[c983d3a](https://github.com/srt2777/AgriDx-v3/commit/c983d3a01bfc1412f6be1543d7c387ed852078f3)，版本 3.1.0。
 
-## GitHub 同步待完成
+## GitHub 保存与审阅
 
-当前账号为 `Changjie29`。Git 推送到用户指定的 `srt2777/AgriDx-v3` 返回 403；GitHub 连接器创建分支也返回 403，明确提示 `Resource not accessible by integration`。仓库权限读取显示可写，但当前实际连接的写入凭据没有通过；未创建远端分支或 PR，没有将成果改推其他仓库。
+用户恢复 GitHub 连接权限后，当前账号 `Changjie29` 已将代码、截图、SVG 与验证记录推送到用户指定的 `srt2777/AgriDx-v3`，并创建 [PR #8](https://github.com/srt2777/AgriDx-v3/pull/8)。
 
-所有修改已保存到本地 `codex/digital-exhibition-ui-20261011` 分支。恢复该仓库的 GitHub 连接内容写入权限后，可继续推送该分支并使用已准备的 PR 描述创建 PR。另提供 Git bundle 与补丁备份；bundle 以已存在的 `62cbafa735b2d0cec6db28c760954238dd82dc51` 主线提交为前置基线。
+保存分支：[codex/digital-exhibition-ui-20261011](https://github.com/srt2777/AgriDx-v3/tree/codex/digital-exhibition-ui-20261011)。PR 等待审阅，尚未合入主线；GitHub 保存没有恢复网站发布。另提供 Git bundle 与补丁备份，所需原项目基线为 `62cbafa735b2d0cec6db28c760954238dd82dc51`。
