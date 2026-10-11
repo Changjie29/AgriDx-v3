@@ -1,0 +1,9 @@
+.ui-version-switch { display: inline-flex; flex-shrink: 0; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--border); border-radius: 9px; background: var(--background); font-family: var(--font-sans); }
+.ui-version-switch button { min-height: 30px; padding: 4px 11px; border: 0; border-radius: 6px; background: transparent; color: var(--muted-foreground); font-size: 12px; white-space: nowrap; cursor: pointer; }
+.ui-version-switch button[aria-pressed="true"] { background: var(--primary); color: var(--primary-foreground); font-weight: 600; }
+.ui-version-switch button:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.ui-version-switch.is-exhibition { border-color: #335579; background: #0a2039; }
+.ui-version-switch.is-exhibition button { color: #a5bfd6; }
+.ui-version-switch.is-exhibition button[aria-pressed="true"] { color: #f4fbff; background: #186bcc; box-shadow: 0 0 15px #287adb38; }
+.ui-version-switch.is-exhibition button:focus-visible { outline-color: #7ce6ff; }
+@media (max-width: 450px) { .site-tools { gap: 4px; } .site-tools .ui-version-switch button { padding-inline: 7px; } }
