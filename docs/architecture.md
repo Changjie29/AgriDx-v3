@@ -1,0 +1,72 @@
+# v3 架构与维护
+
+项目保留 React/Vite/Express 和现有本地知识检索、双模型回退。3.0.1 将界面、请求边界、诊断用例、外部模型与运行初始化拆开，便于协作者独立修改和验证。
+
+## 模块职责
+
+| 位置 | 职责 |
+| --- | --- |
+| `src/pages/` | 路由页面、布局、文案与交互呈现 |
+| `src/features/chat/` | 会话状态、请求生命周期、历史存储、健康状态 |
+| `src/features/knowledge/catalog-api.ts` | 知识目录请求与响应解析 |
+| `src/lib/api-client.ts` | HTTP/JSON 边界、错误与 AbortSignal |
+| `shared/chat.ts`、`shared/knowledge-catalog.ts` | 前后端协议纯类型，不导入服务端实现或密钥 |
+| `server/app.ts` | 注入运行依赖，装配 Express 与 API；每个实例独立限流状态 |
+| `server/routes/` | HTTP 路由、请求参数与响应状态，不承担模型回退算法 |
+| `server/diagnosis/` | 对话输入校验，协调上下文、知识检索、提示词与模型/本地答复 |
+| `server/knowledge/` | 原有索引、适用范围过滤、多轮上下文、目录和证据回复 |
+| `server/llm/` | 供应商协议、配置、超时和双模型顺序回退 |
+| `server/config/`、`server/runtime.ts` | 读取环境、初始化知识索引与运行依赖 |
+| `server/http/` | 安全头、限流、JSON 错误、前端托管及监听/退出 |
+| `scripts/` | 跨平台检查、构建、测试和已提交工作分支同步 |
+
+## 请求链路
+
+```mermaid
+flowchart LR
+  Page[诊断页面] --> Session[会话与 API 客户端]
+  Session --> Route[HTTP 路由与输入校验]
+  Route --> Diagnosis[诊断用例]
+  Diagnosis --> Knowledge[上下文与适用范围检索]
+  Knowledge --> Provider[LLM 路由或本地证据答复]
+  Provider --> Protocol[含来源的统一响应]
+  Protocol --> Session
+```
+
+页面只调用前端客户端，不直接引用 `server/`。协议类型放在 `shared/`；浏览器接收的数据仍需运行时校验，TypeScript 类型不能替代输入验证。会话恢复沿用原存储键，跳过未完成的 loading/error 消息；发送保留最多 20 条历史，用户问题上限 2,000 字。取消等待与清空会话使旧请求失效，不让迟到的响应污染新对话。
+
+HTTP 路由只做传输边界；诊断用例保留来源编号、定位、手册版本与适用范围，不将模型通用分析或品牌匹配当作确诊。知识原件和索引不随架构整理改写；修改知识时继续遵守其目录规范。
+
+## 初始化与入口
+
+`server.ts` 是 `npm run dev` / `npm start` 共用入口，依次创建运行依赖、装配 API、挂载开发 Vite 或生产静态前端，再监听端口。初始化读取既有进程环境、根 `.env`、`server/.env`，配置代理后再构造模型实例。健康状态只表明配置是否存在，不表示上游鉴权或连接通过。
+
+`server/app.ts` 的工厂可用于注入本地测试依赖；导入它不读取环境文件、不加载知识库、不监听端口。`server/index.ts` 保留默认 API app 兼容现有调用；直接执行 index/dev 仍提供 API 服务。未知 `/api` 返回 JSON 404，其他页面路径仍使用原有前端兜底。
+
+服务从仓库根目录运行，继续通过 `tsx server.ts` 启动。`build:server` 的 `dist-server/` 是 TypeScript 编译验证产物，未切换到编译 JS 的生产入口。线上部署仍按已有资料另行验收；本轮仅本地检查和 GitHub 工作分支保存。
+
+## 开发与检查
+
+推荐 Node 24（`.node-version`），最低 Node 22.19.0，npm 10 及以上。Windows PowerShell 用 `npm.cmd`。
+
+```powershell
+npm.cmd ci
+npm.cmd run dev
+npm.cmd run verify
+```
+
+`verify` 依次检查 package/lockfile/README/最新日志版本、前后端与 Vite 配置类型、全部回归测试、Lint 和完整前后端构建；任一步失败即停止。`build` 同时构建前端与后端；保留 `build:client`、`build:server`、`test`、`typecheck` 和 `lint` 单独入口。构建与测试明确调用本地 Node CLI，无需 Bash 或 PATH 中的 vite/tsx。
+
+锁文件补齐各平台可选依赖，现有依赖版本保持。如果本机镜像元数据不全，使用 `npm.cmd ci --registry=https://registry.npmjs.org` 完成本次安装；不修改用户全局 npm 设置。
+
+CI 在 Ubuntu 与 Windows 分别运行相同 `verify`，`ci-verify` 汇总两边结果。它仅持有源码读取权限，不合并 PR、不创建标签或 Release、不部署，也不修改已有仓库规则。
+
+## 协作与同步
+
+从最新 main 建 `codex/` 工作分支；修改后检查 diff，只提交任务文件，版本与日志按最终范围同步。完成提交且工作区干净后运行：
+
+```powershell
+npm.cmd run sync
+```
+
+同步拒绝 main/master/远端默认分支和 detached HEAD，明确禁用附带标签；不会自动暂存、提交、拉取覆盖或部署。旧 `bash scripts/build.sh` 与 `bash scripts/sync.sh` 转发到同一 Node 实现。暂停的 `cloud-pull.sh` 明确退出，历史服务器准备脚本仅保留作资料，不安排执行。合入前按[贡献指南](../CONTRIBUTING.md)审阅 PR。
