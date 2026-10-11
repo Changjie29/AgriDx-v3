@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.1.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.1.1**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -16,7 +16,13 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 默认首页采用蓝色科技大屏风格，中央保留一个原创拖拉机结构示意模型，提供组件选择、俯视、展开、旋转及重置。新旧版左上角均为工学院徽章，点击打开学院官网。右上角的“新版 / 旧版”切换可返回原有首页，选择保存在当前浏览器，并在同源标签页间同步；知识库、诊断和模型工坊仍使用原有路由。
 
-资料概览和设备目录读取现有 `/api/knowledge/catalog`，加载或请求失败时不填入推测数量。模型不是实测 CAD；真实传感器与实车数字孪生尚未接入。视觉调研及 Figma 设计见 [新版界面说明](docs/design/2026-10-11-digital-exhibition/README.md)。代码与设计稿通过 [PR #8](https://github.com/srt2777/AgriDx-v3/pull/8) 保存到用户指定仓库；审阅和合并状态以 PR 为准，本轮未恢复网站发布。
+资料概览和设备目录读取现有 `/api/knowledge/catalog`，加载或请求失败时不填入推测数量。模型不是实测 CAD；真实传感器与实车数字孪生尚未接入。视觉调研及 Figma 设计见 [新版界面说明](docs/design/2026-10-11-digital-exhibition/README.md)。代码与设计稿通过已合并的 [PR #8](https://github.com/srt2777/AgriDx-v3/pull/8) 保存到用户指定仓库，服务器执行与验收见下方配置记录。
+
+## 腾讯云现有服务器更新
+
+用户已于 2026-10-11 授权配置现有腾讯云轻量服务器。服务器为 Ubuntu 24.04.4，网站使用 `/opt/agridx/current` 版本软链接、`agridx.service`、本机 8787 接口及现有 Nginx HTTPS；运行密钥文件为 `/etc/agridx.env`。
+
+新增手动更新脚本 [update-existing.sh](scripts/tencent-deploy/update-existing.sh)，支持 `--check` 只读检查和 `--deploy <完整提交 SHA>` 分目录构建、检查、切换及失败回退。每个版本使用 agridx 拥有的独立 npm 缓存，避免旧缓存权限阻止安装。它不改 Nginx、证书、DNS、防火墙或自动发布任务。当前配置与验收记录见 [腾讯服务器配置](docs/deployment/2026-10-11-tencent-existing-server.md)；GitHub 保存、脚本检查和服务器实际执行分别记录。
 
 ## 技术栈
 
