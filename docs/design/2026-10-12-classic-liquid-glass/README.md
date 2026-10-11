@@ -45,4 +45,4 @@ Safari 用户代理和背景滤镜缺失是模拟回退检查，不代表真实 
 
 ## GitHub 保存
 
-目标仓库 [srt2777/AgriDx-v3](https://github.com/srt2777/AgriDx-v3)，任务分支 `codex/classic-liquid-glass-20261011`。提交和 PR 链接在完成同步后补充。本轮未部署网站。
+目标仓库 [srt2777/AgriDx-v3](https://github.com/srt2777/AgriDx-v3)，任务分支 `codex/classic-liquid-glass-20261011`。实现提交 [6b24fbc](https://github.com/srt2777/AgriDx-v3/commit/6b24fbc2c4a456ff028902b2f00b30f655dca984) 已推送，审阅入口为 [PR #16](https://github.com/srt2777/AgriDx-v3/pull/16)。CI 与合入状态以 PR 为准；本轮未合并主线或部署网站。
