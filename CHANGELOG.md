@@ -8,7 +8,7 @@
 - 拖拉机支持 WASD / 方向键、空格刹车和手机方向触控，带简单园区边界与展台避碰；小地图和“驶向这里”支持绕开展台自动导览。释放按键、失焦、切换页面或搜索目录会清理输入；Esc 返回总览，回到起点可重置位置。
 - 保留新旧版切换、双语、工学院徽章链接、真实知识目录搜索与适用范围、现有子页面及研究区块。WebGL 不可用时保留直接入口；减少动态偏好关闭镜头过渡，静止场景按需渲染，只回传发生变化的坐标，避免慢设备连续重绘；手机降低反射与阴影分辨率。不新增建模依赖、知识事实、真实监测或物理仿真。
 - 先核对 Bruno Simon、r3f-scroll-rig、drei 与三维配置器 GitHub 案例，再基于现有技术栈实现原创场景；不复制参考项目代码或素材。提供桌面、手机分层可编辑 SVG、网页预览及调研记录。Figma 插件读取和编辑均受 Starter MCP 额度限制，未完成原生画布写入。
-- 本地完整 verify 通过：127 项测试、版本一致性、三个 TypeScript 项目、Lint 和生产构建通过，2 项 Windows 专用测试在 Linux 跳过。生产浏览器 22 项检查通过，无页面脚本错误；实际核对常规 / 减少动态模式的静止绘制停止。保留已有 Fast Refresh 与 Three.js 包体积提示。验证及 GitHub PR 保存记录见 [三维园区设计说明](docs/design/2026-10-11-spatial-campus/README.md)。本轮不执行网站部署。
+- 本地完整 verify 通过：127 项测试、版本一致性、三个 TypeScript 项目、Lint 和生产构建通过，2 项 Windows 专用测试在 Linux 跳过。生产浏览器 22 项检查通过，无页面脚本错误；实际核对常规 / 减少动态模式的静止绘制停止。保留已有 Fast Refresh 与 Three.js 包体积提示。验证及 GitHub PR 保存记录见 [三维园区设计说明](docs/design/2026-10-11-spatial-campus/README.md)。实现提交 [19e4a07](https://github.com/srt2777/AgriDx-v3/commit/19e4a07f9e197fd66199f29e3923a486ff8f269f) 已保存到独立分支并创建 [PR #11](https://github.com/srt2777/AgriDx-v3/pull/11)，实现提交的 Ubuntu / Windows CI 与汇总通过；最新检查及合入状态以 PR 为准。本轮不执行网站部署。
 
 ## 3.1.1 — 2026-10-11
 

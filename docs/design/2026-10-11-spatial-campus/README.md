@@ -46,3 +46,9 @@
 - 本轮只做本地验收与 GitHub PR 保存，没有部署 Sites 或腾讯服务器。保留原有 3.1.1 手动服务器更新成果。
 
 本地运行：`npm ci`、`npm run dev`，默认访问 `http://localhost:3000/`。生产检查使用本机 3104 端口；这不是线上地址。
+
+## GitHub 保存
+
+代码、预览、SVG 与验证记录已保存到指定仓库 [srt2777/AgriDx-v3](https://github.com/srt2777/AgriDx-v3)，实现提交为 [19e4a07](https://github.com/srt2777/AgriDx-v3/commit/19e4a07f9e197fd66199f29e3923a486ff8f269f)。
+
+独立分支：`codex/spatial-exhibition-ui-20261011`，审阅入口为 [PR #11](https://github.com/srt2777/AgriDx-v3/pull/11)。实现提交的 [CI 运行 15](https://github.com/srt2777/AgriDx-v3/actions/runs/38147891054) 已完成且成功，Ubuntu / Windows 检查及 ci-verify 汇总通过。记录补充提交会重新触发 CI，最新状态以 PR 为准；本轮没有合并主线或部署服务器。
