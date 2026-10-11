@@ -24,6 +24,8 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 新增手动更新脚本 [update-existing.sh](scripts/tencent-deploy/update-existing.sh)，支持 `--check` 只读检查和 `--deploy <完整提交 SHA>` 分目录构建、检查、切换及失败回退。每个版本使用 agridx 拥有的独立 npm 缓存，避免旧缓存权限阻止安装。它不改 Nginx、证书、DNS、防火墙或自动发布任务。当前配置与验收记录见 [腾讯服务器配置](docs/deployment/2026-10-11-tencent-existing-server.md)；GitHub 保存、脚本检查和服务器实际执行分别记录。
 
+2026-10-11 已成功部署主线 [0b8a670](https://github.com/srt2777/AgriDx-v3/commit/0b8a670a547f89b1349e1f49b0d8a347e90d3367) 的 3.1.1 到 [agridx.xyz](https://agridx.xyz)。服务器成功回执、独立公网 HTTPS 29 项检查及浏览器 9 项检查均通过：归档仍为 212 条/221 片段，首页、全部 JS/CSS、徽章和模型与已验证构建一致，新旧界面切换与刷新记忆正常。保留旧版本及现有 HTTPS、密钥文件，真实外部模型问答未验收。
+
 ## 技术栈
 
 - **前端**：React 19 + Vite + TypeScript + Tailwind CSS + React Router + React Three Fiber

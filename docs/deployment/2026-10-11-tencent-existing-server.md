@@ -10,7 +10,8 @@
 | 系统 / 架构 | Ubuntu 24.04.4 LTS / x86_64 |
 | Node / npm | /usr/local/bin/node，实际路径 /opt/agridx/node-v24.21.0/bin/node，24.21.0 / 11.19.0 |
 | 服务 | agridx.service，User=agridx，WorkingDirectory=/opt/agridx/current，active |
-| 当前目录 | 软链接指向 /opt/agridx/releases/20261010-v3-87d169f |
+| 更新前目录 | 软链接指向 /opt/agridx/releases/20261010-v3-87d169f |
+| 更新后目录 | /opt/agridx/releases/20261011T115619Z-0b8a670a547f-682062；旧目录保留 |
 | 运行环境文件 | /etc/agridx.env，ignore_errors=no；未读取密钥内容 |
 | Nginx | agridx.xyz 和 www.agridx.xyz 的 HTTPS 已配置；另有公网 IP 的 HTTP 站点，保留默认站点 |
 | 静态目录 / API | /opt/agridx/current/dist / http://127.0.0.1:8787 |
@@ -41,6 +42,24 @@ sudo bash update-existing.sh --deploy <经审阅的40位提交SHA>
 
 本地生产命令 node --import tsx server.ts 另行启动成功，健康为 3.1.1 / 212 / 221，首页及模型 HEAD HTTP 200，模型大小 646,792 字节；测试明确清空模型 Key，没有真实外部模型请求，临时进程已停止。verify 对 loopback HTTP 使用既有本地请求调度，外部请求仍沿用环境代理。
 
-实现保存到独立分支 codex/tencent-existing-server-20261011，通过 [PR #9](https://github.com/srt2777/AgriDx-v3/pull/9) 审阅；初始代码提交为 [bcdcfcd](https://github.com/srt2777/AgriDx-v3/commit/bcdcfcd4ff4cff262932364f0051299d2cd99d88)。用户已执行 [b570618](https://github.com/srt2777/AgriDx-v3/commit/b570618fdefe637333cb5e41cff013bb26ad8575) 的更新命令，完整终端记录确认 npm ci 报 `EACCES: permission denied, mkdir '/opt/agridx/.npm'`，未完成依赖安装。失败目录 `/opt/agridx/releases/20261011T112950Z-b570618fdefe-675811` 保留，current 尚未切换，旧 3.0.0 服务继续运行。该次尝试不代表部署成功；同一 3.1.1 迭代修复为独立缓存后，以新的固定提交重试，不复用未安装完成的目录。实际成功结果回传后再验收线上版本及界面。
+实现保存到独立分支 codex/tencent-existing-server-20261011，通过 [PR #9](https://github.com/srt2777/AgriDx-v3/pull/9) 审阅；初始代码提交为 [bcdcfcd](https://github.com/srt2777/AgriDx-v3/commit/bcdcfcd4ff4cff262932364f0051299d2cd99d88)。用户首次执行 [b570618](https://github.com/srt2777/AgriDx-v3/commit/b570618fdefe637333cb5e41cff013bb26ad8575) 的更新命令，完整终端记录确认 npm ci 报 `EACCES: permission denied, mkdir '/opt/agridx/.npm'`，未完成依赖安装。失败目录 `/opt/agridx/releases/20261011T112950Z-b570618fdefe-675811` 保留，当时 current 未切换，旧 3.0.0 服务继续运行。同一 3.1.1 迭代修复为独立缓存后，以新的固定提交重试，不复用未安装完成的目录。
 
-切换后应分别确认：本机及域名 /api/health 的预期版本与 212 / 221、首页及 JS/CSS、工学院徽章、GLB、知识目录，以及新旧版切换。健康响应的 configured 状态仅证明密钥设置，真实外部模型调用需独立检查，不能用健康接口代替模型问答验收。
+## 已完成的部署与公网验收
+
+用户要求 GitHub 最新版本与网站同步后，PR #9 已合入 main，部署源码为 [0b8a670](https://github.com/srt2777/AgriDx-v3/commit/0b8a670a547f89b1349e1f49b0d8a347e90d3367)，版本 3.1.1。该主线源码树与已验证修复完全一致，主线 [CI 38136829114](https://github.com/srt2777/AgriDx-v3/actions/runs/38136829114) 的 Ubuntu、Windows 和 ci-verify 全部成功。
+
+用户腾讯终端回执确认：新版本依赖安装、前后端构建及生产依赖裁剪完成，临时及正式服务、Nginx 代理健康均为 3.1.1 / 212 / 221，最终输出 `手动部署完成：version=3.1.1 commit=0b8a670a547f89b1349e1f49b0d8a347e90d3367`。current 切换至 `/opt/agridx/releases/20261011T115619Z-0b8a670a547f-682062`，旧版本保留。Nginx、证书、DNS、防火墙、cron 和现有 EnvironmentFile 未修改。npm 的 install-scripts 提示及 Three.js 大包提示没有阻断构建或服务启动；未修改全局 npm 或启用额外安装脚本。
+
+独立公网 HTTPS 请求验收 29/29 通过，全部 HTTP 200，外部请求沿用环境代理：
+
+| 检查 | 实际结果 |
+| --- | --- |
+| /api/health | ok=true，version=3.1.1，archivedEntries=212，chunks=221 |
+| 首页、20 个 JS、3 个 CSS | 与本地已验证构建逐字节一致 |
+| 工学院徽章 | 57,322 字节，与本地资源逐字节一致 |
+| 静态 GLB 与 /api/model/tractor | 均为 646,792 字节，与本地资源一致；SHA-256 为 605f35f76f58c0c03aaac3acc31fa271dccd0e111ab65fbda2dc70dc3145b56e |
+| /api/knowledge/catalog | 212 条资料、26 来源、15 品牌、97 型号/系列目录，实际目录行数一致 |
+
+公网浏览器另外完成 9 项界面检查：首次进入默认蓝色新版，页脚显示 3.1.1；新旧版左上角均有工学院徽章，新版徽章链接经 DOM 检查指向 https://coe.njau.edu.cn/；切到旧版、刷新保留，再切回新版、刷新仍保留。新版拖拉机示意正常显示，知识概览实际显示 212 / 26 / 15 / 97。浏览器报告未发现页面错误，结束时保持新版。图片检查工具未能单独解析院徽图像内容，但浏览器可见院徽，独立 HTTP 已确认图片和本地官方资源逐字节一致。未扩大为全部模型控制、其他浏览器或手机实机验收。
+
+健康响应的 configured 状态仅证明密钥设置；本轮未发起真实外部模型问答，不能用健康接口代替模型问答验收。
