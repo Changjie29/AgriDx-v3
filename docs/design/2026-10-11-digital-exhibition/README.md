@@ -51,4 +51,4 @@
 
 用户恢复 GitHub 连接权限后，当前账号 `Changjie29` 已将代码、截图、SVG 与验证记录推送到用户指定的 `srt2777/AgriDx-v3`，并创建 [PR #8](https://github.com/srt2777/AgriDx-v3/pull/8)。
 
-保存分支：[codex/digital-exhibition-ui-20261011](https://github.com/srt2777/AgriDx-v3/tree/codex/digital-exhibition-ui-20261011)。PR 等待审阅，尚未合入主线；GitHub 保存没有恢复网站发布。另提供 Git bundle 与补丁备份，所需原项目基线为 `62cbafa735b2d0cec6db28c760954238dd82dc51`。
+保存分支：[codex/digital-exhibition-ui-20261011](https://github.com/srt2777/AgriDx-v3/tree/codex/digital-exhibition-ui-20261011)。审阅和合并状态以 [PR #8](https://github.com/srt2777/AgriDx-v3/pull/8) 为准；GitHub 保存没有恢复网站发布。另提供 Git bundle 与补丁备份，所需原项目基线为 `62cbafa735b2d0cec6db28c760954238dd82dc51`。
