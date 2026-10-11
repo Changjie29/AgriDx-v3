@@ -272,8 +272,14 @@ for relative in .env server/.env; do
       "$ORIGINAL_RELEASE/$relative" "$RELEASE/$relative"
   fi
 done
-as_app bash -c 'cd "$1" && "$2" "$3" ci --include=dev --no-audit --no-fund && "$2" "$3" run build && "$2" "$3" prune --omit=dev --no-audit --no-fund' \
-  _ "$RELEASE" "$NODE_BIN" "$NPM_BIN"
+# A prior sudo npm invocation may have left the service user's default cache
+# owned by root. Keep this release's cache private and explicitly select it for
+# every npm phase, without changing the existing home/global npm configuration.
+NPM_CACHE="$RELEASE/.npm-cache"
+install -d -m 0700 -o "$APP_USER" -g "$APP_USER" "$NPM_CACHE"
+as_app env npm_config_cache="$NPM_CACHE" NPM_CONFIG_CACHE="$NPM_CACHE" bash -c \
+  'cd "$1" && "$2" "$3" ci --cache "$4" --include=dev --no-audit --no-fund && "$2" "$3" run build --cache "$4" && "$2" "$3" prune --cache "$4" --omit=dev --no-audit --no-fund' \
+  _ "$RELEASE" "$NODE_BIN" "$NPM_BIN" "$NPM_CACHE"
 [[ -s "$RELEASE/dist/index.html" && -s "$RELEASE/server.ts" &&
    -s "$RELEASE/public/models/tractor-detailed-v1.glb" ]] || fail '构建或静态模型文件不完整。'
 runuser -u "$NGINX_USER" -- test -r "$RELEASE/dist/index.html" ||

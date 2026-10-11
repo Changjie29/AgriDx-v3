@@ -21,6 +21,7 @@ interface CommandCall {
   command: string;
   args: string[];
   target?: string;
+  cache?: string;
 }
 
 // The production script has a fixed, deliberately narrow filesystem layout.
@@ -34,6 +35,7 @@ function relocate(source: string, before: string, after: string) {
 function fixture(t: { after: (cleanup: () => void) => void }, options: {
   failure?: 'preflight' | 'build' | 'stage' | 'production' | 'nginx';
   previousDropin?: boolean;
+  blockedNpmCache?: boolean;
 } = {}) {
   const temporaryRoot = path.resolve(os.tmpdir());
   const directory = mkdtempSync(path.join(temporaryRoot, 'agridx-tencent-deploy-'));
@@ -47,6 +49,7 @@ function fixture(t: { after: (cleanup: () => void) => void }, options: {
   const nginxFile = path.join(directory, 'nginx.conf');
   const commands = path.join(directory, 'commands.jsonl');
   const bin = path.join(directory, 'bin');
+  const legacyCache = path.join(appRoot, '.npm');
   const previousDropin = `${marker}\n[Service]\nEnvironment=OLD_FIXTURE_SETTING=preserved\n`;
   const envContent = 'MOCK_SETTING=original-production-setting\n';
   const dotenvContent = 'MOCK_SETTING=original-dotenv-setting\n';
@@ -62,9 +65,13 @@ function fixture(t: { after: (cleanup: () => void) => void }, options: {
   writeFileSync(envFile, envContent, { mode: 0o600 });
   writeFileSync(nginxFile, nginxContent);
   writeFileSync(commands, '');
+  mkdirSync(legacyCache);
+  writeFileSync(path.join(legacyCache, 'legacy-marker'), 'existing cache retained');
+  chmodSync(legacyCache, 0o500);
   t.after(() => {
     assert.equal(path.dirname(path.resolve(directory)), temporaryRoot);
     assert.match(path.basename(directory), /^agridx-tencent-deploy-/);
+    chmodSync(legacyCache, 0o700);
     rmSync(directory, { recursive: true, force: true });
   });
 
@@ -79,6 +86,7 @@ const current = path.join(root, 'app', 'current');
 const previous = path.join(root, 'app', 'releases', 'previous');
 const failure = process.env.AGRIDX_FIXTURE_FAILURE;
 const record = { command: name, args };
+if (name === 'npm') record.cache = process.env.npm_config_cache;
 if (name === 'systemctl' && args[0] === 'restart') record.target = fs.readlinkSync(current);
 fs.appendFileSync(path.join(root, 'commands.jsonl'), JSON.stringify(record) + '\\n');
 function run(command, rest, extra = {}) {
@@ -172,6 +180,15 @@ if (name === 'id') {
     console.log(fs.readFileSync(path.join(args[1], 'checked-out-commit'), 'utf8'));
   } else if (!(args[0] === '-C' && args[2] === 'fetch')) process.exit(98);
 } else if (name === 'npm') {
+  if (args[0] !== '--version' && process.env.AGRIDX_FIXTURE_BLOCKED_CACHE === '1') {
+    const cacheOption = args.indexOf('--cache');
+    const cache = cacheOption < 0 ? process.env.npm_config_cache : args[cacheOption + 1];
+    if (!cache || !fs.existsSync(cache) || !(fs.statSync(cache).mode & 0o222)) {
+      console.error('EACCES: permission denied, npm cache');
+      process.exit(1);
+    }
+    fs.writeFileSync(path.join(cache, 'npm-write-probe'), 'release cache writable');
+  }
   if (args[0] === '--version') console.log('11.0.0');
   else if (args[0] === 'run' && args[1] === 'build') {
     if (failure === 'build') process.exit(1);
@@ -217,6 +234,8 @@ if (name === 'id') {
     ...process.env, PATH: `${bin}:/usr/local/bin:/usr/bin:/bin`,
     AGRIDX_FIXTURE_ROOT: directory, AGRIDX_FIXTURE_FAILURE: options.failure ?? '',
     AGRIDX_FIXTURE_STAGE_PID: String(process.pid),
+    AGRIDX_FIXTURE_BLOCKED_CACHE: options.blockedNpmCache ? '1' : '',
+    npm_config_cache: legacyCache, NPM_CONFIG_CACHE: legacyCache,
   };
   // These fake commands make no HTTP calls; an inherited project test loader is
   // unnecessary for their many short-lived real Node JSON parser processes.
@@ -233,7 +252,7 @@ if (name === 'id') {
     assert.ok(calls().filter(call => call.command === 'nginx').every(call => call.args.join(' ') === '-T'));
     assert.equal(readFileSync(path.join(previous, '.env'), 'utf8'), dotenvContent);
   };
-  return { execute, calls, current, previous, releases, dropin, previousDropin, dotenvContent, assertPreserved };
+  return { execute, calls, current, previous, releases, dropin, previousDropin, dotenvContent, legacyCache, assertPreserved };
 }
 
 test('腾讯只读诊断检查真实 Bash 流程且不创建版本或重启服务', { skip: unixOnly }, t => {
@@ -259,7 +278,7 @@ for (const failure of ['preflight', 'build', 'stage'] as const) {
       assert.deepEqual(readdirSync(context.releases), ['previous']);
       assert.match(result.stderr, /现有8787健康检查未通过/);
     } else if (failure === 'build') {
-      assert.ok(context.calls().some(call => call.command === 'npm' && call.args.join(' ') === 'run build'));
+      assert.ok(context.calls().some(call => call.command === 'npm' && call.args[0] === 'run' && call.args[1] === 'build'));
       assert.ok(!context.calls().some(call => call.command === 'systemd-run'));
     } else {
       assert.ok(context.calls().some(call => call.command === 'systemd-run'));
@@ -326,6 +345,25 @@ test('腾讯成功更新使用完整 SHA，保留旧目录/env/Nginx且临时检
   assert.ok(stage?.args.includes('--property=PrivateNetwork=yes'));
   assert.ok(stage?.args.every(argument => !argument.includes('EnvironmentFile')));
   assert.equal(calls.filter(call => call.command === 'systemctl' && call.args[0] === 'restart').length, 1);
+  context.assertPreserved();
+});
+
+test('腾讯默认 npm 缓存不可写时使用独立缓存完成安装、构建和裁剪', { skip: unixOnly }, t => {
+  const context = fixture(t, { blockedNpmCache: true });
+  const result = context.execute();
+  assert.equal(result.status, 0, result.stderr || result.error?.message);
+  const release = readlinkSync(context.current);
+  const cache = path.join(release, '.npm-cache');
+  assert.equal(statSync(cache).mode & 0o777, 0o700);
+  assert.equal(readFileSync(path.join(cache, 'npm-write-probe'), 'utf8'), 'release cache writable');
+  const npmPhases = context.calls().filter(call => call.command === 'npm' && call.args[0] !== '--version');
+  assert.deepEqual(npmPhases.map(call => call.args[0]), ['ci', 'run', 'prune']);
+  for (const call of npmPhases) {
+    assert.equal(call.cache, cache);
+    assert.equal(call.args[call.args.indexOf('--cache') + 1], cache);
+  }
+  assert.equal(statSync(context.legacyCache).mode & 0o777, 0o500);
+  assert.equal(readFileSync(path.join(context.legacyCache, 'legacy-marker'), 'utf8'), 'existing cache retained');
   context.assertPreserved();
 });
 
