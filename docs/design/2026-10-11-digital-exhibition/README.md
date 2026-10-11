@@ -44,3 +44,5 @@
 - 本轮沿用仓库暂停发布的约定，只做本地验证及 GitHub PR，不恢复 Sites / 腾讯部署。
 
 本地启动：`npm ci` 后执行 `npm run dev`，默认访问 `http://localhost:3000/`。测试环境使用 `PORT=3100`，未验收真实外部 LLM、传感器或实车效果。
+
+对应实现提交：[c983d3a](https://github.com/srt2777/AgriDx-v3/commit/c983d3a01bfc1412f6be1543d7c387ed852078f3)，版本 3.1.0。提交引用在同一版本范围的后续文档提交中维护。
