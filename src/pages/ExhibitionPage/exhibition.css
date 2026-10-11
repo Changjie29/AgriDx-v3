@@ -8,6 +8,7 @@
   --expo-space: 20px;
   --expo-radius: 10px;
   min-height: 100dvh; padding: 0 28px; color: var(--expo-text); color-scheme: dark;
+  overflow-x: hidden;
   background: radial-gradient(ellipse at 49% 27%, #14345680, transparent 56%), linear-gradient(145deg, #0b1a30, #071325 65%);
   font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 13px;
 }
@@ -40,7 +41,7 @@
 .expo-subheader i, .expo-outline-badge i { width: 5px; height: 5px; border-radius: 50%; background: #6addb9; box-shadow: 0 0 8px #6addb960; }
 .expo-subheader time { color: #a3bbd1; font-variant-numeric: tabular-nums; }
 .expo-subheader time small { margin-left: 12px; color: #65829d; font-size: 9px; }
-.expo-main { display: grid; grid-template-columns: 250px minmax(0, 1fr) 306px; gap: var(--expo-space); max-width: 1800px; margin-inline: auto; }
+.expo-main { display: grid; grid-template-columns: 250px minmax(0, 1fr) 306px; gap: var(--expo-space); max-width: 1800px; margin-inline: auto; align-items: start; }
 .expo-left, .expo-center, .expo-right { min-width: 0; }
 .expo-panel { position: relative; border: 1px solid var(--expo-border); border-radius: var(--expo-radius); background: linear-gradient(130deg, #15325564, #0d203be0); overflow: hidden; }
 .expo-panel::before { content: ''; position: absolute; left: 0; top: 0; width: 26px; height: 2px; background: #5bb9ea; }
@@ -73,28 +74,29 @@
 .expo-intro-counts strong small { font-size: 10px; padding-left: 7px; color: #6b9abb; }
 .expo-intro-counts span { color: #91a9bf; font-size: 10px; }
 .expo-intro-note { padding: 10px 18px 14px; display: flex; align-items: center; gap: 7px; color: #6896b6; font-size: 9px; }
-.expo-stage { min-height: 510px; height: clamp(510px, 37vw, 650px); position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 65%, #27608b40, transparent 61%); border: 1px solid #1d3c56; border-radius: 10px; }
+.expo-stage { min-height: 510px; height: clamp(510px, 37vw, 650px); position: relative; overflow: hidden; isolation: isolate; background: radial-gradient(ellipse at 50% 65%, #27608b40, transparent 61%); border: 1px solid #1d3c56; border-radius: 10px; }
 .expo-stage::before, .expo-stage::after { position: absolute; content: ''; width: 32px; height: 32px; z-index: 2; pointer-events: none; border-color: #56a0c0; }
 .expo-stage::before { left: 0; top: 0; border-left: 2px solid; border-top: 2px solid; color: #528aab; }
 .expo-stage::after { right: 0; bottom: 0; border-right: 2px solid; border-bottom: 2px solid; color: #528aab; }
-.expo-stage-heading { position: absolute; top: 24px; left: 26px; right: 24px; z-index: 2; display: flex; justify-content: space-between; gap: 12px; pointer-events: none; }
+.expo-stage-heading { position: absolute; top: 24px; left: 26px; right: 24px; z-index: 4; display: flex; justify-content: space-between; gap: 12px; pointer-events: none; }
 .expo-eyebrow { color: #74bee5; font-size: 9px; letter-spacing: 2px; }
 .expo-stage-heading h2 { margin-top: 9px; font-weight: 500; font-size: 22px; letter-spacing: 1px; }
 .expo-stage-heading h2 small { display: block; color: #7596b2; font-size: 10px; letter-spacing: .5px; font-weight: 400; margin-top: 10px; }
 .expo-outline-badge { display: flex; align-items: center; gap: 7px; color: #88aec9; border: 1px solid #2a4b66; height: 27px; padding: 0 9px; border-radius: 4px; font-size: 8px; letter-spacing: .5px; }
 .expo-stage-grid { position: absolute; inset: 0; opacity: .11; background-image: linear-gradient(#6cabd050 1px, transparent 1px), linear-gradient(90deg, #6cabd050 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse, black, transparent 72%); pointer-events: none; }
-.expo-model { position: absolute; inset: 40px 0 14px; }
-.expo-model canvas { touch-action: none; }
-.expo-model-label { pointer-events: none; position: absolute; left: 27px; bottom: 86px; display: flex; flex-direction: column; gap: 8px; border-left: 2px solid #419acf; padding-left: 12px; }
+.expo-model { position: absolute; inset: 92px 0 88px; z-index: 1; }
+.expo-model canvas { display: block; width: 100% !important; height: 100% !important; touch-action: none; }
+.expo-model-label { z-index: 3; pointer-events: none; position: absolute; left: 27px; bottom: 86px; display: flex; flex-direction: column; gap: 8px; border-left: 2px solid #419acf; padding-left: 12px; }
 .expo-model-label > span { display: flex; gap: 7px; align-items: center; font-size: 12px; color: #b0d9f3; }
 .expo-model-label small { color: #5b88aa; font-size: 8px; letter-spacing: 1px; }
-.expo-model-tip { pointer-events: none; position: absolute; right: 23px; bottom: 100px; color: #668dac; font-size: 9px; letter-spacing: 1px; }
-.expo-model-toolbar { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 5px; border: 1px solid #335977; border-radius: 7px; background: #0c2239ed; backdrop-filter: blur(12px); box-shadow: 0 8px 30px #0003; }
+.expo-model-tip { z-index: 3; pointer-events: none; position: absolute; right: 23px; bottom: 100px; color: #668dac; font-size: 9px; letter-spacing: 1px; }
+.expo-model-toolbar { z-index: 5; position: absolute; bottom: 22px; left: 50%; max-width: calc(100% - 26px); transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 5px; border: 1px solid #335977; border-radius: 7px; background: #0c2239ed; backdrop-filter: blur(12px); box-shadow: 0 8px 30px #0003; overflow-x: auto; scrollbar-width: none; }
+.expo-model-toolbar::-webkit-scrollbar { display: none; }
 .expo-model-toolbar button { display: flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: 4px; background: transparent; color: #90b4cf; font-size: 11px; padding: 9px 12px; white-space: nowrap; min-height: 36px; }
 .expo-model-toolbar button[aria-pressed="true"] { color: #93e0ff; background: #20649460; }
 .expo-model-toolbar button:hover { color: #e0f8ff; background: #245d8040; }
 .expo-model-toolbar > span { width: 1px; height: 19px; background: #305273; margin: 0 3px; }
-.expo-model-loading, .expo-model-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #8bb5d2; pointer-events: none; font-size: 12px; }
+.expo-model-loading, .expo-model-fallback { z-index: 2; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #8bb5d2; pointer-events: none; font-size: 12px; }
 .expo-model-fallback { flex-direction: column; }
 .expo-model-fallback span { font-size: 10px; color: #6d90ac; }
 .expo-model-loading svg { animation: expo-spin 1s linear infinite; }
@@ -159,6 +161,45 @@
 .expo-footer i { width: 2px; height: 2px; border-radius: 50%; background: #486d8c; }
 .expo-notice { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); padding: 15px 20px; max-width: 85%; background: #123653; border: 1px solid #599ac2; border-radius: 8px; color: #d9efff; z-index: 50; box-shadow: 0 5px 35px #0005; font-size: 12px; }
 @keyframes expo-spin { to { transform: rotate(360deg); } }
+
+/* Keep the stage alive without letting decorative layers capture model gestures. */
+.expo-stage {
+  background: radial-gradient(ellipse at 50% 76%, #65d7ff26 0 7%, transparent 40%), radial-gradient(ellipse at 50% 65%, #27608b40, transparent 61%);
+  box-shadow: inset 0 0 70px #3aa9df12, 0 18px 45px #020b1526;
+}
+.expo-stage-grid {
+  will-change: background-position;
+  animation: expo-grid-drift 32s linear infinite;
+}
+.expo-model {
+  isolation: isolate;
+}
+.expo-model::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 3% 9% 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 82%, #6cddff2b 0, #2580b414 29%, transparent 68%);
+  filter: blur(7px);
+}
+.expo-model canvas {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 18px 22px #010914a8);
+}
+.expo-model-toolbar button,
+.expo-components button {
+  transition: color .22s ease, background-color .22s ease, border-color .22s ease, transform .22s cubic-bezier(.22, 1, .36, 1);
+}
+.expo-model-toolbar button:active,
+.expo-components button:active {
+  transform: translateY(1px) scale(.97);
+}
+.expo-components button:hover {
+  transform: translateY(-1px);
+}
+@keyframes expo-grid-drift { to { background-position: 60px 60px; } }
 @media (min-width: 1800px) { .expo-page { padding-inline: max(28px, calc((100vw - 1860px) / 2)); } }
 @media (max-width: 1200px) {
   .expo-page { padding-inline: 20px; --expo-space: 14px; }
@@ -166,7 +207,7 @@
   .expo-brand strong { font-size: 15px; }
   .expo-title h1 { font-size: 22px; letter-spacing: 2px; }
   .expo-title p { font-size: 6px; letter-spacing: 1.5px; }
-  .expo-main { grid-template-columns: 205px minmax(0, 1fr) 260px; }
+  .expo-main { grid-template-columns: minmax(190px, 205px) minmax(0, 1fr) minmax(230px, 260px); }
   .expo-module { padding: 15px 12px; gap: 10px; min-height: 101px; }
   .expo-module-copy strong { font-size: 15px; }
   .expo-module-copy > span { font-size: 9px; }
@@ -191,7 +232,7 @@
   .expo-title-line, .expo-title::before, .expo-title::after { display: none; }
   .expo-brand { padding-top: 13px; }
   .expo-header-tools { padding-top: 13px; }
-  .expo-main { grid-template-columns: 205px minmax(0, 1fr); }
+  .expo-main { grid-template-columns: minmax(190px, 205px) minmax(0, 1fr); }
   .expo-right { display: grid; grid-template-columns: 1fr 1.5fr; grid-column: 1 / -1; gap: 14px; }
   .expo-catalog { margin-top: 0; }
   .expo-catalog-list { height: 232px; }
@@ -234,8 +275,8 @@
   .expo-stage-heading h2 small { font-size: 9px; }
   .expo-eyebrow { font-size: 8px; letter-spacing: 1px; }
   .expo-outline-badge { display: none; }
-  .expo-model { inset: 70px 0 30px; }
-  .expo-model-label { left: 18px; top: 110px; bottom: auto; gap: 6px; }
+  .expo-model { inset: 84px 0 78px; }
+  .expo-model-label { left: 18px; top: auto; bottom: 68px; gap: 6px; }
   .expo-model-label > span { font-size: 10px; }
   .expo-model-label small { font-size: 7px; }
   .expo-model-toolbar { padding: 4px; gap: 2px; bottom: 19px; }
