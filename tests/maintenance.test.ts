@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
@@ -56,13 +56,19 @@ test('同步拒绝未跟踪、工作区修改和已暂存但未提交的文件',
 });
 
 function fixture(t: { after: (cleanup: () => void) => void }) {
-  const directory = mkdtempSync(path.join(os.tmpdir(), 'agridx-v3-maintenance-'));
+  const temporaryRoot = path.resolve(os.tmpdir());
+  const directory = mkdtempSync(path.join(temporaryRoot, 'agridx-v3-maintenance-'));
   const repo = path.join(directory, 'repo');
   mkdirSync(path.join(repo, 'scripts', 'lib'), { recursive: true });
   for (const name of ['sync.mjs', 'lib/process.mjs']) {
     cpSync(path.join(projectRoot, 'scripts', name), path.join(repo, 'scripts', name));
   }
-  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  t.after(() => {
+    // Only remove this fixture's newly created child of the OS temporary directory.
+    assert.equal(path.dirname(path.resolve(directory)), temporaryRoot);
+    assert.match(path.basename(directory), /^agridx-v3-maintenance-/);
+    rmSync(directory, { recursive: true, force: true });
+  });
   const git = (...args: string[]) => {
     const result = spawnSync('git', args, { cwd: repo, encoding: 'utf8', shell: false });
     assert.equal(result.status, 0, result.stderr || result.error?.message);
@@ -95,6 +101,32 @@ test('实际Git仓库中的主线、游离状态和未跟踪文件均在推送�
   assert.equal(result.status, 1);
   assert.match(result.stderr, /未提交或未跟踪/);
   assert.equal(git('status', '--porcelain'), '?? untracked.txt');
+});
+
+test('从目录链接启动同步脚本仍执行主线保护，而非静默成功退出', (t) => {
+  const { directory, repo, git } = fixture(t);
+  const alias = path.join(directory, 'alias');
+  // The alias stays inside this fixture and targets only its own temporary repository.
+  symlinkSync(repo, alias, process.platform === 'win32' ? 'junction' : 'dir');
+  const result = spawnSync(process.execPath, [path.join(alias, 'scripts', 'sync.mjs')], {
+    cwd: alias, encoding: 'utf8', shell: false,
+  });
+  assert.equal(result.status, 1, result.stderr || result.error?.message);
+  assert.match(result.stderr, /稳定主线/);
+  assert.equal(git('status', '--porcelain'), '');
+});
+
+test('Windows目录大小写变化不跳过同步入口或误判Git仓库根目录', {
+  skip: process.platform !== 'win32',
+}, (t) => {
+  const { directory, git } = fixture(t);
+  const differentlyCasedRepo = path.join(directory, 'REPO');
+  const result = spawnSync(process.execPath, [path.join(differentlyCasedRepo, 'scripts', 'sync.mjs')], {
+    cwd: differentlyCasedRepo, encoding: 'utf8', shell: false,
+  });
+  assert.equal(result.status, 1, result.stderr || result.error?.message);
+  assert.match(result.stderr, /稳定主线/);
+  assert.equal(git('status', '--porcelain'), '');
 });
 
 test('实际推送只保存当前分支，即使Git配置followTags也不推标签或主线', (t) => {

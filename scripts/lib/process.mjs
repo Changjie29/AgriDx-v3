@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -32,8 +32,17 @@ export function runPackageBin(packageName, binName, args = []) {
   return runNode(path.resolve(packageDir, relativeBin), args);
 }
 
+/** Node resolves entry aliases in import.meta.url but keeps the supplied argv path. */
+export function samePath(first, second) {
+  const normalize = (value) => {
+    const actual = realpathSync(path.resolve(value));
+    return process.platform === 'win32' ? actual.toLowerCase() : actual;
+  };
+  return normalize(first) === normalize(second);
+}
+
 export function isMain(moduleUrl) {
-  return Boolean(process.argv[1]) && path.resolve(process.argv[1]) === fileURLToPath(moduleUrl);
+  return Boolean(process.argv[1]) && samePath(process.argv[1], fileURLToPath(moduleUrl));
 }
 
 export function main(task, name) {

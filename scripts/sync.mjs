@@ -1,5 +1,4 @@
-import { realpathSync } from 'node:fs';
-import { isMain, main, rootDir, run } from './lib/process.mjs';
+import { isMain, main, rootDir, run, samePath } from './lib/process.mjs';
 
 function git(args, options = {}) {
   return run('git', args, { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', ...options });
@@ -22,7 +21,7 @@ export function pushArguments(branch) {
 export function sync(args = process.argv.slice(2)) {
   if (args.length) throw new Error('用法：node scripts/sync.mjs；只推送当前已提交的协作分支。');
   const topLevel = git(['rev-parse', '--show-toplevel']).stdout.trim();
-  if (realpathSync(topLevel) !== realpathSync(rootDir)) {
+  if (!samePath(topLevel, rootDir)) {
     throw new Error('脚本所在目录不是独立的 Git 仓库根目录。');
   }
   const branch = git(['branch', '--show-current']).stdout.trim();
