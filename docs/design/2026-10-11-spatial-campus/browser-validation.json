@@ -1,0 +1,185 @@
+{
+  "version": "3.2.0",
+  "date": "2026-10-11",
+  "environment": "Linux Chromium / SwiftShader; local production build, no external LLM keys",
+  "checks": [
+    {
+      "name": "生产版本与知识条目",
+      "passed": true,
+      "details": {
+        "version": "3.2.0",
+        "knowledge": {
+          "chunks": 221,
+          "archivedEntries": 212
+        }
+      }
+    },
+    {
+      "name": "桌面三维场景、四个标识、实际目录数量与学院链接",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "W 前进、方向键与 A 转向",
+      "passed": true,
+      "details": {
+        "start": {
+          "x": 0,
+          "z": 1.8
+        },
+        "forward": {
+          "x": -0.0,
+          "z": 0.32
+        },
+        "turned": {
+          "x": -0.54,
+          "z": -1.81
+        }
+      }
+    },
+    {
+      "name": "空格优先刹车",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "Esc 返回总览，非驾驶模式不响应方向",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "回到起点重置坐标",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "从不同位置自动驶向四个展区",
+      "passed": true,
+      "details": [
+        {
+          "zone": "农机知识",
+          "position": {
+            "x": -4.1,
+            "z": -3.4
+          }
+        },
+        {
+          "zone": "智能诊断",
+          "position": {
+            "x": 4.1,
+            "z": -3.4
+          }
+        },
+        {
+          "zone": "模型工坊",
+          "position": {
+            "x": -4.1,
+            "z": 3.4
+          }
+        },
+        {
+          "zone": "研究依据",
+          "position": {
+            "x": 4.1,
+            "z": 3.4
+          }
+        }
+      ]
+    },
+    {
+      "name": "目录快捷键、输入焦点、搜索无匹配与带机型参数跳转",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "三维展区对应实际知识、诊断与模型路由",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "研究入口定位旧版区块与新旧版持久化",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "窗口失焦清理驾驶输入",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "目录失败不编造数量，重试恢复真实数据",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "390px 中文手机布局无横向溢出",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "手机双指前进加转向、释放触控停止",
+      "passed": true,
+      "details": {
+        "start": {
+          "x": 0,
+          "z": 1.8
+        },
+        "moved": {
+          "x": -3.01,
+          "z": -3.35
+        },
+        "released": {
+          "x": -3.01,
+          "z": -3.35
+        }
+      }
+    },
+    {
+      "name": "320px 英文手机布局与四个导览入口",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "减少动态模式，静止场景停止 WebGL 绘制",
+      "passed": true,
+      "details": {
+        "before": 2209,
+        "after": 2209
+      }
+    },
+    {
+      "name": "减少动态模式下功能入口可用",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "无 WebGL 显示降级并保留直接入口",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "全部生产浏览器流程无页面脚本错误",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "常规模式静止场景停止 WebGL 绘制",
+      "passed": true,
+      "details": {
+        "before": 2209,
+        "after": 2209
+      }
+    },
+    {
+      "name": "最终构建的自动导览与停止位置回传",
+      "passed": true,
+      "details": true
+    },
+    {
+      "name": "最终桌面及手机预览捕获无页面脚本错误",
+      "passed": true,
+      "details": true
+    }
+  ],
+  "pageErrors": []
+}

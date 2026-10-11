@@ -1,0 +1,52 @@
+{
+  "version": "3.2.0",
+  "date": "2026-10-11",
+  "screens": [
+    {
+      "file": "desktop-editable.svg",
+      "viewport": {
+        "width": 1600,
+        "height": 1050
+      },
+      "elements": {
+        "text": 69,
+        "path": 60,
+        "rect": 47,
+        "line": 2,
+        "image": 2,
+        "g": 111
+      },
+      "xml": "valid",
+      "independentBrowserRender": "passed",
+      "font": "Noto Sans SC",
+      "rasterContent": [
+        "WebGL canvas only; UI overlays hidden during capture",
+        "existing college emblem"
+      ],
+      "figmaNativeImport": "not verified: Starter MCP quota blocked canvas access"
+    },
+    {
+      "file": "mobile-editable.svg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "elements": {
+        "text": 58,
+        "path": 43,
+        "rect": 39,
+        "line": 2,
+        "image": 2,
+        "g": 96
+      },
+      "xml": "valid",
+      "independentBrowserRender": "passed",
+      "font": "Noto Sans SC",
+      "rasterContent": [
+        "WebGL canvas only; UI overlays hidden during capture",
+        "existing college emblem"
+      ],
+      "figmaNativeImport": "not verified: Starter MCP quota blocked canvas access"
+    }
+  ]
+}

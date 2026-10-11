@@ -1,264 +1,1477 @@
 .expo-page {
-  --expo-bg: #071426;
-  --expo-panel: #0e223d;
-  --expo-text: #eaf5ff;
-  --expo-muted: #93adc8;
-  --expo-border: #274464;
-  --expo-accent: #60d4ff;
-  --expo-space: 20px;
-  --expo-radius: 10px;
-  min-height: 100dvh; padding: 0 28px; color: var(--expo-text); color-scheme: dark;
-  background: radial-gradient(ellipse at 49% 27%, #14345680, transparent 56%), linear-gradient(145deg, #0b1a30, #071325 65%);
-  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 13px;
+  --expo-bg: #080f1b;
+  --expo-text: #e8eff5;
+  --expo-muted: #9bafbe;
+  --expo-accent: #b5e6dd;
+  color: var(--expo-text);
+  color-scheme: dark;
+  background: var(--expo-bg);
+  min-height: 100dvh;
+  padding: 0 36px;
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
 }
-.expo-page *, .expo-page *::before, .expo-page *::after { box-sizing: border-box; }
-.expo-page h1, .expo-page h2, .expo-page h3, .expo-page p { margin: 0; font-family: inherit; }
-.expo-page a { color: inherit; text-decoration: none; }
-.expo-page button { font: inherit; cursor: pointer; }
-.expo-page a:focus-visible, .expo-page button:focus-visible, .expo-page input:focus-visible { outline: 2px solid #8ae4ff; outline-offset: 4px; }
-.expo-page button, .expo-page a { -webkit-tap-highlight-color: transparent; }
-.expo-header { min-height: 108px; display: grid; grid-template-columns: 250px minmax(0, 1fr) 284px; align-items: center; gap: 20px; position: relative; border-bottom: 1px solid #295171; }
-.expo-header::after { content: ''; position: absolute; bottom: -1px; left: 34%; width: 32%; height: 2px; background: linear-gradient(90deg, transparent, #72daff, transparent); box-shadow: 0 2px 18px #5fccff50; }
-.expo-brand { display: flex; align-items: center; gap: 11px; }
-.expo-college-mark { flex: none; display: block; width: 45px; height: 45px; overflow: hidden; background: #fff; border-radius: 50%; }
-.expo-college-mark img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: right; }
-.expo-wordmark { min-width: 0; }
-.expo-brand strong { display: block; font-size: 17px; font-weight: 600; letter-spacing: 2px; }
-.expo-brand small { display: block; margin-top: 5px; color: #79a6ca; font-size: 8px; letter-spacing: 1.4px; }
-.expo-title { text-align: center; position: relative; min-width: 0; padding: 17px 10px; }
-.expo-title::before, .expo-title::after { content: ''; position: absolute; top: 9px; width: 42px; height: 55px; border-bottom: 1px solid #58adcf90; }
-.expo-title::before { left: -17px; border-left: 1px solid #58adcf90; transform: skewX(30deg); }
-.expo-title::after { right: -17px; border-right: 1px solid #58adcf90; transform: skewX(-30deg); }
-.expo-title h1 { font-size: clamp(21px, 1.9vw, 32px); font-weight: 600; letter-spacing: 4px; text-shadow: 0 0 24px #78ccff35; }
-.expo-title p { color: #74a0c3; font-size: 8px; letter-spacing: 2.5px; margin-top: 8px; }
-.expo-title-line { display: block; width: 45px; height: 3px; margin: 0 auto 10px; background: #61c5fa; box-shadow: -17px 0 0 -1px #54a6d5, 17px 0 0 -1px #54a6d5; }
-.expo-header-tools { display: flex; gap: 9px; align-items: center; justify-content: flex-end; }
-.expo-icon-button { display: inline-flex; gap: 4px; align-items: center; justify-content: center; min-width: 33px; height: 36px; background: transparent; border: 0; color: #9fc1db; font-size: 10px !important; }
-.expo-icon-button:hover { color: white; }
-.expo-subheader { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 14px 0 18px; color: #7798b7; font-size: 10px; letter-spacing: 1px; }
-.expo-subheader > span { display: flex; align-items: center; gap: 8px; }
-.expo-subheader i, .expo-outline-badge i { width: 5px; height: 5px; border-radius: 50%; background: #6addb9; box-shadow: 0 0 8px #6addb960; }
-.expo-subheader time { color: #a3bbd1; font-variant-numeric: tabular-nums; }
-.expo-subheader time small { margin-left: 12px; color: #65829d; font-size: 9px; }
-.expo-main { display: grid; grid-template-columns: 250px minmax(0, 1fr) 306px; gap: var(--expo-space); max-width: 1800px; margin-inline: auto; }
-.expo-left, .expo-center, .expo-right { min-width: 0; }
-.expo-panel { position: relative; border: 1px solid var(--expo-border); border-radius: var(--expo-radius); background: linear-gradient(130deg, #15325564, #0d203be0); overflow: hidden; }
-.expo-panel::before { content: ''; position: absolute; left: 0; top: 0; width: 26px; height: 2px; background: #5bb9ea; }
-.expo-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 18px; border-bottom: 1px solid #29476580; }
-.expo-panel-heading h2 { display: flex; align-items: center; gap: 9px; font-weight: 500; font-size: 14px; letter-spacing: 0.8px; }
-.expo-panel-heading h2 svg { color: #82b9dc; }
-.expo-panel-heading > span { font-size: 8px; letter-spacing: 1px; color: #6e97b8; }
-.expo-panel-heading a { display: inline-flex; align-items: center; color: #93b8d5; font-size: 10px; }
-.expo-heading-line { width: 3px; height: 13px; background: #64c7ff; box-shadow: 0 0 8px #5dccff40; }
-.expo-panel-label { display: flex; align-items: center; gap: 10px; color: #9bb4ce; padding: 7px 0 15px; font-size: 11px; letter-spacing: 2px; }
-.expo-panel-label span { color: #4b87ac; font-size: 10px; letter-spacing: 0; }
-.expo-modules { display: grid; gap: 12px; }
-.expo-module { display: flex; align-items: center; width: 100%; min-height: 105px; gap: 13px; padding: 18px 16px; border: 1px solid #294765; border-radius: 8px; color: #a9c0d5; text-align: left; background: linear-gradient(105deg, #112b4980, #10254030); position: relative; transition: border-color .18s, background .18s; }
-.expo-module:hover { border-color: #6abbe2; background: #18436b50; }
-.expo-module.is-active { border-color: #378ac9; background: linear-gradient(110deg, #176fac60, #1a47734a); box-shadow: inset 0 0 18px #3298dd0c; }
-.expo-module.is-active::before { content: ''; position: absolute; left: -1px; height: 38px; width: 3px; top: 30px; background: #89e3ff; box-shadow: 0 0 10px #72d3ff; }
-.expo-module-icon { color: #76bee9; flex-shrink: 0; }
-.expo-module.is-active .expo-module-icon { color: #9ae5ff; }
-.expo-module-copy { flex: 1; min-width: 0; }
-.expo-module-copy small { display: block; font-size: 9px; color: #749dbb; letter-spacing: 2px; margin-bottom: 6px; }
-.expo-module-copy strong { display: block; color: #e7f4ff; font-weight: 500; font-size: 17px; margin-bottom: 7px; letter-spacing: 1px; }
-.expo-module-copy > span { display: block; font-size: 10px; color: #9ab1c7; line-height: 1.7; }
-.expo-module > svg { flex-shrink: 0; color: #6091b7; }
-.expo-intro { margin-top: 22px; }
-.expo-intro > p { color: #99b0c8; font-size: 11px; line-height: 2; padding: 17px 18px 0; }
-.expo-intro-counts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 19px 18px; }
-.expo-intro-counts > div { display: flex; flex-direction: column; gap: 6px; }
-.expo-intro-counts > div + div { border-left: 1px solid #26435e; padding-left: 19px; }
-.expo-intro-counts strong { font-size: 30px; color: #96dfff; font-weight: 500; line-height: 1; }
-.expo-intro-counts strong small { font-size: 10px; padding-left: 7px; color: #6b9abb; }
-.expo-intro-counts span { color: #91a9bf; font-size: 10px; }
-.expo-intro-note { padding: 10px 18px 14px; display: flex; align-items: center; gap: 7px; color: #6896b6; font-size: 9px; }
-.expo-stage { min-height: 510px; height: clamp(510px, 37vw, 650px); position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 65%, #27608b40, transparent 61%); border: 1px solid #1d3c56; border-radius: 10px; }
-.expo-stage::before, .expo-stage::after { position: absolute; content: ''; width: 32px; height: 32px; z-index: 2; pointer-events: none; border-color: #56a0c0; }
-.expo-stage::before { left: 0; top: 0; border-left: 2px solid; border-top: 2px solid; color: #528aab; }
-.expo-stage::after { right: 0; bottom: 0; border-right: 2px solid; border-bottom: 2px solid; color: #528aab; }
-.expo-stage-heading { position: absolute; top: 24px; left: 26px; right: 24px; z-index: 2; display: flex; justify-content: space-between; gap: 12px; pointer-events: none; }
-.expo-eyebrow { color: #74bee5; font-size: 9px; letter-spacing: 2px; }
-.expo-stage-heading h2 { margin-top: 9px; font-weight: 500; font-size: 22px; letter-spacing: 1px; }
-.expo-stage-heading h2 small { display: block; color: #7596b2; font-size: 10px; letter-spacing: .5px; font-weight: 400; margin-top: 10px; }
-.expo-outline-badge { display: flex; align-items: center; gap: 7px; color: #88aec9; border: 1px solid #2a4b66; height: 27px; padding: 0 9px; border-radius: 4px; font-size: 8px; letter-spacing: .5px; }
-.expo-stage-grid { position: absolute; inset: 0; opacity: .11; background-image: linear-gradient(#6cabd050 1px, transparent 1px), linear-gradient(90deg, #6cabd050 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse, black, transparent 72%); pointer-events: none; }
-.expo-model { position: absolute; inset: 40px 0 14px; }
-.expo-model canvas { touch-action: none; }
-.expo-model-label { pointer-events: none; position: absolute; left: 27px; bottom: 86px; display: flex; flex-direction: column; gap: 8px; border-left: 2px solid #419acf; padding-left: 12px; }
-.expo-model-label > span { display: flex; gap: 7px; align-items: center; font-size: 12px; color: #b0d9f3; }
-.expo-model-label small { color: #5b88aa; font-size: 8px; letter-spacing: 1px; }
-.expo-model-tip { pointer-events: none; position: absolute; right: 23px; bottom: 100px; color: #668dac; font-size: 9px; letter-spacing: 1px; }
-.expo-model-toolbar { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 5px; border: 1px solid #335977; border-radius: 7px; background: #0c2239ed; backdrop-filter: blur(12px); box-shadow: 0 8px 30px #0003; }
-.expo-model-toolbar button { display: flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: 4px; background: transparent; color: #90b4cf; font-size: 11px; padding: 9px 12px; white-space: nowrap; min-height: 36px; }
-.expo-model-toolbar button[aria-pressed="true"] { color: #93e0ff; background: #20649460; }
-.expo-model-toolbar button:hover { color: #e0f8ff; background: #245d8040; }
-.expo-model-toolbar > span { width: 1px; height: 19px; background: #305273; margin: 0 3px; }
-.expo-model-loading, .expo-model-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #8bb5d2; pointer-events: none; font-size: 12px; }
-.expo-model-fallback { flex-direction: column; }
-.expo-model-fallback span { font-size: 10px; color: #6d90ac; }
-.expo-model-loading svg { animation: expo-spin 1s linear infinite; }
-.expo-structure { margin-top: 18px; }
-.expo-structure .expo-panel-heading { padding-block: 14px; }
-.expo-expand { display: flex; gap: 9px; align-items: center; color: #92abc2; font-size: 10px; cursor: pointer; }
-.expo-expand input { width: 14px; height: 14px; accent-color: #59b7eb; }
-.expo-components { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 16px 18px 13px; }
-.expo-components button { min-height: 36px; border: 1px solid #2a4a65; background: #112b44; border-radius: 5px; color: #9ab8d0; font-size: 10px; }
-.expo-components button[aria-pressed="true"] { color: #93dfff; border-color: #4e9dca; background: #1d587e50; }
-.expo-components button:hover { border-color: #63aad1; }
-.expo-structure-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 0 18px 16px; }
-.expo-structure-footer p { display: flex; align-items: center; gap: 6px; color: #6e95b3; font-size: 9px; line-height: 1.6; }
-.expo-structure-footer a { display: flex; gap: 6px; align-items: center; font-size: 10px; color: #72b9e1; }
-.expo-overview-main { display: flex; align-items: center; gap: 19px; padding: 22px 20px 17px; }
-.expo-donut { flex-shrink: 0; width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(from -90deg, #5dbcf6 0 var(--expo-ratio), #315875 var(--expo-ratio) 100%); padding: 11px; box-shadow: 0 0 35px #5abffe0b; }
-.expo-donut > div { height: 100%; width: 100%; background: #0d223a; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.expo-donut strong { font-size: 30px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1; }
-.expo-donut span { font-size: 8px; color: #92b3cd; margin-top: 8px; }
-.expo-overview dl { margin: 0; flex: 1; display: grid; gap: 15px; }
-.expo-overview dl > div { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.expo-overview dt { font-size: 10px; color: #a6bed4; display: flex; align-items: center; gap: 7px; }
-.expo-overview dt i { width: 5px; height: 5px; border-radius: 50%; background: #65c6f7; }
-.expo-overview dl > div:nth-child(2) i { background: #75dbbf; }
-.expo-overview dl > div:nth-child(3) i { background: #d7b96f; }
-.expo-overview dd { margin: 0; font-size: 15px; font-variant-numeric: tabular-nums; }
-.expo-data-note { margin: 0 18px 17px !important; color: #6e95b3; font-size: 9px; line-height: 1.7; }
-.expo-catalog { margin-top: 18px; }
-.expo-search { display: flex; align-items: center; margin: 14px 16px 12px; border: 1px solid #31516e; background: #081d33; border-radius: 5px; padding: 9px 10px; gap: 8px; color: #6e95b3; }
-.expo-search input { flex: 1; min-width: 0; width: 100%; padding: 0; border: 0; color: #c2dcf0; background: transparent; font: inherit; font-size: 11px; line-height: 1.5; }
-.expo-search input::placeholder { color: #6e92b1; }
-.expo-search input:focus { outline: 0; }
-.expo-search:focus-within { outline: 2px solid #82dfff; outline-offset: 3px; }
-.expo-search kbd { font-size: 9px; border: 1px solid #244460; padding: 1px 4px; border-radius: 2px; color: #6a8bab; }
-.expo-catalog-columns { display: flex; justify-content: space-between; margin: 0 16px; padding: 9px 9px; font-size: 9px; background: #24456440; color: #88a9c4; }
-.expo-catalog-list { height: 311px; overflow-y: auto; scrollbar-color: #315677 #0c2039; scrollbar-width: thin; padding: 0 16px; }
-.expo-catalog-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 7px; border-bottom: 1px solid #29486670; }
-.expo-catalog-row:hover { background: #26537840; }
-.expo-catalog-row > div { min-width: 0; }
-.expo-catalog-row strong { font-size: 11px; font-weight: 400; display: block; overflow-wrap: anywhere; }
-.expo-catalog-row small { display: block; margin-top: 5px; font-size: 9px; color: #7598b6; }
-.expo-scope { flex-shrink: 0; font-size: 8px; border-radius: 3px; padding: 3px 5px; background: #276baa35; border: 1px solid #3374a450; color: #81c8f2; white-space: nowrap; }
-.expo-scope.scope-series { color: #83d2c6; border-color: #488c8150; background: #24644d35; }
-.expo-scope.scope-pending { color: #d2b982; border-color: #91825950; background: #75602635; }
-.expo-catalog-state { padding: 40px 10px; text-align: center; color: #92acc4; font-size: 11px; line-height: 1.8; }
-.expo-catalog-state button { margin-top: 12px; background: #1b527c; border: 1px solid #4284b0; border-radius: 4px; padding: 6px 12px; color: #caecff; font-size: 10px; }
-.expo-catalog-bottom { display: flex; align-items: center; gap: 7px; color: #668eaf; padding: 12px 17px; border-top: 1px solid #29476580; font-size: 9px; }
-.expo-shortcuts { display: grid; grid-template-columns: 250px repeat(3, minmax(0, 1fr)); gap: 20px; max-width: 1800px; margin: 26px auto 0; border-top: 1px solid #284662; padding-top: 20px; }
-.expo-shortcuts-title { padding: 4px 0; }
-.expo-shortcuts-title > span { color: #5f99be; font-size: 8px; letter-spacing: 2px; }
-.expo-shortcuts-title h2 { font-weight: 400; font-size: 16px; margin-top: 9px; }
-.expo-shortcuts-title p { color: #7899b5; margin-top: 7px; font-size: 10px; }
-.expo-shortcut { display: flex; align-items: center; gap: 16px; padding: 19px 23px; border: 1px solid #2a4863; border-radius: 7px; background: linear-gradient(100deg, #1737595c, #0b21384d); min-width: 0; transition: border-color .18s, background .18s; }
-.expo-shortcut:hover { border-color: #619bbd; background: #1b426866; }
-.expo-shortcut > svg:first-child { color: #87ccf2; flex-shrink: 0; }
-.expo-shortcut > div { min-width: 0; flex: 1; }
-.expo-shortcut h3 { font-size: 14px; font-weight: 500; }
-.expo-shortcut p { font-size: 10px; color: #88a5bf; margin-top: 7px; line-height: 1.6; }
-.expo-shortcut > svg:last-child { color: #4f83aa; flex-shrink: 0; }
-.expo-footer { max-width: 1800px; margin: 20px auto 0; padding-bottom: 17px; display: flex; justify-content: space-between; gap: 10px; color: #4e7391; font-size: 8px; letter-spacing: .7px; }
-.expo-footer span { display: flex; align-items: center; gap: 9px; }
-.expo-footer i { width: 2px; height: 2px; border-radius: 50%; background: #486d8c; }
-.expo-notice { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); padding: 15px 20px; max-width: 85%; background: #123653; border: 1px solid #599ac2; border-radius: 8px; color: #d9efff; z-index: 50; box-shadow: 0 5px 35px #0005; font-size: 12px; }
-@keyframes expo-spin { to { transform: rotate(360deg); } }
-@media (min-width: 1800px) { .expo-page { padding-inline: max(28px, calc((100vw - 1860px) / 2)); } }
-@media (max-width: 1200px) {
-  .expo-page { padding-inline: 20px; --expo-space: 14px; }
-  .expo-header { grid-template-columns: 200px minmax(0, 1fr) 208px; gap: 14px; }
-  .expo-brand strong { font-size: 15px; }
-  .expo-title h1 { font-size: 22px; letter-spacing: 2px; }
-  .expo-title p { font-size: 6px; letter-spacing: 1.5px; }
-  .expo-main { grid-template-columns: 205px minmax(0, 1fr) 260px; }
-  .expo-module { padding: 15px 12px; gap: 10px; min-height: 101px; }
-  .expo-module-copy strong { font-size: 15px; }
-  .expo-module-copy > span { font-size: 9px; }
-  .expo-intro .expo-panel-heading { padding-inline: 13px; }
-  .expo-overview-main { padding-inline: 13px; gap: 12px; }
-  .expo-donut { width: 104px; height: 104px; padding: 9px; }
-  .expo-donut strong { font-size: 26px; }
-  .expo-stage-heading { left: 18px; top: 21px; right: 18px; }
-  .expo-stage-heading h2 { font-size: 20px; }
-  .expo-outline-badge { font-size: 7px; padding-inline: 6px; }
-  .expo-components { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .expo-shortcuts { grid-template-columns: 205px repeat(3, minmax(0, 1fr)); gap: 14px; }
-  .expo-shortcut { padding: 16px 14px; gap: 11px; }
-  .expo-shortcut p { font-size: 9px; }
-  .expo-model-tip { display: none; }
+.expo-page *,
+.expo-page *::before,
+.expo-page *::after {
+  box-sizing: border-box;
 }
-@media (max-width: 1000px) {
-  .expo-header { grid-template-columns: 190px minmax(0, 1fr); min-height: 100px; }
-  .expo-title { grid-column: 1 / -1; grid-row: 2; padding: 5px 0 16px; }
-  .expo-title h1 { font-size: 25px; }
-  .expo-title p { font-size: 8px; }
-  .expo-title-line, .expo-title::before, .expo-title::after { display: none; }
-  .expo-brand { padding-top: 13px; }
-  .expo-header-tools { padding-top: 13px; }
-  .expo-main { grid-template-columns: 205px minmax(0, 1fr); }
-  .expo-right { display: grid; grid-template-columns: 1fr 1.5fr; grid-column: 1 / -1; gap: 14px; }
-  .expo-catalog { margin-top: 0; }
-  .expo-catalog-list { height: 232px; }
-  .expo-overview-main { flex-direction: column; align-items: stretch; gap: 22px; padding: 25px; }
-  .expo-donut { align-self: center; width: 128px; height: 128px; }
-  .expo-overview dl { gap: 16px; }
-  .expo-shortcuts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .expo-shortcuts-title { grid-column: 1 / -1; }
-  .expo-shortcuts-title > span { display: none; }
+.expo-page h1,
+.expo-page h2,
+.expo-page h3,
+.expo-page p {
+  margin: 0;
+  font-family: inherit;
 }
-@media (max-width: 640px) {
-  .expo-page { padding-inline: 14px; }
-  .expo-header { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; min-height: 130px; }
-  .expo-brand { gap: 8px; }
-  .expo-college-mark { width: 38px; height: 38px; }
-  .expo-brand strong { font-size: 13px; letter-spacing: 1px; }
-  .expo-brand small { font-size: 6px; letter-spacing: .6px; }
-  .expo-header-tools { gap: 3px; }
-  .expo-fullscreen { display: none; }
-  .expo-icon-button { min-width: 25px; }
-  .expo-icon-button svg { display: none; }
-  .expo-title h1 { font-size: 21px; letter-spacing: 2px; line-height: 1.4; }
-  .expo-title p { font-size: 6px; letter-spacing: 1px; line-height: 1.7; margin-top: 7px; }
-  .expo-subheader { font-size: 8px; letter-spacing: 0; padding-bottom: 14px; }
-  .expo-subheader > span { max-width: 47%; line-height: 1.6; gap: 5px; }
-  .expo-subheader time { font-size: 8px; flex-shrink: 0; }
-  .expo-subheader time small { display: none; }
-  .expo-main { display: flex; flex-direction: column; gap: 16px; }
-  .expo-panel-label, .expo-intro { display: none; }
-  .expo-modules { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
-  .expo-module { flex-direction: column; gap: 9px; padding: 12px 5px; min-height: 93px; text-align: center; }
-  .expo-module-icon svg { width: 21px; height: 21px; }
-  .expo-module-copy small { font-size: 7px; margin-bottom: 5px; letter-spacing: 1px; }
-  .expo-module-copy strong { font-size: 11px; margin: 0; letter-spacing: 0; line-height: 1.4; }
-  .expo-module-copy > span, .expo-module > svg { display: none; }
-  .expo-module.is-active::before { height: 2px; width: 28px; top: -1px; left: calc(50% - 14px); }
-  .expo-stage { min-height: 430px; height: 430px; }
-  .expo-stage-heading { top: 20px; left: 17px; right: 17px; }
-  .expo-stage-heading h2 { font-size: 19px; }
-  .expo-stage-heading h2 small { font-size: 9px; }
-  .expo-eyebrow { font-size: 8px; letter-spacing: 1px; }
-  .expo-outline-badge { display: none; }
-  .expo-model { inset: 70px 0 30px; }
-  .expo-model-label { left: 18px; top: 110px; bottom: auto; gap: 6px; }
-  .expo-model-label > span { font-size: 10px; }
-  .expo-model-label small { font-size: 7px; }
-  .expo-model-toolbar { padding: 4px; gap: 2px; bottom: 19px; }
-  .expo-model-toolbar button { font-size: 10px; padding: 8px 10px; gap: 5px; min-height: 34px; }
-  .expo-model-toolbar svg { width: 13px; }
-  .expo-structure { margin-top: 14px; }
-  .expo-structure .expo-panel-heading { padding: 14px; }
-  .expo-panel-heading h2 { font-size: 13px; letter-spacing: .5px; }
-  .expo-components { padding: 14px; gap: 7px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .expo-components button { min-height: 38px; }
-  .expo-structure-footer { padding: 0 14px 16px; }
-  .expo-structure-footer p { font-size: 8px; }
-  .expo-right { display: flex; flex-direction: column; gap: 14px; }
-  .expo-overview-main { flex-direction: row; align-items: center; padding: 22px; gap: 30px; }
-  .expo-donut { width: 118px; height: 118px; }
-  .expo-overview dl { gap: 19px; }
-  .expo-catalog-list { height: 260px; }
-  .expo-catalog-row { min-height: 58px; }
-  .expo-shortcuts { margin-top: 23px; padding-top: 17px; grid-template-columns: 1fr; gap: 10px; }
-  .expo-shortcuts-title { margin-bottom: 5px; }
-  .expo-shortcut { padding: 17px; }
-  .expo-footer { flex-direction: column; gap: 10px; font-size: 7px; line-height: 1.8; }
-  .expo-footer span { flex-wrap: wrap; }
+.expo-page a {
+  color: inherit;
+  text-decoration: none;
 }
-@media (max-width: 380px) { .expo-brand { gap: 6px; } .expo-college-mark { width: 32px; height: 32px; } .expo-brand small { display: none; } }
-@media (prefers-reduced-motion: reduce) { .expo-page *, .expo-page *::before, .expo-page *::after { animation: none !important; transition: none !important; } }
+.expo-page button {
+  font: inherit;
+  cursor: pointer;
+}
+.expo-page .skip-link {
+  position: fixed;
+  z-index: 60;
+  top: -100px;
+  left: 24px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  background: #b5e6dd;
+  color: #183d3d;
+}
+.expo-page .skip-link:focus {
+  top: 14px;
+}
+.expo-page button,
+.expo-page a {
+  -webkit-tap-highlight-color: transparent;
+}
+.expo-page a:focus-visible,
+.expo-page button:focus-visible,
+.expo-page input:focus-visible,
+.expo-world-stage:focus-visible {
+  outline: 2px solid #b5e6dd;
+  outline-offset: 4px;
+}
+.expo-header,
+.expo-main,
+.expo-footer {
+  max-width: 1800px;
+  margin-inline: auto;
+}
+.expo-header {
+  min-height: 104px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid #283746;
+}
+.expo-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.expo-college-mark {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.expo-college-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right;
+}
+.expo-wordmark strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 550;
+  letter-spacing: 2px;
+}
+.expo-wordmark small {
+  display: block;
+  color: #7895a7;
+  font-size: 8px;
+  letter-spacing: 1.3px;
+  margin-top: 6px;
+}
+.expo-title {
+  text-align: center;
+}
+.expo-title > span {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 2.6px;
+  color: #7793a5;
+  margin-bottom: 9px;
+}
+.expo-title h1 {
+  font-size: clamp(19px, 1.7vw, 27px);
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+.expo-header-tools {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+.expo-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 40px;
+  min-height: 44px;
+  background: transparent;
+  color: #a7bbca;
+  border: 0;
+  font-size: 11px !important;
+  border-radius: 9px;
+}
+.expo-icon-button:hover {
+  color: #fff;
+  background: #c2e5ff0c;
+}
+.expo-scene-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  min-height: 58px;
+}
+.expo-scene-bar > span {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  color: #98aebf;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.expo-scene-bar i,
+.expo-world-hint i {
+  width: 5px;
+  height: 5px;
+  background: #a7d8c8;
+  border-radius: 50%;
+  flex: none;
+}
+.expo-catalog-trigger {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b6c7d4;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 11px !important;
+}
+.expo-catalog-trigger:hover,
+.expo-catalog-trigger[aria-expanded='true'] {
+  background: #172532;
+  border-color: #354b5b;
+}
+.expo-catalog-trigger kbd {
+  color: #8095a5;
+  font: inherit;
+  border: 1px solid #354554;
+  width: 18px;
+  height: 19px;
+  text-align: center;
+  border-radius: 4px;
+  margin-left: 9px;
+}
+.expo-world-stage {
+  position: relative;
+  isolation: isolate;
+  min-height: 680px;
+  height: clamp(680px, 76vh, 940px);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #344653;
+  background: radial-gradient(ellipse at 63% 45%, #21394a 0%, #101e2c 45%, #080f1b 82%);
+  box-shadow:
+    0 35px 70px #0005,
+    inset 0 1px 0 #b5def218;
+}
+.expo-world-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.expo-world-canvas canvas {
+  touch-action: none;
+}
+.expo-world-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #08101bbb, transparent 28%, transparent 83%, #08101b55),
+    linear-gradient(0deg, #080f1bcc, transparent 22%, transparent 86%, #080f1b33);
+}
+.expo-world-guide {
+  position: absolute;
+  left: 32px;
+  top: 32px;
+  width: 240px;
+  z-index: 10;
+}
+.expo-guide-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b1c7ce;
+  font-size: 8px;
+  letter-spacing: 1.6px;
+}
+.expo-world-guide h2 {
+  font-size: clamp(28px, 2.55vw, 42px);
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-top: 22px;
+  text-shadow: 0 4px 20px #0008;
+}
+.expo-world-guide h2 > span {
+  color: #b5dcd2;
+}
+.expo-world-guide > p {
+  font-size: 11px;
+  line-height: 1.9;
+  color: #a5b9c6;
+  max-width: 204px;
+  margin-top: 15px;
+}
+.expo-start-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #c5e9dd;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #d2ece3, #a0cfc4);
+  box-shadow:
+    0 6px 20px #0004,
+    inset 0 1px 0 #fff8;
+  color: #183d3d;
+  min-height: 46px;
+  padding: 0 17px;
+  font-size: 12px !important;
+  margin-top: 22px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.expo-start-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px #0005;
+}
+.expo-zone-nav {
+  margin-top: 30px;
+  display: grid;
+  gap: 3px;
+  max-width: 204px;
+}
+.expo-zone-nav > button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  width: 100%;
+  color: #a2b9c7;
+  border: 1px solid transparent;
+  padding: 0 11px;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.expo-zone-nav > button > span {
+  color: #8499aa;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+.expo-zone-nav > button > svg:first-of-type {
+  color: var(--zone-color);
+}
+.expo-zone-nav > button > strong {
+  font-size: 12px;
+  font-weight: 450;
+  flex: 1;
+}
+.expo-zone-nav > button > svg:last-child {
+  color: #6d8c9c;
+}
+.expo-zone-nav > button:hover,
+.expo-zone-nav > button[aria-pressed='true'] {
+  color: #e7f1f6;
+  background: #233e4d99;
+  border-color: #74959a42;
+}
+.expo-world-coordinate {
+  position: absolute;
+  right: 30px;
+  top: 31px;
+  z-index: 9;
+  text-align: right;
+  pointer-events: none;
+}
+.expo-world-coordinate > span {
+  color: #a4c2ce;
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+.expo-world-coordinate small {
+  display: block;
+  color: #889da8;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+.world-zone-label {
+  min-width: 126px;
+  text-align: left;
+  border: 1px solid #a6c2d344;
+  border-radius: 10px;
+  color: #ddeaf3;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #234156ed, #101e2bf0);
+  box-shadow:
+    0 12px 28px #0006,
+    inset 0 1px 0 #c9e8f522;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+  position: relative;
+}
+.world-zone-label::after {
+  content: '';
+  height: 15px;
+  width: 1px;
+  background: linear-gradient(var(--zone-color), transparent);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+}
+.world-zone-label > span {
+  color: var(--zone-color);
+  display: block;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  margin-bottom: 5px;
+}
+.world-zone-label strong {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 13px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.world-zone-label:hover,
+.world-zone-label.is-selected {
+  border-color: var(--zone-color);
+  transform: translateY(-3px);
+}
+.expo-zone-card,
+.expo-catalog-sheet {
+  position: absolute;
+  z-index: 15;
+  top: 86px;
+  right: 26px;
+  width: 292px;
+  border: 1px solid #809aab66;
+  border-radius: 16px;
+  color: #e5eef4;
+  background: linear-gradient(145deg, #233847f5, #0e1c29f5);
+  box-shadow:
+    0 24px 55px #0006,
+    inset 0 1px 0 #b2d3e92b;
+  backdrop-filter: blur(14px);
+}
+.expo-zone-card {
+  padding: 19px 22px 22px;
+  border-top-color: var(--zone-color);
+}
+.expo-zone-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.expo-zone-card-top > span {
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  color: var(--zone-color);
+}
+.expo-zone-card-top .expo-icon-button {
+  min-width: 36px;
+}
+.expo-zone-card-icon {
+  color: var(--zone-color);
+  margin-top: 11px;
+}
+.expo-zone-card h2 {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-top: 14px;
+}
+.expo-zone-card h3 {
+  font-size: 13px;
+  font-weight: 450;
+  line-height: 1.8;
+  margin-top: 19px;
+}
+.expo-zone-card > p {
+  font-size: 11px;
+  line-height: 1.95;
+  color: #a6bdcc;
+  margin-top: 12px;
+}
+.expo-zone-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+.expo-zone-tags span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  color: #b7c7d1;
+}
+.expo-zone-tags svg {
+  color: var(--zone-color);
+}
+.expo-zone-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 24px;
+}
+.expo-zone-actions > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  min-height: 44px;
+  border: 1px solid #a6c9d4;
+  border-radius: 7px;
+  color: #132d3a;
+  background: #c1dce3;
+  font-size: 11px;
+}
+.expo-zone-actions > .expo-visit-button {
+  border-color: #607f905c;
+  background: #c3e5ed08;
+  color: #b4cfda;
+  justify-content: center;
+  gap: 8px;
+}
+.expo-zone-actions > button:hover {
+  filter: brightness(1.1);
+}
+.expo-world-bottom {
+  position: absolute;
+  bottom: 25px;
+  left: 30px;
+  right: 30px;
+  z-index: 11;
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  align-items: end;
+  gap: 20px;
+  pointer-events: none;
+}
+.expo-mini-map,
+.expo-world-dock {
+  pointer-events: auto;
+}
+.expo-mini-map {
+  padding: 11px;
+  width: 150px;
+  border-radius: 12px;
+  background: #122330ed;
+  border: 1px solid #6b8da044;
+  box-shadow: 0 10px 25px #0004;
+}
+.expo-map-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #9eb8c8;
+  font-size: 8px;
+  letter-spacing: 0.9px;
+}
+.expo-map-grid {
+  position: relative;
+  height: 96px;
+  margin-top: 8px;
+  background:
+    linear-gradient(0deg, transparent 44%, #6d91921d 44%, #6d91921d 56%, transparent 56%),
+    linear-gradient(90deg, transparent 43%, #6d91921d 43%, #6d91921d 57%, transparent 57%);
+  border: 1px solid #617a8d2e;
+  border-radius: 5px;
+}
+.expo-map-grid > button {
+  position: absolute;
+  width: 28px;
+  height: 24px;
+  min-width: 28px;
+  border: 1px solid #708b965c;
+  border-radius: 4px;
+  background: #1c3341;
+  color: var(--zone-color);
+  transform: translate(-50%, -50%);
+  font-size: 8px;
+  padding: 0;
+}
+.expo-map-grid > button::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+.expo-map-grid > button:hover,
+.expo-map-grid > button.is-nearby {
+  border-color: var(--zone-color);
+  background: #2d495b;
+}
+.expo-map-player {
+  color: #edf8f2;
+  position: absolute;
+  display: flex;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0 4px #bdffdb);
+}
+.expo-world-dock {
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  padding: 6px;
+  gap: 4px;
+  border: 1px solid #68889866;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #213a49ef, #11212fef);
+  box-shadow:
+    0 12px 35px #0007,
+    inset 0 1px 0 #d9edf51f;
+  backdrop-filter: blur(12px);
+}
+.expo-world-dock > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 16px;
+  color: #afc6d2;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.expo-world-dock > button[aria-pressed='true'] {
+  color: #d9eee8;
+  border-color: #90b4b544;
+  background: #426b7066;
+  box-shadow: 0 2px 5px #0002;
+}
+.expo-world-dock > button:hover {
+  background: #7398a322;
+  color: white;
+}
+.expo-dock-divider {
+  width: 1px;
+  height: 22px;
+  margin-inline: 3px;
+  background: #647d8d44;
+}
+.expo-world-hint {
+  color: #a0b8c6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-size: 9px;
+  padding-bottom: 11px;
+  text-align: right;
+}
+.expo-world-hint kbd {
+  display: block;
+  color: #d3e1e8;
+  border: 1px solid #819baa66;
+  border-radius: 5px;
+  padding: 7px 9px;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.expo-world-hint > small {
+  font-size: 8px;
+  display: block;
+  color: #809aa9;
+  width: 100%;
+}
+.expo-drive-pad {
+  position: absolute;
+  bottom: 110px;
+  right: 29px;
+  z-index: 14;
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(2, 44px);
+  gap: 5px;
+}
+.expo-drive-pad button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #708f9e80;
+  border-radius: 8px;
+  background: #1d3444ef;
+  color: #c0d8e5;
+  touch-action: none;
+  user-select: none;
+}
+.expo-drive-pad button:active {
+  color: #f7fff9;
+  background: #4d797b;
+}
+.drive-forward {
+  grid-column: 2;
+}
+.drive-left {
+  grid-row: 2;
+  grid-column: 1;
+}
+.drive-backward {
+  grid-row: 2;
+  grid-column: 2;
+}
+.drive-right {
+  grid-row: 2;
+  grid-column: 3;
+}
+.expo-catalog-sheet {
+  width: 326px;
+  top: 25px;
+  bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  padding: 21px;
+  overflow: hidden;
+}
+.expo-sheet-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.expo-sheet-heading span {
+  display: block;
+  color: #86a4b7;
+  font-size: 8px;
+  letter-spacing: 1.4px;
+}
+.expo-sheet-heading h2 {
+  font-size: 22px;
+  margin-top: 9px;
+  font-weight: 500;
+}
+.expo-sheet-counts {
+  display: flex;
+  gap: 28px;
+  padding: 22px 0 18px;
+}
+.expo-sheet-counts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.expo-sheet-counts strong {
+  font-size: 23px;
+  color: #d0e2e8;
+  font-weight: 450;
+}
+.expo-sheet-counts span {
+  font-size: 8px;
+  color: #a0b3c2;
+}
+.expo-search {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #718c9e66;
+  border-radius: 7px;
+  background: #07152266;
+  color: #99b6c9;
+  padding: 0 11px;
+  min-height: 44px;
+  flex: none;
+}
+.expo-search input {
+  background: transparent;
+  border: 0;
+  color: #e1edf5;
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  font-size: 11px;
+  padding: 0;
+}
+.expo-search input::placeholder {
+  color: #98aebd;
+}
+.expo-search input:focus {
+  outline: 0;
+}
+.expo-search:focus-within {
+  outline: 2px solid #b5e6dd;
+  outline-offset: 2px;
+}
+.expo-catalog-list {
+  flex: 1;
+  min-height: 80px;
+  overflow-y: auto;
+  margin-top: 15px;
+  scrollbar-color: #688799 #122531;
+  scrollbar-width: thin;
+}
+.expo-catalog-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 12px 5px;
+  border-bottom: 1px solid #789aaf26;
+}
+.expo-catalog-row:hover {
+  background: #365d762e;
+}
+.expo-catalog-row > div {
+  min-width: 0;
+}
+.expo-catalog-row strong {
+  font-size: 12px;
+  display: block;
+  overflow-wrap: anywhere;
+  font-weight: 450;
+}
+.expo-catalog-row small {
+  font-size: 9px;
+  color: #a0b5c2;
+  display: block;
+  margin-top: 6px;
+}
+.expo-scope {
+  font-size: 8px;
+  white-space: nowrap;
+  flex: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid #7799aa44;
+  background: #42667930;
+  color: #b1d2e7;
+}
+.expo-scope.scope-series {
+  color: #a5d7c8;
+  background: #3b716730;
+}
+.expo-scope.scope-pending {
+  color: #dfc59b;
+  background: #716a4330;
+}
+.expo-catalog-state {
+  text-align: center;
+  padding: 25px 10px;
+  color: #acbdc9;
+  font-size: 11px;
+  line-height: 1.9;
+}
+.expo-catalog-state button {
+  min-height: 44px;
+  margin-top: 12px;
+  background: #315266;
+  color: #e2f0f7;
+  padding: 0 16px;
+  border: 1px solid #779bae;
+  border-radius: 7px;
+}
+.expo-catalog-note {
+  color: #8fa9ba;
+  font-size: 9px;
+  line-height: 1.9;
+  margin-top: 14px !important;
+}
+.expo-catalog-all {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #c3ddd9 !important;
+  padding-top: 17px;
+  min-height: 44px;
+  font-size: 11px;
+}
+.world-loading,
+.world-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  font-size: 12px;
+  color: #a7bfce;
+  pointer-events: none;
+  background: #0b172055;
+}
+.world-loading {
+  z-index: 3;
+}
+.world-loading svg {
+  animation: expo-spin 1s linear infinite;
+}
+.world-fallback {
+  flex-direction: column;
+  text-align: center;
+  padding: 30px 25%;
+}
+.world-fallback h2 {
+  font-size: 19px;
+  font-weight: 500;
+  margin-top: 15px;
+}
+.world-fallback p {
+  font-size: 11px;
+  line-height: 1.8;
+  max-width: 300px;
+}
+.expo-evidence-strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+  padding: 35px 10px;
+}
+.expo-strip-label {
+  display: block;
+  color: #869eae;
+  font-size: 8px;
+  letter-spacing: 1.8px;
+  margin-bottom: 11px;
+}
+.expo-evidence-strip strong {
+  font-weight: 450;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+.expo-evidence-strip dl {
+  display: flex;
+  gap: 36px;
+  margin: 0;
+}
+.expo-evidence-strip dl > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 9px;
+}
+.expo-evidence-strip dd {
+  font-size: 26px;
+  font-weight: 400;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  color: #c0d9dd;
+}
+.expo-evidence-strip dt {
+  font-size: 9px;
+  color: #8da7b6;
+  white-space: nowrap;
+}
+.expo-evidence-strip > p {
+  color: #98afbd;
+  font-size: 10px;
+  line-height: 1.9;
+  max-width: 300px;
+}
+.expo-direct-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+  padding: 15px 10px;
+  border-top: 1px solid #2f4351;
+}
+.expo-direct-links > span {
+  color: #7897aa;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-right: auto;
+}
+.expo-direct-links button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  color: #b3c8d5;
+  border: 0;
+  background: transparent;
+  font-size: 11px;
+}
+.expo-direct-links button:hover {
+  color: #e0f6ed;
+}
+.expo-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 28px 10px;
+  color: #7895a6;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.expo-footer span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.expo-footer i {
+  width: 2px;
+  height: 2px;
+  background: #6e8a99;
+}
+.expo-notice {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 85%;
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: 1px solid #83a7ba;
+  background: #193344;
+  color: #e0f1f8;
+  box-shadow: 0 12px 30px #0006;
+  z-index: 60;
+  font-size: 12px;
+}
+@keyframes expo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (min-width: 1900px) {
+  .expo-world-stage {
+    height: 900px;
+  }
+}
+@media (max-width: 1150px) {
+  .expo-page {
+    padding-inline: 22px;
+  }
+  .expo-header {
+    gap: 15px;
+    grid-template-columns: 1fr 1.2fr 1fr;
+  }
+  .expo-wordmark strong {
+    font-size: 15px;
+  }
+  .expo-wordmark small {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+  .expo-title h1 {
+    font-size: 20px;
+  }
+  .expo-title > span {
+    letter-spacing: 1.5px;
+    font-size: 7px;
+  }
+  .expo-world-guide {
+    left: 25px;
+    width: 192px;
+  }
+  .expo-world-guide h2 {
+    font-size: 32px;
+  }
+  .expo-world-guide > p {
+    max-width: 175px;
+    font-size: 10px;
+  }
+  .expo-zone-nav {
+    max-width: 180px;
+  }
+  .expo-world-bottom {
+    left: 25px;
+    right: 25px;
+    grid-template-columns: 150px 1fr;
+    gap: 12px;
+  }
+  .expo-world-hint {
+    display: none;
+  }
+  .expo-zone-card {
+    right: 20px;
+    width: 262px;
+  }
+  .expo-world-dock > button {
+    padding-inline: 13px;
+  }
+  .expo-evidence-strip {
+    gap: 24px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .expo-evidence-strip > p {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
+}
+@media (max-width: 780px) {
+  .expo-header {
+    min-height: 136px;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding-top: 16px;
+  }
+  .expo-title {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-bottom: 19px;
+  }
+  .expo-title > span {
+    display: none;
+  }
+  .expo-title h1 {
+    font-size: 21px;
+  }
+  .expo-header-tools {
+    gap: 5px;
+  }
+  .expo-world-stage {
+    height: 760px;
+  }
+  .expo-world-guide {
+    width: 185px;
+  }
+  .expo-world-guide h2 {
+    font-size: 30px;
+  }
+  .expo-world-guide > p {
+    display: none;
+  }
+  .expo-zone-nav {
+    margin-top: 20px;
+  }
+  .expo-world-coordinate {
+    right: 20px;
+    top: 25px;
+  }
+  .expo-world-coordinate > span {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+  .expo-zone-card {
+    top: auto;
+    bottom: 105px;
+    right: 20px;
+    width: 245px;
+    padding: 13px 18px 18px;
+  }
+  .expo-zone-card-icon,
+  .expo-zone-tags {
+    display: none;
+  }
+  .expo-zone-card h2 {
+    font-size: 21px;
+    margin-top: 7px;
+  }
+  .expo-zone-card h3 {
+    margin-top: 12px;
+    font-size: 12px;
+  }
+  .expo-zone-card > p {
+    font-size: 10px;
+    margin-top: 8px;
+  }
+  .expo-zone-actions {
+    margin-top: 17px;
+    gap: 7px;
+  }
+  .expo-drive-pad {
+    bottom: 105px;
+    left: 25px;
+    right: auto;
+  }
+  .expo-world-bottom {
+    grid-template-columns: 1fr;
+  }
+  .expo-mini-map {
+    display: none;
+  }
+  .expo-world-dock {
+    width: auto;
+  }
+  .expo-direct-links {
+    gap: 12px 22px;
+  }
+  .expo-direct-links > span {
+    width: 100%;
+    margin: 0;
+  }
+}
+@media (max-width: 540px) {
+  .expo-page {
+    padding-inline: 14px;
+  }
+  .expo-header {
+    min-height: 132px;
+    gap: 4px;
+  }
+  .expo-brand {
+    gap: 8px;
+  }
+  .expo-college-mark {
+    width: 35px;
+    height: 35px;
+  }
+  .expo-wordmark strong {
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  .expo-wordmark small {
+    font-size: 5px;
+    letter-spacing: 0.5px;
+  }
+  .expo-header-tools {
+    gap: 1px;
+  }
+  .expo-fullscreen {
+    display: none;
+  }
+  .expo-icon-button {
+    min-width: 32px;
+  }
+  .expo-header-tools .expo-icon-button svg {
+    display: none;
+  }
+  .expo-title h1 {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  .expo-scene-bar {
+    min-height: 60px;
+    gap: 8px;
+  }
+  .expo-scene-bar > span {
+    max-width: 55%;
+    font-size: 8px;
+    line-height: 1.7;
+    letter-spacing: 0;
+  }
+  .expo-catalog-trigger {
+    font-size: 9px !important;
+    gap: 5px;
+    padding-inline: 3px;
+  }
+  .expo-catalog-trigger kbd {
+    display: none;
+  }
+  .expo-world-stage {
+    height: 780px;
+    min-height: 780px;
+    border-radius: 15px;
+  }
+  .expo-world-vignette {
+    background:
+      linear-gradient(0deg, #080f1bcc, transparent 40%), linear-gradient(180deg, #08111bdd, transparent 37%);
+  }
+  .expo-world-canvas {
+    top: 245px;
+    bottom: 80px;
+  }
+  .expo-world-stage[data-mode='drive'] .expo-world-canvas {
+    top: 130px;
+    bottom: 85px;
+  }
+  .expo-world-guide {
+    top: 23px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+  }
+  .expo-guide-eyebrow {
+    font-size: 7px;
+    letter-spacing: 1.3px;
+    gap: 7px;
+  }
+  .expo-guide-eyebrow svg {
+    width: 13px;
+  }
+  .expo-world-guide h2 {
+    font-size: 29px;
+    line-height: 1.45;
+    margin-top: 16px;
+  }
+  .expo-world-guide h2 br {
+    display: none;
+  }
+  .expo-world-guide h2 > span {
+    display: inline;
+  }
+  .expo-start-button {
+    margin-top: 16px;
+    padding-inline: 13px;
+    min-height: 44px;
+    font-size: 10px !important;
+    gap: 7px;
+  }
+  .expo-zone-nav {
+    max-width: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    margin-top: 15px;
+  }
+  .expo-zone-nav > button {
+    min-height: 44px;
+    padding: 0 8px;
+    gap: 8px;
+    background: #1c2c39aa;
+    border-color: #63849922;
+  }
+  .expo-zone-nav > button > strong {
+    font-size: 10px;
+  }
+  .expo-zone-nav > button > span {
+    font-size: 8px;
+  }
+  .expo-zone-nav > button > svg:last-child {
+    display: none;
+  }
+  .expo-world-coordinate {
+    display: none;
+  }
+  .world-zone-label {
+    min-width: 88px;
+    padding: 8px 9px;
+    border-radius: 7px;
+  }
+  .world-zone-label > span {
+    font-size: 6px;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .world-zone-label strong {
+    font-size: 9px;
+    gap: 5px;
+  }
+  .world-zone-label strong svg {
+    width: 10px;
+  }
+  .expo-world-bottom {
+    bottom: 20px;
+    left: 12px;
+    right: 12px;
+  }
+  .expo-world-dock {
+    padding: 5px;
+    gap: 2px;
+    border-radius: 9px;
+    width: 100%;
+    max-width: 340px;
+  }
+  .expo-world-dock > button {
+    padding-inline: 8px;
+    gap: 6px;
+    min-height: 44px;
+    font-size: 9px;
+    flex: 1;
+  }
+  .expo-world-dock > button svg {
+    width: 14px;
+  }
+  .expo-dock-divider {
+    margin: 0;
+  }
+  .expo-zone-card {
+    left: 17px;
+    right: 17px;
+    bottom: 91px;
+    width: auto;
+    padding: 10px 17px 16px;
+    border-radius: 12px;
+  }
+  .expo-zone-card-top > span {
+    font-size: 7px;
+  }
+  .expo-zone-card h2 {
+    margin-top: 2px;
+    font-size: 19px;
+  }
+  .expo-zone-card h3 {
+    margin-top: 10px;
+    font-size: 11px;
+  }
+  .expo-zone-card > p {
+    display: none;
+  }
+  .expo-zone-actions {
+    flex-direction: row;
+    margin-top: 14px;
+  }
+  .expo-zone-actions > button {
+    flex: 1;
+    font-size: 10px;
+    padding-inline: 11px;
+  }
+  .expo-zone-actions > .expo-visit-button {
+    gap: 5px;
+  }
+  .expo-drive-pad {
+    bottom: 109px;
+    left: 20px;
+  }
+  .expo-world-stage[data-mode='drive'] .expo-zone-card {
+    bottom: 244px;
+  }
+  .expo-world-stage[data-mode='drive'] .expo-world-guide h2,
+  .expo-world-stage[data-mode='drive'] .expo-start-button {
+    display: none;
+  }
+  .expo-world-stage[data-mode='drive'] .expo-zone-nav {
+    margin-top: 14px;
+  }
+  .expo-catalog-sheet {
+    top: 16px;
+    left: 15px;
+    right: 15px;
+    bottom: 90px;
+    width: auto;
+    padding: 17px;
+  }
+  .expo-sheet-heading h2 {
+    font-size: 20px;
+  }
+  .expo-sheet-counts {
+    gap: 25px;
+  }
+  .expo-sheet-counts strong {
+    font-size: 21px;
+  }
+  .expo-sheet-counts span {
+    font-size: 7px;
+  }
+  .world-fallback {
+    padding: 230px 25px 110px;
+  }
+  .world-fallback h2 {
+    font-size: 16px;
+  }
+  .world-fallback p {
+    font-size: 10px;
+  }
+  .expo-evidence-strip {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 29px 5px;
+  }
+  .expo-evidence-strip strong {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  .expo-evidence-strip dl {
+    gap: 46px;
+  }
+  .expo-evidence-strip dd {
+    font-size: 25px;
+  }
+  .expo-evidence-strip > p {
+    grid-column: auto;
+    font-size: 9px;
+  }
+  .expo-direct-links {
+    padding-inline: 5px;
+    gap: 8px 22px;
+  }
+  .expo-direct-links button {
+    font-size: 10px;
+  }
+  .expo-footer {
+    flex-direction: column;
+    padding: 24px 5px;
+    font-size: 7px;
+    letter-spacing: 0.3px;
+    line-height: 1.8;
+  }
+  .expo-footer span {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+@media (max-width: 350px) {
+  .expo-wordmark small {
+    display: none;
+  }
+  .expo-brand {
+    gap: 6px;
+  }
+  .expo-college-mark {
+    width: 30px;
+    height: 30px;
+  }
+  .expo-title h1 {
+    font-size: 18px;
+  }
+  .expo-world-guide h2 {
+    font-size: 24px;
+  }
+  .expo-zone-nav > button {
+    gap: 6px;
+  }
+  .expo-world-dock > button {
+    padding-inline: 4px;
+    gap: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .expo-page *,
+  .expo-page *::before,
+  .expo-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .expo-zone-card,
+  .expo-catalog-sheet,
+  .expo-world-dock {
+    background: #152a38;
+    backdrop-filter: none;
+  }
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .expo-zone-card,
+  .expo-catalog-sheet,
+  .expo-world-dock {
+    background: #152a38;
+  }
+}
