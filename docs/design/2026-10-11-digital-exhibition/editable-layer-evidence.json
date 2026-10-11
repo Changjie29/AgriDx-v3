@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-11T08:27:25.120043+00:00",
+  "method": "Parsed the SVG XML and rendered each file independently in Chromium. Figma import remains unvalidated because MCP writes and capture are blocked.",
+  "designs": [
+    {
+      "file": "new-desktop-editable.svg",
+      "width": "1600",
+      "height": "1120",
+      "nodeTypes": {
+        "svg": 30,
+        "title": 1,
+        "desc": 1,
+        "defs": 1,
+        "linearGradient": 13,
+        "stop": 26,
+        "clipPath": 218,
+        "rect": 293,
+        "circle": 7,
+        "g": 217,
+        "path": 90,
+        "image": 2,
+        "text": 124
+      },
+      "editableSvgTextElements": 124,
+      "vectorIconElements": 29,
+      "contentImages": [
+        "college-of-engineering-emblem",
+        "original-tractor-3D-content"
+      ],
+      "fontFamily": "Noto Sans SC, sans-serif",
+      "completeUiRaster": false
+    },
+    {
+      "file": "new-mobile-editable.svg",
+      "width": "390",
+      "height": "2093.453125",
+      "nodeTypes": {
+        "svg": 22,
+        "title": 1,
+        "desc": 1,
+        "defs": 1,
+        "linearGradient": 12,
+        "stop": 24,
+        "clipPath": 177,
+        "rect": 247,
+        "circle": 6,
+        "g": 176,
+        "path": 72,
+        "image": 2,
+        "text": 98
+      },
+      "editableSvgTextElements": 98,
+      "vectorIconElements": 21,
+      "contentImages": [
+        "college-of-engineering-emblem",
+        "original-tractor-3D-content"
+      ],
+      "fontFamily": "Noto Sans SC, sans-serif",
+      "completeUiRaster": false
+    }
+  ]
+}

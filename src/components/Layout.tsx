@@ -6,6 +6,8 @@ import { LiquidGlass } from '@sohumsuthar/liquid-glass';
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useLang, setLang } from '@/hooks/useLang';
+import { setUiVersion, useUiVersion } from '@/hooks/useUiVersion';
+import VersionSwitch from '@/components/VersionSwitch';
 
 const NAV_ZH = [
   { label: '首页', path: '/' },
@@ -23,12 +25,14 @@ const NAV_EN = [
 export function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    const saved = localStorage.getItem('srt-theme');
+    let saved: string | null = null;
+    try { saved = localStorage.getItem('srt-theme'); } catch { /* Browser privacy settings may disable storage. */ }
     if (saved === 'dark') return 'dark';
     if (saved === 'light') return 'light';
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
   const lang = useLang();
+  const uiVersion = useUiVersion();
   const location = useLocation();
   const navigate = useNavigate();
   const reducedMotion = useReducedMotion();
@@ -46,14 +50,19 @@ export function Layout() {
     document.documentElement.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
     // 液态玻璃库使用 html.dark 切换暗色材质
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('srt-theme', theme);
+    try { localStorage.setItem('srt-theme', theme); } catch { /* Theme selection still works in this tab. */ }
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  }, [lang]);
 
   const NAV_ITEMS = lang === 'zh' ? NAV_ZH : NAV_EN;
   const chatLabel = lang === 'zh' ? '诊断工作台' : 'Diagnosis';
 
   const handleHashNav = (hash: string) => {
     setMobileOpen(false);
+    if (hash === 'research') setUiVersion('old');
     if (location.pathname === '/') {
       document.getElementById(hash)?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
     } else {
@@ -62,6 +71,8 @@ export function Layout() {
       navigate('/', { state: { scrollTo: hash } });
     }
   };
+
+  if (location.pathname === '/' && uiVersion === 'new') return <Outlet />;
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -126,6 +137,7 @@ export function Layout() {
 
           {/* 右侧工具按钮（主题 + 语言 + 移动端菜单） */}
           <div className="site-tools flex items-center gap-2">
+            <VersionSwitch onChange={() => navigate('/')} />
             <button
               type="button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
