@@ -35,7 +35,9 @@ export function runPackageBin(packageName, binName, args = []) {
 /** Node resolves entry aliases in import.meta.url but keeps the supplied argv path. */
 export function samePath(first, second) {
   const normalize = (value) => {
-    const actual = realpathSync(path.resolve(value));
+    const resolved = path.resolve(value);
+    // The native Windows resolver expands 8.3 aliases such as RUNNER~1.
+    const actual = process.platform === 'win32' ? realpathSync.native(resolved) : realpathSync(resolved);
     return process.platform === 'win32' ? actual.toLowerCase() : actual;
   };
   return normalize(first) === normalize(second);

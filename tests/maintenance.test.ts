@@ -129,6 +129,32 @@ test('Windows目录大小写变化不跳过同步入口或误判Git仓库根目�
   assert.equal(git('status', '--porcelain'), '');
 });
 
+test('Windows短路径启动同步脚本仍正确识别Git根目录并执行主线保护', {
+  skip: process.platform !== 'win32',
+}, (t) => {
+  const { repo, git } = fixture(t);
+  const shortPathResult = spawnSync('powershell.exe', [
+    '-NoProfile', '-NonInteractive', '-Command',
+    "[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); " +
+    "$ErrorActionPreference = 'Stop'; " +
+    "$pathProbe = New-Object -ComObject Scripting.FileSystemObject; " +
+    "$pathProbe.GetFolder($env:AGRIDX_TEST_REPO).ShortPath",
+  ], { env: { ...process.env, AGRIDX_TEST_REPO: repo }, encoding: 'utf8', shell: false });
+  assert.equal(shortPathResult.status, 0, shortPathResult.stderr || shortPathResult.error?.message);
+  const shortRepo = shortPathResult.stdout.trim();
+  assert.ok(shortRepo, 'Windows短路径查询应返回目录');
+  if (shortRepo.toLowerCase() === repo.toLowerCase()) {
+    t.skip('此Windows卷未提供与原路径不同的8.3短路径');
+    return;
+  }
+  const result = spawnSync(process.execPath, [path.join(shortRepo, 'scripts', 'sync.mjs')], {
+    cwd: shortRepo, encoding: 'utf8', shell: false,
+  });
+  assert.equal(result.status, 1, result.stderr || result.error?.message);
+  assert.match(result.stderr, /稳定主线/);
+  assert.equal(git('status', '--porcelain'), '');
+});
+
 test('实际推送只保存当前分支，即使Git配置followTags也不推标签或主线', (t) => {
   const { directory, repo, git, execute } = fixture(t);
   const remote = path.join(directory, 'remote.git');
