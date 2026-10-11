@@ -41,6 +41,6 @@ sudo bash update-existing.sh --deploy <经审阅的40位提交SHA>
 
 本地生产命令 node --import tsx server.ts 另行启动成功，健康为 3.1.1 / 212 / 221，首页及模型 HEAD HTTP 200，模型大小 646,792 字节；测试明确清空模型 Key，没有真实外部模型请求，临时进程已停止。verify 对 loopback HTTP 使用既有本地请求调度，外部请求仍沿用环境代理。
 
-服务器尚未执行新版切换，不能记录更新完成。下一步将已验证脚本保存到 GitHub，使用固定提交 SHA 的下载和手动执行命令；实际执行结果回传后再验收线上版本及界面。
+实现已保存到独立分支 codex/tencent-existing-server-20261011，通过 [PR #9](https://github.com/srt2777/AgriDx-v3/pull/9) 审阅；代码提交为 [bcdcfcd](https://github.com/srt2777/AgriDx-v3/commit/bcdcfcd4ff4cff262932364f0051299d2cd99d88)。服务器尚未执行新版切换，不能记录更新完成。使用固定提交 SHA 的下载和手动执行命令；实际执行结果回传后再验收线上版本及界面。
 
 切换后应分别确认：本机及域名 /api/health 的预期版本与 212 / 221、首页及 JS/CSS、工学院徽章、GLB、知识目录，以及新旧版切换。健康响应的 configured 状态仅证明密钥设置，真实外部模型调用需独立检查，不能用健康接口代替模型问答验收。

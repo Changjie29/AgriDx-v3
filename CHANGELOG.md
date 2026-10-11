@@ -9,6 +9,7 @@
 - 正式服务从 current 的工作目录以相对 server.ts 入口启动，避免绝对软链接路径与主模块判断不一致而退出；补充真实 TypeScript 服务启动回归。构建文件使用公开读取权限，密钥文件仍单独限制为 0600，正式检查校验 Nginx 首页及入口 JavaScript 的实际内容。
 - 保存用户本轮服务器配置授权及实际 Ubuntu、Node、systemd、Nginx 元数据，区分本地脚本验证与线上验收。检查结果与服务器执行状态在本轮部署记录中更新，未取得成功结果前不记录部署完成。
 - 本地完整 verify 通过：122 项测试通过、2 项 Windows 专用测试在 Linux 跳过，含 9 项部署行为和真实启动检查；类型、Lint、构建及 Bash 语法通过，保留既有 Fast Refresh 和 Three.js 包体积提示。本地生产健康为 3.1.1 / 212 / 221，首页与模型接口 HTTP 200；临时服务已停止，服务器切换尚未执行。
+- 实现保存为 [bcdcfcd](https://github.com/srt2777/AgriDx-v3/commit/bcdcfcd4ff4cff262932364f0051299d2cd99d88)，通过 [PR #9](https://github.com/srt2777/AgriDx-v3/pull/9) 审阅；GitHub 保存不代表服务器已更新。
 
 ## 3.1.0 — 2026-10-11
 
