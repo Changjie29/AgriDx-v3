@@ -1,5 +1,13 @@
 # Third-party attribution / 第三方来源
 
+## Liquid Glass React
+
+Repository: https://github.com/rdev/liquid-glass-react
+Author: Max Rovensky
+Package: liquid-glass-react 1.1.1
+License: MIT, Copyright 2025 MAX ROVENSKY.
+Usage: SVG refraction behind classic navigation, model-entry and model-control surfaces in AgriDx-v3. App-owned layout, content, pointer highlights and preference fallbacks wrap the upstream component. No upstream demo images are used. The full license is distributed in public/licenses/liquid-glass-react.txt.
+
 ## ROS Agriculture - lawn_tractor
 
 Repository: https://github.com/ros-agriculture/lawn_tractor

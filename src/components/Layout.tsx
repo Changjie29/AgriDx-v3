@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { Menu, X, MessageSquare, Sun, Moon, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { LiquidGlass } from '@sohumsuthar/liquid-glass';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useLang, setLang } from '@/hooks/useLang';
@@ -48,7 +48,7 @@ export function Layout() {
   useEffect(() => {
     document.documentElement.classList.remove('theme-light', 'theme-dark');
     document.documentElement.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
-    // 液态玻璃库使用 html.dark 切换暗色材质
+    // 材质与院徽使用 html.dark 切换暗色显示。
     document.documentElement.classList.toggle('dark', theme === 'dark');
     try { localStorage.setItem('srt-theme', theme); } catch { /* Theme selection still works in this tab. */ }
   }, [theme]);
@@ -82,7 +82,7 @@ export function Layout() {
         <LiquidGlass
           variant="regular"
           lens
-          lensOptions={{ bezel: 7, refraction: 0.32, dispersion: 0.8 }}
+          displacementScale={28}
           className="site-nav-glass"
           contentClassName="site-nav-content flex min-h-16 w-full items-center justify-between gap-2 px-3 md:px-5"
         >
@@ -168,6 +168,13 @@ export function Layout() {
             </button>
           </div>
         </LiquidGlass>
+
+        {/* 小屏独立版本胶囊，保持主导航的单行轮廓。 */}
+        <div className="site-version-mobile">
+          <LiquidGlass className="site-version-mobile-glass">
+            <VersionSwitch onChange={() => navigate('/')} />
+          </LiquidGlass>
+        </div>
 
         {/* 移动端导航抽屉（非玻璃，避免玻璃嵌套失效） */}
         {mobileOpen && (

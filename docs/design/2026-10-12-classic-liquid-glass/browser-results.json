@@ -1,0 +1,640 @@
+{
+  "browser": "Chromium 151.0.7922.173",
+  "base_url": "http://127.0.0.1:3103",
+  "checks": [
+    {
+      "name": "default new exhibition has no glass renderer",
+      "result": "passed"
+    },
+    {
+      "name": "classic switch shows classic homepage and stores selection",
+      "result": "passed"
+    },
+    {
+      "name": "classic choice persists after refresh",
+      "result": "passed"
+    },
+    {
+      "name": "home refraction limited to two surfaces",
+      "result": "passed"
+    },
+    {
+      "name": "text and controls are outside optical filters and transforms",
+      "result": "passed",
+      "detail": {
+        "filter": "none",
+        "backdrop": "none",
+        "transform": "none"
+      }
+    },
+    {
+      "name": "pointer highlights update locally",
+      "result": "passed"
+    },
+    {
+      "name": "no global glass cursor class",
+      "result": "passed"
+    },
+    {
+      "name": "pointer exit clears local styles",
+      "result": "passed"
+    },
+    {
+      "name": "all four model view controls remain operable",
+      "result": "passed"
+    },
+    {
+      "name": "rotation pause/start toggles state",
+      "result": "passed"
+    },
+    {
+      "name": "keyboard reset restores default model view",
+      "result": "passed"
+    },
+    {
+      "name": "parent-only resize preserves focused control and updates renderer",
+      "result": "passed"
+    },
+    {
+      "name": "four-level knowledge selection still returns evidence",
+      "result": "passed"
+    },
+    {
+      "name": "knowledge material uses static frosting",
+      "result": "passed"
+    },
+    {
+      "name": "chat draft remains editable",
+      "result": "passed"
+    },
+    {
+      "name": "chat panels keep normal layout without refraction",
+      "result": "passed"
+    },
+    {
+      "name": "reduced motion removes refraction and pointer updates",
+      "result": "passed"
+    },
+    {
+      "name": "reduced motion leaves local cursor vars unset",
+      "result": "passed"
+    },
+    {
+      "name": "normal preference restores refraction live",
+      "result": "passed"
+    },
+    {
+      "name": "reduced transparency uses solid background without filters",
+      "result": "passed"
+    },
+    {
+      "name": "forced colors uses solid system colors",
+      "result": "passed"
+    },
+    {
+      "name": "glass-off class unmounts optical engine",
+      "result": "passed"
+    },
+    {
+      "name": "blur-only preference is preserved",
+      "result": "passed"
+    },
+    {
+      "name": "dark theme applies to classic material",
+      "result": "passed"
+    },
+    {
+      "name": "version switch synchronizes across browser tabs",
+      "result": "passed"
+    },
+    {
+      "name": "new exhibition remains free of classic renderers",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh/light tools fully visible",
+      "result": "passed",
+      "detail": [
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 155,
+          "right": 199
+        },
+        {
+          "text": "EN",
+          "width": 44,
+          "height": 44,
+          "left": 205,
+          "right": 249
+        },
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 255,
+          "right": 299
+        },
+        {
+          "text": "新版",
+          "width": 46.015625,
+          "height": 44,
+          "left": 213.96875,
+          "right": 259.984375
+        },
+        {
+          "text": "旧版",
+          "width": 46.015625,
+          "height": 44,
+          "left": 259.984375,
+          "right": 306
+        }
+      ]
+    },
+    {
+      "name": "320px zh main bar keeps a single-row capsule",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh controls meet 44px target",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh model controls usable",
+      "result": "passed",
+      "detail": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "320px zh switches back to new exhibition",
+      "result": "passed"
+    },
+    {
+      "name": "320px en/dark tools fully visible",
+      "result": "passed",
+      "detail": [
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 155,
+          "right": 199
+        },
+        {
+          "text": "中",
+          "width": 44,
+          "height": 44,
+          "left": 205,
+          "right": 249
+        },
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 255,
+          "right": 299
+        },
+        {
+          "text": "New",
+          "width": 61.984375,
+          "height": 44,
+          "left": 182.03125,
+          "right": 244.015625
+        },
+        {
+          "text": "Classic",
+          "width": 61.984375,
+          "height": 44,
+          "left": 244.015625,
+          "right": 306
+        }
+      ]
+    },
+    {
+      "name": "320px en main bar keeps a single-row capsule",
+      "result": "passed"
+    },
+    {
+      "name": "320px en controls meet 44px target",
+      "result": "passed"
+    },
+    {
+      "name": "320px en no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "320px en model controls usable",
+      "result": "passed",
+      "detail": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "320px en switches back to new exhibition",
+      "result": "passed"
+    },
+    {
+      "name": "375px zh/light tools fully visible",
+      "result": "passed",
+      "detail": [
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 210,
+          "right": 254
+        },
+        {
+          "text": "EN",
+          "width": 44,
+          "height": 44,
+          "left": 260,
+          "right": 304
+        },
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 310,
+          "right": 354
+        },
+        {
+          "text": "新版",
+          "width": 46.015625,
+          "height": 44,
+          "left": 268.96875,
+          "right": 314.984375
+        },
+        {
+          "text": "旧版",
+          "width": 46.015625,
+          "height": 44,
+          "left": 314.984375,
+          "right": 361
+        }
+      ]
+    },
+    {
+      "name": "375px zh main bar keeps a single-row capsule",
+      "result": "passed"
+    },
+    {
+      "name": "375px zh controls meet 44px target",
+      "result": "passed"
+    },
+    {
+      "name": "375px zh no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "375px zh model controls usable",
+      "result": "passed",
+      "detail": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "375px zh switches back to new exhibition",
+      "result": "passed"
+    },
+    {
+      "name": "375px en/dark tools fully visible",
+      "result": "passed",
+      "detail": [
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 210,
+          "right": 254
+        },
+        {
+          "text": "中",
+          "width": 44,
+          "height": 44,
+          "left": 260,
+          "right": 304
+        },
+        {
+          "text": "",
+          "width": 44,
+          "height": 44,
+          "left": 310,
+          "right": 354
+        },
+        {
+          "text": "New",
+          "width": 61.984375,
+          "height": 44,
+          "left": 237.03125,
+          "right": 299.015625
+        },
+        {
+          "text": "Classic",
+          "width": 61.984375,
+          "height": 44,
+          "left": 299.015625,
+          "right": 361
+        }
+      ]
+    },
+    {
+      "name": "375px en main bar keeps a single-row capsule",
+      "result": "passed"
+    },
+    {
+      "name": "375px en controls meet 44px target",
+      "result": "passed"
+    },
+    {
+      "name": "375px en no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "375px en model controls usable",
+      "result": "passed",
+      "detail": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 54.75,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "375px en switches back to new exhibition",
+      "result": "passed"
+    },
+    {
+      "name": "768px zh/light tools fully visible",
+      "result": "passed",
+      "detail": [
+        {
+          "text": "新版",
+          "width": 46.015625,
+          "height": 38,
+          "left": 468.953125,
+          "right": 514.96875
+        },
+        {
+          "text": "旧版",
+          "width": 46.015625,
+          "height": 38,
+          "left": 514.96875,
+          "right": 560.984375
+        },
+        {
+          "text": "",
+          "width": 36,
+          "height": 36,
+          "left": 572.984375,
+          "right": 608.984375
+        },
+        {
+          "text": "EN",
+          "width": 62.015625,
+          "height": 36,
+          "left": 616.984375,
+          "right": 679
+        },
+        {
+          "text": "",
+          "width": 36,
+          "height": 36,
+          "left": 687,
+          "right": 723
+        }
+      ]
+    },
+    {
+      "name": "768px zh no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "768px zh model controls usable",
+      "result": "passed",
+      "detail": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "768px zh switches back to new exhibition",
+      "result": "passed"
+    },
+    {
+      "name": "768px en/dark tools fully visible",
+      "result": "passed",
+      "detail": [
+        {
+          "text": "New",
+          "width": 61.984375,
+          "height": 38,
+          "left": 441.015625,
+          "right": 503
+        },
+        {
+          "text": "Classic",
+          "width": 61.984375,
+          "height": 38,
+          "left": 503,
+          "right": 564.984375
+        },
+        {
+          "text": "",
+          "width": 36,
+          "height": 36,
+          "left": 576.984375,
+          "right": 612.984375
+        },
+        {
+          "text": "中",
+          "width": 58.015625,
+          "height": 36,
+          "left": 620.984375,
+          "right": 679
+        },
+        {
+          "text": "",
+          "width": 36,
+          "height": 36,
+          "left": 687,
+          "right": 723
+        }
+      ]
+    },
+    {
+      "name": "768px en no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "768px en model controls usable",
+      "result": "passed",
+      "detail": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 81.5,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "768px en switches back to new exhibition",
+      "result": "passed"
+    },
+    {
+      "name": "unsupported backdrop avoids optical engine",
+      "result": "passed"
+    },
+    {
+      "name": "Safari fallback avoids optical engine",
+      "result": "passed"
+    },
+    {
+      "name": "unavailable storage retains version switching",
+      "result": "passed"
+    },
+    {
+      "name": "no browser page errors",
+      "result": "passed",
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "note": "Local Chromium checks; Safari UA and missing backdrop support are simulated fallback checks, not cross-browser rendering or hardware FPS measurements."
+}

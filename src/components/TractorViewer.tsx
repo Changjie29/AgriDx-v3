@@ -8,7 +8,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import TractorModel, { TRACTOR_MODEL_URL, type TractorComponent } from './TractorModel';
 import { useLang } from '@/hooks/useLang';
-import { LiquidGlass } from '@sohumsuthar/liquid-glass';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
 import '@/control-glass.css';
 
 // 相机初始配置（常量避免重渲染触发重置）
@@ -360,7 +360,7 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
           ? lang === 'zh' ? '原创结构示意 · 非实机 CAD' : 'Original schematic · Not machine CAD'
           : lang === 'zh' ? '本地模型 · 尺寸待核验' : 'Local model · Dimensions unverified'}
       </div>
-      {controls && <div className="model-control-shell" role="group" aria-label={lang === 'zh' ? '模型视角与旋转控制' : 'Model view and rotation controls'}><LiquidGlass variant="regular" className="model-control-glass lg-blur-only" contentClassName="model-control-content">
+      {controls && <div className="model-control-shell" role="group" aria-label={lang === 'zh' ? '模型视角与旋转控制' : 'Model view and rotation controls'}><LiquidGlass variant="regular" lens displacementScale={36} className="model-control-glass" contentClassName="model-control-content">
         <button type="button" onClick={() => setAutoRotate(value => !value)} aria-label={lang === 'zh' ? autoRotate ? '暂停自转' : '开启自转' : autoRotate ? 'Pause rotation' : 'Start rotation'} aria-pressed={autoRotate} className="model-icon-button">
           {autoRotate ? <Pause size={16} /> : <Play size={16} />}
         </button>
