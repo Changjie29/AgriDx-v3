@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.1.1**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.2.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -107,6 +107,10 @@ npm run build        # 前端与后端完整构建
 npm run build:client # 单独构建前端
 npm run build:server # 单独编译后端
 ```
+
+## 独立开发预览
+
+用户2026-10-12授权独立开发网址，并选择当前未合并的开发成果。固定 `dev-preview` 分支推送后，由 GitHub Actions 自动构建并更新独立 Sites 网址；与腾讯和原 Sites 发布独立。支持首页、模型、资料和本地知识诊断，外部模型不接入开发预览。更新和验证方式见[开发预览说明](docs/deployment/dev-preview.md)。
 
 ## 生产部署与验收
 

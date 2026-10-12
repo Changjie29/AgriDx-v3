@@ -1,3 +1,4 @@
+import { publicAsset } from '@/lib/public-asset';
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { Menu, X, MessageSquare, Sun, Moon, Globe } from 'lucide-react';
@@ -90,7 +91,7 @@ export function Layout() {
           {/* Logo */}
           <div className="brand-lockup flex items-center gap-3">
             <a href="https://coe.njau.edu.cn/" target="_blank" rel="noopener noreferrer" className={cn('college-mark', theme === 'dark' && 'college-mark-dark')} aria-label={lang === 'zh' ? '南京农业大学工学院官网首页' : 'College of Engineering, NAU official homepage'}>
-              <img src="/images/njau-engineering-mark.jpg" alt={lang === 'zh' ? '南京农业大学工学院院徽' : 'College of Engineering, NAU emblem'} width="857" height="411" />
+              <img src={publicAsset('images/njau-engineering-mark.jpg')} alt={lang === 'zh' ? '南京农业大学工学院院徽' : 'College of Engineering, NAU emblem'} width="857" height="411" />
             </a>
             <NavLink to="/" onPointerEnter={() => preloadPage('/', uiVersion)} onFocus={() => preloadPage('/', uiVersion)} className="brand-wordmark" aria-label={lang === 'zh' ? '耕知·耘诊首页' : 'Gengzhi · Yunzhen home'}><strong>耕知·耘诊</strong><span>{lang === 'zh' ? '农机诊断工作台' : 'Machinery diagnosis'}</span></NavLink>
           </div>

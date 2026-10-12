@@ -8,3 +8,6 @@ dist-server
 .env
 server/.env
 *.tsbuildinfo
+
+# Independent development preview build
+dist-preview

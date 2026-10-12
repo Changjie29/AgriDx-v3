@@ -1,0 +1,34 @@
+name: Development preview
+
+on:
+  push:
+    branches: [dev-preview]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: development-preview
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci --no-audit --no-fund --registry=https://registry.npmjs.org
+      - run: npm run verify
+      - run: npm run build:dev-preview
+      - name: Publish the development artifact branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/publish-preview-artifact.mjs
