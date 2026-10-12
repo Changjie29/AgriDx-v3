@@ -4,14 +4,14 @@ v3由Changjie29与另外三位协作者共同改进。初始3.0.0基线来自Agr
 
 ## 团队与任务
 
-截至2026-10-10核对的仓库现有权限：
+根据2026-10-12的最新确认，四位团队成员的仓库权限均为`admin`：
 
 | GitHub账号 | 仓库权限 |
 | --- | --- |
 | Changjie29 | admin |
-| jianshiting920-web | write |
-| jingxinnie0414-dev | write |
-| bai1022 | write |
+| jianshiting920-web | admin |
+| jingxinnie0414-dev | admin |
+| bai1022 | admin |
 
 具体任务在各次PR中说明，不预设个人分工。开始修改前先确认影响文件和目标，涉及共同修改的文件时及时协调。按新旧版本和任务意图判断是否需要更新性覆盖，保留与任务无关的成果；有冲突先对照diff再合并。现有PR #1（`fix/diagnosis-coordination`）保留独立待审，不属于3.0.0初始化内容。
 

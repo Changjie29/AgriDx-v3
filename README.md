@@ -292,7 +292,7 @@ AgriDx-v3/
 
 - GitHub：[Changjie29/AgriDx-v3](https://github.com/Changjie29/AgriDx-v3)。v2保留在[原仓库](https://github.com/Changjie29/AgriDx-v2)，本轮不修改v2。
 - 本地工作区：clone v3仓库后在根目录执行`npm ci`即可开发，无需额外配置路径；`.env`和`server/.env`按本机配置，不进入Git。
-- 团队：Changjie29（admin），jianshiting920-web、jingxinnie0414-dev、bai1022（write）。截至2026-10-10已核对仓库现有权限；具体任务按各次PR约定，不预设个人职责。
+- 团队：Changjie29、jianshiting920-web、jingxinnie0414-dev、bai1022均为admin（2026-10-12最新确认）；具体任务按各次PR约定，不预设个人职责。
 - 用户2026-10-10最新要求：**停止发布，继续及时同步GitHub。每轮授权改动完成必要验证后，按现有分支/PR规范及时提交并推送到v3仓库。** 此要求替换此前v3默认部署约定；v2仍只保存GitHub。用户明确要求暂缓提交或仅本地修改时按其要求执行。
 - GPT/Sites与腾讯服务器后续发布均已停止安排，不自动恢复，不连接服务器、不改DNS，也不启用旧定时拉取/自动重启流程。此前Sites版本20发布回执为成功，但自定义域名线上尚未确认3.0.0；真实保存、发布与验证边界见[3.0.0状态记录](docs/deployment/2026-10-10-v3-initial-status.md)。腾讯迁移是用户正在办理的事项，本轮未验收，不能写成迁移或上线已完成；未来发布等待新的明确授权。香港脚本与[旧部署指南](docs/deployment/2026-10-07-hk-deployment.md)保留作历史准备资料。
 - 每次推送前对比远端与本地改动，按新旧版本及任务意图判断更新性覆盖，保留无关成果；本次允许按差异覆盖v3的旧v2基线。主线合入、GitHub保存和网站发布分别记录，本地构建或Git推送本身不证明已发布。

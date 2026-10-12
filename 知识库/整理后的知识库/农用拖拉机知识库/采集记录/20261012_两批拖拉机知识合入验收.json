@@ -3,7 +3,7 @@
   "date_shanghai": "2026-10-12",
   "repository": "srt2777/AgriDx-v3",
   "repository_version": "3.1.0",
-  "main_baseline": "4d08ce0",
+  "main_baseline": "88a4e80b9515113f04fdab222356a5e8790f76d3",
   "pull_requests": {
     "6": "4951a18566105f1a0e4dfcd7c5e69201c2ca8d51",
     "7": "5de03a93db56ada1cc5ed9757105d61109b5fd10"
@@ -202,5 +202,7 @@
     "No manufacturer review",
     "No vehicle validation",
     "Seven existing external PDFs were not downloaded again"
-  ]
+  ],
+  "initial_main_baseline": "4d08ce0",
+  "integration_data_commit": "094afcbd8043fae29a702e495e53eae3ce6ff98e"
 }
