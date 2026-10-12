@@ -1,0 +1,27 @@
+.dev-preview-status {
+  position: fixed;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 24px);
+  padding: 5px 12px;
+  border: 1px solid #60a5fa;
+  border-radius: 20px;
+  background: #0f172a;
+  color: #eff6ff;
+  font: 11px/1.6 system-ui, sans-serif;
+  box-shadow: 0 2px 12px #0003;
+}
+.dev-preview-status button {
+  min-height: 32px;
+  padding: 0 8px;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+.dev-preview-status button:focus-visible { outline: 2px solid white; outline-offset: 2px; }

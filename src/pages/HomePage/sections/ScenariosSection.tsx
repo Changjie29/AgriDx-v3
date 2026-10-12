@@ -1,3 +1,4 @@
+import { publicAsset } from '@/lib/public-asset';
 import { Tractor, Wheat, Factory, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import content, { pick } from '@/data/content';
@@ -16,7 +17,7 @@ export default function ScenariosSection() {
         </div>
         <div className="scenario-layout">
           <figure className="scenario-image">
-            <img src="/images/agri-fields.webp" alt={t('稻田与田间作业拖拉机的农业场景插图', 'Illustration of rice fields and a tractor at work')} width="1400" height="933" loading="lazy" />
+            <img src={publicAsset('images/agri-fields.webp')} alt={t('稻田与田间作业拖拉机的农业场景插图', 'Illustration of rice fields and a tractor at work')} width="1400" height="933" loading="lazy" />
             <figcaption>{t('农业作业场景示意 · AI 生成', 'Agricultural scene illustration · AI generated')}</figcaption>
           </figure>
           <div className="scenario-list">
