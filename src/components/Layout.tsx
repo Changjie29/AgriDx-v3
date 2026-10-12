@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { useLang, setLang } from '@/hooks/useLang';
 import { setUiVersion, useUiVersion } from '@/hooks/useUiVersion';
 import VersionSwitch from '@/components/VersionSwitch';
+import { preloadPage } from '@/lib/page-loaders';
 
 const NAV_ZH = [
   { label: '首页', path: '/' },
@@ -91,7 +92,7 @@ export function Layout() {
             <a href="https://coe.njau.edu.cn/" target="_blank" rel="noopener noreferrer" className={cn('college-mark', theme === 'dark' && 'college-mark-dark')} aria-label={lang === 'zh' ? '南京农业大学工学院官网首页' : 'College of Engineering, NAU official homepage'}>
               <img src="/images/njau-engineering-mark.jpg" alt={lang === 'zh' ? '南京农业大学工学院院徽' : 'College of Engineering, NAU emblem'} width="857" height="411" />
             </a>
-            <NavLink to="/" className="brand-wordmark" aria-label={lang === 'zh' ? '耕知·耘诊首页' : 'Gengzhi · Yunzhen home'}><strong>耕知·耘诊</strong><span>{lang === 'zh' ? '农机诊断工作台' : 'Machinery diagnosis'}</span></NavLink>
+            <NavLink to="/" onPointerEnter={() => preloadPage('/', uiVersion)} onFocus={() => preloadPage('/', uiVersion)} className="brand-wordmark" aria-label={lang === 'zh' ? '耕知·耘诊首页' : 'Gengzhi · Yunzhen home'}><strong>耕知·耘诊</strong><span>{lang === 'zh' ? '农机诊断工作台' : 'Machinery diagnosis'}</span></NavLink>
           </div>
 
           {/* 桌面端导航 */}
@@ -110,6 +111,8 @@ export function Layout() {
                 <NavLink
                   key={item.path}
                   to={item.path!}
+                  onPointerEnter={() => preloadPage(item.path!, uiVersion)}
+                  onFocus={() => preloadPage(item.path!, uiVersion)}
                   end={item.path === '/'}
                   className={({ isActive }) =>
                     cn(
@@ -128,7 +131,7 @@ export function Layout() {
               ),
             )}
             <Button asChild size="sm" className="site-diagnosis-button press-control ml-2 gap-1.5">
-              <NavLink to="/chat">
+              <NavLink to="/chat" onPointerEnter={() => preloadPage('/chat')} onFocus={() => preloadPage('/chat')}>
                 <MessageSquare className="h-4 w-4" />
                 {chatLabel}
               </NavLink>
@@ -194,6 +197,8 @@ export function Layout() {
                   <NavLink
                     key={item.path}
                     to={item.path!}
+                    onPointerEnter={() => preloadPage(item.path!, uiVersion)}
+                    onFocus={() => preloadPage(item.path!, uiVersion)}
                     end={item.path === '/'}
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive }) =>
@@ -208,7 +213,7 @@ export function Layout() {
                 ),
               )}
               <Button asChild size="sm" className="press-control mt-2 gap-1.5">
-                <NavLink to="/chat" onClick={() => setMobileOpen(false)}>
+                <NavLink to="/chat" onClick={() => setMobileOpen(false)} onPointerEnter={() => preloadPage('/chat')} onFocus={() => preloadPage('/chat')}>
                   <MessageSquare className="h-4 w-4" />
                   {chatLabel}
                 </NavLink>

@@ -22,6 +22,8 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 旧版界面的导航、模型入口和控制栏使用 [rdev/liquid-glass-react](https://github.com/rdev/liquid-glass-react) 实现边缘折射、薄亮边与局部高光；顶部导航采用同心胶囊轮廓，小屏的版本切换独立为紧凑胶囊。触摸设备及减少动态设置采用雾面材质，减少透明度、高对比或不支持背景滤镜时使用实色。实现和本地验证见 [旧版液态玻璃优化](docs/design/2026-10-12-classic-liquid-glass/README.md)。
 
+首屏不再等待外部字体服务，导航和功能入口先显示，三维视图随后按需加载。二级页面在意图明确时预热，内容加载期间保留导航；短期复用已验证的目录数据，资料展开或答复显示时才加载正文解析器。性能对比和线上 CDN 排查见 [加载与导航优化记录](docs/performance/2026-10-12-loading-navigation.md)。
+
 ## 腾讯云现有服务器更新
 
 用户已于 2026-10-11 授权配置现有腾讯云轻量服务器。服务器为 Ubuntu 24.04.4，网站使用 `/opt/agridx/current` 版本软链接、`agridx.service`、本机 8787 接口及现有 Nginx HTTPS；运行密钥文件为 `/etc/agridx.env`。

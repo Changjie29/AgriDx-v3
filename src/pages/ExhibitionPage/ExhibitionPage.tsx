@@ -1,6 +1,5 @@
 import {
   lazy,
-  Suspense,
   useCallback,
   useEffect,
   useRef,
@@ -34,6 +33,8 @@ import {
 } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 import VersionSwitch from '@/components/VersionSwitch';
+import DeferredScene from '@/components/DeferredScene';
+import { preloadPage } from '@/lib/page-loaders';
 import { useLang, setLang } from '@/hooks/useLang';
 import { setUiVersion } from '@/hooks/useUiVersion';
 import { useKnowledgeCatalog } from '@/hooks/useKnowledgeCatalog';
@@ -106,6 +107,13 @@ export default function ExhibitionPage() {
   const [input] = useState<WorldInput>(() => ({ actions: new Map() }));
   const searchInput = useRef<HTMLInputElement>(null);
   const catalogTrigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      preloadPage('/knowledge');
+      preloadPage('/chat');
+    }, 2500);
+    return () => window.clearTimeout(timer);
+  }, []);
   const stopInput = useCallback(() => {
     input.actions.clear();
     input.wake?.();
@@ -369,7 +377,8 @@ export default function ExhibitionPage() {
           data-tractor-z={position.z.toFixed(2)}
         >
           <div className="expo-world-canvas">
-            <Suspense
+            <DeferredScene
+              priority={mode === 'drive' || focus !== null || destination !== null || reset > 0}
               fallback={
                 <div className="world-loading" role="status">
                   {t('正在打开三维园区…', 'Opening the 3D campus…')}
@@ -388,7 +397,7 @@ export default function ExhibitionPage() {
                 onPosition={setPosition}
                 onNearby={onNearby}
               />
-            </Suspense>
+            </DeferredScene>
           </div>
           <div className="expo-world-vignette" aria-hidden="true" />
           <aside className="expo-world-guide">
@@ -471,7 +480,7 @@ export default function ExhibitionPage() {
                 ))}
               </div>
               <div className="expo-zone-actions">
-                <button type="button" onClick={() => enterZone(selectedZone.id)}>
+                <button type="button" onPointerEnter={() => preloadPage(selectedZone.path ?? '/', selectedZone.path ? 'new' : 'old')} onFocus={() => preloadPage(selectedZone.path ?? '/', selectedZone.path ? 'new' : 'old')} onClick={() => enterZone(selectedZone.id)}>
                   {t('进入展区', 'Open zone')}
                   <ArrowRight size={15} />
                 </button>
@@ -551,6 +560,8 @@ export default function ExhibitionPage() {
                     <Link
                       key={`${model.brandId}/${model.id}`}
                       to={`/knowledge?${new URLSearchParams({ brand: model.brandId, model: model.id })}`}
+                      onPointerEnter={() => preloadPage('/knowledge')}
+                      onFocus={() => preloadPage('/knowledge')}
                       className="expo-catalog-row"
                     >
                       <div>
@@ -583,7 +594,7 @@ export default function ExhibitionPage() {
                   'Archive counts do not imply complete coverage. Check the model and configuration.',
                 )}
               </p>
-              <Link className="expo-catalog-all" to="/knowledge">
+              <Link className="expo-catalog-all" to="/knowledge" onPointerEnter={() => preloadPage('/knowledge')} onFocus={() => preloadPage('/knowledge')}>
                 {t('打开完整知识库', 'Open the complete catalog')}
                 <ArrowRight size={14} />
               </Link>
@@ -742,7 +753,7 @@ export default function ExhibitionPage() {
         <nav className="expo-direct-links" aria-label={t('直接进入功能', 'Direct feature access')}>
           <span>{t('也可以直接出发', 'OR GO DIRECTLY')}</span>
           {WORLD_ZONES.map((zone) => (
-            <button type="button" key={zone.id} onClick={() => enterZone(zone.id)}>
+            <button type="button" key={zone.id} onPointerEnter={() => preloadPage(zone.path ?? '/', zone.path ? 'new' : 'old')} onFocus={() => preloadPage(zone.path ?? '/', zone.path ? 'new' : 'old')} onClick={() => enterZone(zone.id)}>
               {t(zone.zh, zone.en)}
               <ChevronRight size={14} />
             </button>

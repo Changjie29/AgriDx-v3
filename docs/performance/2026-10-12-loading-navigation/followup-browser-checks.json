@@ -1,0 +1,91 @@
+{
+  "browser": "Chromium 151.0.7922.173",
+  "checks": [
+    {
+      "name": "homepage shows actual validated archive counts",
+      "result": "passed"
+    },
+    {
+      "name": "homepage to knowledge reuses the completed directory download",
+      "result": "passed",
+      "detail": {
+        "directory_requests": 1
+      }
+    },
+    {
+      "name": "knowledge landing does not download Markdown formatting code",
+      "result": "passed"
+    },
+    {
+      "name": "collapsed evidence mounts no paragraph bodies or parser",
+      "result": "passed"
+    },
+    {
+      "name": "opening evidence shows source and real plain text while formatting is delayed",
+      "result": "passed"
+    },
+    {
+      "name": "evidence formats after the deferred parser arrives",
+      "result": "passed"
+    },
+    {
+      "name": "closing and reopening evidence preserves its original content",
+      "result": "passed"
+    },
+    {
+      "name": "evidence handoff preserves the selected model and does not send automatically",
+      "result": "passed"
+    },
+    {
+      "name": "returning to a part reuses only that exact selection",
+      "result": "passed",
+      "detail": {
+        "selection_requests": 1
+      }
+    },
+    {
+      "name": "empty diagnosis opens and accepts input without Markdown code",
+      "result": "passed"
+    },
+    {
+      "name": "saved answer stays readable and chat remains editable while formatting is delayed",
+      "result": "passed"
+    },
+    {
+      "name": "saved answers retain GFM tables and emphasis",
+      "result": "passed"
+    },
+    {
+      "name": "375px English deferred answer has no horizontal page overflow",
+      "result": "passed"
+    },
+    {
+      "name": "failed catalog can be manually retried and loaded on mobile",
+      "result": "passed"
+    },
+    {
+      "name": "320px Chinese catalog has no horizontal page overflow",
+      "result": "passed"
+    },
+    {
+      "name": "unknown model shows a failure without another model evidence",
+      "result": "passed"
+    },
+    {
+      "name": "rapid CAB to SU navigation discards a delayed old response",
+      "result": "passed"
+    },
+    {
+      "name": "SU model retains its real evidence gap instead of CAB entries",
+      "result": "passed"
+    },
+    {
+      "name": "no browser page errors in the follow-up",
+      "result": "passed",
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "scope": "Production build, actual catalog API except explicit simulated failures/delays; WebGL disabled to isolate text/data loading; no live LLM calls.",
+  "tested_build_version": "3.2.2 before metadata-only renumbering to 3.0.6"
+}
