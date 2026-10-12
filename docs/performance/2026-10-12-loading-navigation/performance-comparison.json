@@ -864,11 +864,11 @@
       }
     ]
   },
-  "after_scope": "Final frontend implementation; measured as 3.2.2, now numbered 3.0.7 without frontend source changes.",
+  "after_scope": "Final frontend implementation; measured as 3.2.2, now numbered 3.1.1 without frontend source changes.",
   "version_mapping": {
     "measured_baseline": "3.2.1",
     "current_baseline": "3.0.5",
     "measured_after": "3.2.2",
-    "current_after": "3.0.7"
+    "current_after": "3.1.1"
   }
 }

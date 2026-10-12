@@ -291,7 +291,7 @@ def render(data, date):
             summary.text(.08, y, '• ' + line, fontsize=13, color=ink)
             y -= .033
         y -= .027
-    summary.text(.07, .04, 'GitHub：Changjie29/AgriDx-v2  |  事实与证据仍以原知识卡、来源记录为准。', fontsize=10, color=muted)
+    summary.text(.07, .04, 'GitHub：srt2777/AgriDx-v3  |  事实与证据仍以原知识卡、来源记录为准。', fontsize=10, color=muted)
     with PdfPages(out / '现有知识库概要.pdf', metadata={'Title': '现有知识库概要', 'Author': 'AgriDx'}) as pdf:
         pdf.savefig(summary)
         pdf.savefig(fig)

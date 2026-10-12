@@ -87,5 +87,5 @@
   ],
   "errors": [],
   "scope": "Production build, actual catalog API except explicit simulated failures/delays; WebGL disabled to isolate text/data loading; no live LLM calls.",
-  "tested_build_version": "3.2.2 before metadata-only renumbering to 3.0.7"
+  "tested_build_version": "3.2.2 before metadata-only renumbering to 3.1.1"
 }

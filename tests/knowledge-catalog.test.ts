@@ -26,6 +26,20 @@ after(async () => {
   if (server) await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
 });
 
+// Exercise the local server directly, including when the app configures a global outbound fetch proxy.
+function requestCatalog(query: string | URLSearchParams) {
+  return new Promise<{ status: number; json: () => Promise<unknown> }>((resolve, reject) => {
+    const request = http.get({ hostname: '127.0.0.1', port, path: `/api/knowledge/catalog?${query}`, agent: false }, (response) => {
+      let body = '';
+      response.setEncoding('utf8');
+      response.on('data', (chunk: string) => { body += chunk; });
+      response.on('error', reject);
+      response.on('end', () => resolve({ status: response.statusCode ?? 0, json: async () => JSON.parse(body) as unknown }));
+    });
+    request.on('error', reject);
+  });
+}
+
 test('catalogue counts only archived entries and exposes the expansion target as planned', () => {
   assert.equal(catalog.totals.entries, archive.length);
   assert.equal(catalog.totals.mappedEntries, archive.length);
@@ -100,19 +114,19 @@ test('every advertised part has matching evidence and counts are independently d
 
 test('read-only catalogue HTTP API rejects malformed hierarchy filters and unknown parts', async () => {
   for (const query of ['model=LF804S', 'component=electrical', 'part=starter', 'brand=a&brand=b', 'brand=']) {
-    const response = await fetch(`http://127.0.0.1:${port}/api/knowledge/catalog?${query}`);
+    const response = await requestCatalog(query);
     assert.equal(response.status, 400, query);
     assert.equal((await response.json() as { code: string }).code, 'bad_request');
   }
   const query = new URLSearchParams({ brand: '东方红', model: 'LF804S', component: 'electrical', part: 'unknown-part' });
-  const response = await fetch(`http://127.0.0.1:${port}/api/knowledge/catalog?${query}`);
+  const response = await requestCatalog(query);
   assert.equal(response.status, 404);
   assert.equal((await response.json() as { code: string }).code, 'knowledge_not_found');
 });
 
 test('catalogue HTTP selection serves source-backed content without asking an external model', async () => {
   const query = new URLSearchParams({ brand: '纽荷兰', model: 'WORKMASTER25', component: 'cooling', part: 'radiator' });
-  const response = await fetch(`http://127.0.0.1:${port}/api/knowledge/catalog?${query}`);
+  const response = await requestCatalog(query);
   assert.equal(response.status, 200);
   const result = await response.json() as KnowledgeCatalog;
   assert.equal(result.selected!.entries[0].entryId, 'NH-WM25-006');

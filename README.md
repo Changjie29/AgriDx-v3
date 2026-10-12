@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.0.7**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.1.1**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -30,12 +30,14 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 新增手动更新脚本 [update-existing.sh](scripts/tencent-deploy/update-existing.sh)，支持 `--check` 只读检查和 `--deploy <完整提交 SHA>` 分目录构建、检查、切换及失败回退。每个版本使用 agridx 拥有的独立 npm 缓存，避免旧缓存权限阻止安装。它不改 Nginx、证书、DNS、防火墙或自动发布任务。当前配置与验收记录见 [腾讯服务器配置](docs/deployment/2026-10-11-tencent-existing-server.md)；GitHub 保存、脚本检查和服务器实际执行分别记录。
 
+2026-10-12按用户要求整合[PR #6](https://github.com/srt2777/AgriDx-v3/pull/6)和[PR #7](https://github.com/srt2777/AgriDx-v3/pull/7)的两批共200条知识，当前为26来源、412条归档知识、421个检索片段。同步来源已核对页、分层导航、品牌入口和概要图表；保留原件、完整型号及配置限制，未厂家复核、全书审校或实车验证。详见[整合验收](知识库/整理后的知识库/农用拖拉机知识库/采集记录/20261012_两批拖拉机知识合入验收.md)。
+
 ## 技术栈
 
 - **前端**：React 19 + Vite + TypeScript + Tailwind CSS + React Router + React Three Fiber
 - **后端**：Node.js + Express + tsx（ESM）
 - **LLM**：Gemini（默认 `gemini-3.8-flash`，可配置）/ DeepSeek（默认 `deepseek-v4-flash`，可配置），OpenAI 兼容协议
-- **知识库**：通用信息收集提示 + 212 条索引化拖拉机及配套系统资料，按章节提取 + 关键词重叠打分，零向量库
+- **知识库**：通用信息收集提示 + 412 条索引化拖拉机及配套系统资料，按章节提取 + 关键词重叠打分，零向量库
 - **3D**：Three.js / React Three Fiber，程序化 RoomEnvironment 光照，零 HDR 网络请求
 
 ## 快速开始
@@ -139,7 +141,7 @@ NODE_ENV=production PORT=3000 npm start
 
 ## RAG 工作流
 
-1. 启动时扫描 `server/knowledge/` 下的通用 `.md` 文件（跳过 `00_说明/`），按 `## ` 二级标题切块；同时读取 `知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl`，按条目编号提取对应 Markdown 章节。目前为 9 个信息收集片段 + 212 条归档条目，共 221 个片段。通用内容只帮助补充机型与现象，不提供维修原因、操作或参数依据。
+1. 启动时扫描 `server/knowledge/` 下的通用 `.md` 文件（跳过 `00_说明/`），按 `## ` 二级标题切块；同时读取 `知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl`，按条目编号提取对应 Markdown 章节。目前为 9 个信息收集片段 + 412 条归档条目，共 421 个片段。通用内容只帮助补充机型与现象，不提供维修原因、操作或参数依据。
 2. 从最近用户消息重建故障与补充信息，短品牌／型号／工况追问保留原问题，明确换机清理旧身份与配置；独立新问题替换旧症状。检索结合 `machineType`、`brand`、`model`，也识别问题中可辨认的品牌与型号，过滤不相关品牌／型号及非拖拉机的归档条目；再对问题做中文 2-gram + 英文 token 化，扩展启动、无力、提升、异响、过热、制动、定位等常见口语同义症状，按关键词重叠打分，标题命中权重 ×3。说明概述不参与诊断召回，同义扩展仍须覆盖实际症状。配置专用条目使用`entries.models`限定来源型号子集，并要求精确型号；未填该字段的条目沿用整册范围。明确CAB/ROPS或两驱/四驱与已登记范围冲突时排除条目。品牌或型号匹配不代表市场、排放、其他配置及版本已经确认。
 3. 取 top-6 片段（单块超 1200 字符截断），拼入后端独占的 system prompt。
 4. system prompt 硬性要求：
@@ -208,7 +210,7 @@ AgriDx-v3/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "3.0.7", "timestamp": "...", "knowledge": { "chunks": 221, "archivedEntries": 212 } }
+{ "ok": true, "version": "3.1.1", "timestamp": "...", "knowledge": { "chunks": 421, "archivedEntries": 412 } }
 ```
 
 ### `POST /api/chat`

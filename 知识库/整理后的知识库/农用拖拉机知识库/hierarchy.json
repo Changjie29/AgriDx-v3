@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-09",
+  "updated_at": "2026-10-12",
   "purpose": "仅为已有知识条目的分层导航；零件关联不是故障确诊，不新增维修事实、型号或兼容性。",
   "components": [
     {
@@ -137,7 +137,8 @@
           "name": "温度传感器",
           "evidence_terms": [
             "水温传感器",
-            "温度检测"
+            "温度检测",
+            "温度传感器"
           ]
         }
       ]
@@ -199,7 +200,8 @@
           "name": "蓄电池",
           "evidence_terms": [
             "蓄电池",
-            "电池"
+            "电池",
+            "电瓶"
           ]
         },
         {
@@ -3126,6 +3128,2357 @@
         {
           "component_id": "cab",
           "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-005",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-006",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "wiring",
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-007",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-008",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-009",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "turbocharger"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-010",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-011",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-012",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-013",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "turbocharger"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-014",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap",
+            "fan-belt",
+            "thermostat"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-015",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-016",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-017",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-018",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-019",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-pump"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-020",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control",
+            "hydraulic-cooler"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-021",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-022",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-023",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-024",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-025",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-026",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-027",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-028",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-029",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-030",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-031",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-032",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-033",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-034",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-035",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-036",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-037",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-038",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-039",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-040",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-041",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-042",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-043",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-spring",
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-044",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-release",
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-045",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-046",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-047",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-048",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-049",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-050",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-051",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-052",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-053",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6B-L1-054",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-007",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-008",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-009",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-010",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-011",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-012",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-013",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-014",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-015",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-dipstick"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-016",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-017",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-018",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-019",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-020",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-021",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-022",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-023",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-024",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-025",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-026",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-027",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "water-separator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-028",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-029",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-030",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "thermostat"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-031",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-032",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-033",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-034",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-035",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-036",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-037",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-038",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-039",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-040",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-041",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-042",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-043",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-044",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-045",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-046",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-047",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-048",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-049",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-050",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-051",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-052",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-053",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-054",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-055",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-056",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-057",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter"
+          ]
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-058",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-059",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-060",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-061",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-062",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-063",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        },
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-064",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-065",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "thermostat"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-066",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "radiator-cap",
+            "fan-belt",
+            "thermostat"
+          ]
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-067",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-068",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        },
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-hose",
+            "hitch-control",
+            "hydraulic-cooler"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-069",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        },
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-070",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-071",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-072",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hitch-control",
+            "hydraulic-cooler"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-073",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-074",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-075",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-076",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-077",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-078",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-079",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-080",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-081",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-082",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-hose",
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-083",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-084",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-085",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-086",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "fan-belt"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-087",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "fan-belt"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-088",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "fuse",
+            "ignition-switch",
+            "battery"
+          ]
+        },
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        },
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-089",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "wiring",
+            "battery"
+          ]
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-090",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse",
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-091",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-092",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-friction",
+            "clutch-spring",
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-093",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-release",
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-094",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-095",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-096",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-015",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-016",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "thermostat"
+          ]
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-017",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-pump",
+            "oil-pressure-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-018",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-pressure-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-019",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        },
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "turbocharger"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-020",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger",
+            "exhaust-aftertreatment"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-021",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "thermostat"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-022",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter",
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        },
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-023",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        },
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-hose",
+            "hitch-control",
+            "hydraulic-cooler"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-024",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        },
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-025",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-026",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-027",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-028",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-029",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-friction"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-030",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-031",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-032",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-033",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-034",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-035",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-036",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-037",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-038",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-039",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-040",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-041",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-042",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-043",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-044",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-045",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-046",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-047",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring",
+            "fuse",
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-048",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "fan-belt"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-G4-OMTR115296-049",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "wiring",
+            "battery"
+          ]
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-017",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-018",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-019",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "temperature-sensor"
+          ]
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-020",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-021",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-022",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "turbocharger"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        },
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-023",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        },
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "injector"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-024",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-025",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-026",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-027",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-028",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-029",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-030",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-031",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-032",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        },
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-033",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-034",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-035",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-036",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-037",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-038",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery"
+          ]
+        },
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-039",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter",
+            "battery",
+            "fuse",
+            "ignition-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-040",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "instrument-panel"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "ZL-PL-041",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery",
+            "wiring"
+          ]
         }
       ]
     }
