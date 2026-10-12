@@ -12,18 +12,13 @@ export function publishDevelopmentPreview(directory = rootDir) {
   if (!['https://github.com/srt2777/AgriDx-v3.git', 'git@github.com:srt2777/AgriDx-v3.git'].includes(origin)) {
     throw new Error('开发预览仅允许 srt2777/AgriDx-v3，请先核对 origin。');
   }
-  const branch = git(['branch', '--show-current']).stdout.trim();
-  if (!branch || branch === 'main' || branch === 'master') throw new Error('请在已提交的个人开发分支发布预览。');
-  if (git(['status', '--porcelain']).stdout.trim()) throw new Error('请先保存任务改动，预览只推送完整提交。');
-  const remote = git(['ls-remote', '--exit-code', 'origin', 'refs/heads/dev-preview'], true);
-  if (remote.status === 0) {
-    git(['fetch', 'origin', 'dev-preview']);
-    if (git(['merge-base', '--is-ancestor', 'FETCH_HEAD', 'HEAD'], true).status !== 0) {
-      throw new Error('开发预览已有其他成果，请先对照差异合并 origin/dev-preview，再验证和推送；禁止覆盖历史。');
-    }
-  } else if (remote.status !== 2) throw new Error(remote.stderr.trim() || '无法检查开发预览分支。');
-  console.log(git(['push', '--no-follow-tags', 'origin', 'HEAD:refs/heads/dev-preview']).stderr.trim());
-  console.log('开发预览已进入 GitHub Actions；以 Development preview 工作流和线上版本为准。');
+  // Dispatch only the current main workflow. Never mirror a personal branch or push Git refs.
+  const result = spawnSync('gh', ['workflow', 'run', 'dev-preview.yml', '--repo', 'srt2777/AgriDx-v3', '--ref', 'main'], {
+    cwd: directory, encoding: 'utf8', shell: false,
+  });
+  if (result.error) throw result.error;
+  if (result.status !== 0) throw new Error(result.stderr.trim() || '主干预览工作流派发失败。');
+  console.log('已派发 main 主干预览构建；个人分支内容不会发布。请查看 Development preview 工作流和线上版本。');
 }
 
 if (isMain(import.meta.url)) main(publishDevelopmentPreview, 'preview:publish');

@@ -2,7 +2,8 @@ name: Development preview
 
 on:
   push:
-    branches: [dev-preview]
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,6 +14,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

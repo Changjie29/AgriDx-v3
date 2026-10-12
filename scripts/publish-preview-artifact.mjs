@@ -16,11 +16,11 @@ const api = (endpoint, data, method) => {
 };
 const release = JSON.parse(readFileSync(path.join(rootDir, 'dist-preview/dev-preview.json'), 'utf8'));
 const head = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: rootDir, encoding: 'utf8' }).stdout.trim();
-if (release.commit !== head || release.branch !== 'dev-preview' || release.repository !== repository) {
-  throw new Error('预览产物必须对应本仓库 dev-preview 分支的当前完整提交。');
+if (release.commit !== head || release.branch !== 'main' || release.repository !== repository) {
+  throw new Error('预览产物必须对应本仓库 main 主干的当前完整提交。');
 }
 const requireLatestSource = () => {
-  if (api('git/ref/heads/dev-preview').object.sha !== release.commit) {
+  if (api('git/ref/heads/main').object.sha !== release.commit) {
     throw new Error('开发预览源分支已经更新，旧构建不得覆盖最新预览。');
   }
 };

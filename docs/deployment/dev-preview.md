@@ -1,33 +1,51 @@
 # 独立开发预览
 
-用户于2026-10-12（上海）授权独立、自动更新的开发网址，并明确选择未合并的开发分支。
+用户于2026-10-12（上海）最新确认：任何链接持有者均可匿名访问，使用现有 GitHub 账号管理开发站，并跟随 `main` 主干最新版本自动更新。此确认替换此前未合并开发分支、仅所有者登录的预览约定。
 
-预览使用独立 Sites 项目作为访问入口，GitHub Actions 构建产物保存在本仓库 `dev-preview-built` 分支，与腾讯网站的服务器、域名、证书、密钥、部署流程和浏览器存储隔离。`dev-preview` 为固定预览分支；只有推送到该分支才执行 `Development preview` 工作流，`main` 和普通个人分支推送不会发布网页。腾讯及原 Sites 的发布约定保持各自独立。
+固定网址：[打开开发预览](https://agridx-dev-preview.z3464715478.chatgpt.site)。开发站和腾讯正式站使用不同的托管、域名、证书、密钥与浏览器存储；main 只自动更新开发站。腾讯保持既有手动发布流程，GitHub 保存与开发预览不等于腾讯已经升级。
 
-首版以加载与导航优化分支 `90cb706`（3.1.1，已包含3.1.0知识扩充）为开发基线，不额外合入其他待审 PR。首页、新旧界面、模型工坊、四级资料和本地知识诊断可预览。预览重用服务端的知识目录、型号边界、会话解释和本地 RAG 代码，通过构建时只读资料快照在浏览器运行；不包含原始手册、环境文件和模型密钥。外部 Gemini / DeepSeek 服务未接入该开发网址；网页标明“本地知识检索”。
+## 版本来源与访问
 
-## 更新同一个地址
+- **开发站**：任何人拿到链接即可浏览，支持手机和电脑；普通访客仅有网站访问权。
+- **管理账户**：沿用现有 GitHub 账号与仓库权限，通过个人分支、PR 审阅和合入管理代码；Sites 托管管理仍属于现有站点所有者。匿名浏览不授予 GitHub 写入或 Sites 编辑权限。
+- **同步来源**：`srt2777/AgriDx-v3` 的 `main`；每次合入后运行 `Development preview`。其他个人分支、PR 和旧 `dev-preview` 分支不发布该网址。
+- **正式站**：腾讯云沿用独立部署、域名和服务端环境；本配置不连接腾讯，不修改生产环境。
 
-在已有预览成果上继续开发，提交个人任务分支并保留 PR 审阅入口。首次开发可从 `origin/dev-preview` 建立 `codex/` 分支；已有分支先对照差异合并预览分支，避免覆盖其他成果。
+“GitHub 最新版本”指已进入 main 的网站代码、公开资源与已整理知识资料。未经合入的个人分支不作为该网址的版本来源。网页保留现有完整界面：首页、新旧版本、模型工坊、四级知识与本地诊断；外部模型和原始手册不打入浏览器预览，生产密钥不随链接分享。
+
+## 自动更新与管理
+
+从最新 `origin/main` 建立个人任务分支，完成改动并运行对应验证，保存 PR。PR 按仓库既有规则审阅并合入 main 后，Actions 自动执行完整验证、构建、快进更新 `dev-preview-built` 产物分支。Sites 入口只读取该固定仓库的构建，保持同一网址，无需重新创建站点。
+
+构建一般约2分钟，排队时会更久，并非每次按键实时上线。已打开网页每30秒检查新构建，提示“新版已就绪，刷新”；刷新后读取最新文件并保留当前设备已保存的会话。不同设备的浏览器会话分别保存。
+
+若需要重跑当前 main 的预览，可在已配置 GitHub 访问的仓库中执行：
+
+```bash
+npm run preview:publish
+# 相当于仅派发 main 的工作流，不提交、不推送、不合并个人分支
+# 查看运行结果
+gh run list --workflow dev-preview.yml --branch main
+```
+
+也可在 GitHub Actions 的 `Development preview` 工作流选择 main 后手动运行。工作流和产物发布代码同时核对 main、仓库及最新源码 SHA；旧构建不得覆盖更新后的主干。旧 `dev-preview` 分支保留历史，不再作为发布源。
+
+本地检查与构建入口继续可用：
 
 ```bash
 npm run verify
 npm run build:dev-preview
-# 先按仓库约定提交并推送个人任务分支；然后更新固定预览分支
-npm run preview:publish
 ```
 
-`preview:publish` 只将当前完整提交快进推送到本仓库 `dev-preview`，拒绝在 main、错误 origin、脏工作区和非快进状态执行；不强制推送。GitHub Actions 重新运行验证、构建并快进更新产物分支；独立 Sites 入口通过固定公开仓库读取最新构建，不需要反复手工发布 Sites。更新延迟取决于任务排队和构建，并非每次按键立即上线。已打开的网页每30秒检查新部署，显示“新版已就绪，刷新”，刷新后加载最新构建并保留浏览器中已保存的会话。
+预览使用现有真实知识目录、型号边界、会话解释及本地 RAG，通过构建时只读资料快照在浏览器运行；包含已索引的 Markdown 与目录元数据，不包含原始手册、环境文件和模型密钥。外部 Gemini / DeepSeek 未接入该开发网址，界面标明本地知识检索。
 
-默认生产构建关闭开发适配，不加载快照、开发标记或预览检查。开发预览输出保存在忽略的 `dist-preview/`，与腾讯使用的 `dist/` 分开。公开图片和模型遵循 Vite 的 BASE_URL，兼容独立网址和子目录。
+## 托管与隔离
 
-实际部署网址、提交、检查结果另记录于本轮交付记录；构建与 Git 推送不单独作为已上线的证据。
+项目ID：`appgprj_6accea9518e08191ba29e1f8b0f8725e`。开发配置单独位于 `.openai/dev-preview.json`，保留原 `.openai/hosting.json` 的正式站身份。Sites 的公开访问权限以原生权限响应及匿名 HTTP 验证为准；源代码中的配置声明不单独证明已公开。
 
-## 托管与权限
+GitHub 连接曾在 Pages 创建接口返回403，未启用 Pages。开发站采用已完成的 GitHub Actions 产物与独立 Sites 入口。Worker 只读固定仓库产物，拒绝上游重定向，使用平台支持的 `redirect: manual`；不转发访客头或代理腾讯。入口代码和隔离测试分别在 `scripts/dev-preview-gateway/worker.js` 与 `tests/dev-preview-gateway.test.ts`。
 
-开发预览项目ID：`appgprj_6accea9518e08191ba29e1f8b0f8725e`，与原 Sites 的项目ID不同。固定开发网址： https://agridx-dev-preview.z3464715478.chatgpt.site 。新站按 Sites 默认保持仅所有者登录访问。旧项目的 `.openai/hosting.json` 保持原样，开发配置单独保存在 `.openai/dev-preview.json`。
-
-GitHub 连接在 Pages 创建接口返回403（Resource not accessible by integration），未启用 Pages。改为 GitHub Actions 通过内容写权限生成独立产物分支；Site 的 Worker 只读固定仓库的产物，不代理腾讯，不转发访客登录凭据。Worker 源码及隔离测试在 `scripts/dev-preview-gateway/worker.js` 与 `tests/dev-preview-gateway.test.ts`。
+普通生产构建关闭预览适配，不加载资料快照、开发标记或预览检查。开发输出 `dist-preview/` 和腾讯构建输出 `dist/` 独立。版本记录和固定资源不缓存，带哈希的 JS/CSS 缓存并保留旧资源，避免已打开页面的延迟加载失效。
 
 ## 首次入口发布与验证
 
@@ -38,3 +56,9 @@ GitHub 连接在 Pages 创建接口返回403（Resource not accessible by integr
 首次实际线上验证（2026-10-12，上海）：[工作流38262003843](https://github.com/srt2777/AgriDx-v3/actions/runs/38262003843)全部步骤成功，对应开发提交 `afef3cee20eff51bce75103b6e33a24f07640bc3`、产物提交 `17dba4b2bcf801e62e613f8b16cb8b2f393e56f2`。使用 Sites 所有者服务访问凭据检查 `/`、`/dev-preview.json`、`/api/health`、入口 JS/CSS、工学院徽章、GLB 和真实知识模块，均 HTTP 200，MIME 正确，健康/构建记录的版本与提交一致；凭据没有保存到源码、记录或浏览器代码。执行从线上下载的实际知识模块，确认412条、26来源、已知型号来源答复与未知型号隔离。
 
 Worker 使用平台支持的 `redirect: manual`，拒绝上游重定向，不转发访客头；固定文件与版本记录不缓存，带哈希的 JS/CSS 可缓存并保留旧版本的延迟加载资源。Sites 入口发布与路由生效之间存在短暂延迟；以实际 HTTP 及版本记录为验收依据。后续提交的当前线上版本仍以网址内的构建记录为准。
+
+## 公开访问与主干同步核验
+
+2026-10-12（上海），用户明确选择“有链接即可访问，无需登录”及“用现有 GitHub 账号管理”。Sites 权限更新返回 `public`、revision 2；未增设网页管理账号或修改 GitHub 协作者权限。无登录凭据的桌面及手机标识请求读取版本和健康接口成功，切换主干之前仍为开发构建3.2.0。
+
+本轮本地完整 verify 143项通过、2项Windows专用检查在Linux跳过，版本、类型、Lint和完整构建通过；CI、PR主干合入、main构建和最终匿名版本验证以[PR #22](https://github.com/srt2777/AgriDx-v3/pull/22)交付记录及现网版本记录为准。腾讯服务、DNS、证书及模型密钥未改动。
