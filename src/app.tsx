@@ -10,6 +10,8 @@ const ModelPage = lazy(pageLoaders.models);
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import { useUiVersion } from '@/hooks/useUiVersion';
 const ExhibitionPage = lazy(pageLoaders.exhibition);
+const PreviewStatus = typeof __AGRIDX_DEV_PREVIEW__ !== 'undefined' && __AGRIDX_DEV_PREVIEW__
+  ? lazy(() => import('./dev-preview/PreviewStatus')) : null;
 
 function PageContent({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -27,6 +29,7 @@ function VersionedHomePage() {
 
 export default function App() {
   return (
+    <>
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<PageContent><VersionedHomePage /></PageContent>} />
@@ -36,5 +39,7 @@ export default function App() {
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    {PreviewStatus && <Suspense fallback={null}><PreviewStatus /></Suspense>}
+    </>
   );
 }

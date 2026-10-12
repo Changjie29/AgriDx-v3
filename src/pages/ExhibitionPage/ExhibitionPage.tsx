@@ -1,3 +1,4 @@
+import { publicAsset } from '@/lib/public-asset';
 import {
   lazy,
   useCallback,
@@ -305,7 +306,7 @@ export default function ExhibitionPage() {
             aria-label={t('南京农业大学工学院官网首页', 'College of Engineering, NAU official homepage')}
           >
             <img
-              src="/images/njau-engineering-mark.jpg"
+              src={publicAsset('images/njau-engineering-mark.jpg')}
               alt={t('南京农业大学工学院院徽', 'College of Engineering, NAU emblem')}
               width="857"
               height="411"

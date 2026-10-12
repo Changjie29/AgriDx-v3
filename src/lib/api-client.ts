@@ -18,7 +18,9 @@ export async function requestJson(
   fetchImplementation: FetchImplementation = fetch,
 ): Promise<unknown> {
   options.signal?.throwIfAborted();
-  const response = await fetchImplementation(path, options);
+  const response = typeof __AGRIDX_DEV_PREVIEW__ !== 'undefined' && __AGRIDX_DEV_PREVIEW__ && fetchImplementation === fetch
+    ? await (await import('../dev-preview/api')).previewFetch(path, options)
+    : await fetchImplementation(path, options);
   options.signal?.throwIfAborted();
   if (!response.ok) {
     const payload: unknown = await response.json().catch(() => null);

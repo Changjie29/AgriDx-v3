@@ -1,6 +1,6 @@
 {
   "name": "agri-fault-diagnosis",
-  "version": "3.1.2",
+  "version": "3.2.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -15,7 +15,9 @@
     "lint": "eslint . --cache --cache-location node_modules/.eslintcache --report-unused-disable-directives",
     "check:version": "node scripts/check-version.mjs",
     "verify": "node scripts/verify.mjs",
-    "sync": "node scripts/sync.mjs"
+    "sync": "node scripts/sync.mjs",
+    "build:dev-preview": "node scripts/build-dev-preview.mjs",
+    "preview:publish": "node scripts/publish-dev-preview.mjs"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.14",
