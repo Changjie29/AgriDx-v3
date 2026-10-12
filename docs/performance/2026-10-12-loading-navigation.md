@@ -42,8 +42,8 @@ agridx.xyz → agridx.xyz.cdn.dnsv1.com → 13kd6ev2.slt.sched.intlscdn.com
 
 本环境对首页与 `/api/health` 的多次 HTTPS 请求收到 HTTP 514、空响应，并带 `x-nws-log-uuid`、`x-cache-lookup: Return Directly`。这证明这里没有拿到正常页面或健康数据，不能直接认定服务器本机慢，也不能确认用户所在地区返回相同结果。未更改 DNS、CDN、Nginx、证书或运行密钥。
 
-已请求维护者回传现有服务版本、本机 API / HTTPS 与域名首页 / API 的状态码和响应耗时、CPU / 内存以及 Nginx 压缩指令。下一步按对比结果核对源站可用性、CDN 回源与静态资源压缩，暂不猜测配置后直接改动生产服务。若传输未启用 JS / CSS 压缩，三维代码本身的传输成本仍需服务器或 CDN 侧处理。
+已请求维护者回传现有服务版本、本机 API / HTTPS 与域名首页 / API 的状态码和响应耗时、CPU / 内存以及 Nginx 压缩指令。用户反馈多行命令没有反应后，改为无需 sudo、8 秒超时的单行本机 API 检查，结果仍待回传。下一步按对比结果核对源站可用性、CDN 回源与静态资源压缩，暂不猜测配置后直接改动生产服务。若传输未启用 JS / CSS 压缩，三维代码本身的传输成本仍需服务器或 CDN 侧处理。
 
 ## GitHub 与上线状态
 
-目标仓库 `srt2777/AgriDx-v3`，分支 `codex/loading-navigation-performance-20261012`，基线为主线已合入的 3.2.1。提交与 PR 在同步后补充。本轮本地修复和 GitHub 保存不代表腾讯线上已更新到 3.2.2。
+目标仓库 `srt2777/AgriDx-v3`，分支 `codex/loading-navigation-performance-20261012`，基线为主线已合入的 3.2.1。实现已保存为 [fa6cf43](https://github.com/srt2777/AgriDx-v3/commit/fa6cf43257e8e15035039cd2f080f8126890e562)，审阅入口为 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17)，CI 与合入状态以 PR 为准。本轮本地修复和 GitHub 保存不代表腾讯线上已更新到 3.2.2。
