@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { useGlassMode } from '@/hooks/useGlassMode';
 import './liquid-glass.css';
 
@@ -18,6 +19,7 @@ const ReactLiquidGlass = lazy(() => import('liquid-glass-react'));
 export function LiquidGlass({ children, className = '', contentClassName = '', variant = 'regular', lens = false, displacementScale = 36 }: LiquidGlassProps) {
   const ref = useRef<HTMLDivElement>(null);
   const mode = useGlassMode();
+  const reducedMotion = useReducedMotion();
   const [visible, setVisible] = useState(true);
   const [size, setSize] = useState({ width: 0, height: 0, radius: 22, blur: 12 });
   const refract = lens && mode === 'refract' && visible;
@@ -59,24 +61,32 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
 
   useEffect(() => {
     const element = ref.current;
-    if (!element || !lens || mode !== 'refract') return;
+    if (!element || !lens || mode === 'solid' || reducedMotion) return;
     let frame = 0;
-    let point: PointerEvent | null = null;
+    let point: Pick<PointerEvent, 'clientX' | 'clientY' | 'target'> | null = null;
+    let pressedControl: HTMLElement | null = null;
     const touched = new Set<HTMLElement>();
+    const clearPress = () => {
+      pressedControl?.removeAttribute('data-glass-pressed');
+      pressedControl = null;
+      element.removeAttribute('data-glass-pressed');
+    };
     const clear = () => {
+      clearPress();
       cancelAnimationFrame(frame);
       frame = 0;
       point = null;
       element.removeAttribute('data-glass-active');
       for (const target of touched) {
-        for (const name of ['--mx', '--my', '--lg-light-angle']) target.style.removeProperty(name);
+        for (const name of ['--mx', '--my', '--lg-light-angle', '--lg-press-x', '--lg-press-y']) target.style.removeProperty(name);
       }
       touched.clear();
     };
     const flush = () => {
+      if (frame) cancelAnimationFrame(frame);
       frame = 0;
       if (!point) return;
-      const control = point.target instanceof Element ? point.target.closest<HTMLElement>('button, a') : null;
+      const control = pressedControl ?? (point.target instanceof Element ? point.target.closest<HTMLElement>('button, a') : null);
       for (const target of [element, control]) {
         if (!target || !element.contains(target)) continue;
         const rect = target.getBoundingClientRect();
@@ -84,6 +94,10 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
         target.style.setProperty('--mx', `${x.toFixed(1)}px`);
         target.style.setProperty('--my', `${y.toFixed(1)}px`);
         target.style.setProperty('--lg-light-angle', `${Math.atan2(x - rect.width / 2, -(y - rect.height / 2)) * 180 / Math.PI}deg`);
+        if (target === pressedControl) {
+          target.style.setProperty('--lg-press-x', `${Math.max(-1.5, Math.min(1.5, (x / rect.width - .5) * 3))}px`);
+          target.style.setProperty('--lg-press-y', `${Math.max(-1, Math.min(1, (y / rect.height - .5) * 2))}px`);
+        }
         touched.add(target);
       }
       element.setAttribute('data-glass-active', 'true');
@@ -93,14 +107,60 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       point = event;
       if (!frame) frame = requestAnimationFrame(flush);
     };
+    const findControl = (target: EventTarget | null) => {
+      const control = target instanceof Element ? target.closest<HTMLElement>('button, a') : null;
+      if (!control || !element.contains(control) || (control instanceof HTMLButtonElement && control.disabled) || control.getAttribute('aria-disabled') === 'true') return null;
+      return control;
+    };
+    const press = (event: PointerEvent) => {
+      if (!event.isPrimary || event.button !== 0) return;
+      const control = findControl(event.target);
+      if (!control) return;
+      clearPress();
+      pressedControl = control;
+      control.setAttribute('data-glass-pressed', 'true');
+      element.setAttribute('data-glass-pressed', 'true');
+      point = event;
+      flush();
+    };
+    const release = (event: PointerEvent) => {
+      clearPress();
+      if (event.pointerType === 'touch') clear();
+    };
+    const keyPress = (event: KeyboardEvent) => {
+      if (event.repeat || !['Enter', ' '].includes(event.key)) return;
+      const control = findControl(event.target);
+      if (!control || (control.tagName === 'A' && event.key === ' ')) return;
+      clearPress();
+      pressedControl = control;
+      control.setAttribute('data-glass-pressed', 'true');
+      element.setAttribute('data-glass-pressed', 'true');
+      const rect = control.getBoundingClientRect();
+      point = { target: control, clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2 };
+      flush();
+    };
     element.addEventListener('pointermove', move, { passive: true });
+    element.addEventListener('pointerdown', press, { passive: true });
     element.addEventListener('pointerleave', clear);
+    element.addEventListener('pointercancel', clear);
+    element.addEventListener('keydown', keyPress);
+    element.addEventListener('focusout', clear);
+    window.addEventListener('pointerup', release);
+    window.addEventListener('keyup', clearPress);
+    window.addEventListener('blur', clear);
     return () => {
       element.removeEventListener('pointermove', move);
+      element.removeEventListener('pointerdown', press);
       element.removeEventListener('pointerleave', clear);
+      element.removeEventListener('pointercancel', clear);
+      element.removeEventListener('keydown', keyPress);
+      element.removeEventListener('focusout', clear);
+      window.removeEventListener('pointerup', release);
+      window.removeEventListener('keyup', clearPress);
+      window.removeEventListener('blur', clear);
       clear();
     };
-  }, [lens, mode]);
+  }, [lens, mode, reducedMotion]);
 
   return <div ref={ref} className={`liquid-glass agri-liquid-glass lg-${variant} ${className}`} data-glass-mode={mode}>
     {refract && size.width > 0 && size.height > 0 ? <div className="liquid-glass-effect agri-glass-lens" aria-hidden="true">

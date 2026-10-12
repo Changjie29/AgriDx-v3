@@ -3,7 +3,9 @@ import { Outlet, useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { Menu, X, MessageSquare, Sun, Moon, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
-import { motion, useReducedMotion } from 'framer-motion';
+import { LiquidSelection } from '@/components/ui/liquid-selection';
+import FloatingPanel from '@/components/FloatingPanel';
+import { AnimatePresence, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useLang, setLang } from '@/hooks/useLang';
 import { setUiVersion, useUiVersion } from '@/hooks/useUiVersion';
@@ -37,9 +39,6 @@ export function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const reducedMotion = useReducedMotion();
-  const indicatorTransition = reducedMotion
-    ? { duration: 0 }
-    : { type: 'spring' as const, stiffness: 410, damping: 34, mass: 0.7 };
 
   useEffect(() => {
     setMobileOpen(false);
@@ -123,7 +122,7 @@ export function Layout() {
                 >
                   {({ isActive }) => (
                     <>
-                      {isActive && <motion.span className="site-nav-indicator" layoutId="desktop-nav-selection" transition={indicatorTransition} aria-hidden="true" />}
+                      {isActive && <LiquidSelection className="site-nav-indicator" layoutId="desktop-nav-selection" />}
                       <span className="site-nav-label">{item.label}</span>
                     </>
                   )}
@@ -174,14 +173,14 @@ export function Layout() {
 
         {/* 小屏独立版本胶囊，保持主导航的单行轮廓。 */}
         <div className="site-version-mobile">
-          <LiquidGlass className="site-version-mobile-glass">
+          <LiquidGlass lens className="site-version-mobile-glass">
             <VersionSwitch onChange={() => navigate('/')} />
           </LiquidGlass>
         </div>
 
         {/* 移动端导航抽屉（非玻璃，避免玻璃嵌套失效） */}
-        {mobileOpen && (
-          <div id="mobile-navigation" className="site-mobile-menu mt-2 rounded-2xl border border-border/60 bg-card shadow-lg lg:hidden">
+        <AnimatePresence initial={false}>{mobileOpen && (
+          <FloatingPanel key="mobile-menu" id="mobile-navigation" className="site-mobile-menu mt-2 rounded-2xl border border-border/60 bg-card shadow-lg lg:hidden">
             <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-3 py-3" aria-label={lang === 'zh' ? '移动端主导航' : 'Mobile navigation'}>
               {NAV_ITEMS.map((item) =>
                 item.hash ? (
@@ -208,7 +207,7 @@ export function Layout() {
                       )
                     }
                   >
-                    {({ isActive }) => <>{isActive && <motion.span className="site-mobile-indicator" layoutId="mobile-nav-selection" transition={indicatorTransition} aria-hidden="true" />}<span className="site-nav-label">{item.label}</span></>}
+                    {({ isActive }) => <>{isActive && <LiquidSelection className="site-mobile-indicator" layoutId="mobile-nav-selection" />}<span className="site-nav-label">{item.label}</span></>}
                   </NavLink>
                 ),
               )}
@@ -219,8 +218,8 @@ export function Layout() {
                 </NavLink>
               </Button>
             </nav>
-          </div>
-        )}
+          </FloatingPanel>
+        )}</AnimatePresence>
       </header>
 
       {/* 主内容区 */}

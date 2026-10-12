@@ -283,6 +283,8 @@
   max-width: 204px;
 }
 .expo-zone-nav > button {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -297,6 +299,11 @@
   transition:
     background 0.2s,
     border-color 0.2s;
+}
+.expo-zone-selection {
+  z-index: -1;
+  --selection-fill: #233e4de6;
+  --selection-shadow: inset 0 0 0 1px var(--zone-color), inset 0 1px 0 #fff2, 0 3px 12px -9px var(--zone-color);
 }
 .expo-zone-nav > button > span {
   color: #8499aa;
@@ -320,6 +327,7 @@
   background: #233e4d99;
   border-color: #74959a42;
 }
+.expo-zone-nav > button[aria-pressed='true'] { background: transparent; border-color: transparent; }
 .expo-world-coordinate {
   position: absolute;
   right: 30px;
@@ -1474,4 +1482,8 @@
   .expo-world-dock {
     background: #152a38;
   }
+}
+@media (forced-colors: active) {
+  .expo-zone-nav > button[aria-pressed='true'] { background: Highlight; color: HighlightText; border-color: Highlight; }
+  .expo-zone-nav > button > svg { color: inherit; }
 }

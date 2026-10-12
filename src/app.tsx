@@ -13,8 +13,11 @@ const ExhibitionPage = lazy(pageLoaders.exhibition);
 
 function PageContent({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
+  const version = useUiVersion();
   // Reset only the content boundary: the header remains available during a slow route load.
-  return <Suspense key={pathname} fallback={<PageLoading />}>{children}</Suspense>;
+  return <Suspense key={pathname} fallback={<PageLoading />}>
+    <div key={pathname === '/' ? version : pathname} className={pathname === '/' ? 'route-home-reveal' : 'route-content-reveal'}>{children}</div>
+  </Suspense>;
 }
 
 function VersionedHomePage() {
