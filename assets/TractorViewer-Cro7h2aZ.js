@@ -1,0 +1,61 @@
+import{c as D,r as o,u as q,j as e,e as oe}from"./index-D-q6ZVj3.js";import{S as ne,U as se,a as re,M as K,e as ae,u as ie,_ as B,B as le,P as ce,V as x,v as de,C as V,b as me,c as ue,d as fe,T as he,O as xe,f as X,R as ge,g as pe}from"./TractorModel-DWJAYe1N.js";import{T as U}from"./tractor-model-info-2FumfyFA.js";/* empty css                      */import{L as we}from"./loader-circle-Y18tESxW.js";import{R as ve}from"./rotate-ccw-CUPMBoa2.js";const be=[["path",{d:"M15.033 9.44a.647.647 0 0 1 0 1.12l-4.065 2.352a.645.645 0 0 1-.968-.56V7.648a.645.645 0 0 1 .967-.56z",key:"vbtd3f"}],["path",{d:"M12 17v4",key:"1riwvh"}],["path",{d:"M8 21h8",key:"1ev6f3"}],["rect",{x:"2",y:"3",width:"20",height:"14",rx:"2",key:"x3v2xh"}]],J=D("monitor-play",be);const je=[["rect",{x:"14",y:"3",width:"5",height:"18",rx:"1",key:"kaeet6"}],["rect",{x:"5",y:"3",width:"5",height:"18",rx:"1",key:"1wsw3u"}]],ye=D("pause",je);const Ce=[["path",{d:"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z",key:"10ikf1"}]],Pe=D("play",Ce);function ze(n,c,a,m){var s;return s=class extends ne{constructor(r){super({vertexShader:c,fragmentShader:a,...r});for(const u in n)this.uniforms[u]=new se(n[u]),Object.defineProperty(this,u,{get(){return this.uniforms[u].value},set(i){this.uniforms[u].value=i}});this.uniforms=re.clone(this.uniforms)}},s.key=K.generateUUID(),s}const ke=ze({cellSize:.5,sectionSize:1,fadeDistance:100,fadeStrength:1,fadeFrom:1,cellThickness:.5,sectionThickness:1,cellColor:new V,sectionColor:new V,infiniteGrid:!1,followCamera:!1,worldCamProjPosition:new x,worldPlanePosition:new x},`
+    varying vec3 localPosition;
+    varying vec4 worldPosition;
+
+    uniform vec3 worldCamProjPosition;
+    uniform vec3 worldPlanePosition;
+    uniform float fadeDistance;
+    uniform bool infiniteGrid;
+    uniform bool followCamera;
+
+    void main() {
+      localPosition = position.xzy;
+      if (infiniteGrid) localPosition *= 1.0 + fadeDistance;
+      
+      worldPosition = modelMatrix * vec4(localPosition, 1.0);
+      if (followCamera) {
+        worldPosition.xyz += (worldCamProjPosition - worldPlanePosition);
+        localPosition = (inverse(modelMatrix) * worldPosition).xyz;
+      }
+
+      gl_Position = projectionMatrix * viewMatrix * worldPosition;
+    }
+  `,`
+    varying vec3 localPosition;
+    varying vec4 worldPosition;
+
+    uniform vec3 worldCamProjPosition;
+    uniform float cellSize;
+    uniform float sectionSize;
+    uniform vec3 cellColor;
+    uniform vec3 sectionColor;
+    uniform float fadeDistance;
+    uniform float fadeStrength;
+    uniform float fadeFrom;
+    uniform float cellThickness;
+    uniform float sectionThickness;
+
+    float getGrid(float size, float thickness) {
+      vec2 r = localPosition.xz / size;
+      vec2 grid = abs(fract(r - 0.5) - 0.5) / fwidth(r);
+      float line = min(grid.x, grid.y) + 1.0 - thickness;
+      return 1.0 - min(line, 1.0);
+    }
+
+    void main() {
+      float g1 = getGrid(cellSize, cellThickness);
+      float g2 = getGrid(sectionSize, sectionThickness);
+
+      vec3 from = worldCamProjPosition*vec3(fadeFrom);
+      float dist = distance(from, worldPosition.xyz);
+      float d = 1.0 - min(dist / fadeDistance, 1.0);
+      vec3 color = mix(cellColor, sectionColor, min(1.0, sectionThickness * g2));
+
+      gl_FragColor = vec4(color, (g1 + g2) * pow(d, fadeStrength));
+      gl_FragColor.a = mix(0.75 * gl_FragColor.a, gl_FragColor.a, g2);
+      if (gl_FragColor.a <= 0.0) discard;
+
+      #include <tonemapping_fragment>
+      #include <${de>=154?"colorspace_fragment":"encodings_fragment"}>
+    }
+  `),Me=o.forwardRef(({args:n,cellColor:c="#000000",sectionColor:a="#2080ff",cellSize:m=.5,sectionSize:s=1,followCamera:r=!1,infiniteGrid:u=!1,fadeDistance:i=100,fadeStrength:z=1,fadeFrom:k=1,cellThickness:j=.5,sectionThickness:y=1,side:M=le,...C},g)=>{ae({GridMaterial:ke});const l=o.useRef(null);o.useImperativeHandle(g,()=>l.current,[]);const p=new ce,w=new x(0,1,0),S=new x(0,0,0);ie(R=>{p.setFromNormalAndCoplanarPoint(w,S).applyMatrix4(l.current.matrixWorld);const P=l.current.material,f=P.uniforms.worldCamProjPosition,N=P.uniforms.worldPlanePosition;p.projectPoint(R.camera.position,f.value),N.value.set(0,0,0).applyMatrix4(l.current.matrixWorld)});const E={cellSize:m,sectionSize:s,cellColor:c,sectionColor:a,cellThickness:j,sectionThickness:y},v={fadeDistance:i,fadeStrength:z,fadeFrom:k,infiniteGrid:u,followCamera:r};return o.createElement("mesh",B({ref:l,frustumCulled:!1},C),o.createElement("gridMaterial",B({transparent:!0,"extensions-derivatives":!0,side:M},E,v)),o.createElement("planeGeometry",{args:n}))}),Se={position:[6.5,4,6.5],fov:40},W=.8,Ee={antialias:!0,alpha:!0},Re=[1,1.5],$={dark:{fog:"#1a2420",cell:"#2e3a34",section:"#4a5a50"},light:{fog:"#eef3ef",cell:"#d9e3dc",section:"#c3d2c7"}};function H({error:n}){const c=q(),a=n instanceof Error?n.message:String(n);return e.jsxs("div",{className:"flex h-full w-full flex-col items-center justify-center gap-3 rounded-2xl border border-border/50 bg-gradient-to-br from-muted/30 to-transparent text-muted-foreground",children:[e.jsx(J,{className:"size-12 opacity-50"}),e.jsx("div",{className:"text-sm",children:c==="zh"?"3D 模型加载失败":"Unable to load the 3D model"}),e.jsx("div",{className:"max-w-[80%] truncate text-xs opacity-60",children:a.slice(0,60)})]})}function Ne(){return e.jsxs("mesh",{children:[e.jsx("sphereGeometry",{args:[.001,8,8]}),e.jsx("meshBasicMaterial",{visible:!1})]})}function Le(){const{scene:n,gl:c,invalidate:a}=X();return o.useEffect(()=>{const m=new pe(c),s=new ge,r=m.fromScene(s,.04);return n.environment=r.texture,a(),()=>{n.environment=null,r.dispose(),s.dispose(),m.dispose()}},[n,c,a]),null}const _=[{id:"isometric",zh:"总览",en:"Overview",direction:[-1,.62,1]},{id:"front",zh:"正面",en:"Front",direction:[-1,.12,0]},{id:"side",zh:"侧面",en:"Side",direction:[0,.12,1]},{id:"top",zh:"俯视",en:"Top",direction:[.01,1,.01]}];function Te({modelRef:n,fit:c}){const a=X(m=>m.size);return o.useEffect(()=>{n.current&&c(n.current)},[a.width,a.height,n,c]),null}function Be({component:n="all",exploded:c=!1,modelUrl:a=U,controls:m=!1}){const s=q(),[r,u]=o.useState("isometric"),[i,z]=o.useState(()=>m&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches),[k]=o.useState(()=>{try{const t=document.createElement("canvas").getContext("webgl2");return t?.getExtension("WEBGL_lose_context")?.loseContext(),!!t}catch{return!1}}),[j,y]=o.useState(null),[M,C]=o.useState(!1),g=o.useRef(null),l=o.useRef(null),p=o.useRef(null),w=o.useRef(null);o.useEffect(()=>{C(!1),y(null)},[a]);const[S,E]=o.useState(()=>document.documentElement.classList.contains("theme-dark")||!document.documentElement.classList.contains("theme-light")&&window.matchMedia("(prefers-color-scheme: dark)").matches);o.useEffect(()=>{const t=()=>{const b=document.documentElement.classList.contains("theme-dark")||!document.documentElement.classList.contains("theme-light")&&window.matchMedia("(prefers-color-scheme: dark)").matches;E(h=>h===b?h:b)},d=new MutationObserver(t);return d.observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",t),()=>{d.disconnect(),window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change",t)}},[]);const v=o.useCallback(t=>{g.current&&(g.current.autoRotate=t)},[]),R=o.useCallback(()=>{l.current&&window.clearTimeout(l.current),l.current=window.setTimeout(()=>{v(i&&r==="isometric")},3e3)},[v,i,r]),P=o.useCallback(()=>{l.current&&(window.clearTimeout(l.current),l.current=null),v(!1)},[v]),f=o.useCallback(t=>{const d=g.current;if(!d)return;const b=new me().setFromObject(t),h=b.getSize(new x),T=b.getCenter(new x),F=Math.max(h.x,h.y,h.z)||1,G=new x(T.x,T.y+h.y*.05,T.z);d.target.copy(G);const O=d.object,I=K.degToRad(O.fov),Y=2*Math.atan(Math.tan(I/2)*O.aspect),A=h.length()/2/Math.sin(Math.min(I,Y)/2)*1.13,Z=new x(..._.find(te=>te.id===r).direction).normalize(),ee=G.clone().add(Z.multiplyScalar(A));d.object.position.copy(ee),d.minDistance=F*.6,d.maxDistance=Math.max(F*4,A*1.8),d.update()},[r]);o.useEffect(()=>()=>{l.current&&window.clearTimeout(l.current)},[i,r]);const N=o.useCallback(t=>{g.current=t,t&&(t.autoRotate=i&&r==="isometric",t.autoRotateSpeed=W,p.current&&(f(p.current),p.current=null))},[f,i,r]),Q=o.useCallback(t=>{C(!0),w.current=t,g.current?f(t):p.current=t},[f]);if(!k)return e.jsxs("div",{className:"flex h-full w-full flex-col items-center justify-center gap-3 rounded-2xl border border-border/50 bg-gradient-to-br from-muted/30 to-transparent text-muted-foreground",children:[e.jsx(J,{className:"size-16 opacity-40"}),e.jsx("div",{className:"text-sm font-medium",children:"3D 模型预览"}),e.jsx("div",{className:"text-xs opacity-60",children:"当前浏览器环境不支持 WebGL"}),e.jsx("div",{className:"text-xs opacity-60",children:"支持的设备上可查看可交互 3D 拖拉机模型"})]});if(j)return e.jsx(H,{error:j});const L=S?$.dark:$.light;return e.jsxs("div",{className:"relative h-full w-full",children:[e.jsx(ue,{resetKeys:[a],FallbackComponent:H,onError:t=>{const d=t instanceof Error?t.message:String(t);y(d)},children:e.jsxs(fe,{frameloop:i&&r==="isometric"?"always":"demand",shadows:!0,camera:Se,gl:Ee,dpr:Re,children:[e.jsx("fog",{attach:"fog",args:[L.fog,8,20]}),e.jsx(Le,{}),e.jsx("ambientLight",{intensity:.5}),e.jsx("hemisphereLight",{args:["#FFF8E7","#C8B89A",.6]}),e.jsx("directionalLight",{position:[5,8,5],intensity:1.2,castShadow:!0,"shadow-mapSize":[1024,1024]}),e.jsx("directionalLight",{position:[-3,4,-3],intensity:.3,color:"#E8D5B7"}),e.jsx(Me,{args:[20,20],cellSize:1,cellThickness:.5,cellColor:L.cell,sectionSize:5,sectionThickness:1,sectionColor:L.section,fadeDistance:15,fadeStrength:1,position:[0,-.4,0]}),e.jsxs("mesh",{rotation:[-Math.PI/2,0,0],position:[0,-.401,0],receiveShadow:!0,children:[e.jsx("planeGeometry",{args:[20,20]}),e.jsx("shadowMaterial",{transparent:!0,opacity:.25})]}),e.jsxs(o.Suspense,{fallback:e.jsx(Ne,{}),children:[e.jsx(he,{onLoaded:Q,component:n,exploded:c,modelUrl:a}),e.jsx(Te,{modelRef:w,fit:f})]}),e.jsx(xe,{ref:N,enableDamping:i&&r==="isometric",dampingFactor:.05,minDistance:2,maxDistance:18,maxPolarAngle:Math.PI/2.2,minPolarAngle:.03,autoRotateSpeed:W,onStart:P,onEnd:R})]})}),!M&&e.jsx("div",{className:"pointer-events-none absolute inset-0 flex items-center justify-center",children:e.jsxs("div",{className:"flex items-center gap-2 rounded-full bg-card/80 px-4 py-2 text-xs text-muted-foreground backdrop-blur-sm shadow-sm",children:[e.jsx(we,{className:"size-4 animate-spin"}),s==="zh"?"模型加载中…":"Loading model…"]})}),e.jsx("div",{className:"absolute left-3 top-3 rounded-full border border-border/50 bg-card/85 px-3 py-1.5 text-[10px] text-muted-foreground backdrop-blur",children:a===U?s==="zh"?"原创结构示意 · 非实机 CAD":"Original schematic · Not machine CAD":s==="zh"?"本地模型 · 尺寸待核验":"Local model · Dimensions unverified"}),m&&e.jsx("div",{className:"model-control-shell",role:"group","aria-label":s==="zh"?"模型视角与旋转控制":"Model view and rotation controls",children:e.jsxs(oe,{variant:"regular",lens:!0,displacementScale:36,className:"model-control-glass",contentClassName:"model-control-content",children:[e.jsx("button",{type:"button",onClick:()=>z(t=>!t),"aria-label":s==="zh"?i?"暂停自转":"开启自转":i?"Pause rotation":"Start rotation","aria-pressed":i,className:"model-icon-button",children:i?e.jsx(ye,{size:16}):e.jsx(Pe,{size:16})}),e.jsxs("div",{className:"model-view-segment",role:"group","aria-label":s==="zh"?"选择模型视角":"Select model view",children:[e.jsx("span",{className:"model-view-indicator","aria-hidden":"true",style:{transform:`translateX(${_.findIndex(t=>t.id===r)*100}%)`}}),_.map(t=>e.jsx("button",{type:"button","aria-pressed":r===t.id,onClick:()=>u(t.id),className:"model-view-button",children:s==="zh"?t.zh:t.en},t.id))]}),e.jsx("button",{type:"button","aria-label":s==="zh"?"恢复模型视角":"Reset model view",onClick:()=>{u("isometric"),w.current&&f(w.current)},className:"model-icon-button",children:e.jsx(ve,{size:16})})]})}),e.jsx("div",{className:"pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-muted-foreground/70",children:s==="zh"?"拖动旋转 · 滚轮缩放":"Drag to rotate · Scroll to zoom"})]})}export{Be as default};
