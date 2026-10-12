@@ -15,7 +15,7 @@ test('开发入口仅使用固定预览产物，不把访客凭据或生产查�
   assert.match(response.headers.get('content-type')!, /text\/html/);
   assert.equal(response.headers.get('cache-control'), 'no-store');
   assert.match(seen!.url, /^https:\/\/raw.githubusercontent.com\/srt2777\/AgriDx-v3\/dev-preview-built\/index.html\?t=\d+$/);
-  assert.deepEqual(seen!.options, { redirect: 'error' });
+  assert.deepEqual(seen!.options, { redirect: 'manual' });
   assert.equal(await response.text(), '<html>preview</html>');
 });
 
@@ -34,5 +34,6 @@ test('JavaScript与GLB使用正确MIME，HEAD和上游失败保留边界', async
   const head = await servePreview(new Request('https://preview.example/', { method: 'HEAD' }), upstream);
   assert.equal(await head.text(), '');
   assert.equal((await servePreview(new Request('https://preview.example/'), async () => new Response('', { status: 404 }))).status, 404);
+  assert.equal((await servePreview(new Request('https://preview.example/'), async () => new Response('', { status: 302 }))).status, 502);
   assert.equal((await servePreview(new Request('https://preview.example/'), async () => { throw new Error('network'); })).status, 502);
 });

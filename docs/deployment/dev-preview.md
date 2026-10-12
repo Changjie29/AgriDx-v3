@@ -25,12 +25,16 @@ npm run preview:publish
 
 ## 托管与权限
 
-开发预览项目ID：`appgprj_6accea9518e08191ba29e1f8b0f8725e`，与原 Sites 的项目ID不同。预期固定网址： https://agridx-dev-preview.z3464715478.chatgpt.site 。新站按 Sites 默认保持仅所有者登录访问。旧项目的 `.openai/hosting.json` 保持原样，开发配置单独保存在 `.openai/dev-preview.json`。
+开发预览项目ID：`appgprj_6accea9518e08191ba29e1f8b0f8725e`，与原 Sites 的项目ID不同。固定开发网址： https://agridx-dev-preview.z3464715478.chatgpt.site 。新站按 Sites 默认保持仅所有者登录访问。旧项目的 `.openai/hosting.json` 保持原样，开发配置单独保存在 `.openai/dev-preview.json`。
 
 GitHub 连接在 Pages 创建接口返回403（Resource not accessible by integration），未启用 Pages。改为 GitHub Actions 通过内容写权限生成独立产物分支；Site 的 Worker 只读固定仓库的产物，不代理腾讯，不转发访客登录凭据。Worker 源码及隔离测试在 `scripts/dev-preview-gateway/worker.js` 与 `tests/dev-preview-gateway.test.ts`。
 
 ## 首次入口发布与验证
 
-2026-10-12，独立 Sites 入口原生部署回执成功：`appgdep_6accebf622a88191a74ac0b50a0320c3`，保存版本 `appgprj_6accea9518e08191ba29e1f8b0f8725e~appgver_b4b7ae4e4dfc8191a0774d8eaa189a5b`，入口源码提交 `81f6feb459306c2ecfd60e5ca01769ab3aa8af2f`。该回执证明入口已部署；开发应用还须由 dev-preview 工作流完成产物发布，线上源码提交以 `/dev-preview.json` 与 `/api/health` 为准。本轮最终工作流、HTTP 验证及 PR 链接记录于 PR 交付说明。
+2026-10-12，独立 Sites 入口原生部署回执成功：`appgdep_6accee3cf5f48191ba3088c161657a0f`，保存版本 `appgprj_6accea9518e08191ba29e1f8b0f8725e~appgver_b93c8941838c8191bbfb15990e3547aa`，入口源码提交 `55b38da96acbe558dbdf41c53c4602ecfb157bf7`。首轮 dev-preview 工作流也已成功完成产物发布，线上源码提交以 `/dev-preview.json` 与 `/api/health` 为准。本轮最终工作流、HTTP 验证及 PR 链接记录于 PR 交付说明。
 
 本地完整 verify：143 项测试通过、2 项 Windows 专用测试在 Linux 跳过，版本一致性、前后端/Vite类型、Lint和完整构建通过。开发构建通过；测试加载实际浏览器构建模块，对照全部97个型号及所有有证据零件目录、已知和未知机型诊断、取消和错误响应。412条归档/421片段/26来源保持一致。普通生产构建中未生成开发API快照或预览标记模块；未进行真实浏览器渲染或真实外部模型调用验收。
+
+首次实际线上验证（2026-10-12，上海）：[工作流38262003843](https://github.com/srt2777/AgriDx-v3/actions/runs/38262003843)全部步骤成功，对应开发提交 `afef3cee20eff51bce75103b6e33a24f07640bc3`、产物提交 `17dba4b2bcf801e62e613f8b16cb8b2f393e56f2`。使用 Sites 所有者服务访问凭据检查 `/`、`/dev-preview.json`、`/api/health`、入口 JS/CSS、工学院徽章、GLB 和真实知识模块，均 HTTP 200，MIME 正确，健康/构建记录的版本与提交一致；凭据没有保存到源码、记录或浏览器代码。执行从线上下载的实际知识模块，确认412条、26来源、已知型号来源答复与未知型号隔离。
+
+Worker 使用平台支持的 `redirect: manual`，拒绝上游重定向，不转发访客头；固定文件与版本记录不缓存，带哈希的 JS/CSS 可缓存并保留旧版本的延迟加载资源。Sites 入口发布与路由生效之间存在短暂延迟；以实际 HTTP 及版本记录为验收依据。后续提交的当前线上版本仍以网址内的构建记录为准。

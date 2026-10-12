@@ -16,7 +16,7 @@ export async function servePreview(request, upstreamFetch = fetch) {
   try { file = decodeURIComponent(url.pathname).slice(1) || 'index.html'; }
   catch { return new Response('Invalid path', { status: 400 }); }
   if (file === 'api/health') {
-    const response = await upstreamFetch(`${artifactOrigin}dev-preview.json?t=${Date.now()}`, { redirect: 'error' });
+    const response = await upstreamFetch(`${artifactOrigin}dev-preview.json?t=${Date.now()}`, { redirect: 'manual' });
     if (!response.ok) return Response.json({ ok: false, environment: 'development-preview' }, { status: 503 });
     return Response.json({
       ...await response.json(), ok: true, environment: 'development-preview',
@@ -27,20 +27,23 @@ export async function servePreview(request, upstreamFetch = fetch) {
     !(/^(assets|images|models|licenses|fonts)\//.test(file) || ['index.html', 'favicon.svg', 'dev-preview.json'].includes(file))) {
     return new Response('Not found', { status: 404 });
   }
-  const mutable = ['index.html', 'dev-preview.json'].includes(file);
+  const mutable = !/^assets\/.+-[A-Za-z0-9_-]{8}\.(js|css)$/.test(file);
   const target = `${artifactOrigin}${file}${mutable ? `?t=${Date.now()}` : ''}`;
   try {
     // Forward no visitor cookies, login headers, query parameters or production traffic.
-    const response = await upstreamFetch(target, { redirect: 'error' });
+    const response = await upstreamFetch(target, { redirect: 'manual' });
     if (!response.ok) return new Response('Preview asset unavailable', { status: response.status === 404 ? 404 : 502 });
     const extension = file.split('.').at(-1);
     const headers = {
       'Content-Type': types[extension] || 'application/octet-stream',
-      'Cache-Control': mutable ? 'no-store' : 'public, max-age=300',
+      'Cache-Control': mutable ? 'no-store' : 'public, max-age=31536000, immutable',
       'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex', 'Referrer-Policy': 'no-referrer',
     };
     return new Response(request.method === 'HEAD' ? null : response.body, { headers });
-  } catch { return new Response('Development preview temporarily unavailable', { status: 502 }); }
+  } catch (error) {
+    console.error('[dev-preview] upstream fetch failed:', error instanceof Error ? error.message : 'unknown');
+    return new Response('Development preview temporarily unavailable', { status: 502 });
+  }
 }
 
 export default { fetch: (request) => servePreview(request) };

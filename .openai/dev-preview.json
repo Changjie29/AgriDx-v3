@@ -5,6 +5,6 @@
   "source_branch": "dev-preview",
   "artifact_branch": "dev-preview-built",
   "audience": "owner-private",
-  "gateway_source_commit": "81f6feb459306c2ecfd60e5ca01769ab3aa8af2f",
-  "gateway_deployment_id": "appgdep_6accebf622a88191a74ac0b50a0320c3"
+  "gateway_source_commit": "55b38da96acbe558dbdf41c53c4602ecfb157bf7",
+  "gateway_deployment_id": "appgdep_6accee3cf5f48191ba3088c161657a0f"
 }
