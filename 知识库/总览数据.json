@@ -1,26 +1,31 @@
 {
   "schema_version": 1,
-  "snapshot_date_shanghai": "2026-10-11",
+  "snapshot_date_shanghai": "2026-10-12",
   "repository_version": "3.1.0",
   "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
   "input_sha256": {
-    "sources.json": "53ed93042502538ea331a55669d591ae9a5daf0b8970a296f148a7f744fe13f0",
-    "entries.jsonl": "ec2bd7e7de05ead6f7c81f75f95853386f02b615d3cb1d45de89fcba7e617e4a"
+    "sources.json": "7bc4f93c37bf2c7ceee4953f4fcaeccb3f8deb20486a2baee5f123375cc4acbf",
+    "entries.jsonl": "c759860ee0525854d35016e49061fb241e93fc006b205bec06c5ba7462f7024b"
   },
   "totals": {
     "sources": 26,
-    "archived_entries": 312,
-    "knowledge_documents": 21,
+    "archived_entries": 412,
+    "knowledge_documents": 24,
     "brand_labels": 15,
     "generic_chunks": 9,
-    "retrieval_chunks": 321,
+    "retrieval_chunks": 421,
     "information_or_scope_entries": 32
   },
   "brands": [
     {
       "label": "约翰迪尔",
       "sources": 4,
-      "entries": 130
+      "entries": 205
+    },
+    {
+      "label": "中联",
+      "sources": 1,
+      "entries": 41
     },
     {
       "label": "东方红",
@@ -36,11 +41,6 @@
       "label": "雷沃欧豹",
       "sources": 3,
       "entries": 25
-    },
-    {
-      "label": "中联",
-      "sources": 1,
-      "entries": 16
     },
     {
       "label": "沃得",
@@ -96,7 +96,7 @@
   "entry_types": {
     "安全操作": 53,
     "操作/维护知识": 109,
-    "维护/故障知识": 112,
+    "维护/故障知识": 212,
     "机型资料": 5,
     "资料缺口": 3,
     "资料索引": 13,
@@ -112,7 +112,7 @@
     "配套导航PDF": 2
   },
   "entries_by_source_purpose": {
-    "整机／维保PDF": 251,
+    "整机／维保PDF": 351,
     "维护网页": 9,
     "报道背景": 2,
     "交机培训PDF": 32,
@@ -124,7 +124,7 @@
     "PDF链接＋来源记录": 7
   },
   "entries_by_storage": {
-    "仓库PDF原件": 249,
+    "仓库PDF原件": 349,
     "仓库网页快照": 11,
     "PDF链接＋来源记录": 52
   },
@@ -154,7 +154,8 @@
     "证据页渲染+OCR已核对；未厂家复核/实车验证": 10,
     "已核对所列文本及PDF页图；未全书审校、厂家复核或实车验证": 6,
     "已同时阅读可提取文字和对应PDF图像；仅核对所列证据页，未全书审校、厂家或实车验证。": 7,
-    "已核对文本及证据页图像；未全书审校/厂家复核/实车验证": 100
+    "已核对文本及证据页图像；未全书审校/厂家复核/实车验证": 100,
+    "已核对原文及证据页图像；未厂家复核、未全书审校、未实车验证。": 100
   },
   "research": {
     "reports": 3,
@@ -262,12 +263,12 @@
       "version_date": null,
       "pdf_metadata_date": null,
       "scope_boundary": "子型号/国四适用性待核实",
-      "status": "既有PDF及知识卡；本批未重复上传",
+      "status": "既有PDF及知识卡；本批未重复上传；2026-10-11本批新增25条故障表概述已核对文本与选页图像；未厂家复核/实车验证",
       "content_group": "整机／维保PDF",
       "storage_group": "仓库PDF原件",
       "source_path": "知识库/原始农机说明书/中联/PL系列/中联PL系列拖拉机维保操作手册.pdf",
       "source_url": "https://www.zoomlion-ag.com/whby_1.html",
-      "entry_count": 16,
+      "entry_count": 41,
       "entry_ids": [
         "ZL-PL-001",
         "ZL-PL-002",
@@ -284,9 +285,35 @@
         "ZL-PL-013",
         "ZL-PL-014",
         "ZL-PL-015",
-        "ZL-PL-016"
+        "ZL-PL-016",
+        "ZL-PL-017",
+        "ZL-PL-018",
+        "ZL-PL-019",
+        "ZL-PL-020",
+        "ZL-PL-021",
+        "ZL-PL-022",
+        "ZL-PL-023",
+        "ZL-PL-024",
+        "ZL-PL-025",
+        "ZL-PL-026",
+        "ZL-PL-027",
+        "ZL-PL-028",
+        "ZL-PL-029",
+        "ZL-PL-030",
+        "ZL-PL-031",
+        "ZL-PL-032",
+        "ZL-PL-033",
+        "ZL-PL-034",
+        "ZL-PL-035",
+        "ZL-PL-036",
+        "ZL-PL-037",
+        "ZL-PL-038",
+        "ZL-PL-039",
+        "ZL-PL-040",
+        "ZL-PL-041"
       ],
       "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/中联_PL_故障扩充.md",
         "知识库/整理后的知识库/拖拉机/中联/PL系列.md"
       ]
     },
@@ -569,12 +596,12 @@
       "version_date": "2026-03-27（官方目录修订日期）",
       "pdf_metadata_date": null,
       "scope_boundary": "中国版本国四G4，仅封面列明的型号，仍需按PIN、发动机、离合器、变速箱及前桥配置匹配具体章节；封面有JAPANESE及問題D6字样，但正文为中文，官方目录语言Chinese且封面明确中国版本；保留原件，该语言模板异常待厂家核实；PDF元数据创建日期为2026-04-24，不能替代目录修订日期；章节内旧日期不是整本出版日期",
-      "status": "已取得完整PDF文件",
+      "status": "已取得完整PDF文件；2026-10-11本批新增35条故障表概述已核对文本与选页图像；未厂家复核/实车验证",
       "content_group": "整机／维保PDF",
       "storage_group": "仓库PDF原件",
       "source_path": "知识库/原始农机说明书/约翰迪尔/6E国四/OMTR115296.pdf",
       "source_url": "https://techpubs.deere.com/zh-CHS/Search/Equipment?st=model&kw=6E-1204",
-      "entry_count": 14,
+      "entry_count": 49,
       "entry_ids": [
         "KB-JD-6E-G4-OMTR115296-001",
         "KB-JD-6E-G4-OMTR115296-002",
@@ -589,10 +616,46 @@
         "KB-JD-6E-G4-OMTR115296-011",
         "KB-JD-6E-G4-OMTR115296-012",
         "KB-JD-6E-G4-OMTR115296-013",
-        "KB-JD-6E-G4-OMTR115296-014"
+        "KB-JD-6E-G4-OMTR115296-014",
+        "KB-JD-6E-G4-OMTR115296-015",
+        "KB-JD-6E-G4-OMTR115296-016",
+        "KB-JD-6E-G4-OMTR115296-017",
+        "KB-JD-6E-G4-OMTR115296-018",
+        "KB-JD-6E-G4-OMTR115296-019",
+        "KB-JD-6E-G4-OMTR115296-020",
+        "KB-JD-6E-G4-OMTR115296-021",
+        "KB-JD-6E-G4-OMTR115296-022",
+        "KB-JD-6E-G4-OMTR115296-023",
+        "KB-JD-6E-G4-OMTR115296-024",
+        "KB-JD-6E-G4-OMTR115296-025",
+        "KB-JD-6E-G4-OMTR115296-026",
+        "KB-JD-6E-G4-OMTR115296-027",
+        "KB-JD-6E-G4-OMTR115296-028",
+        "KB-JD-6E-G4-OMTR115296-029",
+        "KB-JD-6E-G4-OMTR115296-030",
+        "KB-JD-6E-G4-OMTR115296-031",
+        "KB-JD-6E-G4-OMTR115296-032",
+        "KB-JD-6E-G4-OMTR115296-033",
+        "KB-JD-6E-G4-OMTR115296-034",
+        "KB-JD-6E-G4-OMTR115296-035",
+        "KB-JD-6E-G4-OMTR115296-036",
+        "KB-JD-6E-G4-OMTR115296-037",
+        "KB-JD-6E-G4-OMTR115296-038",
+        "KB-JD-6E-G4-OMTR115296-039",
+        "KB-JD-6E-G4-OMTR115296-040",
+        "KB-JD-6E-G4-OMTR115296-041",
+        "KB-JD-6E-G4-OMTR115296-042",
+        "KB-JD-6E-G4-OMTR115296-043",
+        "KB-JD-6E-G4-OMTR115296-044",
+        "KB-JD-6E-G4-OMTR115296-045",
+        "KB-JD-6E-G4-OMTR115296-046",
+        "KB-JD-6E-G4-OMTR115296-047",
+        "KB-JD-6E-G4-OMTR115296-048",
+        "KB-JD-6E-G4-OMTR115296-049"
       ],
       "knowledge_paths": [
-        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md"
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四_故障扩充.md"
       ]
     },
     {
@@ -827,12 +890,12 @@
       "version_date": null,
       "pdf_metadata_date": "2020-04-30",
       "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实",
-      "status": "官方PDF已取得；封面与选页渲染+OCR核对；未厂家复核/实车验证；2026-10-11新增50条指定正文页文本及图像核对；未全书/厂家/实车验证",
+      "status": "官方PDF已取得；封面与选页渲染+OCR核对；未厂家复核/实车验证；2026-10-11新增50条指定正文页文本及图像核对；未全书/厂家/实车验证；2026-10-11本批新增40条故障表概述已核对文本与选页图像",
       "content_group": "整机／维保PDF",
       "storage_group": "仓库PDF原件",
       "source_path": "知识库/原始农机说明书/约翰迪尔/5E_D0/OMSJ34997.pdf",
       "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsj34997",
-      "entry_count": 56,
+      "entry_count": 96,
       "entry_ids": [
         "KB-JD-5E-D0-001",
         "KB-JD-5E-D0-002",
@@ -889,9 +952,50 @@
         "KB-JD-5E-D0-053",
         "KB-JD-5E-D0-054",
         "KB-JD-5E-D0-055",
-        "KB-JD-5E-D0-056"
+        "KB-JD-5E-D0-056",
+        "KB-JD-5E-D0-057",
+        "KB-JD-5E-D0-058",
+        "KB-JD-5E-D0-059",
+        "KB-JD-5E-D0-060",
+        "KB-JD-5E-D0-061",
+        "KB-JD-5E-D0-062",
+        "KB-JD-5E-D0-063",
+        "KB-JD-5E-D0-064",
+        "KB-JD-5E-D0-065",
+        "KB-JD-5E-D0-066",
+        "KB-JD-5E-D0-067",
+        "KB-JD-5E-D0-068",
+        "KB-JD-5E-D0-069",
+        "KB-JD-5E-D0-070",
+        "KB-JD-5E-D0-071",
+        "KB-JD-5E-D0-072",
+        "KB-JD-5E-D0-073",
+        "KB-JD-5E-D0-074",
+        "KB-JD-5E-D0-075",
+        "KB-JD-5E-D0-076",
+        "KB-JD-5E-D0-077",
+        "KB-JD-5E-D0-078",
+        "KB-JD-5E-D0-079",
+        "KB-JD-5E-D0-080",
+        "KB-JD-5E-D0-081",
+        "KB-JD-5E-D0-082",
+        "KB-JD-5E-D0-083",
+        "KB-JD-5E-D0-084",
+        "KB-JD-5E-D0-085",
+        "KB-JD-5E-D0-086",
+        "KB-JD-5E-D0-087",
+        "KB-JD-5E-D0-088",
+        "KB-JD-5E-D0-089",
+        "KB-JD-5E-D0-090",
+        "KB-JD-5E-D0-091",
+        "KB-JD-5E-D0-092",
+        "KB-JD-5E-D0-093",
+        "KB-JD-5E-D0-094",
+        "KB-JD-5E-D0-095",
+        "KB-JD-5E-D0-096"
       ],
       "knowledge_paths": [
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E_D0_故障扩充.md",
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E_D0_维护扩充.md",
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md"
       ]
