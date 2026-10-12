@@ -46,6 +46,8 @@ sudo bash update-existing.sh --deploy <经审阅的40位提交SHA>
 
 ## 已完成的部署与公网验收
 
+本节记录 2026-10-11 的历史执行结果。2026-10-12 主线将此迭代日志重新编号为 3.0.3；以下 3.1.1、源码 SHA、目录和回执保留当时实际值，不表示重新部署或当前网站状态。
+
 用户要求 GitHub 最新版本与网站同步后，PR #9 已合入 main，部署源码为 [0b8a670](https://github.com/srt2777/AgriDx-v3/commit/0b8a670a547f89b1349e1f49b0d8a347e90d3367)，版本 3.1.1。该主线源码树与已验证修复完全一致，主线 [CI 38136829114](https://github.com/srt2777/AgriDx-v3/actions/runs/38136829114) 的 Ubuntu、Windows 和 ci-verify 全部成功。
 
 用户腾讯终端回执确认：新版本依赖安装、前后端构建及生产依赖裁剪完成，临时及正式服务、Nginx 代理健康均为 3.1.1 / 212 / 221，最终输出 `手动部署完成：version=3.1.1 commit=0b8a670a547f89b1349e1f49b0d8a347e90d3367`。current 切换至 `/opt/agridx/releases/20261011T115619Z-0b8a670a547f-682062`，旧版本保留。Nginx、证书、DNS、防火墙、cron 和现有 EnvironmentFile 未修改。npm 的 install-scripts 提示及 Three.js 大包提示没有阻断构建或服务启动；未修改全局 npm 或启用额外安装脚本。
