@@ -24,4 +24,4 @@
 
 ## GitHub 与线上状态
 
-目标为 `srt2777/AgriDx-v3`，加载优化 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17) 已合入，本次动效在独立分支 `codex/wwdc-fluid-interaction-20261012` 保存为 3.1.2；新 PR 创建后补充审阅入口。服务器当前无法登录，本轮先保存代码与审阅材料，不进行线上部署。
+目标为 `srt2777/AgriDx-v3`，加载优化 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17) 已合入，本次动效在独立分支 `codex/wwdc-fluid-interaction-20261012` 保存为 3.1.2，实现提交为 [7f83921](https://github.com/srt2777/AgriDx-v3/commit/7f839219d7c0e3c232d2841d2a4261dd6858fd00)，审阅入口为 [PR #21](https://github.com/srt2777/AgriDx-v3/pull/21)，CI 与合入状态以 PR 为准。服务器当前无法登录，本轮先保存代码与审阅材料，不进行线上部署。
