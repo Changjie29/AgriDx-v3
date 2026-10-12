@@ -1,0 +1,25 @@
+{
+  "version": "3.2.2",
+  "date_shanghai": "2026-10-12",
+  "npm_ci": "passed",
+  "verify": "passed",
+  "typescript_projects": 3,
+  "tests": {
+    "total": 129,
+    "passed": 127,
+    "failed": 0,
+    "skipped": 2,
+    "skip_reason": "Windows-specific tests on Linux"
+  },
+  "lint_errors": 0,
+  "production_build": "client and server passed",
+  "warnings": [
+    "Existing Fast Refresh warning in ui/button.tsx",
+    "Existing Three.js chunk over 500kB"
+  ],
+  "loopback_note": "Temporary Undici test preloader for loopback HTTP only; inherited external proxy remains enabled and backend proxy configuration is unchanged.",
+  "browser_checks": 32,
+  "live_llm_calls": false,
+  "deployed": false,
+  "live_domain_validation": "Not confirmed; public CDN probes returned 514 and origin comparisons are awaiting the server operator."
+}

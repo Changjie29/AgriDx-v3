@@ -6,7 +6,8 @@ import { Loader2, MonitorPlay, Pause, Play, RotateCcw } from 'lucide-react';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import TractorModel, { TRACTOR_MODEL_URL, type TractorComponent } from './TractorModel';
+import TractorModel from './TractorModel';
+import { TRACTOR_MODEL_URL, type TractorComponent } from './tractor-model-info';
 import { useLang } from '@/hooks/useLang';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
 import '@/control-glass.css';
@@ -55,22 +56,22 @@ function CanvasLoadingPlaceholder() {
 // 程序化环境光照组件：使用 three.js 内置 RoomEnvironment
 // 零网络请求，不依赖外部 HDR 贴图，避免跨域/CDN 不可达问题
 function ProgrammaticEnvironment() {
-  const { scene, gl } = useThree();
+  const { scene, gl, invalidate } = useThree();
 
   useEffect(() => {
     const pmremGenerator = new THREE.PMREMGenerator(gl);
-    pmremGenerator.compileEquirectangularShader();
-
     const envScene = new RoomEnvironment();
-    const environment = pmremGenerator.fromScene(envScene, 0.04).texture;
-    scene.environment = environment;
+    const environment = pmremGenerator.fromScene(envScene, 0.04);
+    scene.environment = environment.texture;
+    invalidate();
 
     return () => {
       scene.environment = null;
       environment.dispose();
+      envScene.dispose();
       pmremGenerator.dispose();
     };
-  }, [scene, gl]);
+  }, [scene, gl, invalidate]);
 
   return null;
 }
@@ -94,7 +95,7 @@ function ResizeFrame({ modelRef, fit }: { modelRef: React.RefObject<THREE.Object
  * 3D 拖拉机查看器
  * - 使用本地原创分组件拖拉机结构示意 GLB，保留旧模型原件
  * - 环境光照使用 three.js 内置 RoomEnvironment 程序化生成，零网络依赖
- * - 自动旋转：初始自动旋转，用户交互后停止，松手 3 秒后恢复自转
+ * - 模型工坊可启停自转；无控制栏的首页预览静止，交互后按所选状态恢复
  * - 支持鼠标/触屏拖拽旋转、滚轮缩放
  * - WebGL 不可用时降级为占位提示
  */
@@ -103,7 +104,15 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
   const [view, setView] = useState<View>('isometric');
   // 无控制栏的首页预览保持静止，避免移除暂停入口后出现无法停止的自转。
   const [autoRotate, setAutoRotate] = useState(() => controls && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const [webglSupported, setWebglSupported] = useState(true);
+  const [webglSupported] = useState(() => {
+    try {
+      const context = document.createElement('canvas').getContext('webgl2');
+      context?.getExtension('WEBGL_lose_context')?.loseContext();
+      return !!context;
+    } catch {
+      return false;
+    }
+  });
   const [modelError, setModelError] = useState<string | null>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
@@ -242,19 +251,6 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
     [fitCameraToModel],
   );
 
-  useEffect(() => {
-    // 检测 WebGL 支持
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) {
-        setWebglSupported(false);
-      }
-    } catch {
-      setWebglSupported(false);
-    }
-  }, []);
-
   if (!webglSupported) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-2xl border border-border/50 bg-gradient-to-br from-muted/30 to-transparent text-muted-foreground">
@@ -283,6 +279,7 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
         }}
       >
         <Canvas
+          frameloop={autoRotate && view === 'isometric' ? 'always' : 'demand'}
           shadows
           camera={CAMERA_CONFIG}
           gl={GL_CONFIG}
@@ -332,7 +329,7 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
 
           <OrbitControls
             ref={handleControlsRef}
-            enableDamping
+            enableDamping={autoRotate && view === 'isometric'}
             dampingFactor={0.05}
             minDistance={2}
             maxDistance={18}

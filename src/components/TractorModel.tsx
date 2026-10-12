@@ -1,10 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { useGLTF } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 import * as THREE from 'three';
 
-export const TRACTOR_MODEL_URL = '/models/tractor-detailed-v1.glb';
-export type TractorComponent = 'all' | 'body' | 'engine' | 'drivetrain' | 'hydraulics' | 'electrical' | 'wheels' | 'cab';
+import { TRACTOR_MODEL_URL, type TractorComponent } from './tractor-model-info';
 const OFFSETS: Record<string, [number, number, number]> = {
   body: [-.1, .75, 0], cab: [.4, .8, 0], engine: [-.8, .05, 0],
   drivetrain: [0, 0, 0], hydraulics: [.6, 0, 0], electrical: [-.2, .65, 0], wheels: [0, -.2, 0],
@@ -19,6 +19,7 @@ interface TractorModelProps {
 
 /** Original schematic GLB. Cache geometry is shared; all changed materials are cloned. */
 export default function TractorModel({ onLoaded, component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL }: TractorModelProps) {
+  const invalidate = useThree(state => state.invalidate);
   const { scene } = useGLTF(modelUrl);
   const model = useMemo(() => {
     const cloned = SkeletonUtils.clone(scene);
@@ -72,7 +73,8 @@ export default function TractorModel({ onLoaded, component = 'all', exploded = f
     });
     model.updateMatrixWorld(true);
     onLoaded?.(model);
-  }, [model, component, exploded, modelUrl, onLoaded]);
+    invalidate();
+  }, [model, component, exploded, modelUrl, onLoaded, invalidate]);
 
   return <primitive object={model} />;
 }
