@@ -1,7 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, FileText, Layers, Loader2, Search, ShieldCheck, TriangleAlert } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Layers, Loader2, Search, TriangleAlert } from 'lucide-react';
+import EvidenceEntry from './EvidenceEntry';
 import { useLang } from '@/hooks/useLang';
 import { useKnowledgeCatalog } from '@/hooks/useKnowledgeCatalog';
 import type { CatalogEntry } from '@shared/knowledge-catalog';
@@ -80,7 +79,7 @@ export default function KnowledgePage() {
         {selected?.gaps.length ? <aside className="catalog-gaps"><TriangleAlert size={18} /><div><strong>{t('当前层级的资料缺口', 'Evidence gaps at this level')}</strong><ul>{selected.gaps.map(gap => <li key={gap}>{gap}</li>)}</ul></div></aside> : null}
 
         <section className="catalog-evidence" aria-labelledby="catalog-evidence-heading"><div className="catalog-evidence-heading"><h2 id="catalog-evidence-heading">{selected?.entries.length && selected.entries.every(entry => INFORMATION_TYPES.has(entry.entryType)) ? t('资料状态与适用范围', 'Document status & applicability') : t('故障、维护与安全资料', 'Fault, maintenance & safety evidence')}</h2><span>{t('按原始资料呈现 · 保留适用边界', 'From archived documents · scope preserved')}</span></div>
-          {selected?.entries.length ? selected.entries.map(entry => <details className="evidence-entry" key={entry.entryId}><summary><FileText size={20} strokeWidth={1.4} /><div><h3>{entry.title}</h3><span>{entry.entryType} · {entry.locator || t('定位待核实', 'Locator unconfirmed')} · {entry.status}</span></div><ChevronRight size={18} className="evidence-toggle" /></summary><div className="evidence-entry-body"><dl className="evidence-provenance"><div><dt>{t('资料来源', 'Source')}</dt><dd>{entry.sourceUrl ? <a href={entry.sourceUrl} target="_blank" rel="noreferrer">{entry.sourceId}</a> : entry.sourceId}</dd></div><div><dt>{t('版次 / 定位', 'Version / locator')}</dt><dd>{entry.version || t('版次待核实', 'Version unconfirmed')} · {entry.locator}</dd></div><div><dt>{t('适用范围', 'Applicability')}</dt><dd>{entry.scopeBoundary || t('待核实', 'Needs verification')}</dd></div></dl><div className="prose prose-sm max-w-none overflow-x-auto dark:prose-invert"><ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.content}</ReactMarkdown></div><div className="evidence-entry-footer"><span><ShieldCheck size={15} />{t('资料没有给出的数值与关联，需进一步核实。', 'Unspecified parameters and relationships need verification.')}</span><Link to="/chat" state={machineState(entry)} className="hero-text-link">{t('围绕这条资料提问', 'Ask about this evidence')}<ArrowRight size={15} /></Link></div></div></details>) : <div className="catalog-empty"><BookOpen size={25} /><p>{t('这一层级暂无已归档资料，请换一个组件或零部件查看。', 'No archived evidence at this level. Try another component or part.')}</p></div>}
+          {selected?.entries.length ? selected.entries.map(entry => <EvidenceEntry key={entry.entryId} entry={entry} diagnosisState={machineState(entry)} />) : <div className="catalog-empty"><BookOpen size={25} /><p>{t('这一层级暂无已归档资料，请换一个组件或零部件查看。', 'No archived evidence at this level. Try another component or part.')}</p></div>}
         </section>
       </>}
 

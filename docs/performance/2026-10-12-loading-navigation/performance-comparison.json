@@ -1,0 +1,874 @@
+{
+  "baseline_commit": "a7a5da1c6454fd15fecb3119ad4e58bf810819ee",
+  "method": "Two independent browser contexts per version; samples collected without the functional WebGL test running. Simulated external font delay and CPU/network throttling; WebGL disabled. Not live site, GPU readiness, LCP or physical-device FPS measurements.",
+  "summary": {
+    "home_ready_ms": {
+      "before_median_ms": 9858.0,
+      "after_median_ms": 2469.5
+    },
+    "knowledge_ms": {
+      "before_median_ms": 1734.5,
+      "after_median_ms": 975.5
+    },
+    "chat_ms": {
+      "before_median_ms": 1443.5,
+      "after_median_ms": 1001.5
+    },
+    "model_shell_ms": {
+      "before_median_ms": 1427.0,
+      "after_median_ms": 728.0
+    }
+  },
+  "before": {
+    "label": "before",
+    "conditions": {
+      "cpu_slowdown": 4,
+      "latency_ms": 120,
+      "download_bytes_per_sec": 400000,
+      "font_delay_ms": 8000,
+      "webgl": "disabled to isolate DOM/network navigation; not a GPU measurement"
+    },
+    "samples": [
+      {
+        "sample": 1,
+        "home_ready_ms": 9773,
+        "knowledge_ms": 1990,
+        "chat_ms": 1463,
+        "model_shell_ms": 1459,
+        "external_font_requests": [
+          "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+        ],
+        "errors": [],
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 8840
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 9236
+          }
+        ],
+        "long_tasks": [
+          {
+            "start": 8838.5,
+            "duration": 122
+          },
+          {
+            "start": 8969.09999999404,
+            "duration": 56
+          },
+          {
+            "start": 9436.79999999702,
+            "duration": 175
+          },
+          {
+            "start": 11440.89999999851,
+            "duration": 86
+          },
+          {
+            "start": 11609.59999999404,
+            "duration": 72
+          },
+          {
+            "start": 13007.19999999553,
+            "duration": 154
+          },
+          {
+            "start": 14317.89999999851,
+            "duration": 136
+          },
+          {
+            "start": 14490.19999999553,
+            "duration": 106
+          }
+        ],
+        "resources": [
+          {
+            "name": "http://127.0.0.1:3105/assets/index-Qnestf-e.js",
+            "size": 408983,
+            "duration": 1402.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index-DUzv8GQl.css",
+            "size": 73281,
+            "duration": 576.5
+          },
+          {
+            "name": "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap",
+            "size": 0,
+            "duration": 8029.39999999851
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-CkbvKIKj.js",
+            "size": 22346,
+            "duration": 234
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/useKnowledgeCatalog-DeJ0uxYj.js",
+            "size": 2789,
+            "duration": 182.40000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/api-client-DRhRATRb.js",
+            "size": 500,
+            "duration": 156.80000000447035
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/package-DT1GOGLs.js",
+            "size": 793,
+            "duration": 159.90000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/search-CNEZUf7O.js",
+            "size": 246,
+            "duration": 171.60000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/layers-CkcakIz5.js",
+            "size": 539,
+            "duration": 175.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/cpu-9vabCK9l.js",
+            "size": 643,
+            "duration": 285.5
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/rotate-ccw-CmQ7ozO0.js",
+            "size": 201,
+            "duration": 295.40000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-DZtSXdeZ.css",
+            "size": 21910,
+            "duration": 339.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 125.39999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/images/njau-engineering-mark.jpg",
+            "size": 57322,
+            "duration": 521.7000000029802
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionWorld-BuwPRevP.js",
+            "size": 33943,
+            "duration": 395.1000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/TractorModel-Cs9KgC9h.js",
+            "size": 1013308,
+            "duration": 4860.39999999851
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/loader-circle-CMslD41G.js",
+            "size": 140,
+            "duration": 139.20000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 240940,
+            "duration": 1961.2000000029802
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 135.20000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/KnowledgePage-C4NaNxHQ.js",
+            "size": 13212,
+            "duration": 289.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/triangle-alert-BylVfAo4.js",
+            "size": 875,
+            "duration": 142.29999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index-8v0giFPw.js",
+            "size": 158413,
+            "duration": 1314.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/control-glass-Bhi9E50R.css",
+            "size": 2950,
+            "duration": 252.79999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 0,
+            "duration": 1479.7999999970198
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index.esm-BqSvG8_4.js",
+            "size": 52967,
+            "duration": 527.7000000029802
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 142.79999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ChatPage-BDvMeR4l.js",
+            "size": 78231,
+            "duration": 750.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/content-BiCBV3Q7.js",
+            "size": 10411,
+            "duration": 244.70000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/health",
+            "size": 375,
+            "duration": 279.40000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 133.59999999403954
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ModelPage-DVN0h5QC.js",
+            "size": 13453,
+            "duration": 238.39999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/TractorViewer-CoxHKyw_.js",
+            "size": 12801,
+            "duration": 233.29999999701977
+          }
+        ]
+      },
+      {
+        "sample": 2,
+        "home_ready_ms": 9943,
+        "knowledge_ms": 1479,
+        "chat_ms": 1424,
+        "model_shell_ms": 1395,
+        "external_font_requests": [
+          "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+        ],
+        "errors": [],
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 8804
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 9056
+          }
+        ],
+        "long_tasks": [
+          {
+            "start": 8800.29999999702,
+            "duration": 107
+          },
+          {
+            "start": 8910.10000000149,
+            "duration": 62
+          },
+          {
+            "start": 11225.89999999851,
+            "duration": 64
+          },
+          {
+            "start": 11605.29999999702,
+            "duration": 68
+          },
+          {
+            "start": 12718.5,
+            "duration": 65
+          },
+          {
+            "start": 14099.19999999553,
+            "duration": 129
+          },
+          {
+            "start": 14261.89999999851,
+            "duration": 54
+          }
+        ],
+        "resources": [
+          {
+            "name": "http://127.0.0.1:3105/assets/index-Qnestf-e.js",
+            "size": 408983,
+            "duration": 1403.7000000029802
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index-DUzv8GQl.css",
+            "size": 73281,
+            "duration": 564.9000000059605
+          },
+          {
+            "name": "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap",
+            "size": 0,
+            "duration": 8012.89999999851
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-CkbvKIKj.js",
+            "size": 22346,
+            "duration": 230.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/useKnowledgeCatalog-DeJ0uxYj.js",
+            "size": 2789,
+            "duration": 187.69999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/api-client-DRhRATRb.js",
+            "size": 500,
+            "duration": 160.89999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/package-DT1GOGLs.js",
+            "size": 793,
+            "duration": 164.90000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/search-CNEZUf7O.js",
+            "size": 246,
+            "duration": 169.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/layers-CkcakIz5.js",
+            "size": 539,
+            "duration": 172
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/cpu-9vabCK9l.js",
+            "size": 643,
+            "duration": 290.20000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/rotate-ccw-CmQ7ozO0.js",
+            "size": 201,
+            "duration": 297.29999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-DZtSXdeZ.css",
+            "size": 21910,
+            "duration": 344.19999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 201.29999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/images/njau-engineering-mark.jpg",
+            "size": 57322,
+            "duration": 584.3999999985099
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionWorld-BuwPRevP.js",
+            "size": 33943,
+            "duration": 429.70000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/TractorModel-Cs9KgC9h.js",
+            "size": 1013308,
+            "duration": 4704.19999999553
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/loader-circle-CMslD41G.js",
+            "size": 140,
+            "duration": 140.20000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 240940,
+            "duration": 1760.7999999970198
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 133.5
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/KnowledgePage-C4NaNxHQ.js",
+            "size": 13212,
+            "duration": 285.29999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/triangle-alert-BylVfAo4.js",
+            "size": 875,
+            "duration": 140.5
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index-8v0giFPw.js",
+            "size": 158413,
+            "duration": 1195.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/control-glass-Bhi9E50R.css",
+            "size": 2950,
+            "duration": 268.69999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 0,
+            "duration": 1115.1000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index.esm-BqSvG8_4.js",
+            "size": 52967,
+            "duration": 656.8000000044703
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 136.89999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ChatPage-BDvMeR4l.js",
+            "size": 78231,
+            "duration": 852.1000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/content-BiCBV3Q7.js",
+            "size": 10411,
+            "duration": 277.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/health",
+            "size": 375,
+            "duration": 176.20000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 133.70000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ModelPage-DVN0h5QC.js",
+            "size": 13453,
+            "duration": 235.70000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/TractorViewer-CoxHKyw_.js",
+            "size": 12801,
+            "duration": 227.39999999850988
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "label": "after",
+    "conditions": {
+      "cpu_slowdown": 4,
+      "latency_ms": 120,
+      "download_bytes_per_sec": 400000,
+      "font_delay_ms": 8000,
+      "webgl": "disabled to isolate DOM/network navigation; not a GPU measurement"
+    },
+    "samples": [
+      {
+        "sample": 1,
+        "home_ready_ms": 2518,
+        "knowledge_ms": 976,
+        "chat_ms": 1057,
+        "model_shell_ms": 533,
+        "external_font_requests": [],
+        "errors": [],
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 780
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 1920
+          }
+        ],
+        "long_tasks": [
+          {
+            "start": 1611.2000000029802,
+            "duration": 132
+          },
+          {
+            "start": 1751.4000000059605,
+            "duration": 77
+          },
+          {
+            "start": 4541.30000000447,
+            "duration": 50
+          }
+        ],
+        "resources": [
+          {
+            "name": "http://127.0.0.1:3105/assets/index-28Y6Zqy1.js",
+            "size": 410269,
+            "duration": 1386.7000000029802
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index-DzkfmEmq.css",
+            "size": 73345,
+            "duration": 544
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-EId-ugcc.js",
+            "size": 22974,
+            "duration": 247.89999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/DeferredScene-CbgbdZBe.js",
+            "size": 955,
+            "duration": 169.89999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/useKnowledgeCatalog-Dxc4_3EN.js",
+            "size": 3478,
+            "duration": 196.79999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/api-client-DRhRATRb.js",
+            "size": 500,
+            "duration": 180.40000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/package-D-YZgkUp.js",
+            "size": 793,
+            "duration": 181
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/search-DY32xkzh.js",
+            "size": 246,
+            "duration": 186.69999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/layers-CHzAaqDO.js",
+            "size": 539,
+            "duration": 308.8999999985099
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/cpu-CIDAqz85.js",
+            "size": 643,
+            "duration": 311.5
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/rotate-ccw-DQVKNecw.js",
+            "size": 201,
+            "duration": 318.40000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-Dy7APSJf.css",
+            "size": 21875,
+            "duration": 355
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 204.20000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/images/njau-engineering-mark.jpg",
+            "size": 57322,
+            "duration": 266.30000000447035
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 0,
+            "duration": 701.3999999985099
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionWorld-VWceY6wT.js",
+            "size": 34020,
+            "duration": 391.3999999985099
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/tractor-model-info-CiBxqDDl.js",
+            "size": 58,
+            "duration": 142.29999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/loader-circle-80h0ccmy.js",
+            "size": 140,
+            "duration": 143.60000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/KnowledgePage-C0XuLpXu.js",
+            "size": 13376,
+            "duration": 248.30000000447035
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/DeferredMarkdown-CT_Tmkn_.js",
+            "size": 482,
+            "duration": 158.69999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/triangle-alert-BBq3EHSx.js",
+            "size": 875,
+            "duration": 165.40000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/control-glass-Bhi9E50R.css",
+            "size": 2950,
+            "duration": 199.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 225.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index.esm-BsqsV2jH.js",
+            "size": 52967,
+            "duration": 390.5
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 0,
+            "duration": 684.1000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ChatPage-u48vr02q.js",
+            "size": 78215,
+            "duration": 593.3000000044703
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/content-85PnRUfB.js",
+            "size": 10411,
+            "duration": 252.39999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 140.09999999403954
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/health",
+            "size": 374,
+            "duration": 170.39999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ModelPage-Bv5ENB7H.js",
+            "size": 13914,
+            "duration": 226.80000000447035
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/SceneLoading-BdEdXwMS.js",
+            "size": 889,
+            "duration": 154.69999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 138.89999999850988
+          }
+        ]
+      },
+      {
+        "sample": 2,
+        "home_ready_ms": 2421,
+        "knowledge_ms": 975,
+        "chat_ms": 946,
+        "model_shell_ms": 923,
+        "external_font_requests": [],
+        "errors": [],
+        "paints": [
+          {
+            "name": "first-paint",
+            "start": 748
+          },
+          {
+            "name": "first-contentful-paint",
+            "start": 1856
+          }
+        ],
+        "long_tasks": [
+          {
+            "start": 1589.3999999985099,
+            "duration": 115
+          },
+          {
+            "start": 1710.8999999985099,
+            "duration": 83
+          }
+        ],
+        "resources": [
+          {
+            "name": "http://127.0.0.1:3105/assets/index-28Y6Zqy1.js",
+            "size": 410269,
+            "duration": 1369.8999999985099
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index-DzkfmEmq.css",
+            "size": 73345,
+            "duration": 529.7999999970198
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-EId-ugcc.js",
+            "size": 22974,
+            "duration": 310
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/DeferredScene-CbgbdZBe.js",
+            "size": 955,
+            "duration": 179.19999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/useKnowledgeCatalog-Dxc4_3EN.js",
+            "size": 3478,
+            "duration": 214.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/api-client-DRhRATRb.js",
+            "size": 500,
+            "duration": 189.90000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/package-D-YZgkUp.js",
+            "size": 793,
+            "duration": 195
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/search-DY32xkzh.js",
+            "size": 246,
+            "duration": 302.5
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/layers-CHzAaqDO.js",
+            "size": 539,
+            "duration": 311.29999999701977
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/cpu-CIDAqz85.js",
+            "size": 643,
+            "duration": 313
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/rotate-ccw-DQVKNecw.js",
+            "size": 201,
+            "duration": 326.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionPage-Dy7APSJf.css",
+            "size": 21875,
+            "duration": 298.1000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 321.8999999985099
+          },
+          {
+            "name": "http://127.0.0.1:3105/images/njau-engineering-mark.jpg",
+            "size": 57322,
+            "duration": 273.40000000596046
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 0,
+            "duration": 708.7000000029802
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ExhibitionWorld-VWceY6wT.js",
+            "size": 34020,
+            "duration": 391.1000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/tractor-model-info-CiBxqDDl.js",
+            "size": 58,
+            "duration": 143.89999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/loader-circle-80h0ccmy.js",
+            "size": 140,
+            "duration": 147.20000000298023
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/KnowledgePage-C0XuLpXu.js",
+            "size": 13376,
+            "duration": 245.39999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/DeferredMarkdown-CT_Tmkn_.js",
+            "size": 482,
+            "duration": 152.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/triangle-alert-BBq3EHSx.js",
+            "size": 875,
+            "duration": 153.60000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/control-glass-Bhi9E50R.css",
+            "size": 2950,
+            "duration": 177.80000000447035
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 229.10000000149012
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/index.esm-BsqsV2jH.js",
+            "size": 52967,
+            "duration": 393
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/knowledge/catalog",
+            "size": 0,
+            "duration": 537.9000000059605
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ChatPage-u48vr02q.js",
+            "size": 78215,
+            "duration": 559.6000000014901
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/content-85PnRUfB.js",
+            "size": 10411,
+            "duration": 220.89999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 137.80000000447035
+          },
+          {
+            "name": "http://127.0.0.1:3105/api/health",
+            "size": 374,
+            "duration": 156.89999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/ModelPage-Bv5ENB7H.js",
+            "size": 13914,
+            "duration": 222.39999999850988
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/SceneLoading-BdEdXwMS.js",
+            "size": 889,
+            "duration": 154.5
+          },
+          {
+            "name": "http://127.0.0.1:3105/favicon.svg",
+            "size": 288,
+            "duration": 136.69999999552965
+          },
+          {
+            "name": "http://127.0.0.1:3105/assets/TractorViewer-D1Meli_f.js",
+            "size": 12435,
+            "duration": 196.60000000149012
+          }
+        ]
+      }
+    ]
+  },
+  "after_scope": "Final frontend implementation; measured as 3.2.2, now numbered 3.1.1 without frontend source changes.",
+  "version_mapping": {
+    "measured_baseline": "3.2.1",
+    "current_baseline": "3.0.5",
+    "measured_after": "3.2.2",
+    "current_after": "3.1.1"
+  }
+}

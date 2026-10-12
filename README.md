@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.1.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.1.1**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -21,6 +21,8 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 资料概览与设备目录读取 `/api/knowledge/catalog`，可按品牌 / 型号搜索并跳转；加载或失败时不填入推测数量，保留型号 / 系列 / 待核实的范围。模型和园区均为结构示意。GitHub 案例、分层可编辑 SVG、预览与验证见 [三维园区设计说明](docs/design/2026-10-11-spatial-campus/README.md)；此前 3.0.2 大屏设计保留在 [历史设计记录](docs/design/2026-10-11-digital-exhibition/README.md)。本轮保存到 GitHub PR，未部署服务器。
 
 旧版界面的导航、模型入口和控制栏使用 [rdev/liquid-glass-react](https://github.com/rdev/liquid-glass-react) 实现边缘折射、薄亮边与局部高光；顶部导航采用同心胶囊轮廓，小屏的版本切换独立为紧凑胶囊。触摸设备及减少动态设置采用雾面材质，减少透明度、高对比或不支持背景滤镜时使用实色。实现和本地验证见 [旧版液态玻璃优化](docs/design/2026-10-12-classic-liquid-glass/README.md)。
+
+首屏不再等待外部字体服务，导航和功能入口先显示，三维视图随后按需加载。二级页面在意图明确时预热，内容加载期间保留导航；短期复用已验证的目录数据，资料展开或答复显示时才加载正文解析器。性能对比和线上 CDN 排查见 [加载与导航优化记录](docs/performance/2026-10-12-loading-navigation.md)。
 
 ## 腾讯云现有服务器更新
 
@@ -208,7 +210,7 @@ AgriDx-v3/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "3.1.0", "timestamp": "...", "knowledge": { "chunks": 421, "archivedEntries": 412 } }
+{ "ok": true, "version": "3.1.1", "timestamp": "...", "knowledge": { "chunks": 421, "archivedEntries": 412 } }
 ```
 
 ### `POST /api/chat`

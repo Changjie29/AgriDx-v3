@@ -1,10 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Database, ShieldCheck, Box, Wheat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import TractorViewer from '@/components/TractorViewer';
+import { lazy } from 'react';
+import DeferredScene from '@/components/DeferredScene';
+import SceneLoading from '@/components/SceneLoading';
 import content, { pick } from '@/data/content';
 import { useLang } from '@/hooks/useLang';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
+import { preloadPage } from '@/lib/page-loaders';
+
+const TractorViewer = lazy(() => import('@/components/TractorViewer'));
 
 export default function HeroSection() {
   const navigate = useNavigate();
@@ -27,21 +32,21 @@ export default function HeroSection() {
             </h1>
             <p className="hero-description">{pick(h.desc, lang)}</p>
             <div className="hero-actions">
-              <Button size="lg" onClick={() => navigate('/chat')} className="hero-cta-primary gap-3">
+              <Button size="lg" onPointerEnter={() => preloadPage('/chat')} onFocus={() => preloadPage('/chat')} onClick={() => navigate('/chat')} className="hero-cta-primary gap-3">
                 {pick(h.ctaPrimary, lang)}<ArrowRight size={17} />
               </Button>
-              <Link className="hero-text-link" to="/knowledge">
+              <Link className="hero-text-link" to="/knowledge" onPointerEnter={() => preloadPage('/knowledge')} onFocus={() => preloadPage('/knowledge')}>
                 {pick(h.ctaSecondary, lang)}<ArrowRight size={16} />
               </Link>
             </div>
             <div className="hero-evidence-note"><span className="status-dot" />{t('以资料适用范围为边界 · 缺口明确标注', 'Source-aware guidance · visible knowledge gaps')}</div>
           </div>
           <figure className="hero-model-visual">
-            <div className="hero-model-stage"><TractorViewer /></div>
+            <div className="hero-model-stage"><DeferredScene fallback={<SceneLoading />}><TractorViewer /></DeferredScene></div>
             <figcaption className="hero-model-caption">
               <span>{t('农业装备 · 交互式结构示意', 'Agricultural machinery · Interactive structure')}</span>
               <LiquidGlass variant="regular" lens displacementScale={40} className="hero-model-entry" contentClassName="hero-model-entry-content">
-                <Link to="/models" className="hero-model-entry-link press-control"><span>{t('进入模型工坊', 'Model studio')}</span><ArrowRight size={15} /></Link>
+                <Link to="/models" onPointerEnter={() => preloadPage('/models')} onFocus={() => preloadPage('/models')} className="hero-model-entry-link press-control"><span>{t('进入模型工坊', 'Model studio')}</span><ArrowRight size={15} /></Link>
               </LiquidGlass>
             </figcaption>
           </figure>

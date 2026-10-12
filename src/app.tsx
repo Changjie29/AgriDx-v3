@@ -1,13 +1,21 @@
-import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense, type ReactNode } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
-const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
-const ChatPage = lazy(() => import('@/pages/ChatPage/ChatPage'));
-const KnowledgePage = lazy(() => import('@/pages/KnowledgePage/KnowledgePage'));
-const ModelPage = lazy(() => import('@/pages/ModelPage/ModelPage'));
+import PageLoading from '@/components/PageLoading';
+import { pageLoaders } from '@/lib/page-loaders';
+const HomePage = lazy(pageLoaders.classic);
+const ChatPage = lazy(pageLoaders.chat);
+const KnowledgePage = lazy(pageLoaders.knowledge);
+const ModelPage = lazy(pageLoaders.models);
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import { useUiVersion } from '@/hooks/useUiVersion';
-const ExhibitionPage = lazy(() => import('@/pages/ExhibitionPage/ExhibitionPage'));
+const ExhibitionPage = lazy(pageLoaders.exhibition);
+
+function PageContent({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  // Reset only the content boundary: the header remains available during a slow route load.
+  return <Suspense key={pathname} fallback={<PageLoading />}>{children}</Suspense>;
+}
 
 function VersionedHomePage() {
   const version = useUiVersion();
@@ -16,18 +24,14 @@ function VersionedHomePage() {
 
 export default function App() {
   return (
-    <>
-    <Suspense fallback={<div role="status" className="p-8 text-center text-muted-foreground">加载中 / Loading…</div>}>
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<VersionedHomePage />} />
-        <Route path="chat" element={<ChatPage />} />
-        <Route path="knowledge" element={<KnowledgePage />} />
-        <Route path="models" element={<ModelPage />} />
+        <Route index element={<PageContent><VersionedHomePage /></PageContent>} />
+        <Route path="chat" element={<PageContent><ChatPage /></PageContent>} />
+        <Route path="knowledge" element={<PageContent><KnowledgePage /></PageContent>} />
+        <Route path="models" element={<PageContent><ModelPage /></PageContent>} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
-    </Suspense>
-    </>
   );
 }

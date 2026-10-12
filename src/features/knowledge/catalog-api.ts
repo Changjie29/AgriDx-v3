@@ -59,6 +59,43 @@ export function parseKnowledgeCatalog(value: unknown): KnowledgeCatalog {
   return value as unknown as KnowledgeCatalog;
 }
 
+const CACHE_TTL = 5 * 60_000;
+const CACHE_LIMIT = 32;
+const catalogCache = new Map<string, { catalog: KnowledgeCatalog; expires: number }>();
+
+function cacheKey(query: string): string {
+  const params = new URLSearchParams(query);
+  params.sort();
+  return params.toString();
+}
+
+/** Tab-local, short-lived evidence cache; each full filter selection has its own key. */
+export function getCachedKnowledgeCatalog(query: string): KnowledgeCatalog | null {
+  const key = cacheKey(query);
+  const cached = catalogCache.get(key);
+  if (!cached) return null;
+  if (cached.expires <= Date.now()) {
+    catalogCache.delete(key);
+    return null;
+  }
+  catalogCache.delete(key);
+  catalogCache.set(key, cached);
+  return cached.catalog;
+}
+
+export function clearCachedKnowledgeCatalog(query: string): void {
+  catalogCache.delete(cacheKey(query));
+}
+
 export async function requestKnowledgeCatalog(query: string, signal: AbortSignal): Promise<KnowledgeCatalog> {
-  return parseKnowledgeCatalog(await requestJson(`/api/knowledge/catalog${query ? `?${query}` : ''}`, { signal }));
+  signal.throwIfAborted();
+  const cached = getCachedKnowledgeCatalog(query);
+  if (cached) return cached;
+  const catalog = parseKnowledgeCatalog(await requestJson(`/api/knowledge/catalog${query ? `?${query}` : ''}`, { signal }));
+  signal.throwIfAborted();
+  const key = cacheKey(query);
+  catalogCache.delete(key);
+  catalogCache.set(key, { catalog, expires: Date.now() + CACHE_TTL });
+  if (catalogCache.size > CACHE_LIMIT) catalogCache.delete(catalogCache.keys().next().value!);
+  return catalog;
 }

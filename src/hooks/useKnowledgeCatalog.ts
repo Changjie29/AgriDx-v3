@@ -1,31 +1,47 @@
 import { useEffect, useState } from 'react';
 import type { KnowledgeCatalog } from '@shared/knowledge-catalog';
-import { requestKnowledgeCatalog } from '@/features/knowledge/catalog-api';
+import { clearCachedKnowledgeCatalog, getCachedKnowledgeCatalog, requestKnowledgeCatalog } from '@/features/knowledge/catalog-api';
+
+interface CatalogResult {
+  query: string;
+  revision: number;
+  catalog: KnowledgeCatalog | null;
+  loading: boolean;
+  failed: boolean;
+}
+
+function initialResult(query: string, revision: number): CatalogResult {
+  const catalog = getCachedKnowledgeCatalog(query);
+  return { query, revision, catalog, loading: !catalog, failed: false };
+}
 
 export function useKnowledgeCatalog(query = '') {
-  const [catalog, setCatalog] = useState<KnowledgeCatalog | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
   const [revision, setRevision] = useState(0);
+  const [result, setResult] = useState(() => initialResult(query, 0));
   useEffect(() => {
+    const cached = initialResult(query, revision);
+    setResult(cached);
+    if (cached.catalog) return;
     const controller = new AbortController();
     let active = true;
     const timeout = window.setTimeout(() => controller.abort(), 12_000);
-    setLoading(true);
-    setFailed(false);
     const load = async () => {
       try {
         const data = await requestKnowledgeCatalog(query, controller.signal);
-        if (active) setCatalog(data);
+        if (active) setResult({ query, revision, catalog: data, loading: false, failed: false });
       } catch {
-        if (active) setFailed(true);
+        if (active) setResult({ query, revision, catalog: null, loading: false, failed: true });
       } finally {
         window.clearTimeout(timeout);
-        if (active) setLoading(false);
       }
     };
     void load();
     return () => { active = false; controller.abort(); window.clearTimeout(timeout); };
   }, [query, revision]);
-  return { catalog, loading, failed, retry: () => setRevision(value => value + 1) };
+  // A changed URL must never display the preceding model's evidence, even for one render.
+  const current = result.query === query && result.revision === revision ? result : initialResult(query, revision);
+  return { catalog: current.catalog, loading: current.loading, failed: current.failed, retry: () => {
+    clearCachedKnowledgeCatalog(query);
+    setRevision(value => value + 1);
+  } };
 }
