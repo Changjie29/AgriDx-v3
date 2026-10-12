@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "snapshot_date_shanghai": "2026-10-12",
-  "repository_version": "3.0.7",
+  "repository_version": "3.0.8",
   "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
   "input_sha256": {
     "sources.json": "c8bab37af012b66e5a0296263abc08e462831c80c721f6679ea1936b7ad91d0c",

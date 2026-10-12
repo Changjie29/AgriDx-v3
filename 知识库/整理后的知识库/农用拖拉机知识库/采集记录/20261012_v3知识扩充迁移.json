@@ -1,13 +1,13 @@
 {
   "snapshot_date_shanghai": "2026-10-12",
   "repository": "srt2777/AgriDx-v3",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "checks": 50,
   "results": [
     {
       "check": "health",
       "passed": true,
-      "version": "3.0.7",
+      "version": "3.0.8",
       "entries": 228,
       "chunks": 237
     },
@@ -303,8 +303,8 @@
   "external_llm_verified": false,
   "production_deployed": false,
   "verify": {
-    "tests": 131,
-    "passed": 129,
+    "tests": 136,
+    "passed": 134,
     "failed": 0,
     "skipped": 2,
     "typecheck": true,

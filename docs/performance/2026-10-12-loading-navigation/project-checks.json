@@ -1,5 +1,5 @@
 {
-  "version": "3.0.6",
+  "version": "3.0.7",
   "date_shanghai": "2026-10-12",
   "npm_ci": "passed",
   "verify": "passed",
@@ -26,5 +26,5 @@
     "base_navigation_model_and_campus": 32,
     "catalog_cache_and_deferred_markdown": 19
   },
-  "browser_build_version": "3.2.2 before metadata-only renumbering to 3.0.6; frontend source unchanged"
+  "browser_build_version": "3.2.2 before metadata-only renumbering to 3.0.7; frontend source unchanged"
 }
