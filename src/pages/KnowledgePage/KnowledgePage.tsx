@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { useLang } from '@/hooks/useLang';
 import { useKnowledgeCatalog } from '@/hooks/useKnowledgeCatalog';
 import type { CatalogEntry } from '@shared/knowledge-catalog';
-import { LiquidGlass } from '@sohumsuthar/liquid-glass';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
 import '@/control-glass.css';
 
 const INFORMATION_TYPES = new Set(['资料索引', '资料核验', '机型资料', '资料缺口', '系统适用边界']);
@@ -56,7 +56,7 @@ export default function KnowledgePage() {
       </div>
 
       <section className="catalog-filter-section" aria-labelledby="catalog-select-heading">
-        <LiquidGlass variant="regular" className="catalog-browser catalog-filter-glass lg-blur-only" contentClassName="catalog-filter-content">
+        <LiquidGlass variant="regular" className="catalog-browser catalog-filter-glass" contentClassName="catalog-filter-content">
         <div className="catalog-browser-top"><h2 id="catalog-select-heading"><Search size={18} />{t('找到你的农机', 'Find your machine')}</h2><button onClick={() => setParams({})} className="catalog-reset">{t('重置选择', 'Reset selection')}</button></div>
         <div className="catalog-selectors">
           <label><span>01 {t('品牌', 'Brand')}</span><select aria-label={t('知识浏览品牌', 'Knowledge brand')} value={brand?.id || ''} onChange={event => updateFilter('brand', event.target.value)} disabled={loading}><option value="">{t('选择品牌', 'Choose a brand')}</option>{catalog?.brands.map(item => <option key={item.id} value={item.id}>{item.name} · {item.entryCount}{t(' 条', ' entries')}</option>)}</select></label>

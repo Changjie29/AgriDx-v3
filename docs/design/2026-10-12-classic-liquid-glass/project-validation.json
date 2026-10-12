@@ -1,0 +1,52 @@
+{
+  "version": "3.2.1",
+  "date_shanghai": "2026-10-12",
+  "base_commit": "f1f2178f624006230cec105d06fac959395bec7d",
+  "dependency_install": {
+    "command": "npm ci",
+    "result": "passed"
+  },
+  "verify": {
+    "command": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --import=/tmp/agridx-classic-loopback.mjs\" npm run verify",
+    "result": "passed",
+    "version_consistency": "passed",
+    "typescript_projects": 3,
+    "tests": {
+      "total": 129,
+      "passed": 127,
+      "failed": 0,
+      "skipped": 2,
+      "skip_reason": "Windows-specific tests on Linux"
+    },
+    "lint_errors": 0,
+    "build": "client and server passed",
+    "existing_warnings": [
+      "React Fast Refresh component export warning in ui/button.tsx",
+      "Three.js bundle exceeds 500 kB"
+    ]
+  },
+  "environment_note": "Temporary test preloader sends loopback HTTP through local Undici fetch; inherited external proxy remains enabled. Repository backend proxy configuration was not changed.",
+  "additional_layout_check": {
+    "viewport_widths": [
+      1024,
+      1280
+    ],
+    "language": "en",
+    "nav_content_client_width": [
+      974,
+      1198
+    ],
+    "nav_content_scroll_width": [
+      974,
+      1198
+    ],
+    "note": "Chromium DOM layout with WebGL disabled for this supplementary check."
+  },
+  "lockfile_review": "All 691 retained dependency lock entries unchanged; replaces @sohumsuthar/liquid-glass with liquid-glass-react@1.1.1.",
+  "local_health": {
+    "ok": true,
+    "version": "3.2.1"
+  },
+  "external_llm_called": false,
+  "deployed": false
+}

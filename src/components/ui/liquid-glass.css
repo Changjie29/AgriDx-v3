@@ -1,0 +1,73 @@
+/* App-owned layout and legibility; liquid-glass-react supplies the optical backdrop. */
+.agri-liquid-glass {
+  --lg-radius: 22px;
+  --lg-blur: 12px;
+  --lg-saturate: 135%;
+  --lg-light-angle: 315deg;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--lg-radius);
+  background: transparent;
+  box-shadow: 0 12px 32px -20px rgb(21 54 39 / 30%);
+}
+.agri-liquid-glass > :is(.liquid-glass-effect, .liquid-glass-tint, .liquid-glass-shine) {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.agri-glass-frost {
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+}
+.agri-glass-lens { overflow: hidden; }
+/* The engine defaults to centering, elastic transforms, white text and drop shadows.
+   It sits behind a separate content layer, so none of those defaults affect controls. */
+.agri-glass-lens > :not(.agri-glass-engine, .agri-glass-frost) { display: none; }
+.agri-glass-lens > .agri-glass-frost { position: absolute; inset: 0; }
+.agri-glass-engine { border-radius: inherit; transform: none !important; transition: none !important; pointer-events: none; }
+.agri-glass-engine > svg { inset: 0; width: 0 !important; height: 0 !important; }
+.agri-glass-engine > .glass {
+  width: 100%; height: 100%;
+  display: block !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+.agri-liquid-glass > .liquid-glass-tint { z-index: 1; background: var(--glass-control-tint); }
+.agri-liquid-glass > .liquid-glass-shine {
+  z-index: 2;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 65%), inset 0 -1px 0 rgb(255 255 255 / 30%), inset 1px 0 0 rgb(255 255 255 / 12%);
+}
+.agri-liquid-glass > .liquid-glass-shine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--lg-light-angle), transparent, rgb(255 255 255 / 75%) 20%, transparent 40%, rgb(255 255 255 / 35%) 70%, transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.agri-liquid-glass > .liquid-glass-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse 240px 100px at var(--mx, 50%) var(--my, 0%), var(--glass-press-light), transparent 75%);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.agri-liquid-glass[data-glass-active] > .liquid-glass-shine::after { opacity: .2; }
+.agri-liquid-glass > .liquid-glass-content { position: relative; z-index: 3; }
+html.dark .agri-liquid-glass > .liquid-glass-shine { box-shadow: inset 0 1px 0 rgb(230 248 237 / 22%), inset 0 -1px 0 rgb(230 248 237 / 10%); }
+.agri-liquid-glass[data-glass-mode="solid"] { background: var(--card); border: 1px solid var(--border); }
+.agri-liquid-glass[data-glass-mode="solid"] > :is(.liquid-glass-effect, .liquid-glass-tint, .liquid-glass-shine) { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .agri-liquid-glass .liquid-glass-shine::after { display: none; }
+}
+@media (forced-colors: active) {
+  .agri-liquid-glass[data-glass-mode="solid"] { background: Canvas !important; border-color: CanvasText !important; box-shadow: none !important; }
+}
