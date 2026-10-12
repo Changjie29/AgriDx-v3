@@ -191,7 +191,7 @@
     "application_code_unchanged": true
   },
   "local_markdown_links": {
-    "checked": 572,
+    "checked": 573,
     "missing": 0,
     "excludes": "fenced template examples"
   },
@@ -204,5 +204,8 @@
     "Seven existing external PDFs were not downloaded again"
   ],
   "initial_main_baseline": "4d08ce0",
-  "integration_data_commit": "094afcbd8043fae29a702e495e53eae3ce6ff98e"
+  "integration_data_commit": "094afcbd8043fae29a702e495e53eae3ce6ff98e",
+  "integration_pull_request": "https://github.com/srt2777/AgriDx-v3/pull/20",
+  "integration_branch": "codex/merge-tractor-pr6-pr7-20261012",
+  "merge_method": "merge"
 }
