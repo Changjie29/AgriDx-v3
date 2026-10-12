@@ -25,3 +25,5 @@
 ## GitHub 与线上状态
 
 目标为 `srt2777/AgriDx-v3`，加载优化 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17) 已合入，本次动效在独立分支 `codex/wwdc-fluid-interaction-20261012` 保存为 3.1.2，实现提交为 [7f83921](https://github.com/srt2777/AgriDx-v3/commit/7f839219d7c0e3c232d2841d2a4261dd6858fd00)，审阅入口为 [PR #21](https://github.com/srt2777/AgriDx-v3/pull/21)，CI 与合入状态以 PR 为准。服务器当前无法登录，本轮先保存代码与审阅材料，不进行线上部署。
+
+用户继续要求两版实时玻璃后，同步最新 3.2.1 main 并将这轮 UI 成果协调为 3.2.2；本页保留先前动效与测试当时的版本，最新光学实现、真实三维录屏与验收见[两版实时液态玻璃](../2026-10-13-live-liquid-glass/README.md)。

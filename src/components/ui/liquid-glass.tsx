@@ -1,23 +1,23 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { useGlassMode } from '@/hooks/useGlassMode';
+import type { GlassInteraction, GlassOpticsHandle } from '@/lib/glass-optics';
 import './liquid-glass.css';
 
-interface LiquidGlassProps {
-  children: ReactNode;
-  className?: string;
+interface LiquidGlassProps extends HTMLAttributes<HTMLDivElement> {
   contentClassName?: string;
   variant?: 'regular' | 'clear';
   lens?: boolean;
   displacementScale?: number;
 }
 
-const STILL_POINTER = { x: 0, y: 0 };
-const ReactLiquidGlass = lazy(() => import('liquid-glass-react'));
+const GlassLens = lazy(() => import('./glass-lens'));
 
 /** Keep content in normal flow. The upstream engine renders only the decorative backdrop. */
-export function LiquidGlass({ children, className = '', contentClassName = '', variant = 'regular', lens = false, displacementScale = 36 }: LiquidGlassProps) {
+export function LiquidGlass({ children, className = '', contentClassName = '', variant = 'regular', lens = false, displacementScale = 28, ...props }: LiquidGlassProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const optics = useRef<GlassOpticsHandle>(null);
+  const interaction = useRef<GlassInteraction>({ x: 0, y: 0, active: false, pressed: false });
   const mode = useGlassMode();
   const reducedMotion = useReducedMotion();
   const [visible, setVisible] = useState(true);
@@ -66,10 +66,15 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
     let point: Pick<PointerEvent, 'clientX' | 'clientY' | 'target'> | null = null;
     let pressedControl: HTMLElement | null = null;
     const touched = new Set<HTMLElement>();
+    const updateOptics = (next: Partial<GlassInteraction>) => {
+      Object.assign(interaction.current, next);
+      optics.current?.update(interaction.current);
+    };
     const clearPress = () => {
       pressedControl?.removeAttribute('data-glass-pressed');
       pressedControl = null;
       element.removeAttribute('data-glass-pressed');
+      updateOptics({ pressed: false });
     };
     const clear = () => {
       clearPress();
@@ -81,6 +86,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
         for (const name of ['--mx', '--my', '--lg-light-angle', '--lg-press-x', '--lg-press-y']) target.style.removeProperty(name);
       }
       touched.clear();
+      updateOptics({ x: 0, y: 0, active: false, pressed: false });
     };
     const flush = () => {
       if (frame) cancelAnimationFrame(frame);
@@ -94,6 +100,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
         target.style.setProperty('--mx', `${x.toFixed(1)}px`);
         target.style.setProperty('--my', `${y.toFixed(1)}px`);
         target.style.setProperty('--lg-light-angle', `${Math.atan2(x - rect.width / 2, -(y - rect.height / 2)) * 180 / Math.PI}deg`);
+        if (target === element) updateOptics({ x: (x / rect.width - .5) * 2, y: (y / rect.height - .5) * 2, active: true, pressed: !!pressedControl });
         if (target === pressedControl) {
           target.style.setProperty('--lg-press-x', `${Math.max(-1.5, Math.min(1.5, (x / rect.width - .5) * 3))}px`);
           target.style.setProperty('--lg-press-y', `${Math.max(-1, Math.min(1, (y / rect.height - .5) * 2))}px`);
@@ -103,7 +110,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       element.setAttribute('data-glass-active', 'true');
     };
     const move = (event: PointerEvent) => {
-      if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+      if (event.pointerType === 'touch' && !pressedControl) return;
       point = event;
       if (!frame) frame = requestAnimationFrame(flush);
     };
@@ -127,6 +134,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       clearPress();
       if (event.pointerType === 'touch') clear();
     };
+    const visibility = () => { if (document.hidden) clear(); };
     const keyPress = (event: KeyboardEvent) => {
       if (event.repeat || !['Enter', ' '].includes(event.key)) return;
       const control = findControl(event.target);
@@ -148,6 +156,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
     window.addEventListener('pointerup', release);
     window.addEventListener('keyup', clearPress);
     window.addEventListener('blur', clear);
+    document.addEventListener('visibilitychange', visibility);
     return () => {
       element.removeEventListener('pointermove', move);
       element.removeEventListener('pointerdown', press);
@@ -158,20 +167,17 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       window.removeEventListener('pointerup', release);
       window.removeEventListener('keyup', clearPress);
       window.removeEventListener('blur', clear);
+      document.removeEventListener('visibilitychange', visibility);
       clear();
     };
   }, [lens, mode, reducedMotion]);
 
-  return <div ref={ref} className={`liquid-glass agri-liquid-glass lg-${variant} ${className}`} data-glass-mode={mode}>
+  return <div {...props} ref={ref} className={`liquid-glass agri-liquid-glass lg-${variant} ${className}`} data-glass-mode={mode}>
     {refract && size.width > 0 && size.height > 0 ? <div className="liquid-glass-effect agri-glass-lens" aria-hidden="true">
-      <Suspense fallback={<div className="agri-glass-frost" />}><ReactLiquidGlass
+      <Suspense fallback={<div className="agri-glass-frost" />}><GlassLens
         key={`${size.width}x${size.height}`}
-        className="agri-glass-engine"
-        style={{ position: 'absolute', top: '0px', left: '0px', width: '100%', height: '100%' }}
-        displacementScale={displacementScale} blurAmount={Math.max(0, (size.blur - 4) / 32)} saturation={135}
-        aberrationIntensity={0.8} elasticity={0} cornerRadius={size.radius} padding="0" mode="standard"
-        globalMousePos={STILL_POINTER} mouseOffset={STILL_POINTER}
-      ><div style={{ width: size.width, height: size.height }} /></ReactLiquidGlass></Suspense>
+        {...size} displacementScale={displacementScale} interaction={interaction} surface={ref} ref={optics}
+      /></Suspense>
     </div> : <div className="liquid-glass-effect agri-glass-frost" aria-hidden="true" />}
     <div className="liquid-glass-tint" aria-hidden="true" />
     <div className="liquid-glass-shine" aria-hidden="true" />

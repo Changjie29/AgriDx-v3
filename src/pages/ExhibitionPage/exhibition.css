@@ -3,6 +3,10 @@
   --expo-text: #e8eff5;
   --expo-muted: #9bafbe;
   --expo-accent: #b5e6dd;
+  --glass-control-tint: linear-gradient(145deg, rgb(42 65 80 / 58%), rgb(12 27 40 / 68%));
+  --glass-press-light: rgb(212 244 246 / 45%);
+  --lg-solid: #152a38;
+  --lg-border: #688898;
   color: var(--expo-text);
   color-scheme: dark;
   background: var(--expo-bg);
@@ -121,7 +125,9 @@
   gap: 10px;
   align-items: center;
   justify-content: flex-end;
+  padding: 4px;
 }
+.expo-header-glass { --lg-radius: 999px; --lg-blur: 6px; justify-self: end; }
 .expo-icon-button {
   display: inline-flex;
   align-items: center;
@@ -277,11 +283,13 @@
   box-shadow: 0 10px 25px #0005;
 }
 .expo-zone-nav {
-  margin-top: 30px;
+  margin-top: 0;
   display: grid;
   gap: 3px;
   max-width: 204px;
 }
+.expo-guide-glass { --lg-radius: 24px; --lg-blur: 8px; max-width: 220px; margin-top: 24px; }
+.expo-guide-glass > .liquid-glass-content { padding: 8px; }
 .expo-zone-nav > button {
   position: relative;
   isolation: isolate;
@@ -402,16 +410,17 @@
   right: 26px;
   width: 292px;
   border: 1px solid #809aab66;
-  border-radius: 16px;
+  border-radius: 26px;
   color: #e5eef4;
-  background: linear-gradient(145deg, #233847f5, #0e1c29f5);
+  background: transparent;
   box-shadow:
     0 24px 55px #0006,
     inset 0 1px 0 #b2d3e92b;
-  backdrop-filter: blur(14px);
 }
+.floating-panel-glass { --lg-blur: 16px; border-radius: inherit; width: 100%; height: 100%; }
+.floating-panel-content { padding: var(--expo-panel-padding); }
 .expo-zone-card {
-  padding: 19px 22px 22px;
+  --expo-panel-padding: 19px 22px 22px;
   border-top-color: var(--zone-color);
 }
 .expo-zone-card-top {
@@ -444,7 +453,7 @@
   line-height: 1.8;
   margin-top: 19px;
 }
-.expo-zone-card > p {
+.expo-zone-card .floating-panel-content > p {
   font-size: 11px;
   line-height: 1.95;
   color: #a6bdcc;
@@ -507,7 +516,7 @@
   pointer-events: none;
 }
 .expo-mini-map,
-.expo-world-dock {
+.expo-dock-glass {
   pointer-events: auto;
 }
 .expo-mini-map {
@@ -570,18 +579,11 @@
 .expo-world-dock {
   display: flex;
   justify-content: center;
-  justify-self: center;
   align-items: center;
   padding: 6px;
   gap: 4px;
-  border: 1px solid #68889866;
-  border-radius: 11px;
-  background: linear-gradient(135deg, #213a49ef, #11212fef);
-  box-shadow:
-    0 12px 35px #0007,
-    inset 0 1px 0 #d9edf51f;
-  backdrop-filter: blur(12px);
 }
+.expo-dock-glass { --lg-radius: 999px; --lg-blur: 5px; justify-self: center; box-shadow: 0 12px 35px #0005; }
 .expo-world-dock > button {
   display: flex;
   align-items: center;
@@ -590,7 +592,7 @@
   min-height: 44px;
   padding: 0 16px;
   color: #afc6d2;
-  border-radius: 7px;
+  border-radius: 999px;
   border: 1px solid transparent;
   background: transparent;
   font-size: 11px;
@@ -684,9 +686,11 @@
   bottom: 100px;
   display: flex;
   flex-direction: column;
-  padding: 21px;
+  --expo-panel-padding: 21px;
   overflow: hidden;
 }
+.expo-catalog-sheet > .floating-panel-glass { flex: 1; min-height: 0; }
+.expo-catalog-sheet .floating-panel-content { display: flex; flex-direction: column; height: 100%; min-height: 0; }
 .expo-sheet-heading {
   display: flex;
   align-items: center;
@@ -988,6 +992,9 @@
     transform: rotate(360deg);
   }
 }
+@media (min-width: 781px) and (max-height: 920px) {
+  .expo-map-grid { height: 72px; }
+}
 @media (min-width: 1900px) {
   .expo-world-stage {
     height: 900px;
@@ -1088,7 +1095,7 @@
     display: none;
   }
   .expo-zone-nav {
-    margin-top: 20px;
+    margin-top: 0;
   }
   .expo-world-coordinate {
     right: 20px;
@@ -1103,7 +1110,7 @@
     bottom: 105px;
     right: 20px;
     width: 245px;
-    padding: 13px 18px 18px;
+    --expo-panel-padding: 13px 18px 18px;
   }
   .expo-zone-card-icon,
   .expo-zone-tags {
@@ -1117,7 +1124,7 @@
     margin-top: 12px;
     font-size: 12px;
   }
-  .expo-zone-card > p {
+  .expo-zone-card .floating-panel-content > p {
     font-size: 10px;
     margin-top: 8px;
   }
@@ -1177,7 +1184,7 @@
     display: none;
   }
   .expo-icon-button {
-    min-width: 32px;
+    min-width: 44px;
   }
   .expo-header-tools .expo-icon-button svg {
     display: none;
@@ -1257,8 +1264,9 @@
     max-width: none;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4px;
-    margin-top: 15px;
+    margin-top: 0;
   }
+  .expo-guide-glass { max-width: none; margin-top: 15px; }
   .expo-zone-nav > button {
     min-height: 44px;
     padding: 0 8px;
@@ -1303,10 +1311,10 @@
   .expo-world-dock {
     padding: 5px;
     gap: 2px;
-    border-radius: 9px;
     width: 100%;
     max-width: 340px;
   }
+  .expo-dock-glass { width: 100%; max-width: 340px; }
   .expo-world-dock > button {
     padding-inline: 8px;
     gap: 6px;
@@ -1325,8 +1333,8 @@
     right: 17px;
     bottom: 91px;
     width: auto;
-    padding: 10px 17px 16px;
-    border-radius: 12px;
+    --expo-panel-padding: 10px 17px 16px;
+    border-radius: 24px;
   }
   .expo-zone-card-top > span {
     font-size: 7px;
@@ -1339,7 +1347,7 @@
     margin-top: 10px;
     font-size: 11px;
   }
-  .expo-zone-card > p {
+  .expo-zone-card .floating-panel-content > p {
     display: none;
   }
   .expo-zone-actions {
@@ -1366,7 +1374,7 @@
     display: none;
   }
   .expo-world-stage[data-mode='drive'] .expo-zone-nav {
-    margin-top: 14px;
+    margin-top: 0;
   }
   .expo-catalog-sheet {
     top: 16px;
@@ -1374,7 +1382,7 @@
     right: 15px;
     bottom: 90px;
     width: auto;
-    padding: 17px;
+    --expo-panel-padding: 17px;
   }
   .expo-sheet-heading h2 {
     font-size: 20px;

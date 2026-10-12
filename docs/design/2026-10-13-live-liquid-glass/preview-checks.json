@@ -1,0 +1,36 @@
+{
+  "version": "3.2.2",
+  "browser": "Chromium 151.0.7922.173",
+  "scope": "Locally served dist-preview, WebGL disabled for shared interface and catalog isolation. No publication or external LLM calls. Release built from working tree before final commit.",
+  "checks": [
+    {
+      "name": "new UI live optics survives the isolated preview build",
+      "result": "passed"
+    },
+    {
+      "name": "preview preserves the shared public asset path",
+      "result": "passed"
+    },
+    {
+      "name": "preview glass catalog still filters real archived models",
+      "result": "passed"
+    },
+    {
+      "name": "preview catalog enters the shared live secondary navigation",
+      "result": "passed"
+    },
+    {
+      "name": "preview retains classic switching and live optics",
+      "result": "passed"
+    },
+    {
+      "name": "preview release reports the final project version",
+      "result": "passed"
+    },
+    {
+      "name": "preview has no browser script errors",
+      "result": "passed"
+    }
+  ],
+  "errors": []
+}
