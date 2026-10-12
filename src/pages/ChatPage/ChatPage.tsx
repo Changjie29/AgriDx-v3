@@ -1,7 +1,6 @@
 import { useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
 import { Send, Trash2, Loader2, Bot, User, Sparkles, Cpu, Square } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import DeferredMarkdown from '@/components/DeferredMarkdown';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -262,7 +261,7 @@ export default function ChatPage() {
                   <div className="whitespace-pre-wrap">{msg.content}</div>
                 ) : (
                   <div className="prose prose-sm max-w-none overflow-x-auto dark:prose-invert">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                    <DeferredMarkdown>{msg.content}</DeferredMarkdown>
                     {msg.role === 'assistant' && (msg.model || msg.provider || msg.answerMode || msg.fallbackReason || msg.knowledgeChunks !== undefined) && (
                       <div className="mt-2 border-t border-border/40 pt-2 text-[11px] leading-relaxed text-muted-foreground">
                         <div className="flex flex-wrap gap-x-2 gap-y-1">

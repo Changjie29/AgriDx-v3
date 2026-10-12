@@ -5,8 +5,8 @@
   "verify": "passed",
   "typescript_projects": 3,
   "tests": {
-    "total": 129,
-    "passed": 127,
+    "total": 134,
+    "passed": 132,
     "failed": 0,
     "skipped": 2,
     "skip_reason": "Windows-specific tests on Linux"
@@ -18,8 +18,12 @@
     "Existing Three.js chunk over 500kB"
   ],
   "loopback_note": "Temporary Undici test preloader for loopback HTTP only; inherited external proxy remains enabled and backend proxy configuration is unchanged.",
-  "browser_checks": 32,
+  "browser_checks": 51,
   "live_llm_calls": false,
   "deployed": false,
-  "live_domain_validation": "Not confirmed; public CDN probes returned 514 and origin comparisons are awaiting the server operator."
+  "live_domain_validation": "Deferred: user cannot access the server now. Earlier public CDN probes returned 514; no production or DNS changes.",
+  "browser_check_sets": {
+    "base_navigation_model_and_campus": 32,
+    "catalog_cache_and_deferred_markdown": 19
+  }
 }

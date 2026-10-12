@@ -9,7 +9,7 @@
       "name": "navigation and content placeholder appear without waiting for page or 3D code",
       "result": "passed",
       "detail": {
-        "elapsed_ms": 116
+        "elapsed_ms": 131
       }
     },
     {
@@ -52,24 +52,24 @@
       "name": "paused model stops continuous drawing",
       "result": "passed",
       "detail": {
-        "before": 1748,
-        "after": 1748
+        "before": 1644,
+        "after": 1644
       }
     },
     {
       "name": "component selection draws again while paused",
       "result": "passed",
       "detail": {
-        "before": 1748,
-        "after": 1801
+        "before": 1644,
+        "after": 1697
       }
     },
     {
       "name": "exploded view draws again while paused",
       "result": "passed",
       "detail": {
-        "before": 1801,
-        "after": 1854
+        "before": 1697,
+        "after": 1750
       }
     },
     {
