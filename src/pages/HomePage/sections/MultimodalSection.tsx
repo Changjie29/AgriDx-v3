@@ -20,12 +20,12 @@ export default function MultimodalSection() {
         {/* 标题 */}
         <div className="section-heading mb-12">
           <h2 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
-            {t('四类感知信号 · 融合诊断', 'Four Sensing Modalities · Fused Diagnosis')}
+            {t('下一步，听见与看见机器。', 'Next, hear and see the machine.')}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground md:text-base">
             {t(
-              '通过多模态特征融合，突破单一信号局限，大幅提升复杂工况下故障识别的准确率与鲁棒性',
-              'Multimodal fusion breaks single-sensor limits, boosting accuracy and robustness under complex conditions.',
+              '当前先把文本、机型与资料依据打通。声音、振动、视觉和运行参数是后续研究方向，接入与效果须逐项验证。',
+              'Today, symptoms, machine identity and documents form the starting point. Sound, vibration, vision and telemetry are research directions; integration and outcomes require validation.',
             )}
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function MultimodalSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-10 rounded-xl border border-border/60 bg-card p-6 text-center shadow-sm md:p-8"
         >
-          <div className="mb-3 text-sm font-medium text-wheat">{t('融合诊断价值', 'Value of Fusion')}</div>
+          <div className="mb-3 text-sm font-medium text-wheat">{t('当前能力与边界', 'Current capability & boundaries')}</div>
           <p className="font-serif text-lg font-semibold text-foreground md:text-xl">
             {t(
               '当前版本以故障文本诊断为主：本地知识库分块检索 + 大模型推理，多模态感知为规划方向',

@@ -1,0 +1,112 @@
+{
+  "date_shanghai": "2026-10-09",
+  "version": "2.4.3",
+  "environment": "local production",
+  "totals": {
+    "entries": 212,
+    "sources": 26,
+    "brands": 15,
+    "models": 97,
+    "faultEntries": 63,
+    "mappedEntries": 212
+  },
+  "expansion": {
+    "targetLabel": "1w+",
+    "countingUnit": "pending",
+    "status": "planned"
+  },
+  "checks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "bytes": 375
+    },
+    {
+      "path": "/api/knowledge/catalog",
+      "status": 200,
+      "bytes": 240940
+    },
+    {
+      "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&component=electrical&part=starter",
+      "status": 200,
+      "bytes": 245157
+    },
+    {
+      "path": "/api/knowledge/catalog?brand=%E4%B9%85%E4%BF%9D%E7%94%B0&model=LX2620SUHSD&component=cab",
+      "status": 200,
+      "bytes": 241868
+    },
+    {
+      "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF1504%28G4%29",
+      "status": 404,
+      "bytes": 122
+    },
+    {
+      "path": "/api/knowledge/catalog?model=LF804S",
+      "status": 400,
+      "bytes": 90
+    },
+    {
+      "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&component=electrical&part=unknown-part",
+      "status": 404,
+      "bytes": 101
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 1088
+    },
+    {
+      "path": "/chat",
+      "status": 200,
+      "bytes": 1088
+    },
+    {
+      "path": "/knowledge",
+      "status": 200,
+      "bytes": 1088
+    },
+    {
+      "path": "/models",
+      "status": 200,
+      "bytes": 1088
+    },
+    {
+      "path": "/api/model/tractor",
+      "status": 200,
+      "bytes": 646792
+    },
+    {
+      "path": "/models/tractor-detailed-v1.glb",
+      "status": 200,
+      "bytes": 646792
+    },
+    {
+      "path": "/models/tractor.glb",
+      "status": 200,
+      "bytes": 7371372
+    },
+    {
+      "path": "/images/njau-engineering-mark.jpg",
+      "status": 200,
+      "bytes": 57322
+    },
+    {
+      "path": "/assets/index-DVAsqnFi.js",
+      "status": 200,
+      "bytes": 315454
+    },
+    {
+      "path": "/assets/index-BE8G0M0J.css",
+      "status": 200,
+      "bytes": 71737
+    }
+  ],
+  "model": {
+    "bytes": 646792,
+    "sha256": "605f35f76f58c0c03aaac3acc31fa271dccd0e111ab65fbda2dc70dc3145b56e"
+  },
+  "external_llm_verified": false,
+  "deployed": false,
+  "validation_revision": "post-review"
+}

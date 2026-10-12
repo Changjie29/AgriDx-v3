@@ -1,25 +1,27 @@
 {
   "name": "agri-fault-diagnosis",
-  "version": "2.4.2",
+  "version": "3.0.7",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
     "start": "tsx server.ts",
-    "build": "npm run build:client",
-    "build:client": "tsc -b tsconfig.app.json && vite build",
-    "build:server": "tsc -p tsconfig.server.json",
+    "build": "node scripts/build.mjs",
+    "build:client": "node scripts/build.mjs --client",
+    "build:server": "node scripts/build.mjs --server",
     "preview": "vite preview",
-    "test": "tsx --test tests/*.test.ts",
-    "typecheck": "tsc -b tsconfig.app.json --noEmit",
-    "lint": "eslint . --cache --cache-location node_modules/.eslintcache --report-unused-disable-directives"
+    "test": "node scripts/run-tests.mjs",
+    "typecheck": "node scripts/typecheck.mjs",
+    "lint": "eslint . --cache --cache-location node_modules/.eslintcache --report-unused-disable-directives",
+    "check:version": "node scripts/check-version.mjs",
+    "verify": "node scripts/verify.mjs",
+    "sync": "node scripts/sync.mjs"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.3",
     "@react-three/drei": "^10.7.8",
     "@react-three/fiber": "^9.7.0",
-    "@sohumsuthar/liquid-glass": "^3.1.0",
     "@tailwindcss/typography": "^0.5.19",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -27,6 +29,7 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "framer-motion": "^12.38.0",
+    "liquid-glass-react": "1.1.1",
     "lucide-react": "0.577.0",
     "react": "~19.2.4",
     "react-dom": "~19.2.4",
@@ -62,6 +65,7 @@
     "vite": "^7"
   },
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=22.19.0",
+    "npm": ">=10"
   }
 }

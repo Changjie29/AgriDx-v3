@@ -209,32 +209,13 @@ def render(data, date):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    from matplotlib import font_manager
-    from matplotlib.ft2font import FT2Font
+    from matplotlib.font_manager import FontProperties
     from matplotlib.backends.backend_pdf import PdfPages
-    candidates = [
-        Path('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'),
-        Path('/System/Library/Fonts/Supplemental/Arial Unicode.ttf'),
-        Path('/Library/Fonts/Arial Unicode.ttf'),
-        Path('/System/Library/Fonts/STHeiti Medium.ttc'),
-    ]
-    font_path = None
-    required_glyphs = {ord(char) for char in '知识库来源索引维修边界统计／→＋·•'}
-    for candidate in candidates:
-        if not candidate.is_file():
-            continue
-        try:
-            charmap = FT2Font(str(candidate)).get_charmap()
-        except (RuntimeError, OSError):
-            continue
-        if required_glyphs <= charmap.keys():
-            font_path = candidate
-            break
-    if font_path is None:
-        raise RuntimeError('绘图需可用的中文字体；请安装Noto Sans CJK或Arial Unicode后使用--visuals')
-    font_manager.fontManager.addfont(str(font_path))
-    font = font_manager.FontProperties(fname=str(font_path))
-    # Type3 also supports the CFF outlines in Noto's font collection.
+    font_path = Path('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
+    if not font_path.exists():
+        raise RuntimeError('绘图需Noto Sans CJK字体；请安装字体后使用--visuals')
+    font = FontProperties(fname=str(font_path))
+    # This Noto collection contains CFF outlines; Type3 avoids invalid Type42 embedding.
     plt.rcParams.update({'font.family': font.get_name(), 'pdf.fonttype': 3,
                          'svg.fonttype': 'path', 'axes.unicode_minus': False})
     out = KB / '可视化'
@@ -310,7 +291,7 @@ def render(data, date):
             summary.text(.08, y, '• ' + line, fontsize=13, color=ink)
             y -= .033
         y -= .027
-    summary.text(.07, .04, 'GitHub：Changjie29/AgriDx-v2  |  事实与证据仍以原知识卡、来源记录为准。', fontsize=10, color=muted)
+    summary.text(.07, .04, 'GitHub：srt2777/AgriDx-v3  |  事实与证据仍以原知识卡、来源记录为准。', fontsize=10, color=muted)
     with PdfPages(out / '现有知识库概要.pdf', metadata={'Title': '现有知识库概要', 'Author': 'AgriDx'}) as pdf:
         pdf.savefig(summary)
         pdf.savefig(fig)

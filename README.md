@@ -1,14 +1,32 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**2.4.2**。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署为准。
+当前项目版本：**3.0.7**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+
+v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
 国内资料新增按“使用/购机证据 → 报告所列型号 → 精确说明书 → 审校与检索”整理，见[型号采集优先级](知识库/整理后的知识库/农用拖拉机知识库/采集优先级/README.md)。现有3篇第三方报告、21条证据、20种型号/排放写法候选，均完成定向查找；新增6M-1654(G4)/1854(G4)/2104(G4)中国版手册，报告裸6M-2104与本册后缀及实车版本的关系仍待核实，不能据此给出全国保有量排名。部分省厅正文与吉林公开搜索现已可读；总量背景、历史/展示实例和当前仍失败入口分别归档，研究资料不参与维修检索。
 
 面向农业机械装备的智能故障诊断 Agent。基于本地 Markdown 知识库 + 大语言模型，为拖拉机、联合收割机等农机提供结构化的故障原因分析、排查步骤与安全维修建议。
 
-> 当前版本为**本地知识库 + LLM 对话**的轻量方案，未接入传感器/麦克风/视觉/CAN 总线。多模态感知、结构仿真、数字孪生等能力均为规划方向。
+> 当前版本支持**本地知识库 + LLM 对话、四级资料浏览与三维结构示意**。未接入传感器/麦克风/故障视觉识别/CAN 总线；照片可在本地整理与预览，尚未接入AI照片重建、结构仿真或数字孪生。
 
-现有资料的结构、数量、适用限制与来源导航见[可视化概要](知识库/现有知识库概要.md)（[两页PDF](知识库/可视化/现有知识库概要.pdf)）；主线2.4.1新增6M/LF的13条继续保留；本草稿保留昨日6B的8条，并于2026-10-09新增5E D0的8条故障表概述，当前26来源、228条、237片段。概要与图表随索引更新；[本轮证据与验收](知识库/整理后的知识库/农用拖拉机知识库/采集记录/20261009_约翰迪尔5E故障表扩充.md)。
+现有资料的结构、数量、适用限制与来源导航见[可视化概要](知识库/现有知识库概要.md)（[两页PDF](知识库/可视化/现有知识库概要.pdf)）；保留主线全部 212 条及既有 6M/LF 资料，将历史草稿的 5E D0、6B L1 各 8 条故障表概述迁移到 v3，当前分支为 26 来源、228 条、237 片段，并补齐新版分层导航。版本按待审加载优化 PR #17 的 3.0.6 衔接为 3.0.7；[迁移与验收记录](知识库/整理后的知识库/农用拖拉机知识库/采集记录/20261012_v3知识扩充迁移.md)。
+
+## 新版可漫游三维园区
+
+默认首页以原创三维园区连接农机知识、智能诊断、模型工坊与研究依据。点击“开始漫游”后，用 WASD / 方向键驾驶拖拉机，空格刹车，Esc 返回总览；手机提供方向触控。总览可拖动环视、滚轮缩放，展区与小地图支持自动驶向目标，也可直接进入对应功能。
+
+园区使用现有 Three.js / React Three Fiber，不新增建模插件或依赖。地面反射、金属材质、阴影、悬浮标识和跟随镜头构成空间层次；静止时按需渲染，减少动态偏好下关闭镜头过渡。保留新旧版切换、双语、工学院官网徽章入口及现有知识、诊断和模型路由。WebGL 不可用时仍可使用直接功能入口。
+
+资料概览与设备目录读取 `/api/knowledge/catalog`，可按品牌 / 型号搜索并跳转；加载或失败时不填入推测数量，保留型号 / 系列 / 待核实的范围。模型和园区均为结构示意。GitHub 案例、分层可编辑 SVG、预览与验证见 [三维园区设计说明](docs/design/2026-10-11-spatial-campus/README.md)；此前 3.0.2 大屏设计保留在 [历史设计记录](docs/design/2026-10-11-digital-exhibition/README.md)。本轮保存到 GitHub PR，未部署服务器。
+
+旧版界面的导航、模型入口和控制栏使用 [rdev/liquid-glass-react](https://github.com/rdev/liquid-glass-react) 实现边缘折射、薄亮边与局部高光；顶部导航采用同心胶囊轮廓，小屏的版本切换独立为紧凑胶囊。触摸设备及减少动态设置采用雾面材质，减少透明度、高对比或不支持背景滤镜时使用实色。实现和本地验证见 [旧版液态玻璃优化](docs/design/2026-10-12-classic-liquid-glass/README.md)。
+
+## 腾讯云现有服务器更新
+
+用户已于 2026-10-11 授权配置现有腾讯云轻量服务器。服务器为 Ubuntu 24.04.4，网站使用 `/opt/agridx/current` 版本软链接、`agridx.service`、本机 8787 接口及现有 Nginx HTTPS；运行密钥文件为 `/etc/agridx.env`。
+
+新增手动更新脚本 [update-existing.sh](scripts/tencent-deploy/update-existing.sh)，支持 `--check` 只读检查和 `--deploy <完整提交 SHA>` 分目录构建、检查、切换及失败回退。每个版本使用 agridx 拥有的独立 npm 缓存，避免旧缓存权限阻止安装。它不改 Nginx、证书、DNS、防火墙或自动发布任务。当前配置与验收记录见 [腾讯服务器配置](docs/deployment/2026-10-11-tencent-existing-server.md)；GitHub 保存、脚本检查和服务器实际执行分别记录。
 
 ## 技术栈
 
@@ -23,13 +41,15 @@
 ### 环境要求
 
 - Node.js ≥ 22.19.0（建议24 LTS）
-- npm ≥ 10
+- npm ≥ 10；本地推荐与 CI 使用 `.node-version` 中的 Node 24
 
 ### 1. 安装依赖
 
 ```bash
-npm install
+npm ci
 ```
+
+若本机 npm 镜像缺少平台包，可仅对本次安装使用 `npm ci --registry=https://registry.npmjs.org`；无需修改全局 npm 配置。
 
 ### 2. 配置 API Key
 
@@ -67,19 +87,26 @@ npm run dev
 
 - 网站及 API：http://localhost:3000
 - 对话页：http://localhost:3000/#/chat
+- 四级农机知识：http://localhost:3000/#/knowledge
+- 模型工坊：http://localhost:3000/#/models
 - 健康检查：http://localhost:3000/api/health
 
 ### 4. 检索测试 / 类型检查 / Lint / 构建
 
 ```bash
-npm test            # 知识索引、适用范围过滤、检索与回复回归测试
-npm run typecheck   # 前端 tsc
-npm run lint        # eslint
-npm run build       # 前端类型检查与构建
-npm run build:server # 后端编译检查
+npm run verify       # 版本、前后端类型、测试、Lint 与完整构建
+# 可按需单独运行：
+npm test             # 知识、诊断、API、会话与维护脚本回归
+npm run typecheck    # 前端、Vite 配置与后端类型
+npm run lint
+npm run build        # 前端与后端完整构建
+npm run build:client # 单独构建前端
+npm run build:server # 单独编译后端
 ```
 
 ## 生产部署与验收
+
+以下保留生产运行说明；后端编译产物仅用于编译验证，生产入口仍为 `tsx server.ts`。当前按用户2026-10-10最新要求暂停发布，本轮不连接服务器或执行迁移；完成验证后的改动继续及时保存到v3 GitHub。
 
 在仓库根目录使用Node.js ≥ 22.19.0（建议24 LTS）。先安装完整依赖并构建前端，再仅保留运行依赖：
 
@@ -92,9 +119,9 @@ NODE_ENV=production PORT=3000 npm start
 
 `npm start`使用运行依赖中的`tsx`执行TypeScript服务入口。启动时必须设置`NODE_ENV=production`，否则会进入需要Vite的开发模式；若主机已固定生产模式，可在进程管理器配置该变量。配置API Key请使用服务器环境变量或既有`server/.env`，不要写入前端或Git。
 
-部署须包含`dist/`、`server.ts`、`server/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
+部署须包含`dist/`、`server.ts`、`server/`、`shared/`、`package.json`、完整`知识库/`及`public/`，并从仓库根启动；仅上传`dist/`不能提供API和归档检索。按现有主机/平台配置进程管理、端口与反向代理。
 
-发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/#/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。本轮隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。后续实际线上核验已确认2.2.2、20来源/165条/174片段及型号过滤；2.2.3起改用HashRouter，对话页地址为`/#/chat`，静态托管无需SPA重写即可直接打开/刷新。干净路径`/chat`仍依赖托管层重定向，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
+发布后实际检查`/api/health`的版本和归档条目数，以及`/`、`/#/chat`、JS/CSS资源和模型接口；再核对有资料机型的来源回答、未知/冲突型号的资料不足行为。GitHub推送、本地生产运行、线上发布分别验收。历史隔离生产验收见[部署前记录](docs/deployment/2026-10-04-production-validation.md)。2026-10-04的历史线上核验确认2.2.2、20来源/165条/174片段及型号过滤；2.2.3起改用HashRouter，对话页地址为`/#/chat`，静态托管无需SPA重写即可直接打开/刷新。干净路径`/chat`仍依赖托管层重定向，见[线上验收记录](docs/deployment/2026-10-04-live-validation.md)。
 
 ## LLM 选择策略
 
@@ -119,7 +146,7 @@ NODE_ENV=production PORT=3000 npm start
    - 归档事实放在【手册依据】，模型一般原理分析另列；通用信息收集清单不作为手册证据；
    - 已填写身份与用户描述冲突时先确认对象，不能继续套用任一机型资料；
    - 用户用什么语言问，就用什么语言答。
-5. 前端只发 user/assistant 历史（截最近 20 轮），不发 system message——system prompt 由后端独占。
+5. 前端只发 user/assistant 历史（保留最近 20 条消息，再附加当前问题），不发 system message——system prompt 由后端独占。
 6. 归档条目保留来源编号、原文定位、来源链接、文档适用范围及核对状态，供外部模型和本地回复引用。仅索引中的编号条目参与检索；归档 README、待补资料、原始 HTML/PDF 不作为诊断知识自动加载。
 
 例如：填写「拖拉机／久保田／LX2620」，询问「发动机启动困难」，可检索 `KB-LX2620-003`。问题改为「东方红LF1504启动困难」而仍保留久保田字段时，停止召回并要求确认咨询对象；问题中的明确品牌、完整型号或农机类型不能被旧字段覆盖。命中归档条目时优先使用对应资料；仅命中通用内容时说明资料不足，不把信息收集清单当维修依据。LLM 可另列通用待验证分析并主动追问，具体参数和专用操作仍须匹配手册；没有配置 Key 时只能提供本地资料和信息收集。填写 `WORKMASTER25S` 时，不会套用仅适用于 `WORKMASTER25` 的条目。未确认市场或配置时仍需依据条目的适用限制核实。
@@ -143,103 +170,43 @@ server/knowledge/
 
 ## 项目结构
 
+```text
+AgriDx-v3/
+├── src/                 # React 页面、组件与样式
+│   ├── pages/           # 页面布局与路由视图
+│   ├── features/chat/   # 会话、历史存储、请求与健康状态
+│   ├── hooks/           # 语言、响应式与知识目录 hooks
+│   └── lib/             # 共用 API 客户端与界面工具
+├── server/              # HTTP 装配、路由、诊断用例、知识与 LLM
+├── shared/              # 前后端协议类型、知识目录与能力声明
+├── 知识库/              # 归档原文、索引、来源与整理工具
+├── public/              # 模型与静态资源，保留原署名
+├── scripts/             # 跨平台检查、构建、测试与工作分支同步
+├── tests/               # 诊断、知识边界、API、会话与维护脚本回归
+├── docs/architecture.md # 模块职责、请求链路与维护规则
+├── .github/workflows/ci.yml # Ubuntu / Windows 完整检查，不部署
+├── .node-version        # 本地推荐与 CI 的 Node 24
+├── server.ts            # 统一开发/生产入口；生产仍使用 tsx
+└── CONTRIBUTING.md      # 四人协作、版本与 PR 流程
 ```
-AgriDx-v2/
-├── public/                          # 静态公共资源（构建时原样拷贝到 dist/）
-│   └── models/
-│       └── tractor.glb              # 拖拉机 3D 模型（前端经 /models/tractor.glb 加载；后端 /api/model/tractor 为同一文件接口）
-│
-├── src/                              # 前端源码（React 19 + Vite + TypeScript）
-│   ├── index.tsx                     # 应用入口（挂载 React + Router）
-│   ├── app.tsx                      # 路由表（/ 首页、/chat 对话、* 404；经 HashRouter 呈现为 /#/、/#/chat）
-│   ├── index.css / tailwind-theme.css / typography.css  # 样式与主题变量
-│   ├── components/
-│   │   ├── Layout.tsx               # 全局布局：顶栏导航 + 主题/语言切换 + Outlet
-│   │   ├── TractorViewer.tsx       # 3D 查看器（R3F Canvas + OrbitControls + 自转）
-│   │   ├── TractorModel.tsx         # GLB 模型加载（useGLTF + clone 克隆处理）、居中缩放贴地
-│   │   ├── SectionDivider.tsx      # 绿色装饰分割线（leaf/dots/line 三种）
-│   │   └── ui/                     # shadcn/ui 基础组件（button/card/dialog/textarea）
-│   ├── pages/
-│   │   ├── HomePage/
-│   │   │   ├── HomePage.tsx         # 首页组装（按顺序拼接 8 个 section）
-│   │   │   └── sections/            # 首页各区块
-│   │   │       ├── HeroSection.tsx          # 首屏：标题 + CTA + 3D 模型
-│   │   │       ├── PainPointsSection.tsx    # 行业痛点 + 真实能力卡片
-│   │   │       ├── MultimodalSection.tsx    # 多模态信号（标注规划中）
-│   │   │       ├── ArchitectureSection.tsx   # 真实四层架构
-│   │   │       ├── SimulationSection.tsx     # 3D 已实现 / FEA 与数字孪生规划中
-│   │   │       ├── TechRouteSection.tsx      # 六步技术流程
-│   │   │       ├── ScenariosSection.tsx      # 拖拉机/收割机/更广农机
-│   │   │       └── ClosingSection.tsx       # 底部 CTA
-│   │   ├── ChatPage/
-│   │   │   └── ChatPage.tsx         # 对话页：历史/快捷提问/农机信息选择器/Provider 显示
-│   │   └── NotFoundPage/
-│   │       └── NotFoundPage.tsx     # 404
-│   ├── data/
-│   │   └── content.ts               # 全部页面文案（中英双语）+ pick() 工具
-│   ├── hooks/
-│   │   ├── useLang.ts               # 中英双语切换（useSyncExternalStore）
-│   │   └── use-mobile.ts            # 响应式断点 hook
-│   └── lib/
-│       └── utils.ts                 # cn() 类名合并
-│
-├── server/                           # 后端（Node.js + Express + tsx，ESM）
-│   ├── dev.ts                       # 开发入口（tsx watch 启动 index.ts）
-│   ├── index.ts                     # Express 路由：安全中间件/限流/health/chat/model
-│   ├── .env                         # 本地环境变量（永不提交 Git）
-│   │
-│   ├── llm/                         # LLM Provider 层（按代理自动选模型）
-│   │   ├── types.ts                 # Provider 接口 / ChatResult / ProviderError
-│   │   ├── http.ts                  # fetchWithTimeout(20s) + detectProxy()
-│   │   ├── openai-compatible.ts     # 通用 OpenAI 兼容 chat/completions 工厂
-│   │   ├── gemini.ts                # Gemini provider（GEMINI_MODEL）
-│   │   ├── deepseek.ts              # DeepSeek provider（DEEPSEEK_MODEL）
-│   │   └── router.ts                # 单例：配置优先、双模型回退、安全状态概要
-│   │
-│   └── knowledge/                   # 本地知识库 + 轻量 RAG
-│       ├── retriever.ts             # 通用 .md + 归档编号条目、适用范围过滤、关键词打分、top-K
-│       ├── systemPrompt.ts          # buildSystemPrompt（后端独占 system prompt）
-│       ├── 00_说明/                 # 目录约定（不参与检索）
-│       ├── 01_通用原理/             # 发动机/冷却/润滑/液压/电气/传动...
-│       ├── 02_农机类型/             # 拖拉机/收割机/插秧机...
-│       ├── 03_新能源农机/           # 电动/混动农机
-│       ├── 04_智能农机/             # 无人化/自动驾驶
-│       ├── 05_故障代码/             # 各品牌故障码表
-│       ├── 06_品牌资料/             # 东方红/雷沃/久保田/约翰迪尔...
-│       ├── 07_具体型号/             # 具体型号维修手册
-│       └── 99_待整理/              # 未分类资料
-│
-├── shared/                           # 前后端共享类型
-│   ├── plugin-types.ts              # 插件/扩展类型定义
-│   └── capabilities/                # 能力声明
-│
-├── scripts/
-│   ├── dev.mjs                      # 同时启动前端 Vite + 后端 tsx
-│   ├── build.sh                    # 先 build:client 再 build:server
-│   └── cloud-pull.sh               # 云电脑上执行的 git pull 脚本
-│
-├── index.html                        # Vite HTML 入口
-├── package.json                     # 依赖与 scripts（dev/typecheck/lint/build）
-├── vite.config.ts                   # Vite 配置（开发服务默认 3000，由 Express 加载前端中间件）
-├── tsconfig.app.json                # 前端 TS 配置
-├── tsconfig.server.json             # 后端 TS 配置
-├── tsconfig.node.json               # Vite/Node 侧 TS 配置
-├── eslint.config.mjs                # ESLint 配置
-├── components.json                  # shadcn/ui 配置
-└── README.md
-```
+
+模块职责与开发入口见[架构说明](docs/architecture.md)。单个检查仍可独立执行；合入前推荐使用 `npm run verify`，统一验证版本元数据、前后端与 Vite 配置类型、回归测试、Lint 和完整构建。Windows PowerShell 使用 `npm.cmd`。
+
+`npm run sync` 只推送当前工作分支中已经提交的内容；先自行提交本轮相关文件，保持工作区干净。它拒绝 `main`、`master`、远端默认分支与 detached HEAD，不附带标签、不自动提交或部署。
+
 
 ## Git 分支
 
-- **`main`**：稳定版本，日常开发与部署都基于此分支。所有同步脚本（rsync + git push）都推到 `main`。
-- 目前仓库只有 `main` 一个分支。后续如需要独立开发新功能，可从 `main` 切 `feature/<功能名>` 分支，合并后删除，不长期保留展示性分支。
+- **`main`**：共同维护的稳定主线。协作者从最新`main`创建自己的功能或修复分支，通过PR说明改动与验证结果，审阅后合入。
+- 人工开发可使用`feature/<用户名>/<主题>`或`fix/<用户名>/<主题>`，Codex任务默认使用`codex/`前缀。提交前刷新远端并检查差异，按新旧版本与任务意图进行更新性覆盖或合并，保留无关成果；合并完成后可删除对应任务分支。
+- 每轮授权改动完成验证后及时按现有分支/PR规范保存到v3 GitHub；个人分支、PR及主线推送均不触发网站发布，详见[贡献指南](CONTRIBUTING.md)。新增GitHub协作规则等待用户后续明确授权。
 
 ## API
 
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "2.4.2", "timestamp": "...", "knowledge": { "chunks": 237, "archivedEntries": 228 } }
+{ "ok": true, "version": "3.0.7", "timestamp": "...", "knowledge": { "chunks": 237, "archivedEntries": 228 } }
 ```
 
 ### `POST /api/chat`
@@ -282,8 +249,8 @@ AgriDx-v2/
 ## 安全
 
 - API Key 仅存于 `server/.env`，前端/构建产物/Git 均不出现。
-- CORS 白名单仅允许本地开发源；生产可按需扩展。
-- 所有外部 LLM 请求经 `undici` 的 `ProxyAgent` 走系统代理。
+- 当前 CORS 沿用开放源配置；来源限制须结合实际部署环境另行配置。
+- 检测到代理变量时，外部 LLM 请求经 `undici` 的 `ProxyAgent`；未配置代理时使用直连。
 - `/api/chat` 每 IP 每分钟 30 次限流。
 - 错误日志只打印 provider 名与错误类别，绝不打印 key。
 - Markdown 渲染使用 `react-markdown`（默认不执行 HTML/JS）。
@@ -295,26 +262,40 @@ AgriDx-v2/
 - 本地 Markdown 知识库 + 228 条拖拉机及配套系统归档条目 + 品牌／型号过滤与关键词检索 RAG
 - Gemini / DeepSeek 双 Provider，可选优先顺序 + 失败回退 + 安全配置状态
 - 后端独占 system prompt，强制结构化输出与禁止编造参数
-- 可交互 3D 拖拉机模型（拖拽/缩放/自转/恢复视角）
+- 四级农机知识浏览、组件资料缺口、原文/版次/页码/适用范围；可将机型及问题预填到诊断页
+- 原创分组件拖拉机结构示意（拖拽/缩放/自转/暂停/四种视角/结构展开），不代表实车CAD
+- 模型工坊的本地GLB导入、多角度照片选择与清单导出；图片不上传，刷新后需重新选择
 - 中英双语界面、跟随系统的明暗主题
 - 对话历史本地持久化、Markdown 渲染、快捷提问
 - 农机类型/品牌/型号可选选择器，用于增强检索
 - CORS 白名单、安全头、限流、优雅退出、错误脱敏
 
-**规划中（首页已明确标注）**
+### 本阶段九项重点与第一轮进展
 
-- 振动/声学/视觉/CAN 总线多模态信号接入
-- 有限元模态/应力仿真验证
-- 数字孪生诊断-验证闭环
-- 真实 PDF/Word/Excel 维修手册解析入库
-- 向量检索（当前为关键词重叠，资料量上来后再升级）
+以下八项来自本轮讨论的黑板要求，第九项为新增的分层故障体系；共同替换此前的规划列表，作为本阶段重点推进与验收的依据。本轮已形成可运行的第一轮改进，逐项对应结果与限制见[九项改进验收](docs/iterations/2026-10-09-nine-priorities.md)。以下仍保留各项目标，不把阶段进展写成全面完成。
 
-## 同步部署
+1. **知识库扩充与国内外覆盖**：保留板书“GPT生成1w+、覆盖国内外”的建设目标；“1w+”的统计单位待确认。GPT用于辅助整理与发现资料线索，正式知识须经来源与机型适用性核验；对外宣传区分目标规模、已整理数量与已核验知识。
+2. **讲好项目故事，加入论文依据**：围绕实际农机问题、解决思路和验证效果组织项目介绍，结合相关论文说明技术依据与创新方向，论文结论和项目实测结果分别表述。
+3. **突出自身特色，不直接写出参考产品名称**：借鉴参考产品的思路，形成自身的功能特色与产品表达；页面、项目介绍及对外材料不直接写出该参考产品名称。
+4. **细化名字与命名体系**：细化项目名称、品牌表达与功能名称，使名称能准确传达产品定位和特色，并统一网站、文档与汇报材料的用法。
+5. **首页左上角加入学院标识**：使用经确认的学院 logo，在首页左上角安排合适的位置、比例与留白，并核对桌面及移动端显示。
+6. **拖拉机更换更精细的模型**：改善现有拖拉机模型的结构细节、材质与展示效果，同时验证加载速度、交互和移动端表现。
+7. **快速建模与多角度照片重建**：探索多角度照片生成完整三维模型的流程，评估混元及板书所写“magic”等工具的建模协同；板书缩写及具体工具名称待确认，模型完整性和可用性须实际验证。
+8. **优化 UI，提升界面质感与特色**：探索 GPT 与 Figma 协同设计并落实到前端，改善布局、视觉层级、交互和品牌一致性，核对桌面与移动端实际效果。账号已连接，2.4.3基线已建立[可编辑 Figma 初稿](https://www.figma.com/design/ewGYhGwx5rdfu5ubKbKpZS)，包含首页、四级农机知识、模型工坊及375px知识页；后续仅修复知识覆盖卡为桌面四列、手机两列七行，其余页面仍待最终视觉验收。2.4.5网页参考苹果官方WWDC改进液态玻璃导航和操作层，尚未同步到该Figma稿，见[设计依据与验证](docs/design/2026-10-09-liquid-glass-reference.md)。页面范围、协同方式与限制见[Figma交接记录](docs/design/2026-10-09-figma-handoff.md)。
+9. **品牌 → 型号 → 组件 → 零部件的分层故障与性能覆盖**：按品牌、完整型号及适用配置建立组件和零部件的从属关系，逐层整理运行故障表现、受影响的性能、原因线索及对应的诊断、处置与预防策略；关联零部件异常、组件功能变化和整机运行表现，支持从整机现象向下排查、从零部件异常向上分析影响，逐步实现从零部件到整机的故障与性能全覆盖。
 
-- GitHub：https://github.com/Changjie29/AgriDx-v2
-- 本地工作区：clone 仓库后在根目录执行 `npm install` 即可开发，无需额外配置路径
-- 境内免梯子部署：`agridx.xyz` 此前挂在 OpenAI ChatGPT Sites 上，其边缘拦截境内 IP；迁往香港服务器（免备案）的一键脚本与操作清单见[香港部署指南](docs/deployment/2026-10-07-hk-deployment.md)
-- 同步方式：代码和知识库提交到 `main`；运行环境需按实际更新/部署流程重新加载，GitHub推送本身不代表网站已经部署
+**推进与验收记录**：逐项记录“有什么问题 → 如何解决 → 解决后的效果”，同步版本号与迭代结果；本地验证、GitHub保存和线上部署分别记录。分层故障策略保留来源、页码、型号与配置适用范围，资料缺口标记“待补资料／待核实”，各层级的覆盖情况以已核验条目和验证结果为准。当前已实现四级资料导航和适用范围检索，228条归档资料均有组件导航关联；具体零部件仅在原文有依据时细分，尚未完成故障因果与整机性能全覆盖。
+
+## GitHub保存与部署约定
+
+- GitHub：[Changjie29/AgriDx-v3](https://github.com/Changjie29/AgriDx-v3)。v2保留在[原仓库](https://github.com/Changjie29/AgriDx-v2)，本轮不修改v2。
+- 本地工作区：clone v3仓库后在根目录执行`npm ci`即可开发，无需额外配置路径；`.env`和`server/.env`按本机配置，不进入Git。
+- 团队：Changjie29（admin），jianshiting920-web、jingxinnie0414-dev、bai1022（write）。截至2026-10-10已核对仓库现有权限；具体任务按各次PR约定，不预设个人职责。
+- 用户2026-10-10最新要求：**停止发布，继续及时同步GitHub。每轮授权改动完成必要验证后，按现有分支/PR规范及时提交并推送到v3仓库。** 此要求替换此前v3默认部署约定；v2仍只保存GitHub。用户明确要求暂缓提交或仅本地修改时按其要求执行。
+- GPT/Sites与腾讯服务器后续发布均已停止安排，不自动恢复，不连接服务器、不改DNS，也不启用旧定时拉取/自动重启流程。此前Sites版本20发布回执为成功，但自定义域名线上尚未确认3.0.0；真实保存、发布与验证边界见[3.0.0状态记录](docs/deployment/2026-10-10-v3-initial-status.md)。腾讯迁移是用户正在办理的事项，本轮未验收，不能写成迁移或上线已完成；未来发布等待新的明确授权。香港脚本与[旧部署指南](docs/deployment/2026-10-07-hk-deployment.md)保留作历史准备资料。
+- 每次推送前对比远端与本地改动，按新旧版本及任务意图判断更新性覆盖，保留无关成果；本次允许按差异覆盖v3的旧v2基线。主线合入、GitHub保存和网站发布分别记录，本地构建或Git推送本身不证明已发布。
+- 用户后续会再要求从GitHub增加v3协作规则。当前保持已有分支/PR规范，不修改仓库权限、分支保护或rules；新增规则等待后续明确授权。
+- v2的2.4.5历史保存与Sites版本19回执保留在[原记录](docs/deployment/2026-10-10-liquid-glass-status.md)，不能作为v3发布验收结果。
 
 ---
 

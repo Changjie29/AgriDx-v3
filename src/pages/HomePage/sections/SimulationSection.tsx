@@ -19,12 +19,12 @@ export default function SimulationSection() {
         {/* 标题 */}
         <div className="section-heading mb-12">
           <h2 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
-            {t('数字孪生 · 诊断验证闭环', 'Digital Twin · Verification Loop')}
+            {t('结构可探索，验证有边界。', 'Explore structure. Know the boundaries.')}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground md:text-base">
             {t(
-              '不只是给出故障标签，更通过结构仿真验证诊断结论的物理合理性，让诊断结果可解释、可追溯',
-              'Beyond labels: structural simulation verifies physical plausibility, making diagnosis explainable and traceable.',
+              '三维结构展示帮助理解设备。有限元验证与数字孪生分别作为规划展示，当前模型不等同于机型专属工程模型，也未用于计算诊断结论。',
+              'Interactive 3D helps explain structure. FEA and digital twins remain planned. The current visualization is not a model-specific engineering asset or a diagnostic simulation.',
             )}
           </p>
         </div>

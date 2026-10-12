@@ -3,89 +3,76 @@ import { useGLTF } from '@react-three/drei';
 import { SkeletonUtils } from 'three-stdlib';
 import * as THREE from 'three';
 
-// 模型统一存放在 public/models/tractor.glb，前端唯一引用路径
-const MODEL_URL = '/models/tractor.glb';
+export const TRACTOR_MODEL_URL = '/models/tractor-detailed-v1.glb';
+export type TractorComponent = 'all' | 'body' | 'engine' | 'drivetrain' | 'hydraulics' | 'electrical' | 'wheels' | 'cab';
+const OFFSETS: Record<string, [number, number, number]> = {
+  body: [-.1, .75, 0], cab: [.4, .8, 0], engine: [-.8, .05, 0],
+  drivetrain: [0, 0, 0], hydraulics: [.6, 0, 0], electrical: [-.2, .65, 0], wheels: [0, -.2, 0],
+};
 
 interface TractorModelProps {
+  modelUrl?: string;
   onLoaded?: (object: THREE.Object3D) => void;
+  component?: TractorComponent;
+  exploded?: boolean;
 }
 
-/**
- * 拖拉机 3D 模型组件
- *
- * - 统一加载 public/models/tractor.glb（通过 Vite 静态资源服务 /models/tractor.glb）
- * - 从 useGLTF 缓存中克隆 scene（包含 SkinnedMesh/Bone 时使用 SkeletonUtils.clone），
- *   所有缩放、居中、贴地、材质修改只作用于克隆体，绝不修改 useGLTF 缓存的原 scene，
- *   避免组件重新挂载时在上一次修改过的缓存 scene 上重复缩放/定位导致尺寸漂移
- * - 归一化顺序：先 updateMatrixWorld(true)，按原始包围盒计算缩放，
- *   再 updateMatrixWorld(true) 后按最终 scale 重新计算 Box3，做水平居中 + 贴地
- * - 不对模型做节点白名单过滤，完整保留 GLB 原始结构
- */
-export default function TractorModel({ onLoaded }: TractorModelProps) {
-  // useGLTF 返回的是全局缓存的原始 scene，绝不可直接修改
-  const { scene } = useGLTF(MODEL_URL);
-
-  // 从缓存 scene 克隆一份独立副本，后续所有修改只作用于克隆体
+/** Original schematic GLB. Cache geometry is shared; all changed materials are cloned. */
+export default function TractorModel({ onLoaded, component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL }: TractorModelProps) {
+  const { scene } = useGLTF(modelUrl);
   const model = useMemo(() => {
-    const cloned = SkeletonUtils.clone(scene) as THREE.Scene;
+    const cloned = SkeletonUtils.clone(scene);
+    cloned.traverse(node => {
+      if (!(node instanceof THREE.Mesh)) return;
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      const copies = materials.map(material => {
+        const copy = material.clone();
+        copy.userData = { ...copy.userData, baseOpacity: material.opacity, baseTransparent: material.transparent, baseDepthWrite: material.depthWrite };
+        return copy;
+      });
+      node.material = Array.isArray(node.material) ? copies : copies[0];
+      node.castShadow = true;
+      node.receiveShadow = true;
+    });
+    const box = new THREE.Box3().setFromObject(cloned);
+    const size = box.getSize(new THREE.Vector3());
+    const maxDimension = Math.max(size.x, size.y, size.z);
+    if (box.isEmpty() || !Number.isFinite(maxDimension) || maxDimension <= 0) {
+      throw new Error('GLB contains no visible geometry');
+    }
+    cloned.scale.setScalar(2.8 / maxDimension);
+    cloned.updateMatrixWorld(true);
+    const scaled = new THREE.Box3().setFromObject(cloned);
+    const center = scaled.getCenter(new THREE.Vector3());
+    cloned.position.set(-center.x, -scaled.min.y - .4, -center.z);
+    cloned.updateMatrixWorld(true);
     return cloned;
   }, [scene]);
 
-  // 归一化：居中、缩放、贴地（只作用于克隆体，每次挂载结果一致）
+  useEffect(() => () => model.traverse(node => {
+    if (node instanceof THREE.Mesh) {
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      materials.forEach(material => material.dispose());
+    }
+  }), [model]);
+
   useEffect(() => {
-    if (!model) return;
-
-    // 强制重置缩放：useGLTF 全局缓存 scene 可能被历史挂载污染（继承旧缩放），
-    // 必须先归一到 1 再基于原始包围盒计算，否则 scale 会算成 1 导致模型不缩放
-    model.scale.setScalar(1);
-    // 强制重置 position 到原点：SkeletonUtils.clone 会保留原 scene 的 position，
-    // 若原 scene 带非零 position，后续世界坐标包围盒会错位导致贴地失败（模型悬空）
-    model.position.set(0, 0, 0);
-    model.updateMatrixWorld(true);
-    const box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    if (!maxDim) return;
-
-    // 目标最大边长 2.5 单位，适配 HeroSection 4:3 容器
-    const scale = 2.5 / maxDim;
-    model.scale.setScalar(scale);
-
-    // scale 确定后重新计算最终 Box3（保证 Box3 在最终 scale 之后计算）
-    model.updateMatrixWorld(true);
-    const finalBox = new THREE.Box3().setFromObject(model);
-    const finalCenter = finalBox.getCenter(new THREE.Vector3());
-    const finalMin = finalBox.min.clone();
-
-    // 水平居中 + 贴地（地面网格位于 y=-0.4）
-    model.position.set(-finalCenter.x, -finalMin.y - 0.4, -finalCenter.z);
-    model.updateMatrixWorld(true);
-
-    // 最终尺寸/位置确定后，通知外层做相机 fit（只回调一次）
-    onLoaded?.(model);
-  }, [model, onLoaded]);
-
-  // 材质与阴影处理（克隆体）
-  useEffect(() => {
-    if (!model) return;
-    model.traverse((child) => {
-      const mesh = child as THREE.Mesh;
-      if (mesh.isMesh) {
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-        mats.forEach((mat) => {
-          if (mat instanceof THREE.MeshStandardMaterial) {
-            mat.roughness = Math.min(mat.roughness, 0.85);
-            mat.metalness = Math.max(mat.metalness, 0.1);
-            mat.envMapIntensity = 0.8;
-          }
-        });
-      }
+    model.traverse(node => {
+      const id = node.userData.component as string | undefined;
+      if (modelUrl === TRACTOR_MODEL_URL && id && OFFSETS[id]) node.position.set(...OFFSETS[id].map(n => exploded ? n : 0) as [number, number, number]);
+      if (!(node instanceof THREE.Mesh)) return;
+      const selected = component === 'all' || node.parent?.userData.component === component;
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      materials.forEach(material => {
+        material.opacity = selected ? material.userData.baseOpacity : .09;
+        material.transparent = selected ? material.userData.baseTransparent : true;
+        material.depthWrite = selected ? material.userData.baseDepthWrite : false;
+        material.needsUpdate = true;
+      });
     });
-  }, [model]);
-
-  if (!model) return null;
+    model.updateMatrixWorld(true);
+    onLoaded?.(model);
+  }, [model, component, exploded, modelUrl, onLoaded]);
 
   return <primitive object={model} />;
 }

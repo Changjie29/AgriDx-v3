@@ -1,0 +1,116 @@
+/* A single material behind model controls and catalog filters.
+   Selected controls are flat, solid pills above the material. */
+.model-control-shell {
+  position: absolute;
+  z-index: 2;
+  inset: auto 12px 42px;
+  width: auto;
+  max-width: 440px;
+  margin-inline: auto;
+}
+.model-control-glass {
+  --lg-radius: 999px;
+  --lg-blur: 8px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  box-shadow: 0 8px 22px -10px rgba(22, 48, 35, .25), inset 0 1px 0 rgba(255, 255, 255, .7);
+}
+.model-control-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 56px;
+  padding: 6px;
+}
+.model-view-segment {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(44px, 1fr));
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+}
+.model-view-indicator {
+  position: absolute;
+  inset: 2px auto 2px 0;
+  width: 25%;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 2px 5px rgba(20, 53, 37, .12);
+  transition: transform 260ms cubic-bezier(.2, .7, .2, 1);
+}
+.model-view-button,
+.model-icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 4px;
+  border-radius: 999px;
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+.model-view-button[aria-pressed="true"] { color: var(--primary-foreground); }
+.model-icon-button { flex: 0 0 44px; }
+.model-icon-button:hover { background: var(--accent); color: var(--primary); }
+.model-view-button:not([aria-pressed="true"]):hover { color: var(--primary); }
+.model-control-content button:focus-visible { outline-offset: -2px; }
+
+.catalog-browser.catalog-filter-glass {
+  padding: 0;
+  --lg-radius: 24px;
+  --lg-blur: 14px;
+  border: 1px solid var(--agri-line);
+  box-shadow: 0 9px 25px -19px rgba(24, 55, 38, .3), inset 0 1px 0 rgba(255, 255, 255, .75);
+  background: transparent;
+}
+.catalog-filter-content { padding: 24px; }
+.catalog-filter-content .catalog-browser-top { margin-bottom: 18px; }
+.catalog-filter-content .catalog-reset {
+  min-height: 44px;
+  min-width: 44px;
+  padding-inline: 10px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+.catalog-filter-content .catalog-reset:hover { color: var(--primary); background: var(--accent); }
+.catalog-filter-content .catalog-selectors select {
+  min-height: 48px;
+  background: var(--agri-raised);
+  border-color: var(--agri-line);
+  border-radius: 13px;
+}
+.catalog-filter-content .catalog-selectors select:disabled { opacity: .65; }
+
+html.dark .model-control-glass {
+  border-color: rgba(222, 245, 230, .19);
+  box-shadow: 0 8px 25px -9px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(230, 245, 235, .12);
+}
+html.dark .catalog-browser.catalog-filter-glass { box-shadow: 0 9px 25px -19px rgba(0, 0, 0, .55); }
+
+@media (max-width: 639px) {
+  .model-control-shell { inset-inline: 8px; }
+  .model-control-content { gap: 3px; padding: 5px; }
+  .model-view-button { font-size: 10.5px; letter-spacing: -.03em; }
+  .catalog-filter-content { padding: 20px 16px; }
+}
+@media (max-width: 359px) {
+  .model-control-content { gap: 0; min-height: 48px; padding: 2px; }
+  .model-view-button { padding-inline: 2px; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .model-view-indicator,
+  .model-view-button,
+  .model-icon-button { transition: none; }
+}
+@media (forced-colors: active) {
+  .model-control-glass,
+  .catalog-browser.catalog-filter-glass { border: 1px solid CanvasText; }
+  .model-view-indicator { display: none; }
+  .model-view-button[aria-pressed="true"] { color: HighlightText; background: Highlight; }
+}

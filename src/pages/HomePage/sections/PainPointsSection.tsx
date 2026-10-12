@@ -25,7 +25,7 @@ export default function PainPointsSection() {
           </div>
         </div>
         <dl className="implementation-strip">
-          {content.CAPABILITY_STATS.map(stat => <div key={pick(stat.label, lang)}><dt>{pick(stat.label, lang)}</dt><dd>{stat.value}</dd></div>)}
+          {content.CAPABILITY_STATS.map(stat => <div key={pick(stat.label, lang)}><dt>{pick(stat.label, lang)}</dt><dd>{pick(stat.value, lang)}</dd></div>)}
         </dl>
       </div>
     </section>

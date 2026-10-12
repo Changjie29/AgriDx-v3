@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-11T08:10:45.726Z",
+  "checks": [
+    "new homepage has one model and live knowledge totals",
+    "search, empty state and catalog deep link",
+    "component selection, explode, top view, rotation and reset",
+    "classic version persists after reload and switch returns to new",
+    "version selection synchronizes across tabs",
+    "research opens the existing research section",
+    "390px Chinese new homepage has no horizontal overflow",
+    "390px Chinese classic header has no horizontal overflow",
+    "390px English new homepage has no horizontal overflow",
+    "390px English classic header has no horizontal overflow",
+    "320px Chinese new homepage has no horizontal overflow",
+    "320px Chinese classic header has no horizontal overflow",
+    "320px English new homepage has no horizontal overflow",
+    "320px English classic header has no horizontal overflow",
+    "catalog failure shows retry and does not invent counts",
+    "both versions switch when browser storage is disabled"
+  ],
+  "errors": []
+}

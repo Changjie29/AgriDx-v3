@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-11T08:28:33.289Z",
+  "checks": [
+    "new homepage shows the single college emblem linked to the official homepage",
+    "full-screen control enters and exits full-screen",
+    "classic homepage retains the college emblem in both themes",
+    "390px Chinese emblem and version controls fit without overlap",
+    "390px English emblem and version controls fit without overlap",
+    "320px Chinese emblem and version controls fit without overlap",
+    "320px English emblem and version controls fit without overlap",
+    "saved English selection restores document language on reload",
+    "research navigation on a subpage opens and scrolls to the classic research section"
+  ],
+  "errors": []
+}
