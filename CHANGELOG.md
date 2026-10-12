@@ -10,7 +10,7 @@
 - 首页与知识页复用当前标签页内已验证的目录响应，按完整筛选条件区分，5 分钟过期、最多保留 32 组选择；失败与取消不缓存，手动重试清除当前选择。快速切换 URL 时不显示旧机型资料。约 158 KB 的 Markdown 解析器延后到展开资料或显示答复时加载，加载期间仍可读正文、编辑诊断。
 - 最新本地受控模拟中，新版导航与导览可用时间中位数从 9.86s 降至 2.47s，知识页内容从 1.73s 降至 0.98s，诊断输入区从 1.44s 降至 1.00s，模型工坊页面从 1.43s 降至 0.73s；不是线上或完整三维就绪时间。51 项生产浏览器检查与最新完整 verify 通过，132 项测试通过、2 项 Windows 专用测试在 Linux 跳过；保留原有 Fast Refresh 与 Three.js 包体积提示。
 - 加载对比、本地功能验证及域名/CDN 检查记录见 [性能优化记录](docs/performance/2026-10-12-loading-navigation.md)。线上探测收到腾讯 CDN 的 HTTP 514；用户暂时无法登录服务器，本轮先完成源码优化，线上对比留待恢复登录后进行，不把本地模拟数据写成线上提速或部署完成。
-- 实现提交 [fa6cf43](https://github.com/srt2777/AgriDx-v3/commit/fa6cf43257e8e15035039cd2f080f8126890e562) 已保存到独立分支，通过 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17) 审阅；CI 和合入状态以 PR 为准，腾讯线上尚未验收 3.2.2。
+- 初次实现 [fa6cf43](https://github.com/srt2777/AgriDx-v3/commit/fa6cf43257e8e15035039cd2f080f8126890e562) 与缓存、正文加载补充 [78b5e21](https://github.com/srt2777/AgriDx-v3/commit/78b5e215ae5458ab51af4dfccf9e9fbf5f02b1b4) 保存到同一分支，通过 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17) 审阅；CI 和合入状态以 PR 为准，腾讯线上尚未验收 3.2.2。
 
 ## 3.2.1 — 2026-10-12
 

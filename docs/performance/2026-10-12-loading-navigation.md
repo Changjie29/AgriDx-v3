@@ -50,4 +50,4 @@ agridx.xyz → agridx.xyz.cdn.dnsv1.com → 13kd6ev2.slt.sched.intlscdn.com
 
 ## GitHub 与上线状态
 
-目标仓库 `srt2777/AgriDx-v3`，分支 `codex/loading-navigation-performance-20261012`，基线为主线已合入的 3.2.1。实现已保存为 [fa6cf43](https://github.com/srt2777/AgriDx-v3/commit/fa6cf43257e8e15035039cd2f080f8126890e562)，审阅入口为 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17)，CI 与合入状态以 PR 为准。本轮本地修复和 GitHub 保存不代表腾讯线上已更新到 3.2.2。
+目标仓库 `srt2777/AgriDx-v3`，分支 `codex/loading-navigation-performance-20261012`，基线为主线已合入的 3.2.1。初次实现保存为 [fa6cf43](https://github.com/srt2777/AgriDx-v3/commit/fa6cf43257e8e15035039cd2f080f8126890e562)，目录缓存与正文加载补充保存为 [78b5e21](https://github.com/srt2777/AgriDx-v3/commit/78b5e215ae5458ab51af4dfccf9e9fbf5f02b1b4)。两批仍属同一 3.2.2，审阅入口为 [PR #17](https://github.com/srt2777/AgriDx-v3/pull/17)，CI 与合入状态以 PR 为准。本轮本地修复和 GitHub 保存不代表腾讯线上已更新到 3.2.2。
