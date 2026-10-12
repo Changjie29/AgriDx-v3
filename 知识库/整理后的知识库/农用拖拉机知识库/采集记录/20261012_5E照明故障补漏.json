@@ -1,0 +1,183 @@
+{
+  "snapshot_date_shanghai": "2026-10-12",
+  "repository": "srt2777/AgriDx-v3",
+  "version": "3.1.2",
+  "new_entry": "KB-JD-5E-D0-097",
+  "checks": 28,
+  "results": [
+    {
+      "check": "health",
+      "version": "3.1.2",
+      "entries": 413,
+      "chunks": 422,
+      "passed": true
+    },
+    {
+      "check": "catalogue",
+      "entries": 413,
+      "sources": 26,
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-850",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-850",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-854",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-854",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-904",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-904",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-954",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-954",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-1000",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-1000",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-1004",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-1004",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-1100",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-1100",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-1104",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-1104",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-1200",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-1200",
+      "passed": true
+    },
+    {
+      "check": "exact_model_chat",
+      "model": "5E-1204",
+      "entry_id": "KB-JD-5E-D0-097",
+      "passed": true
+    },
+    {
+      "check": "exact_model_navigation",
+      "model": "5E-1204",
+      "passed": true
+    },
+    {
+      "check": "scope_isolation",
+      "model": "5E-1504",
+      "question": "照明失灵",
+      "passed": true
+    },
+    {
+      "check": "scope_isolation",
+      "model": "5E-1204",
+      "question": "国四照明失灵",
+      "passed": true
+    },
+    {
+      "check": "scope_isolation",
+      "model": "JD1104",
+      "question": "照明失灵",
+      "passed": true
+    },
+    {
+      "check": "scope_isolation",
+      "model": "5E-1204",
+      "brand": "东方红",
+      "question": "照明失灵",
+      "passed": true
+    },
+    {
+      "check": "retained_main_expansion",
+      "model": "5E-1204",
+      "question": "发动机起动困难或不能起动",
+      "expected": "KB-JD-5E-D0-057",
+      "passed": true
+    },
+    {
+      "check": "retained_main_expansion",
+      "model": "JD1104",
+      "question": "发动机过热",
+      "expected": "KB-JD-6B-L1-014",
+      "passed": true
+    }
+  ],
+  "external_llm_verified": false,
+  "production_deployed": false,
+  "verify": {
+    "tests": 140,
+    "passed": 138,
+    "failed": 0,
+    "skipped": 2,
+    "typecheck": true,
+    "lint_errors": 0,
+    "build_client": true,
+    "build_server": true
+  }
+}

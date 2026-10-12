@@ -148,5 +148,5 @@
   ],
   "errors": [],
   "scope": "Local production browser checks; stalled modules simulated where stated, actual WebGL for model and campus controls. No live LLM calls.",
-  "tested_build_version": "3.2.2 before metadata-only renumbering to 3.0.7"
+  "tested_build_version": "3.2.2 before metadata-only renumbering to 3.1.1"
 }

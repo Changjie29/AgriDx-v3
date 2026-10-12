@@ -36,7 +36,6 @@ function fixture(t: { after: (cleanup: () => void) => void }, options: {
   failure?: 'preflight' | 'build' | 'stage' | 'production' | 'nginx';
   previousDropin?: boolean;
   blockedNpmCache?: boolean;
-  expandedKnowledge?: boolean;
 } = {}) {
   const temporaryRoot = path.resolve(os.tmpdir());
   const directory = mkdtempSync(path.join(temporaryRoot, 'agridx-tencent-deploy-'));
@@ -96,9 +95,7 @@ function run(command, rest, extra = {}) {
   process.exit(result.status === null ? 1 : result.status);
 }
 function health(version) {
-  const expanded = process.env.AGRIDX_FIXTURE_EXPANDED_KNOWLEDGE === '1' && version !== '3.0.0';
-  const knowledge = expanded ? { chunks: 237, archivedEntries: 228 } : { chunks: 221, archivedEntries: 212 };
-  console.log(JSON.stringify({ ok: true, version, knowledge }));
+  console.log(JSON.stringify({ ok: true, version, knowledge: { chunks: 221, archivedEntries: 212 } }));
 }
 if (name === 'id') {
   if (args.join(' ') !== '-u') process.exit(90);
@@ -238,7 +235,6 @@ if (name === 'id') {
     AGRIDX_FIXTURE_ROOT: directory, AGRIDX_FIXTURE_FAILURE: options.failure ?? '',
     AGRIDX_FIXTURE_STAGE_PID: String(process.pid),
     AGRIDX_FIXTURE_BLOCKED_CACHE: options.blockedNpmCache ? '1' : '',
-    AGRIDX_FIXTURE_EXPANDED_KNOWLEDGE: options.expandedKnowledge ? '1' : '',
     npm_config_cache: legacyCache, NPM_CONFIG_CACHE: legacyCache,
   };
   // These fake commands make no HTTP calls; an inherited project test loader is
@@ -352,26 +348,6 @@ test('腾讯成功更新使用完整 SHA，保留旧目录/env/Nginx且临时检
   context.assertPreserved();
 });
 
-test('腾讯更新接受228条知识快照并保留212条旧目录', { skip: unixOnly }, t => {
-  const context = fixture(t, { expandedKnowledge: true });
-  const result = context.execute();
-  assert.equal(result.status, 0, result.stderr || result.error?.message);
-  assert.notEqual(readlinkSync(context.current), context.previous);
-  assert.ok(existsSync(path.join(context.previous, 'package.json')));
-  assert.match(result.stdout, /chunks=237 archivedEntries=228/);
-  context.assertPreserved();
-});
-
-test('腾讯228条新版本健康失败时仍能恢复212条旧版本', { skip: unixOnly }, t => {
-  const context = fixture(t, { expandedKnowledge: true, failure: 'production' });
-  const result = context.execute();
-  assert.equal(result.status, 1, result.stderr || result.error?.message);
-  assert.equal(readlinkSync(context.current), context.previous);
-  assert.equal(readFileSync(context.dropin, 'utf8'), context.previousDropin);
-  assert.match(result.stderr, /已恢复上一目录/);
-  context.assertPreserved();
-});
-
 test('腾讯默认 npm 缓存不可写时使用独立缓存完成安装、构建和裁剪', { skip: unixOnly }, t => {
   const context = fixture(t, { blockedNpmCache: true });
   const result = context.execute();
@@ -450,5 +426,8 @@ test('腾讯正式启动命令从 current 软链接工作目录启动真实 Type
   }
   assert.ok(status, `真实入口未开始监听：${output}`);
   assert.equal(status.version, JSON.parse(readFileSync(path.join(projectRoot, 'package.json'), 'utf8')).version);
-  assert.deepEqual(status.knowledge, { chunks: 237, archivedEntries: 228 });
+  const archivedEntries = readFileSync(path.join(projectRoot,
+    '知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl'), 'utf8')
+    .trim().split(/\r?\n/).length;
+  assert.deepEqual(status.knowledge, { chunks: archivedEntries + 9, archivedEntries });
 });

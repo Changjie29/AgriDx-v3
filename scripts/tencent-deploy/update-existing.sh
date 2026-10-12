@@ -64,16 +64,11 @@ validate_health() {
       try {
         const value = JSON.parse(body);
         const expected = process.argv[1];
-        const chunks = value.knowledge?.chunks;
-        const archivedEntries = value.knowledge?.archivedEntries;
-        // Preserve the deployed 212-entry snapshot and the reviewed v3 expansion.
-        const knownKnowledge = (archivedEntries === 212 && chunks === 221) ||
-          (archivedEntries === 228 && chunks === 237);
         if (value.ok !== true || typeof value.version !== "string" ||
             !/^\d+\.\d+\.\d+$/.test(value.version) ||
             (expected && value.version !== expected) ||
-            !knownKnowledge) process.exit(1);
-        console.log(`version=${value.version} chunks=${chunks} archivedEntries=${archivedEntries}`);
+            value.knowledge?.chunks !== 221 || value.knowledge?.archivedEntries !== 212) process.exit(1);
+        console.log(`version=${value.version} chunks=221 archivedEntries=212`);
       } catch { process.exit(1); }
     });
   ' "${1:-}"
