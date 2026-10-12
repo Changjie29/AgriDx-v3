@@ -426,5 +426,8 @@ test('腾讯正式启动命令从 current 软链接工作目录启动真实 Type
   }
   assert.ok(status, `真实入口未开始监听：${output}`);
   assert.equal(status.version, JSON.parse(readFileSync(path.join(projectRoot, 'package.json'), 'utf8')).version);
-  assert.deepEqual(status.knowledge, { chunks: 221, archivedEntries: 212 });
+  const archivedEntries = readFileSync(path.join(projectRoot,
+    '知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl'), 'utf8')
+    .trim().split(/\r?\n/).length;
+  assert.deepEqual(status.knowledge, { chunks: archivedEntries + 9, archivedEntries });
 });
