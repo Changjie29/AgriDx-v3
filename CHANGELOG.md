@@ -10,7 +10,7 @@
 - Chromium 桌面和触摸模式启用增强折射；Safari、Firefox与减少动态使用背景雾面，减少透明度、高对比及不支持背景滤镜时使用实底。光学代码延后加载，贴图限制像素预算；动画到位后停止、离屏释放 SVG，不新增字体或三维依赖。实际 WebGL 像素对比、两版检查和真实园区录屏见 [实时液态玻璃记录](docs/design/2026-10-13-live-liquid-glass/README.md)。
 - 参考 Apple WWDC25《Meet Liquid Glass》的交互原则补充灵动反馈：导航、界面版本、模型视角与新版展区使用连续移动的选中胶囊；玻璃控件在鼠标、触摸和键盘按压时响应高光并短距回弹。手机菜单、展区说明及设备目录使用短弹簧展开，关闭后立即停止接收操作；页面内容轻量入场。减少动态时关闭形变与过渡，保留已有按需三维和目录缓存。调研与实际验证见 [WWDC 交互记录](docs/design/2026-10-12-wwdc-fluid-interaction/README.md)。
 - 同步最新 3.2.1 主线，保留公开开发预览及资源子路径，将同轮 UI 成果协调为 3.2.2。最新完整 verify 通过：146 项测试通过、2 项 Windows 专用检查在 Linux 跳过，类型、Lint 和前后端构建通过；56 项实时界面断言、32 项功能回归、7 项本地开发预览与 5 项 StrictMode 检查通过，无页面脚本错误。界面报告收尾的变量重名已修正，导出来源在记录中说明；此前 70 项动效检查仍按原有版本保存。保留 412 条归档知识与 421 个片段，本轮未部署腾讯服务器，个人分支不发布开发站。
-- 实现提交 [7f83921](https://github.com/srt2777/AgriDx-v3/commit/7f839219d7c0e3c232d2841d2a4261dd6858fd00) 已保存，通过独立 [PR #21](https://github.com/srt2777/AgriDx-v3/pull/21) 审阅；CI 与合入状态以 PR 为准。
+- 实时光学实现提交 [c42f6eb](https://github.com/srt2777/AgriDx-v3/commit/c42f6eb6b2cdbf7005ddfc6f34ed2d5dd512629d)；此前 WWDC 动效实现提交 [7f83921](https://github.com/srt2777/AgriDx-v3/commit/7f839219d7c0e3c232d2841d2a4261dd6858fd00)，共同通过 [PR #21](https://github.com/srt2777/AgriDx-v3/pull/21) 审阅；CI 与合入状态以 PR 为准。
 
 ## 3.2.1 — 2026-10-12
 

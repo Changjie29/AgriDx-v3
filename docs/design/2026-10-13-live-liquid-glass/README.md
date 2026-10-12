@@ -48,4 +48,4 @@ python docs/design/2026-10-13-live-liquid-glass/browser-checks.py
 
 ## GitHub 与上线
 
-成果保存到 [PR #21](https://github.com/srt2777/AgriDx-v3/pull/21)，分支 `codex/wwdc-fluid-interaction-20261012`。个人分支不发布；合入 main 后，已有开发预览工作流按主线更新独立开发站。腾讯服务器本轮未部署，生产域名耗时仍需恢复服务器访问后验收。
+实时光学实现提交 [c42f6eb](https://github.com/srt2777/AgriDx-v3/commit/c42f6eb6b2cdbf7005ddfc6f34ed2d5dd512629d)，成果保存到 [PR #21](https://github.com/srt2777/AgriDx-v3/pull/21)，分支 `codex/wwdc-fluid-interaction-20261012`。个人分支不发布；合入 main 后，已有开发预览工作流按主线更新独立开发站。腾讯服务器本轮未部署，生产域名耗时仍需恢复服务器访问后验收。
