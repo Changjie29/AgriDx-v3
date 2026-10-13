@@ -25,7 +25,8 @@ test('memory persists profile, transcript, revisions and progress across databas
     assert.equal(restored.messages.length, 2);
     assert.equal(restored.messages[1].provider, 'deepseek');
     assert.equal(restored.revision, 2);
-    assert.equal(fs.statSync(filename).mode & 0o777, 0o600);
+    // Windows reports synthetic mode bits; its filesystem permissions use ACLs.
+    if (process.platform !== 'win32') assert.equal(fs.statSync(filename).mode & 0o777, 0o600);
   } finally { store.close(); fs.rmSync(dir, { recursive: true, force: true }); }
 });
 

@@ -32,6 +32,10 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 设备档案、对话及用户检查进度可恢复、新建、清空和删除。同一浏览器使用匿名身份，Express 数据默认保存在运行用户的 `~/.agridx/memory.sqlite`；可用 `MEMORY_DB_PATH` 指向独立持久目录。开发预览只在当前浏览器保存，清除网站数据会删除预览记录。使用与限制见[诊断记忆说明](docs/diagnostic-memory.md)。
 
+## 开发版内部数据
+
+独立开发站新增[开发控制台](https://agridx-dev-preview.z3464715478.chatgpt.site/#/developer)，查看匿名访问、当前提问及诊断结果、GitHub 主干和构建状态。内部接口须验证 GitHub 仓库管理员/维护者身份；普通访问继续公开，腾讯记录未接入。数据从功能上线后采集，保存最近30天；入口存储迁移与线上验证独立于前端自动构建，见[控制台说明](docs/deployment/dev-console.md)。
+
 ## 腾讯云现有服务器更新
 
 用户已于 2026-10-11 授权配置现有腾讯云轻量服务器。服务器为 Ubuntu 24.04.4，网站使用 `/opt/agridx/current` 版本软链接、`agridx.service`、本机 8787 接口及现有 Nginx HTTPS；运行密钥文件为 `/etc/agridx.env`。

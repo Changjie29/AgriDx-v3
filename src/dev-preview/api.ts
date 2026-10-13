@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { recordQuestion } from './telemetry';
 import { PreviewMemoryStore, previewMemoryRoute } from './memory';
 import { MemoryError, summarizeReports } from '../../shared/memory-validation';
 import { loadKnowledgeBase, stats } from '../../server/knowledge/retriever';
@@ -57,6 +58,9 @@ async function dispatchPreviewFetch(input: string, options: RequestInit = {}): P
       try { body = JSON.parse(String(options.body ?? '')); }
       catch { return json({ error: '请求体必须为有效的 JSON 对象', code: 'bad_request' }, 400); }
       const request = parseDiagnosticRequest(body);
+      const started = performance.now();
+      const question = { question: request.history.at(-1)!.content, machineType: request.machineType, brand: request.brand, model: request.model };
+      try {
       // Preview enforces local-only even if the browser requests AI assistance.
       request.diagnosisMode = 'knowledge_only';
       const data = body as Record<string, unknown>;
@@ -83,6 +87,12 @@ async function dispatchPreviewFetch(input: string, options: RequestInit = {}): P
           session.messages.length ? [] : request.history.slice(0, -1));
       }
       response = json(payload);
+        recordQuestion({ ...question, machineType: request.machineType, brand: request.brand, model: request.model,
+          outcome: 'success', knowledgeChunks: payload.knowledgeChunks, latencyMs: performance.now() - started });
+      } catch (error) {
+        recordQuestion({ ...question, outcome: options.signal?.aborted ? 'cancelled' : 'error', knowledgeChunks: 0, latencyMs: performance.now() - started });
+        throw error;
+      }
     } else {
       return json({ error: '接口不存在', code: 'not_found' }, 404);
     }
