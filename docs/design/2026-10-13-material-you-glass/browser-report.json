@@ -1,0 +1,142 @@
+{
+  "version": "3.5.3",
+  "checks": [
+    {
+      "name": "classic uses Material You color roles and a native live filter",
+      "result": "passed"
+    },
+    {
+      "name": "native refraction changes actual WebGL pixels beyond ordinary blur",
+      "result": "passed",
+      "detail": 2.378
+    },
+    {
+      "name": "live backdrop reflects later WebGL frames without DOM capture",
+      "result": "passed",
+      "detail": 42.707
+    },
+    {
+      "name": "focus transfer keeps the new control pressed",
+      "result": "passed"
+    },
+    {
+      "name": "pointer press creates a clipped Material You ripple",
+      "result": "passed"
+    },
+    {
+      "name": "pointer press changes the real lens strength",
+      "result": "passed",
+      "detail": {
+        "rest": -28.0,
+        "pressed": -31.517
+      }
+    },
+    {
+      "name": "ripple is removed after its finite animation",
+      "result": "passed"
+    },
+    {
+      "name": "optical filter has no attribute animation while idle",
+      "result": "passed"
+    },
+    {
+      "name": "keyboard press gets the same bounded ripple",
+      "result": "passed"
+    },
+    {
+      "name": "classic dark theme changes semantic primary and surface colors",
+      "result": "passed"
+    },
+    {
+      "name": "old mobile 320: live Material You glass is enabled",
+      "result": "passed"
+    },
+    {
+      "name": "old mobile 320: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "classic mobile 320: touch press creates bounded ripple",
+      "result": "passed"
+    },
+    {
+      "name": "classic mobile 320: touch release clears press state",
+      "result": "passed"
+    },
+    {
+      "name": "classic mobile 320: menu remains operable",
+      "result": "passed"
+    },
+    {
+      "name": "old mobile 390: live Material You glass is enabled",
+      "result": "passed"
+    },
+    {
+      "name": "old mobile 390: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "classic mobile 390: touch press creates bounded ripple",
+      "result": "passed"
+    },
+    {
+      "name": "classic mobile 390: touch release clears press state",
+      "result": "passed"
+    },
+    {
+      "name": "classic mobile 390: menu remains operable",
+      "result": "passed"
+    },
+    {
+      "name": "new mobile 320: live Material You glass is enabled",
+      "result": "passed"
+    },
+    {
+      "name": "new mobile 320: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "new mobile 390: live Material You glass is enabled",
+      "result": "passed"
+    },
+    {
+      "name": "new mobile 390: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "new campus uses Material You tonal selection and live zone panel",
+      "result": "passed"
+    },
+    {
+      "name": "new knowledge route retains tonal shell and real model selection",
+      "result": "passed"
+    },
+    {
+      "name": "new pages respect global light theme with their own Material You roles",
+      "result": "passed"
+    },
+    {
+      "name": "reduced-motion avoids SVG optics",
+      "result": "passed"
+    },
+    {
+      "name": "reduced-motion avoids animated ripple",
+      "result": "passed"
+    },
+    {
+      "name": "forced-colors avoids SVG optics",
+      "result": "passed"
+    },
+    {
+      "name": "forced-colors avoids animated ripple",
+      "result": "passed"
+    },
+    {
+      "name": "all tested pages have no script errors",
+      "result": "passed",
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "scope": "Actual production UI; live WebGL optics; mobile Chinese/English; fallbacks"
+}

@@ -1,4 +1,4 @@
-/* App-owned layout and legibility; liquid-glass-react supplies the optical backdrop. */
+/* App-owned layout and legibility, with a native SVG optical backdrop. */
 .agri-liquid-glass {
   --lg-radius: 22px;
   --lg-blur: 12px;
@@ -19,22 +19,7 @@
   pointer-events: none;
 }
 .agri-glass-lens { overflow: hidden; }
-.agri-live-optics { position: absolute; inset: 0; border-radius: inherit; }
-.agri-live-optics > :not(.agri-glass-engine) { display: none; }
-.agri-live-optics .glass__warp { display: none; }
-/* The engine defaults to centering, elastic transforms, white text and drop shadows.
-   It sits behind a separate content layer, so none of those defaults affect controls. */
-.agri-glass-lens > :not(.agri-live-optics, .agri-glass-frost) { display: none; }
-.agri-glass-lens > .agri-glass-frost { position: absolute; inset: 0; }
-.agri-glass-engine { border-radius: inherit; transform: none !important; transition: none !important; pointer-events: none; }
-.agri-glass-engine > svg { inset: 0; width: 0 !important; height: 0 !important; }
-.agri-glass-engine > .glass {
-  width: 100%; height: 100%;
-  display: block !important;
-  border-radius: inherit !important;
-  box-shadow: none !important;
-  transition: none !important;
-}
+.agri-live-optics { position: absolute; width: 0; height: 0; overflow: hidden; }
 .agri-liquid-glass > .liquid-glass-tint { z-index: 1; background: var(--glass-control-tint); }
 .agri-liquid-glass > .liquid-glass-shine {
   z-index: 2;
@@ -63,7 +48,6 @@
 }
 .agri-liquid-glass[data-glass-active] > .liquid-glass-shine::after { opacity: .2; }
 .agri-liquid-glass > .liquid-glass-content { position: relative; z-index: 3; }
-html.dark .agri-liquid-glass > .liquid-glass-shine { box-shadow: inset 0 1px 0 rgb(230 248 237 / 22%), inset 0 -1px 0 rgb(230 248 237 / 10%); }
 .agri-liquid-glass[data-glass-mode="solid"] { background: var(--lg-solid, var(--card)); border: 1px solid var(--lg-border, var(--border)); -webkit-backdrop-filter: none; backdrop-filter: none; }
 .agri-liquid-glass[data-glass-mode="solid"] > :is(.liquid-glass-effect, .liquid-glass-tint, .liquid-glass-shine) { display: none; }
 @media (prefers-reduced-motion: reduce) {
