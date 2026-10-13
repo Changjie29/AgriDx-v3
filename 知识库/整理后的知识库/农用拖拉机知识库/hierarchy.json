@@ -37,7 +37,10 @@
           "evidence_terms": [
             "后处理",
             "DPF",
-            "排气"
+            "排气",
+            "排放温度",
+            "驻车清洁",
+            "再生"
           ]
         }
       ]
@@ -78,7 +81,8 @@
             "高压燃油",
             "燃油管路",
             "高压共轨",
-            "燃油管"
+            "燃油管",
+            "油管"
           ]
         },
         {
@@ -220,7 +224,9 @@
             "电缆",
             "接头",
             "控制线路",
-            "接线端"
+            "接线端",
+            "连接器",
+            "线路"
           ]
         },
         {
@@ -265,7 +271,8 @@
           "id": "fuel-sensor",
           "name": "燃油传感器",
           "evidence_terms": [
-            "燃油传感器"
+            "燃油传感器",
+            "油量传感器"
           ]
         }
       ]
@@ -350,7 +357,9 @@
             "液压油滤清器",
             "液压滤芯",
             "液压双滤",
-            "进油滤网"
+            "进油滤网",
+            "吸油滤清器",
+            "网式滤芯"
           ]
         },
         {
@@ -374,7 +383,8 @@
             "拆管",
             "拆接管路",
             "液压软管",
-            "钢管"
+            "钢管",
+            "液压接管"
           ]
         },
         {
@@ -387,7 +397,10 @@
             "多路阀",
             "选择控制阀",
             "辅助方向阀",
-            "SCV"
+            "SCV",
+            "控制阀",
+            "输出阀",
+            "机械阀"
           ]
         },
         {
@@ -422,7 +435,18 @@
             "悬挂传感器",
             "提升速度",
             "下降控制阀",
-            "位置控制上限"
+            "位置控制上限",
+            "深度控制",
+            "悬挂运输锁",
+            "提升上限",
+            "提升拉杆",
+            "提升高度",
+            "悬挂减振",
+            "悬挂远置",
+            "远置控制",
+            "牵引力",
+            "提升行程",
+            "下降控制旋钮"
           ]
         },
         {
@@ -557,7 +581,8 @@
           "evidence_terms": [
             "前桥",
             "前驱桥",
-            "前差速"
+            "前差速",
+            "前驱"
           ]
         }
       ]
@@ -623,7 +648,10 @@
             "驾驶室空气过滤器",
             "驾驶室滤芯",
             "内循环空滤",
-            "新风滤芯"
+            "新风滤芯",
+            "驾驶室空气滤清器",
+            "驾驶室滤清器",
+            "驾驶室普通空气滤芯"
           ]
         },
         {
@@ -10504,6 +10532,3076 @@
         {
           "component_id": "electrical",
           "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-001",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-002",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-003",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-004",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-005",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-006",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-007",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-008",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-009",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-010",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "exhaust-aftertreatment"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-011",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-012",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-013",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-014",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-015",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-016",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-017",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-018",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-019",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-020",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "differential-lock"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-021",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "differential-lock"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-022",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "differential-lock"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-023",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-024",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-025",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-026",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-027",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-028",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-029",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-030",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-031",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-032",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-033",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-034",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-035",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-036",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-037",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-038",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-039",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-040",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-041",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-042",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-043",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-044",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-045",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-046",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-047",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-048",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-049",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-050",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-051",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-052",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-053",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-054",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-055",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-056",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-057",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-058",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-059",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-060",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-061",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-062",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-063",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-064",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-065",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-066",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-067",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-068",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-069",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-070",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-071",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-072",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-073",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-074",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-075",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-076",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-077",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-078",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-079",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-080",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-081",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-082",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-083",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-084",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-085",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-hose",
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-086",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-087",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-088",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-089",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-090",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-091",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-092",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-093",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-094",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-095",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre",
+            "wheel-rim"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-096",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-097",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-098",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-099",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-100",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-101",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-102",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-103",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-104",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-105",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-106",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-107",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-108",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-109",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "rops"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-110",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-111",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "rops"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-112",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-113",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-114",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-115",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-116",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-117",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-118",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-119",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6M-20261013-B2-120",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-001",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-002",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-003",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-004",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-005",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-006",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-007",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-008",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-009",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-010",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-011",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-012",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-013",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-014",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-015",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-016",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-017",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "ignition-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-018",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "ignition-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-019",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "ignition-switch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-020",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-021",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-022",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-023",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-024",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-025",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-026",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-027",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-028",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-029",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-030",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-031",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-032",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-033",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter",
+            "water-separator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-034",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "water-separator",
+            "fuel-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-035",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-036",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-037",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator",
+            "thermostat"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-038",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-039",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-040",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-041",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-042",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-043",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "rops"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-044",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-045",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-046",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-047",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-048",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-049",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-050",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-051",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-052",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-053",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "thermostat"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-054",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-055",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-056",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "radiator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-057",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-058",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-059",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-060",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-061",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-062",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-063",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-064",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-065",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-066",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-067",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-068",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-069",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-070",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-clutch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-071",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-072",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-073",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-074",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "condenser",
+            "cab-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-075",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-076",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-077",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-078",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-079",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-080",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-081",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-082",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-083",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-084",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-085",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-rim"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-086",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-087",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-088",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-filter",
+            "oil-dipstick"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-089",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter",
+            "hydraulic-seal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-090",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-091",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-092",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-093",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-094",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-095",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-096",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-097",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-098",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-099",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-JD-6E-20261013-B2-100",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-001",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-002",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-003",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-004",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-005",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-006",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-007",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-008",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-009",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-pedal"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-010",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-011",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-012",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-013",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-014",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-015",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-016",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-017",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": [
+            "condenser"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-018",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-019",
+      "components": [
+        {
+          "component_id": "cab",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-020",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-021",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-022",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-023",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-024",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-025",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-026",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-027",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-028",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-029",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-030",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-031",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-032",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-033",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-034",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-035",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-clutch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-036",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-shaft"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-037",
+      "components": [
+        {
+          "component_id": "machine",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-038",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-039",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "battery"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-040",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-041",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": [
+            "steering-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-042",
+      "components": [
+        {
+          "component_id": "engine",
+          "part_ids": [
+            "air-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-043",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-dipstick"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-044",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-045",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "water-separator"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-046",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-047",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-048",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-049",
+      "components": [
+        {
+          "component_id": "lubrication",
+          "part_ids": [
+            "oil-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-050",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-filter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-051",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-052",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-053",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "front-axle"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-054",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-055",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-056",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-057",
+      "components": [
+        {
+          "component_id": "fuel",
+          "part_ids": [
+            "fuel-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-058",
+      "components": [
+        {
+          "component_id": "brakes",
+          "part_ids": [
+            "brake-hose"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-059",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-060",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-061",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-062",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-rim"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-063",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-064",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "tyre"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-065",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": [
+            "clutch-spring"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-066",
+      "components": [
+        {
+          "component_id": "pto",
+          "part_ids": [
+            "pto-clutch"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-067",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-068",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-069",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-070",
+      "components": [
+        {
+          "component_id": "transmission",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-071",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": [
+            "wheel-rim",
+            "wheel-bearing"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-072",
+      "components": [
+        {
+          "component_id": "chassis",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-073",
+      "components": [
+        {
+          "component_id": "steering",
+          "part_ids": []
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-074",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-pump",
+            "hydraulic-filter",
+            "hydraulic-cylinder"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-075",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-076",
+      "components": [
+        {
+          "component_id": "hydraulics",
+          "part_ids": [
+            "hydraulic-valve",
+            "hitch-control"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-077",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "starter"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-078",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "wiring",
+            "brush"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-079",
+      "components": [
+        {
+          "component_id": "cooling",
+          "part_ids": [
+            "temperature-sensor"
+          ]
+        }
+      ]
+    },
+    {
+      "entry_id": "KB-YTO-LF-20261013-B2-080",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuel-sensor",
+            "wiring"
+          ]
         }
       ]
     }
