@@ -89,3 +89,5 @@ flowchart LR
 - 索引校验26来源、1213归档、1222片段，0错误；没有修改知识事实、PDF原件或依赖版本。
 - 生产模式真实Express监听执行12项HTTP检查：三模式来源、三模式制动安全、代码缺身份追问、否定旧机型暂停检索、输入校验及目录；全部通过，实际外部API调用0。见[生产模式HTTP回执](performance/2026-10-13-diagnosis-router/production-http.json)。
 - [验收数据](performance/2026-10-13-diagnosis-router/validation.json)保存结果及范围；本轮仅PR审阅，没有服务器／开发站部署或实车验证。
+
+实现与验收提交：[ebe6f2d](https://github.com/srt2777/AgriDx-v3/commit/ebe6f2d2fa76cdee7b188ae0c40b310ebb5683af)。性能数据中的rootCommit为采样时基线，measuredSourceSha256绑定当时工作树中的实际实现；本提交的相关源码指纹与最终数据一致。

@@ -54,5 +54,6 @@
   "github": {
     "intent": "Independent PR targeting main, wait for review; no merge or website deployment"
   },
-  "capturedAt": "2026-10-13T10:13:34.803661+00:00"
+  "capturedAt": "2026-10-13T10:13:34.803661+00:00",
+  "implementationCommit": "ebe6f2d2fa76cdee7b188ae0c40b310ebb5683af"
 }
