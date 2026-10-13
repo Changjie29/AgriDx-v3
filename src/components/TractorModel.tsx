@@ -1,3 +1,4 @@
+import { useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
@@ -19,6 +20,7 @@ interface TractorModelProps {
 
 /** Original schematic GLB. Cache geometry is shared; all changed materials are cloned. */
 export default function TractorModel({ onLoaded, component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL }: TractorModelProps) {
+  const reducedMotion = useReducedMotion();
   const invalidate = useThree(state => state.invalidate);
   const { scene } = useGLTF(modelUrl);
   const model = useMemo(() => {
@@ -68,13 +70,14 @@ export default function TractorModel({ onLoaded, component = 'all', exploded = f
   }, [model, exploded, modelUrl, invalidate]);
 
   useFrame((state, delta) => {
-    const alpha = 1 - Math.exp(-delta * 8);
+    const alpha = reducedMotion ? 1 : 1 - Math.exp(-Math.min(delta, .1) * 8);
     let moving = false;
     model.traverse(node => {
       const target = node.userData.explosionTarget as THREE.Vector3 | undefined;
       if (target) {
         node.position.lerp(target, alpha);
         if (node.position.distanceToSquared(target) > 0.0004) moving = true;
+        else node.position.copy(target);
       }
       if (!(node instanceof THREE.Mesh)) return;
       const materials = Array.isArray(node.material) ? node.material : [node.material];
@@ -83,6 +86,14 @@ export default function TractorModel({ onLoaded, component = 'all', exploded = f
         if (targetOpacity === undefined) return;
         material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, alpha);
         if (Math.abs(material.opacity - targetOpacity) > 0.002) moving = true;
+        else {
+          material.opacity = targetOpacity;
+          if (targetOpacity === material.userData.baseOpacity) {
+            if (material.transparent !== material.userData.baseTransparent) material.needsUpdate = true;
+            material.transparent = material.userData.baseTransparent;
+            material.depthWrite = material.userData.baseDepthWrite;
+          }
+        }
       });
     });
     if (moving) state.invalidate();
@@ -106,7 +117,7 @@ export default function TractorModel({ onLoaded, component = 'all', exploded = f
       materials.forEach(material => {
         const targetOpacity = selected ? material.userData.baseOpacity : .09;
         material.userData.targetOpacity = targetOpacity;
-        material.transparent = selected ? material.userData.baseTransparent : true;
+        material.transparent = true;
         material.depthWrite = selected ? material.userData.baseDepthWrite : false;
         material.needsUpdate = true;
       });

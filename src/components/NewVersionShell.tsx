@@ -1,3 +1,7 @@
+import { LiquidGlass } from '@/components/ui/liquid-glass';
+import { LiquidSelection } from '@/components/ui/liquid-selection';
+import { preloadPage } from '@/lib/page-loaders';
+import { publicAsset } from '@/lib/public-asset';
 import { Globe } from 'lucide-react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useLang, setLang } from '@/hooks/useLang';
@@ -28,10 +32,10 @@ export function NewVersionShell() {
   return (
     <div className="new-version-shell" data-ui-version="new" data-route={location.pathname}>
       <a className="new-version-skip-link" href="#main-content">{t('跳到主要内容', 'Skip to content')}</a>
-      <header className="new-version-header">
+      <header className="new-version-header"><LiquidGlass lens className="new-version-header-glass" contentClassName="new-version-header-content">
         <div className="new-version-brand">
           <a href="https://coe.njau.edu.cn/" target="_blank" rel="noopener noreferrer" className="new-version-college-mark" aria-label={t('南京农业大学工学院官网首页', 'College of Engineering, NAU official homepage')}>
-            <img src="/images/njau-engineering-mark.jpg" alt={t('南京农业大学工学院院徽', 'College of Engineering, NAU emblem')} width="857" height="411" />
+            <img src={publicAsset('images/njau-engineering-mark.jpg')} alt={t('南京农业大学工学院院徽', 'College of Engineering, NAU emblem')} width="857" height="411" />
           </a>
           <Link to="/" className="new-version-wordmark" aria-label={t('耕知·耘诊大厅', 'Gengzhi · Yunzhen hub')}>
             <strong>耕知 · 耘诊</strong>
@@ -45,9 +49,11 @@ export function NewVersionShell() {
               key={item.path}
               to={item.path}
               end={item.path === '/'}
+              onPointerEnter={() => preloadPage(item.path, 'new')}
+              onFocus={() => preloadPage(item.path, 'new')}
               className={({ isActive }) => `new-version-nav-item${isActive ? ' is-active' : ''}`}
             >
-              {item.label}
+              {({ isActive }) => <>{isActive && <LiquidSelection className="new-version-nav-indicator" layoutId="new-shell-navigation" />}<span className="new-version-nav-label">{item.label}</span></>}
             </NavLink>
           ))}
         </nav>
@@ -59,7 +65,7 @@ export function NewVersionShell() {
             <span>{lang === 'zh' ? 'EN' : '中'}</span>
           </button>
         </div>
-      </header>
+      </LiquidGlass></header>
       <div className="new-version-subheader">
         <span><i aria-hidden="true" />{t('探索装备 · 连接知识 · 辅助诊断', 'EXPLORE EQUIPMENT · CONNECT KNOWLEDGE')}</span>
         <span className="new-version-route-label">{location.pathname === '/knowledge' ? t('农机知识', 'MACHINE KNOWLEDGE') : location.pathname === '/models' ? t('模型工坊', 'MODEL STUDIO') : t('智能诊断', 'DIAGNOSIS')}</span>

@@ -1,8 +1,10 @@
+import type { MemorySession } from '../../../shared/memory';
+import { isDiagnosisMode } from '../../../shared/diagnosis';
 import type { ChatRequest, LlmHealth } from '../../../shared/chat';
 import { ApiError, isRecord, requestJson, type FetchImplementation } from '../../lib/api-client';
 import { isAnswerMode, isChatProvider, isFallbackReason, isKnowledgeChunkCount, type ChatMessage } from './session';
 
-export type ChatReply = Omit<ChatMessage, 'id'>;
+export type ChatReply = Omit<ChatMessage, 'id'> & { memory?: MemorySession };
 
 export function parseChatResponse(value: unknown): ChatReply {
   if (!isRecord(value) || !Array.isArray(value.choices)) throw new Error('Invalid chat response');
@@ -13,6 +15,9 @@ export function parseChatResponse(value: unknown): ChatReply {
   }
   return {
     role: 'assistant',
+    localSummary: value.provider === 'knowledge-base' && typeof value.localSummary === 'string' && value.localSummary.length <= 4000 ? value.localSummary : undefined,
+    coordinationMessage: typeof value.coordinationMessage === 'string' && value.coordinationMessage.length <= 500 ? value.coordinationMessage : undefined,
+    memory: isRecord(value.memory) && typeof value.memory.id === 'string' && Number.isSafeInteger(value.memory.revision) && typeof value.memory.deviceId === 'string' ? value.memory as unknown as MemorySession : undefined,
     content: message.content,
     model: typeof value.model === 'string' ? value.model : undefined,
     provider: isChatProvider(value.provider) ? value.provider : undefined,
@@ -48,7 +53,10 @@ export async function requestChat(
 export function parseLlmHealth(value: unknown): LlmHealth {
   const llm = isRecord(value) ? value.llm : undefined;
   if (!isRecord(llm) || typeof llm.configured !== 'boolean') throw new Error('Unknown LLM configuration');
+  const coordination = isRecord(value) && isRecord(value.coordination) ? value.coordination : {};
   return {
+    ...(typeof coordination.allowExternalAi === 'boolean' ? { allowExternalAi: coordination.allowExternalAi } : {}),
+    ...(isDiagnosisMode(coordination.defaultMode) ? { defaultMode: coordination.defaultMode } : {}),
     configured: llm.configured,
     primary: llm.primary === 'gemini' || llm.primary === 'deepseek' ? llm.primary : null,
   };

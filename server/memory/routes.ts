@@ -36,7 +36,8 @@ export function memoryFailure(error: unknown, res: Response) {
     res.status(503).json({ code: 'memory_unavailable', error: '诊断记忆暂时无法保存或读取，请稍后重试；已有记录不会被清空' });
   }
 }
-export const memoryRouter = Router();
+export function createMemoryRoutes(store = getMemoryStore) {
+const memoryRouter = Router();
 memoryRouter.use(sameOrigin);
 memoryRouter.use((_req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
 memoryRouter.use((req, res, next) => { res.locals.memoryOwner = memoryOwner(req, res); next(); });
@@ -47,19 +48,22 @@ const id = (value: unknown): string => {
   if (!validId(value)) throw new MemoryError(400, 'bad_request', '记录编号格式错误');
   return value;
 };
-memoryRouter.get('/', route((_req, res, owner) => res.json(getMemoryStore().overview(owner))));
-memoryRouter.post('/devices', route((req, res, owner) => res.status(201).json(getMemoryStore().saveDevice(owner, profileFrom(req.body)))));
-memoryRouter.patch('/devices/:id', route((req, res, owner) => res.json(getMemoryStore().saveDevice(owner, profileFrom(req.body), id(req.params.id)))));
-memoryRouter.delete('/devices/:id', route((req, res, owner) => { getMemoryStore().deleteDevice(owner, id(req.params.id)); res.json({ ok: true }); }));
-memoryRouter.post('/sessions', route((req, res, owner) => res.status(201).json(getMemoryStore().createSession(owner, id(req.body?.deviceId)))));
-memoryRouter.get('/sessions/:id', route((req, res, owner) => res.json(getMemoryStore().session(owner, id(req.params.id)))));
+memoryRouter.get('/', route((_req, res, owner) => res.json(store().overview(owner))));
+memoryRouter.post('/devices', route((req, res, owner) => res.status(201).json(store().saveDevice(owner, profileFrom(req.body)))));
+memoryRouter.patch('/devices/:id', route((req, res, owner) => res.json(store().saveDevice(owner, profileFrom(req.body), id(req.params.id)))));
+memoryRouter.delete('/devices/:id', route((req, res, owner) => { store().deleteDevice(owner, id(req.params.id)); res.json({ ok: true }); }));
+memoryRouter.post('/sessions', route((req, res, owner) => res.status(201).json(store().createSession(owner, id(req.body?.deviceId)))));
+memoryRouter.get('/sessions/:id', route((req, res, owner) => res.json(store().session(owner, id(req.params.id)))));
 memoryRouter.patch('/sessions/:id', route((req, res, owner) => {
   if (typeof req.body?.progress !== 'string' || req.body.progress.length > 2000) throw new MemoryError(400, 'bad_request', '检查进度须为文本（上限2000字符）');
-  res.json(getMemoryStore().updateProgress(owner, id(req.params.id), revisionFrom(req.body.revision), req.body.progress.trim()));
+  res.json(store().updateProgress(owner, id(req.params.id), revisionFrom(req.body.revision), req.body.progress.trim()));
 }));
 memoryRouter.post('/sessions/:id/clear', route((req, res, owner) => {
   const sessionId = id(req.params.id);
-  getMemoryStore().clearSession(owner, sessionId, revisionFrom(req.body?.revision));
-  res.json(getMemoryStore().session(owner, sessionId));
+  store().clearSession(owner, sessionId, revisionFrom(req.body?.revision));
+  res.json(store().session(owner, sessionId));
 }));
-memoryRouter.delete('/sessions/:id', route((req, res, owner) => { getMemoryStore().deleteSession(owner, id(req.params.id)); res.json({ ok: true }); }));
+memoryRouter.delete('/sessions/:id', route((req, res, owner) => { store().deleteSession(owner, id(req.params.id)); res.json({ ok: true }); }));
+
+return memoryRouter;
+}

@@ -68,7 +68,7 @@ test('实际浏览器构建保持完整知识目录、诊断来源与型号隔�
     for (const model of ['5E-1004', '不存在的型号']) {
       const body = { messages: [{ role: 'user', content: '发动机无法启动' }], machineType: '拖拉机', brand: '约翰迪尔', model };
       const actual = await (await previewFetch('/api/chat', { method: 'POST', body: JSON.stringify(body) })).json();
-      assert.deepEqual(actual, transported(await diagnose(parseDiagnosticRequest(body))));
+      assert.deepEqual(actual, transported(await diagnose({ ...parseDiagnosticRequest(body), diagnosisMode: 'knowledge_only' })));
       assert.equal(actual.provider, 'knowledge-base');
     }
     assert.equal((await previewFetch('/api/chat', { method: 'POST', body: '{' })).status, 400);

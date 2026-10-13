@@ -2,23 +2,12 @@ import type { KnowledgeChunk } from './retriever';
 import { queryWithoutIdentity, resolveScope, type RetrievalContext } from './scope';
 import { hasIndexedReference, mentionsEntryId, referenceVerification } from './evidence';
 
-export const DIAGNOSIS_MODES = ['auto', 'knowledge_only', 'ai_assisted'] as const;
-export type DiagnosisMode = typeof DIAGNOSIS_MODES[number];
-export type RouteReason = 'identity_conflict' | 'identity_required' | 'server_local_only' | 'invalid_config' | 'local_requested' | 'direct_reference' | 'llm_not_configured' | 'insufficient_evidence' | 'synthesis_requested' | 'ai_requested' | 'provider_unavailable' | 'llm_config_invalid';
-export interface CoordinationDecision {
-  requestedMode: DiagnosisMode;
-  effectiveMode: DiagnosisMode;
-  route: 'local' | 'clarify' | 'ai';
-  reason: RouteReason;
-  evidenceLevel: 'none' | 'partial' | 'direct_reference';
-  llmConfigured: boolean;
-}
-export function isDiagnosisMode(value: unknown): value is DiagnosisMode {
-  return typeof value === 'string' && (DIAGNOSIS_MODES as readonly string[]).includes(value);
-}
+import { isDiagnosisMode, type DiagnosisMode, type CoordinationDecision, type RouteReason } from '../../shared/diagnosis';
+export { DIAGNOSIS_MODES, isDiagnosisMode, type DiagnosisMode, type CoordinationDecision, type RouteReason } from '../../shared/diagnosis';
 export function coordinationConfig() {
-  const value = process.env.DIAGNOSIS_MODE?.trim() || 'auto';
-  const external = process.env.ALLOW_EXTERNAL_AI?.trim() || 'true';
+  const env = typeof process === 'undefined' ? {} : process.env;
+  const value = env.DIAGNOSIS_MODE?.trim() || 'auto';
+  const external = env.ALLOW_EXTERNAL_AI?.trim() || 'true';
   const valid = isDiagnosisMode(value) && ['true', 'false'].includes(external);
   return { defaultMode: valid && isDiagnosisMode(value) ? value : 'knowledge_only' as DiagnosisMode, configValid: valid,
     allowExternalAi: valid && external === 'true' && value !== 'knowledge_only' };

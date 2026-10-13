@@ -1,3 +1,4 @@
+import type { DiagnosisMode } from '../../../shared/diagnosis';
 import { useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
 import { Send, Trash2, Loader2, Bot, User, Sparkles, Cpu, Square } from 'lucide-react';
 import DeferredMarkdown from '@/components/DeferredMarkdown';
@@ -45,9 +46,16 @@ export default function ChatPage() {
   const {
     messages, input, setInput, isLoading, currentModel, currentProvider, currentFallbackReason,
     machineType, setMachineType, brand, setBrand, model, setModel,
-    sendMessage, stopRequest, handleClear,
+    sendMessage, stopRequest, handleClear, memory, profile,
+    diagnosisMode, setDiagnosisMode, deviceName, setDeviceName, hours, setHours, deviceNotes, setDeviceNotes, progress, setProgress,
   } = useChatSession({ handoff, translate: t, focusInput });
   const llmHealth = useLlmHealth();
+  useEffect(() => {
+    if (typeof llmHealth === 'object') {
+      if (llmHealth.allowExternalAi === false) setDiagnosisMode('knowledge_only');
+      else if (llmHealth.defaultMode) setDiagnosisMode(llmHealth.defaultMode);
+    }
+  }, [llmHealth, setDiagnosisMode]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -139,7 +147,7 @@ export default function ChatPage() {
         </div>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="secondary" size="sm" className="gap-1.5 shrink-0" aria-label={t('清空对话', 'Clear conversation')} disabled={isEmpty}>
+            <Button variant="secondary" size="sm" className="gap-1.5 shrink-0" aria-label={t('清空对话', 'Clear conversation')} disabled={isEmpty || isLoading || memory.busy}>
               <Trash2 className="h-4 w-4" />
               <span className="hidden sm:inline">{t('清空对话', 'Clear')}</span>
             </Button>
@@ -159,6 +167,14 @@ export default function ChatPage() {
         </AlertDialog>
       </LiquidGlass>
 
+      <div className="flex items-center gap-2 border-b border-border/60 px-4 py-2 text-xs">
+        <label htmlFor="diagnosis-mode">{t('回答模式', 'Answer mode')}</label>
+        <select id="diagnosis-mode" value={diagnosisMode} disabled={isLoading || memory.busy} onChange={e => setDiagnosisMode(e.target.value as DiagnosisMode)} className="rounded-md border border-border bg-background px-2 py-1">
+          <option value="auto">{t('自动协调', 'Automatic')}</option>
+          <option value="knowledge_only">{t('仅本地知识库', 'Local knowledge only')}</option>
+          <option value="ai_assisted" disabled={typeof llmHealth !== 'object' || !llmHealth.configured || llmHealth.allowExternalAi === false}>{t('AI 辅助分析', 'AI-assisted analysis')}</option>
+        </select>
+      </div>
       {/* 消息列表 */}
       <div className="min-h-0 flex-1 overflow-y-auto" role="log" aria-label={t('诊断对话', 'Diagnosis conversation')} aria-live="polite">
         <div className="mx-auto max-w-3xl px-4 py-6 md:px-6">
@@ -170,7 +186,7 @@ export default function ChatPage() {
                     aria-label={t('农机类型', 'Machine type')}
                     value={machineType}
                     onChange={(e) => setMachineType(e.target.value)}
-                    disabled={isLoading}
+                    disabled={isLoading || memory.busy}
                     className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground disabled:opacity-60"
                   >
                     <option value="">{t('类型', 'Type')}</option>
@@ -184,7 +200,7 @@ export default function ChatPage() {
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
                     placeholder={t('品牌（选填）', 'Brand (optional)')}
-                    disabled={isLoading}
+                    disabled={isLoading || memory.busy}
                     className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground disabled:opacity-60"
                   />
                   <input
@@ -193,12 +209,44 @@ export default function ChatPage() {
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
                     placeholder={t('型号（选填）', 'Model (optional)')}
-                    disabled={isLoading}
+                    disabled={isLoading || memory.busy}
                     className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground disabled:opacity-60"
                   />
                 </div>
 
               <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{t('完整型号与配置帮助限定资料范围；系列资料不能直接代替具体机型。带入的问题仅预填，由你确认后发送。', 'The complete model and configuration define applicability. Series documents do not replace specific-model evidence. Imported questions are drafts for you to review and send.')}</p>
+              <details className="mt-4 border-t border-border/60 pt-3">
+                <summary className="cursor-pointer text-sm font-medium">{t('诊断记忆', 'Diagnosis memory')} · {memory.ready ? t('已连接', 'Connected') : t('未就绪', 'Not ready')}</summary>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{typeof __AGRIDX_DEV_PREVIEW__ !== 'undefined' && __AGRIDX_DEV_PREVIEW__ ? t('开发预览的档案与对话仅保存在当前浏览器，清除网站数据会删除。检查结果是用户报告。', 'Preview profiles and chats stay in this browser. Clearing site data deletes them. Checks are user reports.') : t('档案与对话保存到后端，同一浏览器重新打开可继续。清除浏览器身份后无法自动恢复；检查结果是用户报告。', 'Profiles and chats are saved on the server for this browser. Clearing browser identity prevents automatic recovery; checks are user reports.')}</p>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  <select aria-label={t('选择设备档案', 'Select device profile')} value={memory.deviceId} disabled={isLoading || memory.busy || !memory.ready}
+                    onChange={(e) => memory.selectDevice(e.target.value)} className="h-10 min-w-0 rounded-md border border-border bg-background px-3 text-sm">
+                    <option value="">{t('新设备（独立档案）', 'New device (separate profile)')}</option>
+                    {memory.devices.map((d) => <option key={d.id} value={d.id}>{d.name} · {d.model || d.brand}</option>)}
+                  </select>
+                  <select aria-label={t('继续历史诊断', 'Resume diagnosis')} value={memory.session?.id || ''} disabled={isLoading || memory.busy || !memory.ready}
+                    onChange={(e) => { if (e.target.value) void memory.restore(e.target.value); }} className="h-10 min-w-0 rounded-md border border-border bg-background px-3 text-sm">
+                    <option value="">{t('继续历史诊断…', 'Resume a diagnosis…')}</option>
+                    {memory.sessions.map((s) => <option key={s.id} value={s.id}>{memory.devices.find((d) => d.id === s.deviceId)?.name} · {s.title}</option>)}
+                  </select>
+                  <label className="text-xs">{t('设备名称（区分不同车辆）', 'Device name (identify the vehicle)')}<input maxLength={100} value={deviceName} onChange={(e) => setDeviceName(e.target.value)} disabled={isLoading || memory.busy} className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3 text-sm" /></label>
+                  <label className="text-xs">{t('使用小时数（选填）', 'Operating hours (optional)')}<input type="number" min="0" max="1000000" step="any" value={hours} onChange={(e) => setHours(e.target.value)} disabled={isLoading || memory.busy} className="mt-1 h-10 w-full rounded-md border border-border bg-background px-3 text-sm" /></label>
+                </div>
+                <label className="mt-3 block text-xs">{t('设备维护记录（用户提供）', 'Maintenance notes (user reported)')}<Textarea value={deviceNotes} maxLength={2000} onChange={(e) => setDeviceNotes(e.target.value)} disabled={isLoading || memory.busy} className="mt-1" rows={2} /></label>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <Button variant="secondary" size="sm" disabled={isLoading || memory.busy || !memory.ready || !deviceName.trim()} onClick={() => void memory.action(async () => { await memory.saveProfile(profile); })}>{t('保存设备档案', 'Save device profile')}</Button>
+                  <Button variant="secondary" size="sm" disabled={isLoading || memory.busy || !memory.ready} onClick={memory.newDiagnosis}>{t('新建诊断', 'New diagnosis')}</Button>
+                  <Button variant="ghost" size="sm" disabled={isLoading || memory.busy || !memory.deviceId} onClick={() => { if (window.confirm(t('删除此设备及其全部诊断记录？无法恢复。', 'Delete this device and all its diagnoses? This cannot be undone.'))) void memory.deleteDevice(); }}>{t('删除设备及记录', 'Delete device and records')}</Button>
+                </div>
+                <label className="mt-3 block text-xs">{t('本次检查进度（已检查项目、结果、待检查项）', 'Progress (checks done, results, remaining checks)')}<Textarea value={progress} maxLength={2000} onChange={(e) => setProgress(e.target.value)} disabled={isLoading || memory.busy || !memory.session} placeholder={t('例如：电瓶已检查正常；下一步检查接线。', 'Example: Battery checked, reported normal; wiring check pending.')} className="mt-1" rows={2} /></label>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <Button variant="secondary" size="sm" disabled={isLoading || memory.busy || !memory.session || progress.trim() === memory.session.progress} onClick={() => void memory.saveProgress(progress)}>{t('保存检查进度', 'Save progress')}</Button>
+                  <Button variant="ghost" size="sm" disabled={isLoading || memory.busy || !memory.session} onClick={() => { if (window.confirm(t('删除本次诊断及检查进度？设备档案保留。', 'Delete this diagnosis and progress? Keep the device profile.'))) void memory.deleteDiagnosis(); }}>{t('删除本次诊断', 'Delete diagnosis')}</Button>
+                </div>
+                {memory.session?.summary && <details className="mt-3 text-xs"><summary className="cursor-pointer">{t('查看历史用户报告节选', 'Older user report excerpts')}</summary><p className="mt-2 whitespace-pre-wrap text-muted-foreground">{memory.session.summary}</p></details>}
+                {memory.error && <p role="alert" className="mt-2 text-xs text-destructive">{memory.error}</p>}
+                {!memory.ready && <Button variant="secondary" size="sm" className="mt-2" onClick={memory.retry}>{t('重试连接记忆', 'Retry memory connection')}</Button>}
+              </details>
               </div>
 
           {/* 空状态 / 欢迎态 */}
@@ -219,7 +267,7 @@ export default function ChatPage() {
                     <button
                       key={pick(q, lang)}
                       onClick={() => handleQuickQuestion(pick(q, lang))}
-                      disabled={isLoading}
+                      disabled={isLoading || memory.busy}
                       className="rounded-md border border-border/60 bg-card p-3 text-left text-sm text-foreground transition-all hover:border-primary/40 hover:bg-accent/50 hover:text-primary disabled:opacity-50"
                     >
                       {pick(q, lang)}
@@ -261,7 +309,9 @@ export default function ChatPage() {
                   <div className="whitespace-pre-wrap">{msg.content}</div>
                 ) : (
                   <div className="prose prose-sm max-w-none overflow-x-auto dark:prose-invert">
-                    <DeferredMarkdown>{msg.content}</DeferredMarkdown>
+                    {msg.coordinationMessage && <p className="text-xs text-muted-foreground">{msg.coordinationMessage}</p>}
+                    <DeferredMarkdown>{msg.localSummary || msg.content}</DeferredMarkdown>
+                    {msg.localSummary && <details className="mt-3"><summary className="cursor-pointer text-xs">{t('展开完整资料与适用限制', 'Full evidence and applicability')}</summary><DeferredMarkdown>{msg.content}</DeferredMarkdown></details>}
                     {msg.role === 'assistant' && (msg.model || msg.provider || msg.answerMode || msg.fallbackReason || msg.knowledgeChunks !== undefined) && (
                       <div className="mt-2 border-t border-border/40 pt-2 text-[11px] leading-relaxed text-muted-foreground">
                         <div className="flex flex-wrap gap-x-2 gap-y-1">
@@ -305,7 +355,7 @@ export default function ChatPage() {
               placeholder={t('描述您遇到的农机故障现象...', 'Describe the fault symptom...')}
               className="min-h-[60px] resize-none"
               rows={2}
-              disabled={isLoading}
+              disabled={isLoading || memory.busy}
             />
             {isLoading ? (
               <Button type="button" size="icon" onClick={stopRequest} aria-label={t('停止等待', 'Stop waiting')} title={t('停止等待', 'Stop waiting')}>

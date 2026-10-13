@@ -1,14 +1,17 @@
+import { requestJson, ApiError, isRecord } from '@/lib/api-client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { DeviceProfile, MemoryDevice, MemoryOverview, MemorySession, SessionDetail } from '../../shared/memory';
 
 const ACTIVE_SESSION = '__agridx_memory_session';
 export async function memoryRequest<T>(url: string, method = 'GET', body?: unknown, signal?: AbortSignal): Promise<T> {
-  const response = await fetch(`/api/memory${url}`, { method, credentials: 'same-origin', signal,
-    headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
-    body: body === undefined ? undefined : JSON.stringify(body) });
-  const data = await response.json();
-  if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : '诊断记忆暂不可用 / Memory unavailable');
-  return data as T;
+  try {
+    return await requestJson(`/api/memory${url}`, { method, credentials: 'same-origin', signal,
+      headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
+      body: body === undefined ? undefined : JSON.stringify(body) }) as T;
+  } catch (error) {
+    if (error instanceof ApiError && isRecord(error.payload) && typeof error.payload.error === 'string') throw new Error(error.payload.error);
+    throw error;
+  }
 }
 const persistSession = (id?: string) => {
   try { if (id) localStorage.setItem(ACTIVE_SESSION, id); else localStorage.removeItem(ACTIVE_SESSION); } catch { /* private mode */ }
