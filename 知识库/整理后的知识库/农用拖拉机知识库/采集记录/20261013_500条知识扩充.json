@@ -1004,5 +1004,6 @@
   },
   "source_fact_storage": "original factual summaries only in five Markdown cards; metadata and IDs elsewhere; no new PDF redistribution",
   "external_model_validation": "not called; local HTTP checks explicitly disable provider credentials",
-  "publication": "independent branch/PR for review; no merge or deployment performed"
+  "publication": "independent branch/PR for review; no merge or deployment performed",
+  "implementation_commit": "c23688e8738b025548a119a137ec0aea824d8065"
 }
