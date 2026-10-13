@@ -1,0 +1,61 @@
+import{c as _,r as o,u as H,j as e,e as ne,k as se,n as re}from"./index-c8IhsIa6.js";import{S as ae,U as ie,a as le,M as K,e as ce,u as de,_ as A,B as me,P as ue,V as g,v as fe,C as B,b as he,c as xe,d as ge,T as pe,O as we,f as J,R as ve,g as be}from"./TractorModel-Cm-Cz2QN.js";import{T as V}from"./tractor-model-info-Vjnxkfxc.js";/* empty css                      */import{L as je}from"./loader-circle-wF5oWjHR.js";import{R as ye}from"./rotate-ccw-BSQqOodU.js";const Ce=[["path",{d:"M15.033 9.44a.647.647 0 0 1 0 1.12l-4.065 2.352a.645.645 0 0 1-.968-.56V7.648a.645.645 0 0 1 .967-.56z",key:"vbtd3f"}],["path",{d:"M12 17v4",key:"1riwvh"}],["path",{d:"M8 21h8",key:"1ev6f3"}],["rect",{x:"2",y:"3",width:"20",height:"14",rx:"2",key:"x3v2xh"}]],Q=_("monitor-play",Ce);const Pe=[["rect",{x:"14",y:"3",width:"5",height:"18",rx:"1",key:"kaeet6"}],["rect",{x:"5",y:"3",width:"5",height:"18",rx:"1",key:"1wsw3u"}]],ze=_("pause",Pe);const ke=[["path",{d:"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z",key:"10ikf1"}]],Me=_("play",ke);function Se(s,i,r,u){var f;return f=class extends ae{constructor(a){super({vertexShader:i,fragmentShader:r,...a});for(const n in s)this.uniforms[n]=new ie(s[n]),Object.defineProperty(this,n,{get(){return this.uniforms[n].value},set(p){this.uniforms[n].value=p}});this.uniforms=le.clone(this.uniforms)}},f.key=K.generateUUID(),f}const Ee=Se({cellSize:.5,sectionSize:1,fadeDistance:100,fadeStrength:1,fadeFrom:1,cellThickness:.5,sectionThickness:1,cellColor:new B,sectionColor:new B,infiniteGrid:!1,followCamera:!1,worldCamProjPosition:new g,worldPlanePosition:new g},`
+    varying vec3 localPosition;
+    varying vec4 worldPosition;
+
+    uniform vec3 worldCamProjPosition;
+    uniform vec3 worldPlanePosition;
+    uniform float fadeDistance;
+    uniform bool infiniteGrid;
+    uniform bool followCamera;
+
+    void main() {
+      localPosition = position.xzy;
+      if (infiniteGrid) localPosition *= 1.0 + fadeDistance;
+      
+      worldPosition = modelMatrix * vec4(localPosition, 1.0);
+      if (followCamera) {
+        worldPosition.xyz += (worldCamProjPosition - worldPlanePosition);
+        localPosition = (inverse(modelMatrix) * worldPosition).xyz;
+      }
+
+      gl_Position = projectionMatrix * viewMatrix * worldPosition;
+    }
+  `,`
+    varying vec3 localPosition;
+    varying vec4 worldPosition;
+
+    uniform vec3 worldCamProjPosition;
+    uniform float cellSize;
+    uniform float sectionSize;
+    uniform vec3 cellColor;
+    uniform vec3 sectionColor;
+    uniform float fadeDistance;
+    uniform float fadeStrength;
+    uniform float fadeFrom;
+    uniform float cellThickness;
+    uniform float sectionThickness;
+
+    float getGrid(float size, float thickness) {
+      vec2 r = localPosition.xz / size;
+      vec2 grid = abs(fract(r - 0.5) - 0.5) / fwidth(r);
+      float line = min(grid.x, grid.y) + 1.0 - thickness;
+      return 1.0 - min(line, 1.0);
+    }
+
+    void main() {
+      float g1 = getGrid(cellSize, cellThickness);
+      float g2 = getGrid(sectionSize, sectionThickness);
+
+      vec3 from = worldCamProjPosition*vec3(fadeFrom);
+      float dist = distance(from, worldPosition.xyz);
+      float d = 1.0 - min(dist / fadeDistance, 1.0);
+      vec3 color = mix(cellColor, sectionColor, min(1.0, sectionThickness * g2));
+
+      gl_FragColor = vec4(color, (g1 + g2) * pow(d, fadeStrength));
+      gl_FragColor.a = mix(0.75 * gl_FragColor.a, gl_FragColor.a, g2);
+      if (gl_FragColor.a <= 0.0) discard;
+
+      #include <tonemapping_fragment>
+      #include <${fe>=154?"colorspace_fragment":"encodings_fragment"}>
+    }
+  `),Re=o.forwardRef(({args:s,cellColor:i="#000000",sectionColor:r="#2080ff",cellSize:u=.5,sectionSize:f=1,followCamera:a=!1,infiniteGrid:n=!1,fadeDistance:p=100,fadeStrength:l=1,fadeFrom:k=1,cellThickness:M=.5,sectionThickness:y=1,side:C=me,...S},P)=>{ce({GridMaterial:Ee});const d=o.useRef(null);o.useImperativeHandle(P,()=>d.current,[]);const m=new ue,w=new g(0,1,0),v=new g(0,0,0);de(b=>{m.setFromNormalAndCoplanarPoint(w,v).applyMatrix4(d.current.matrixWorld);const z=d.current.material,N=z.uniforms.worldCamProjPosition,h=z.uniforms.worldPlanePosition;m.projectPoint(b.camera.position,N.value),h.value.set(0,0,0).applyMatrix4(d.current.matrixWorld)});const E={cellSize:u,sectionSize:f,cellColor:i,sectionColor:r,cellThickness:M,sectionThickness:y},R={fadeDistance:p,fadeStrength:l,fadeFrom:k,infiniteGrid:n,followCamera:a};return o.createElement("mesh",A({ref:d,frustumCulled:!1},S),o.createElement("gridMaterial",A({transparent:!0,"extensions-derivatives":!0,side:C},E,R)),o.createElement("planeGeometry",{args:s}))}),Ne={position:[6.5,4,6.5],fov:40},U=.8,Le={antialias:!0,alpha:!0},Te=[1,1.5],W={dark:{fog:"#1a2420",cell:"#2e3a34",section:"#4a5a50"},light:{fog:"#eef3ef",cell:"#d9e3dc",section:"#c3d2c7"}};function $({error:s}){const i=H(),r=s instanceof Error?s.message:String(s);return e.jsxs("div",{className:"flex h-full w-full flex-col items-center justify-center gap-3 rounded-2xl border border-border/50 bg-gradient-to-br from-muted/30 to-transparent text-muted-foreground",children:[e.jsx(Q,{className:"size-12 opacity-50"}),e.jsx("div",{className:"text-sm",children:i==="zh"?"3D 模型加载失败":"Unable to load the 3D model"}),e.jsx("div",{className:"max-w-[80%] truncate text-xs opacity-60",children:r.slice(0,60)})]})}function _e(){return e.jsxs("mesh",{children:[e.jsx("sphereGeometry",{args:[.001,8,8]}),e.jsx("meshBasicMaterial",{visible:!1})]})}function De(){const{scene:s,gl:i,invalidate:r}=J();return o.useEffect(()=>{const u=new be(i),f=new ve,a=u.fromScene(f,.04);return s.environment=a.texture,r(),()=>{s.environment=null,a.dispose(),f.dispose(),u.dispose()}},[s,i,r]),null}const q=[{id:"isometric",zh:"总览",en:"Overview",direction:[-1,.62,1]},{id:"front",zh:"正面",en:"Front",direction:[-1,.12,0]},{id:"side",zh:"侧面",en:"Side",direction:[0,.12,1]},{id:"top",zh:"俯视",en:"Top",direction:[.01,1,.01]}];function Fe({modelRef:s,fit:i}){const r=J(u=>u.size);return o.useEffect(()=>{s.current&&i(s.current)},[r.width,r.height,s,i]),null}function We({component:s="all",exploded:i=!1,modelUrl:r=V,controls:u=!1}){const f=o.useId(),a=H(),[n,p]=o.useState("isometric"),[l,k]=o.useState(()=>u&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches),[M]=o.useState(()=>{try{const t=document.createElement("canvas").getContext("webgl2");return t?.getExtension("WEBGL_lose_context")?.loseContext(),!!t}catch{return!1}}),[y,C]=o.useState(null),[S,P]=o.useState(!1),d=o.useRef(null),m=o.useRef(null),w=o.useRef(null),v=o.useRef(null);o.useEffect(()=>{P(!1),C(null)},[r]);const[E,R]=o.useState(()=>document.documentElement.classList.contains("theme-dark")||!document.documentElement.classList.contains("theme-light")&&window.matchMedia("(prefers-color-scheme: dark)").matches);o.useEffect(()=>{const t=()=>{const j=document.documentElement.classList.contains("theme-dark")||!document.documentElement.classList.contains("theme-light")&&window.matchMedia("(prefers-color-scheme: dark)").matches;R(x=>x===j?x:j)},c=new MutationObserver(t);return c.observe(document.documentElement,{attributes:!0,attributeFilter:["class"]}),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",t),()=>{c.disconnect(),window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change",t)}},[]);const b=o.useCallback(t=>{d.current&&(d.current.autoRotate=t)},[]),z=o.useCallback(()=>{m.current&&window.clearTimeout(m.current),m.current=window.setTimeout(()=>{b(l&&n==="isometric")},3e3)},[b,l,n]),N=o.useCallback(()=>{m.current&&(window.clearTimeout(m.current),m.current=null),b(!1)},[b]),h=o.useCallback(t=>{const c=d.current;if(!c)return;const j=new he().setFromObject(t),x=j.getSize(new g),T=j.getCenter(new g),D=Math.max(x.x,x.y,x.z)||1,F=new g(T.x,T.y+x.y*.05,T.z);c.target.copy(F);const G=c.object,O=K.degToRad(G.fov),Z=2*Math.atan(Math.tan(O/2)*G.aspect),I=x.length()/2/Math.sin(Math.min(O,Z)/2)*1.13,ee=new g(...q.find(oe=>oe.id===n).direction).normalize(),te=F.clone().add(ee.multiplyScalar(I));c.object.position.copy(te),c.minDistance=D*.6,c.maxDistance=Math.max(D*4,I*1.8),c.update()},[n]);o.useEffect(()=>()=>{m.current&&window.clearTimeout(m.current)},[l,n]);const X=o.useCallback(t=>{d.current=t,t&&(t.autoRotate=l&&n==="isometric",t.autoRotateSpeed=U,w.current&&(h(w.current),w.current=null))},[h,l,n]),Y=o.useCallback(t=>{P(!0),v.current=t,d.current?h(t):w.current=t},[h]);if(!M)return e.jsxs("div",{className:"flex h-full w-full flex-col items-center justify-center gap-3 rounded-2xl border border-border/50 bg-gradient-to-br from-muted/30 to-transparent text-muted-foreground",children:[e.jsx(Q,{className:"size-16 opacity-40"}),e.jsx("div",{className:"text-sm font-medium",children:"3D 模型预览"}),e.jsx("div",{className:"text-xs opacity-60",children:"当前浏览器环境不支持 WebGL"}),e.jsx("div",{className:"text-xs opacity-60",children:"支持的设备上可查看可交互 3D 拖拉机模型"})]});if(y)return e.jsx($,{error:y});const L=E?W.dark:W.light;return e.jsxs("div",{className:"relative h-full w-full",children:[e.jsx(xe,{resetKeys:[r],FallbackComponent:$,onError:t=>{const c=t instanceof Error?t.message:String(t);C(c)},children:e.jsxs(ge,{frameloop:l&&n==="isometric"?"always":"demand",shadows:!0,camera:Ne,gl:Le,dpr:Te,children:[e.jsx("fog",{attach:"fog",args:[L.fog,8,20]}),e.jsx(De,{}),e.jsx("ambientLight",{intensity:.5}),e.jsx("hemisphereLight",{args:["#FFF8E7","#C8B89A",.6]}),e.jsx("directionalLight",{position:[5,8,5],intensity:1.2,castShadow:!0,"shadow-mapSize":[1024,1024]}),e.jsx("directionalLight",{position:[-3,4,-3],intensity:.3,color:"#E8D5B7"}),e.jsx(Re,{args:[20,20],cellSize:1,cellThickness:.5,cellColor:L.cell,sectionSize:5,sectionThickness:1,sectionColor:L.section,fadeDistance:15,fadeStrength:1,position:[0,-.4,0]}),e.jsxs("mesh",{rotation:[-Math.PI/2,0,0],position:[0,-.401,0],receiveShadow:!0,children:[e.jsx("planeGeometry",{args:[20,20]}),e.jsx("shadowMaterial",{transparent:!0,opacity:.25})]}),e.jsxs(o.Suspense,{fallback:e.jsx(_e,{}),children:[e.jsx(pe,{onLoaded:Y,component:s,exploded:i,modelUrl:r}),e.jsx(Fe,{modelRef:v,fit:h})]}),e.jsx(we,{ref:X,enableDamping:l&&n==="isometric",dampingFactor:.05,minDistance:2,maxDistance:18,maxPolarAngle:Math.PI/2.2,minPolarAngle:.03,autoRotateSpeed:U,onStart:N,onEnd:z})]})}),!S&&e.jsx("div",{className:"pointer-events-none absolute inset-0 flex items-center justify-center",children:e.jsxs("div",{className:"flex items-center gap-2 rounded-full bg-card/80 px-4 py-2 text-xs text-muted-foreground backdrop-blur-sm shadow-sm",children:[e.jsx(je,{className:"size-4 animate-spin"}),a==="zh"?"模型加载中…":"Loading model…"]})}),e.jsx("div",{className:"absolute left-3 top-3 rounded-full border border-border/50 bg-card/85 px-3 py-1.5 text-[10px] text-muted-foreground backdrop-blur",children:r===V?a==="zh"?"原创结构示意 · 非实机 CAD":"Original schematic · Not machine CAD":a==="zh"?"本地模型 · 尺寸待核验":"Local model · Dimensions unverified"}),u&&e.jsx("div",{className:"model-control-shell",role:"group","aria-label":a==="zh"?"模型视角与旋转控制":"Model view and rotation controls",children:e.jsxs(ne,{variant:"regular",lens:!0,displacementScale:36,className:"model-control-glass",contentClassName:"model-control-content",children:[e.jsx("button",{type:"button",onClick:()=>k(t=>!t),"aria-label":a==="zh"?l?"暂停自转":"开启自转":l?"Pause rotation":"Start rotation","aria-pressed":l,className:"model-icon-button",children:l?e.jsx(ze,{size:16}):e.jsx(Me,{size:16})}),e.jsx(se,{id:f,children:e.jsx("div",{className:"model-view-segment",role:"group","aria-label":a==="zh"?"选择模型视角":"Select model view",children:q.map(t=>e.jsxs("button",{type:"button","aria-pressed":n===t.id,onClick:()=>p(t.id),className:"model-view-button",children:[n===t.id&&e.jsx(re,{className:"model-view-indicator"}),e.jsx("span",{className:"model-view-label",children:a==="zh"?t.zh:t.en})]},t.id))})}),e.jsx("button",{type:"button","aria-label":a==="zh"?"恢复模型视角":"Reset model view",onClick:()=>{p("isometric"),v.current&&h(v.current)},className:"model-icon-button",children:e.jsx(ye,{size:16})})]})}),e.jsx("div",{className:"pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-muted-foreground/70",children:a==="zh"?"拖动旋转 · 滚轮缩放":"Drag to rotate · Scroll to zoom"})]})}export{We as default};
