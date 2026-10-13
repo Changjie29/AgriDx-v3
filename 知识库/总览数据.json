@@ -5,22 +5,22 @@
   "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
   "input_sha256": {
     "sources.json": "8bd64819d05f49cc94f7915bbd879e5c924b5d5de26f890ce470d9062fa2826a",
-    "entries.jsonl": "3f4af8ecc0ab370bc0720b5543dba9bb129757d5985b3a801d394e9c332fb88c"
+    "entries.jsonl": "58add67952a7113957f1a8c8ecdf813acd5d11ea80a666b9f6e27127e1caef72"
   },
   "totals": {
     "sources": 26,
-    "archived_entries": 912,
+    "archived_entries": 913,
     "knowledge_documents": 29,
     "brand_labels": 15,
     "generic_chunks": 9,
-    "retrieval_chunks": 921,
+    "retrieval_chunks": 922,
     "information_or_scope_entries": 32
   },
   "brands": [
     {
       "label": "约翰迪尔",
       "sources": 4,
-      "entries": 325
+      "entries": 326
     },
     {
       "label": "久保田",
@@ -96,7 +96,7 @@
   "entry_types": {
     "安全操作": 53,
     "操作/维护知识": 529,
-    "维护/故障知识": 292,
+    "维护/故障知识": 293,
     "机型资料": 5,
     "资料缺口": 3,
     "资料索引": 13,
@@ -112,7 +112,7 @@
     "配套导航PDF": 2
   },
   "entries_by_source_purpose": {
-    "整机／维保PDF": 851,
+    "整机／维保PDF": 852,
     "维护网页": 9,
     "报道背景": 2,
     "交机培训PDF": 32,
@@ -124,7 +124,7 @@
     "PDF链接＋来源记录": 7
   },
   "entries_by_storage": {
-    "仓库PDF原件": 549,
+    "仓库PDF原件": 550,
     "仓库网页快照": 11,
     "PDF链接＋来源记录": 352
   },
@@ -157,7 +157,8 @@
     "已核对文本及证据页图像；未全书审校/厂家复核/实车验证": 100,
     "已核对原文及证据页图像；未厂家复核、未全书审校、未实车验证。": 100,
     "已核对引用页原文文字；未全书审校、厂家复核或实车验证。": 366,
-    "已核对引用页原文文字及本条所引表格／配置页图像；未全书审校、厂家复核或实车验证。": 134
+    "已核对引用页原文文字及本条所引表格／配置页图像；未全书审校、厂家复核或实车验证。": 134,
+    "证据页150dpi完整渲染目视核对；文本定位已复核；未全书审校/厂家复核/实车验证": 1
   },
   "research": {
     "reports": 3,
@@ -1281,7 +1282,7 @@
       "storage_group": "仓库PDF原件",
       "source_path": "知识库/原始农机说明书/约翰迪尔/5E_D0/OMSJ34997.pdf",
       "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsj34997",
-      "entry_count": 96,
+      "entry_count": 97,
       "entry_ids": [
         "KB-JD-5E-D0-001",
         "KB-JD-5E-D0-002",
@@ -1378,7 +1379,8 @@
         "KB-JD-5E-D0-093",
         "KB-JD-5E-D0-094",
         "KB-JD-5E-D0-095",
-        "KB-JD-5E-D0-096"
+        "KB-JD-5E-D0-096",
+        "KB-JD-5E-D0-097"
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E_D0_故障扩充.md",

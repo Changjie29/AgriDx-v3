@@ -10506,6 +10506,17 @@
           "part_ids": []
         }
       ]
+    },
+    {
+      "entry_id": "KB-JD-5E-D0-097",
+      "components": [
+        {
+          "component_id": "electrical",
+          "part_ids": [
+            "fuse"
+          ]
+        }
+      ]
     }
   ]
 }
