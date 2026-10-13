@@ -7,6 +7,14 @@ export function validateVersionState({ packageJson, lockJson, readme, changelog 
   if (typeof version !== 'string' || !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version)) {
     throw new Error('package.json 必须使用规范的 X.Y.Z 项目版本。');
   }
+  const versionParts = version.split('.').map(Number);
+  const maximumParts = [3, 4, 9];
+  for (let index = 0; index < maximumParts.length; index += 1) {
+    if (versionParts[index] > maximumParts[index]) {
+      throw new Error('当前阶段项目版本不得超过 3.4.9；版本上限按用户最新要求调整。');
+    }
+    if (versionParts[index] < maximumParts[index]) break;
+  }
   const recorded = [
     ['package-lock.json', lockJson.version],
     ['package-lock.json 根包', lockJson.packages?.['']?.version],
