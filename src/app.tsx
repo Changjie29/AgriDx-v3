@@ -12,6 +12,8 @@ import { useUiVersion } from '@/hooks/useUiVersion';
 const ExhibitionPage = lazy(pageLoaders.exhibition);
 const PreviewStatus = typeof __AGRIDX_DEV_PREVIEW__ !== 'undefined' && __AGRIDX_DEV_PREVIEW__
   ? lazy(() => import('./dev-preview/PreviewStatus')) : null;
+const DeveloperPage = typeof __AGRIDX_DEV_PREVIEW__ !== 'undefined' && __AGRIDX_DEV_PREVIEW__
+  ? lazy(() => import('./dev-preview/DeveloperPage')) : null;
 
 function PageContent({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -34,6 +36,7 @@ export default function App() {
         <Route path="knowledge" element={<PageContent><KnowledgePage /></PageContent>} />
         <Route path="models" element={<PageContent><ModelPage /></PageContent>} />
       </Route>
+      {DeveloperPage && <Route path="developer" element={<PageContent><DeveloperPage /></PageContent>} />}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
     {PreviewStatus && <Suspense fallback={null}><PreviewStatus /></Suspense>}

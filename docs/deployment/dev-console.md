@@ -1,0 +1,41 @@
+# 开发控制台
+
+2026-10-13（上海），用户要求开发版内查看访问用户、用户问题、服务器及 GitHub 版本，并选择现有 GitHub 账号登录、先接入开发站数据。
+
+网址：[开发控制台](https://agridx-dev-preview.z3464715478.chatgpt.site/#/developer)。普通页面仍公开；控制台路由在生产构建中关闭，内部数据接口必须通过服务端身份验证。
+
+## 身份和范围
+
+现有 Site 未配置专用 GitHub OAuth 应用，采用页面内的 GitHub 令牌验证。令牌仅发送到同源 HTTPS 服务端，服务端只请求固定的 GitHub `/user` 与 `srt2777/AgriDx-v3` 仓库 Metadata，要求 GitHub 返回 `permissions.admin` 或 `permissions.maintain`。普通 GitHub 用户、只有 push 的协作者、匿名访客均不能读取。令牌不要求代码写入权限，不进入数据库、源码或浏览器持久化存储。
+
+验证后生成独立随机会话，以 `__Host-`、Secure、HttpOnly、SameSite=Strict Cookie 返回，D1只存SHA-256摘要及账号/过期时间。会话1小时有效，退出立即撤销；权限在每次建立会话时验证，之后以该有期限的会话授权。没有复用 GitHub 的代码写入凭据作为网站长期服务密钥。
+
+本轮只采集开发站，腾讯云正式站在服务页标为未接入；未连接服务器、读取生产日志、修改正式部署或DNS。GitHub构建状态是公开仓库的只读查询，最多缓存5分钟，失败时显示错误和旧记录时间，不把旧状态称为实时成功。
+
+## 记录与显示
+
+- 匿名访客按服务端分配的浏览器 Cookie 区分，不等同于实名人数。记录浏览器类别、系统、设备类别和国家代码；不保存原始 User-Agent 或原始IP。
+- 首页、知识、诊断、模型页面记录访问，控制台访问不采集。来源仅保留主机名，丢弃查询参数。
+- 诊断记录当前用户问题、选定农机、结果、检索片段数、本地诊断耗时与页面提交号。不重复保存完整历史、模型密钥或完整答复。提问是浏览器上报的开发使用记录，不是服务器模型计费凭据。
+- 访问与提问由服务端定时清理30天前记录；采集从本功能上线后开始，没有过往记录时显示空状态。尊重浏览器 Do Not Track。不同设备通过同一个开发站数据库汇总。
+- 概览按上海自然日统计；列表每页25条，可筛选最近1/7/30天、搜索、翻页。CSV包含当前筛选的最多5000条记录，并对可能被表格执行的公式前缀转义。
+- 面板每30秒读取一次，隐藏页面暂停读取；读失败保留并标记上次数据，切换筛选不显示另一组旧记录。版本页分别显示 GitHub main、已发布产物、当前浏览器页面和入口服务的实际代码版本。
+
+## 开发维护
+
+Worker源码：`scripts/dev-preview-gateway/worker.js`。独立 Drizzle schema 与不可变迁移在同目录；不要在请求处理时创建或修改表，不把任何用户记录作为构建产物提交到公开GitHub。
+
+```bash
+npm ci --prefix scripts/dev-preview-gateway
+npm run db:generate --prefix scripts/dev-preview-gateway
+# 仅针对已经存在、身份与 .openai/dev-preview.json 相同的开发 Site
+node scripts/dev-preview-gateway/prepare-site.mjs /absolute/development-site-checkout
+```
+
+准备脚本保留现有开发项目ID，复制入口与迁移，并记录入口来自哪个GitHub源码提交。Sites按其存储绑定声明管理D1；入口变化和迁移需保存并部署新Sites版本，不能仅靠前端产物分支更新。前端仍在main合入后自动更新固定开发网址，个人分支不发布预览。保留原 `.openai/hosting.json` 正式 Site 身份。
+
+## 验证与发布状态
+
+本轮实现的数据库隔离、权限、过期/退出、同源限制、采集去重、分页搜索、CSV保护与限频使用真实 SQLite 执行已生成的迁移和 Worker 查询验证。模拟 GitHub 响应验证授权逻辑，不等同于已完成用户真实令牌的线上登录。
+
+本地完整 `npm run verify` 通过：150项测试通过、2项Windows专用检查在Linux跳过，版本、类型、Lint及生产构建通过；保留既有Fast Refresh/Three.js提示。后续筛选和导出修正的7项数据库测试、类型与Lint再次通过，开发构建通过。生产产物未包含开发采集/管理接口或控制台模块。浏览器界面、GitHub CI、主干构建、Sites D1迁移和线上验收在实际完成后追加；仅保存源码不代表线上数据库和采集已生效。

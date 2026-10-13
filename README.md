@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.2.1**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.3.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -23,6 +23,10 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 旧版界面的导航、模型入口和控制栏使用 [rdev/liquid-glass-react](https://github.com/rdev/liquid-glass-react) 实现边缘折射、薄亮边与局部高光；顶部导航采用同心胶囊轮廓，小屏的版本切换独立为紧凑胶囊。触摸设备及减少动态设置采用雾面材质，减少透明度、高对比或不支持背景滤镜时使用实色。实现和本地验证见 [旧版液态玻璃优化](docs/design/2026-10-12-classic-liquid-glass/README.md)。
 
 首屏不再等待外部字体服务，导航和功能入口先显示，三维视图随后按需加载。二级页面在意图明确时预热，内容加载期间保留导航；短期复用已验证的目录数据，资料展开或答复显示时才加载正文解析器。性能对比和线上 CDN 排查见 [加载与导航优化记录](docs/performance/2026-10-12-loading-navigation.md)。
+
+## 开发版内部数据
+
+独立开发站新增[开发控制台](https://agridx-dev-preview.z3464715478.chatgpt.site/#/developer)，集中查看匿名访问、当前用户提问及诊断结果、GitHub 主干和构建状态。内部接口须验证 GitHub 仓库管理员/维护者身份；开发站普通访问继续公开，正式站记录尚未接入。数据从功能上线后采集，保存最近30天；使用和维护见[控制台说明](docs/deployment/dev-console.md)。
 
 ## 腾讯云现有服务器更新
 
