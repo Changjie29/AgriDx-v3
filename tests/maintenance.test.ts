@@ -10,12 +10,12 @@ import { assertSyncState, pushArguments } from '../scripts/sync.mjs';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 
-function metadata() {
+function metadata(version = '3.0.1') {
   return {
-    packageJson: { version: '3.0.1' },
-    lockJson: { version: '3.0.1', packages: { '': { version: '3.0.1' } } },
-    readme: '当前项目版本：**3.0.1**。历史版本3.0.0不替换。',
-    changelog: '# 日志\n\n## 3.0.1 — 2026-10-10\n\n修复\n\n## 3.0.0 — 2026-10-10\n',
+    packageJson: { version },
+    lockJson: { version, packages: { '': { version } } },
+    readme: `当前项目版本：**${version}**。历史版本3.0.0不替换。`,
+    changelog: `# 日志\n\n## ${version} — 2026-10-10\n\n修复\n\n## 3.0.0 — 2026-10-10\n`,
   };
 }
 
@@ -35,6 +35,15 @@ test('锁文件根版本与当前README、最新日志任一缺失或滞后时�
 test('项目版本拒绝前导零、非稳定版本与非字符串', () => {
   for (const version of ['03.0.1', '3.0.1-rc.1', 'v3.0.1', '3.0', undefined]) {
     assert.throws(() => validateVersionState({ ...metadata(), packageJson: { version } }), /规范/);
+  }
+});
+
+test('项目版本按整数分段比较，允许3.4.9上限并拒绝所有越界版本', () => {
+  for (const version of ['3.3.10', '3.4.0', '3.4.9']) {
+    assert.equal(validateVersionState(metadata(version)), version);
+  }
+  for (const version of ['3.4.10', '3.5.0', '4.0.0']) {
+    assert.throws(() => validateVersionState(metadata(version)), /不得超过 3\.4\.9/);
   }
 });
 
