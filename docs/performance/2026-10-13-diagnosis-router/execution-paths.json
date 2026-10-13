@@ -1,0 +1,2447 @@
+{
+  "capturedAt": "2026-10-13T10:09:01.443Z",
+  "rootCommit": "aa6f3db8be325a58522affdff2e6c4cff1da78b5",
+  "measuredSourceSha256": {
+    "server/diagnosis/service.ts": "bfcfbda4b87c38809ab648d138aa768833229d969adf1b9b3df61ae12859f295",
+    "server/diagnosis/router.ts": "d4c32a4c4575821552273fba5d437e882857d407b3ce61c2b2ac6155ccae58f9",
+    "server/diagnosis/config.ts": "de109d274b67b6e13c40b759b282e9d01fe17c8c28dddfe7c5406b235016b3ca",
+    "server/knowledge/retriever.ts": "354b01ab33c0901619544540ccfe85fe0ec9fd2e446c36797c278dc3ae5dffa8",
+    "server/knowledge/scope.ts": "d22d5e2286e66e8728fd12e033e7733efae7145539cf74c17f4afbed8ccf4935",
+    "server/knowledge/coordination.ts": "94a54a91cc666ad472b7c8caca091b0e3262b0c3fda4322de82f8e2f72850dca",
+    "server/knowledge/evidence.ts": "30225fec978e2d19ca523a4a97f6383e212de25dd6ac7b56d3e1375a3ba0a1b5",
+    "server/knowledge/systemPrompt.ts": "0f05f959d28a729c79144464b8538856fb961ad52e1026d513f3b8ff376762c6",
+    "server/knowledge/fallbackDiagnosis.ts": "35a1e91f1c71260bef07416bcf7a7dd7d87c435c41e0e387e7c5c2ddea604882",
+    "server/app.ts": "5cdf3a0e60cc903b95d382b262e70dab7c69933b828f8a92ee0b3064023392e9",
+    "server/routes/chat.ts": "0cede34f51f8550eefd968cffb5469dd6c3aa61995f2fcc6dfef39c590689b25"
+  },
+  "provider": "Immediate in-process successful stub, not DeepSeek or Gemini; no real API calls or credentials",
+  "scope": "Actual Express localhost requests using fixed synthetic questions and real public archived knowledge; not real user records",
+  "scenarios": [
+    {
+      "scenario": "matched-start-auto",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "久保田",
+        "model": "LX2620",
+        "diagnosisMode": "auto",
+        "messages": [
+          {
+            "role": "user",
+            "content": "发动机启动困难或不能启动"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "One successful in-process provider stub generation",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "发动机启动困难或不能启动",
+        "symptomQuery": "发动机启动困难或不能启动",
+        "query": "久保田 LX2620 拖拉机 发动机启动困难或不能启动 发动机启动困难或不能启动",
+        "scope": {
+          "machineType": "拖拉机",
+          "brand": "久保田",
+          "model": "LX2620"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [
+        {
+          "entryId": "KB-LX2620-003",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+          "text": "- 可能原因选摘：供油不畅，燃油系统有空气或水，低温导致油黏度增大／带转慢，电池电量不足。\n- 原文方向：检查油箱和燃油滤清器、燃油软管及夹箍；核对适合温度的用油、电池接线和电池状态。排气按原手册对应程序进行。\n- 整理安全边界：不能把所有不启动都归结为缺油；不盲目拆开喷油管路排气或跨接启动，不用明火加热。\n- 待核实：本车环境温度对应的油品、启动系统状态和选装预热装置；不从其他型号补参数。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 33.9,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-005",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-005｜发动机过热",
+          "text": "- 适用现象：冷却温度接近／达到沸腾或温度指示到达 H 红区；应读取本型号的过热处置章节。\n- 该手册的特定流程：在安全地点停车，保持发动机无负荷怠速约 5 分钟后停机；随后远离机器至少按原文要求等待 10 分钟，仍有蒸汽喷出时保持远离。确认无烫伤等危险并排除过热原因后，才按手册重新启动。\n- 上述流程不能跨品牌套用；也不是对同时发生火灾、失油压等其他紧急故障的处理说明。多重危险不适用单一过热排查条目，应停止操作并联系专业救援／维修。\n- 故障表可能原因：超负荷、冷却液不足、风扇皮带松弛／损坏、散热器或格栅脏堵、冷却通路腐蚀。\n- 待冷却且停机后再检查；禁止热态开盖，不将「先怠速」解释成可以继续带负荷作业。\n- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 8,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-KB-LX-20261013-001",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+          "text": "- 故障现象：维护／操作主题：发动机只能从驾驶座起动；不表示实车已发生故障。\n- 可能原因：本页给出维护前提与操作要求，未将该主题作为独立故障确诊。\n- 诊断步骤：先匹配本册完整机型、市场和本条配置，再核对所指部位、状态与原页。未配相应附件时不套用本条。\n- 维修建议：手册事实概述：不得站在地面起动；起动前换挡杆空挡、PTO分离，并在通风处操作。\n- 资料来源：SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页；[原件／记录](../../../原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf)；[公开入口](https://www.gartontractor.com/resources/manuals/kubota-lx2620-operator-manual)。\n- 验证状态：已核对引用页原文文字；未全书审校、厂家复核或实车验证。\n- 适用限制：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。",
+          "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7.95,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 仅适用：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。\n- 资料性质：操作、日常维护及故障候选的独立概述，不是整册翻译或技术维修手册。\n- 整理日期：2026-10-13（上海）；新增100条，旧知识卡和原件保留。\n仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。"
+        },
+        {
+          "entryId": "KB-LX2620-006",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-006｜发动机突然停机",
+          "text": "- 此页列出的候选原因是燃油不足，处理方向为补充燃油并在必要时按手册排气。\n- 不得推论「所有突然停机都是缺油」。需记录停机前负载、油量、报警、异响和泄漏；这些是整理建议，不是原表新增的确定故障原因。\n- 整理安全边界：存在油压／温度异常、异响、泄漏或无法确认原因时，不反复启动，应先联系维修人员。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-007",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+          "text": "- 前提：原表明确限定发动机没有过热，且亮的是发动机警告指示灯；不是任意警灯或低油压报警。\n- 原文方向：停止发动机后重新启动；若无法重新启动或灯仍亮，立即联系当地 Kubota 经销商。\n- 整理安全边界：该处不是「清码后继续干活」授权，不反复重启掩盖故障；若无法确认警灯类型或伴随其他危险，不按此单独条目尝试。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        }
+      ],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "性能测试模拟回答；不是维修资料。"
+            }
+          }
+        ],
+        "model": "benchmark-stub",
+        "provider": "deepseek",
+        "fellBack": false,
+        "knowledgeChunks": 5,
+        "knowledgeSources": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-005｜发动机过热",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_LX2620_20261013扩充.md",
+            "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+            "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+            "referenceVerification": "verified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-006｜发动机突然停机",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "knowledge-grounded",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "ai",
+          "reason": "synthesis_requested",
+          "evidenceLevel": "partial",
+          "llmConfigured": true,
+          "knowledgeIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "aiRequired": true,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "KB-LX2620-003",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 33.9,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-005",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 8,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-KB-LX-20261013-001",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-006",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-007",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "现有资料需要进一步综合或核对，尝试外部 AI 辅助分析。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 1,
+          "aiSuccesses": 1,
+          "aiProvider": "deepseek",
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 5778,
+          "sentKnowledgeIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "timings": {
+            "retrievalMs": 0.01181699999870034,
+            "decisionMs": 0.25179800000114483,
+            "externalAiMs": 0.012267999998584855,
+            "totalMs": 1.5852410000006785
+          }
+        }
+      }
+    },
+    {
+      "scenario": "yto-starter-auto",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "东方红",
+        "model": "LF1504",
+        "diagnosisMode": "auto",
+        "messages": [
+          {
+            "role": "user",
+            "content": "起动机不转"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "One successful in-process provider stub generation",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "起动机不转",
+        "symptomQuery": "起动机不转",
+        "query": "东方红 LF1504 拖拉机 起动机不转 起动机不转",
+        "scope": {
+          "machineType": "拖拉机",
+          "brand": "东方红",
+          "model": "LF1504"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [
+        {
+          "entryId": "KB-YTO-LF1504-007",
+          "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+          "heading": "KB-YTO-LF1504-007｜起动机不转与转动无力要分开记录",
+          "text": "- 起动机不运转的候选原因含蓄电池状态、极柱污物、线缆或搭铁连接、控制线路断路以及起动机内部问题。先区分“不转”与“转得慢”，并记录供电和接线检查结果。\n- 转速低或无力的列表还涉及电路接触、换向器、碳刷、电磁开关触点及轴承。单凭不能着车不能确定应换蓄电池或起动机；内部检修应由合格人员按本车资料处理，不绕过起动联锁。\n\n适用限制：仅本册国三LF1504及匹配出厂配置；基本型/选装型不可混用，不适用于LF1504国四或其他LF机型。封面2016-3-5与前言2017-01关系待核实，发动机引用字段不一致，须核对本车铭牌及匹配发动机手册；仅核对列明证据页，未全书审校、厂家复核或实车验证。\n- 证据：SRC-YTO-LF1504-SMLF150449010；PDF 第104页；第四章表4-6-1（印刷4-5）。",
+          "status": "指定正文页文本及图像已核对；未厂家复核/实车验证",
+          "applicability": "matched",
+          "relevance": {
+            "score": 13.95,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "PDF 第104页；第四章表4-6-1（印刷4-5）",
+          "version": "SM-LF1504.49.010；封面2016-3-5／前言2017-01（日期关系待核实）",
+          "scopeBoundary": "仅本册国三LF1504及匹配出厂配置；基本型/选装型不可混用，不适用于LF1504国四或其他LF机型。封面2016-3-5与前言2017-01关系待核实，发动机引用字段不一致，须核对本车铭牌及匹配发动机手册；仅核对列明证据页，未全书审校、厂家复核或实车验证。\n仅本册国三LF1504及匹配出厂配置；基本型/选装型不可混用，不适用于LF1504国四或其他LF机型。封面2016-3-5与前言2017-01关系待核实，发动机引用字段不一致，须核对本车铭牌及匹配发动机手册；仅核对列明证据页，未全书审校、厂家复核或实车验证。"
+        },
+        {
+          "entryId": "KB-YTO-LF1504-003",
+          "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+          "heading": "KB-YTO-LF1504-003｜预热起动与连续尝试的限制",
+          "text": "- 起动准备需确认换向和变速操纵处于空挡、驻车制动有效、PTO停用，且本机与册中配置匹配；手册不允许通过推车或牵引起动来替代正常起动。\n- 装有预热器且预热灯亮时，应等预热指示熄灭后再起动。单次连续尝试上限15秒，至少间隔2分钟；连续3次未成功，应查明并排除原因再试。着火后及时松开钥匙，避免起动机被发动机反带。\n\n适用限制：仅本册国三LF1504及匹配出厂配置；基本型/选装型不可混用，不适用于LF1504国四或其他LF机型。封面2016-3-5与前言2017-01关系待核实，发动机引用字段不一致，须核对本车铭牌及匹配发动机手册；仅核对列明证据页，未全书审校、厂家复核或实车验证。\n- 证据：SRC-YTO-LF1504-SMLF150449010；PDF 第22、23页；第二章2.1.1/2.1.2（印刷2-7、2-8）。",
+          "status": "指定正文页文本及图像已核对；未厂家复核/实车验证",
+          "applicability": "matched",
+          "relevance": {
+            "score": 4.65,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "PDF 第22、23页；第二章2.1.1/2.1.2（印刷2-7、2-8）",
+          "version": "SM-LF1504.49.010；封面2016-3-5／前言2017-01（日期关系待核实）",
+          "scopeBoundary": "仅本册国三LF1504及匹配出厂配置；基本型/选装型不可混用，不适用于LF1504国四或其他LF机型。封面2016-3-5与前言2017-01关系待核实，发动机引用字段不一致，须核对本车铭牌及匹配发动机手册；仅核对列明证据页，未全书审校、厂家复核或实车验证。\n仅本册国三LF1504及匹配出厂配置；基本型/选装型不可混用，不适用于LF1504国四或其他LF机型。封面2016-3-5与前言2017-01关系待核实，发动机引用字段不一致，须核对本车铭牌及匹配发动机手册；仅核对列明证据页，未全书审校、厂家复核或实车验证。"
+        }
+      ],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "性能测试模拟回答；不是维修资料。"
+            }
+          }
+        ],
+        "model": "benchmark-stub",
+        "provider": "deepseek",
+        "fellBack": false,
+        "knowledgeChunks": 2,
+        "knowledgeSources": [
+          {
+            "entryId": "KB-YTO-LF1504-007",
+            "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504.md",
+            "heading": "KB-YTO-LF1504-007｜起动机不转与转动无力要分开记录",
+            "locator": "PDF 第104页；第四章表4-6-1（印刷4-5）",
+            "version": "SM-LF1504.49.010；封面2016-3-5／前言2017-01（日期关系待核实）",
+            "applicability": "matched",
+            "status": "指定正文页文本及图像已核对；未厂家复核/实车验证",
+            "referenceVerification": "verified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-YTO-LF1504-003",
+            "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504.md",
+            "heading": "KB-YTO-LF1504-003｜预热起动与连续尝试的限制",
+            "locator": "PDF 第22、23页；第二章2.1.1/2.1.2（印刷2-7、2-8）",
+            "version": "SM-LF1504.49.010；封面2016-3-5／前言2017-01（日期关系待核实）",
+            "applicability": "matched",
+            "status": "指定正文页文本及图像已核对；未厂家复核/实车验证",
+            "referenceVerification": "verified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "knowledge-grounded",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "ai",
+          "reason": "synthesis_requested",
+          "evidenceLevel": "partial",
+          "llmConfigured": true,
+          "knowledgeIds": [
+            "KB-YTO-LF1504-007",
+            "KB-YTO-LF1504-003"
+          ],
+          "aiRequired": true,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "KB-YTO-LF1504-007",
+              "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+              "relevance": {
+                "score": 13.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-YTO-LF1504-003",
+              "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+              "relevance": {
+                "score": 4.65,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "KB-YTO-LF1504-007",
+            "KB-YTO-LF1504-003"
+          ],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "现有资料需要进一步综合或核对，尝试外部 AI 辅助分析。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 1,
+          "aiSuccesses": 1,
+          "aiProvider": "deepseek",
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 2098,
+          "sentKnowledgeIds": [
+            "KB-YTO-LF1504-007",
+            "KB-YTO-LF1504-003"
+          ],
+          "timings": {
+            "retrievalMs": 0.011216999999305699,
+            "decisionMs": 0.2663009999996575,
+            "externalAiMs": 0.009954999997717096,
+            "totalMs": 1.523854000002757
+          }
+        }
+      }
+    },
+    {
+      "scenario": "matched-runaway-auto",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "东方红",
+        "model": "LX1004",
+        "diagnosisMode": "auto",
+        "messages": [
+          {
+            "role": "user",
+            "content": "发动机自行加速失控"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "Local structured response; zero provider generations",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "发动机自行加速失控",
+        "symptomQuery": "发动机自行加速失控",
+        "query": "东方红 LX1004 拖拉机 发动机自行加速失控 发动机自行加速失控",
+        "scope": {
+          "machineType": "拖拉机",
+          "brand": "东方红",
+          "model": "LX1004"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [
+        {
+          "entryId": "KB-YTO-LX-MANUAL-004",
+          "sourceId": "SRC-YTO-LX-MANUAL",
+          "heading": "KB-YTO-LX-MANUAL-004｜连续启动限制与着火后松开钥匙",
+          "text": "- 常温启动（本页定义气温在−5℃以上）时须先踩下离合器踏板接通启动安全开关，再将钥匙转至START；发动机着火后立即松手，使钥匙自动回到ON，避免带着起动电机运转。\n- 每次连续启动不得超过15秒，两次启动间隔不少于2分钟，连续启动不得超过3次。整理边界：这些是本册启动次数与时长限制，不据此确诊启动失败原因；电池、发动机及低温配置仍须核对实机。\n\n适用限制：仅限本册2016年2月版LX1004/LX1104/LX1204/LX1254/LX1304及匹配原始配置；未由核对页确认整册排放阶段，不推广为近年国四、改款机型或其他LX型号依据；配套发动机细节另查匹配柴油机说明书。\n\n证据：SRC-YTO-LX-MANUAL；第四章拖拉机的使用，二、操作，（一）发动机的启动，2.启动；PDF第25页／印刷第19页。\n\n状态：PDF原始文字层不可直接使用；已逐页目视核对所列证据，本条为独立事实概述，未全书审校、未实车或厂家复核。",
+          "status": "原始文字层乱码；所列证据页已渲染并目视核对，未全书审校、未实车/厂家复核",
+          "applicability": "matched",
+          "relevance": {
+            "score": 2,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "high"
+          },
+          "locator": "第四章拖拉机的使用，二、操作，（一）发动机的启动，2.启动；PDF第25页／印刷第19页",
+          "version": "2016-02",
+          "scopeBoundary": "限本文件封面型号及原始配置；当前国四机型和改款适用性待厂家核实；完整下载指HTTP长度与MD5一致、可解析至末页；仅所列证据页已目视核对，未全书逐页内容审核；前言落款2016年2月；2021-08下载路径和文件修改时间不等于新版本；网页称国三，原件排放阶段未由全书逐页核实；不作为国四后处理操作依据；LX1204和LX1304页面共用这份五机型说明书属系列共享，不应重复入库；本轮6条正文概述依图像核验，不把发动机家族、网页排放描述或相邻型号作为参数兼容证明\n仅限本册2016年2月版LX1004/LX1104/LX1204/LX1254/LX1304及匹配原始配置；未由核对页确认整册排放阶段，不推广为近年国四、改款机型或其他LX型号依据；配套发动机细节另查匹配柴油机说明书。"
+        }
+      ],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 0,
+        "knowledgeSources": [],
+        "answerMode": "local-evidence",
+        "localSummary": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "safe",
+          "reason": "high_risk_insufficient_evidence",
+          "evidenceLevel": "none",
+          "llmConfigured": true,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "high",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "KB-YTO-LX-MANUAL-004",
+              "sourceId": "SRC-YTO-LX-MANUAL",
+              "relevance": {
+                "score": 2,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "low"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "high",
+              "directEligible": false,
+              "excluded": true
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": [
+            "KB-YTO-LX-MANUAL-004"
+          ]
+        },
+        "coordinationMessage": "涉及高风险系统且可靠依据不足；本次仅返回停机与安全确认提示，不调用外部 AI。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.010505999998713378,
+            "decisionMs": 0.2005619999981718,
+            "externalAiMs": 0,
+            "totalMs": 1.2403470000026573
+          }
+        }
+      }
+    },
+    {
+      "scenario": "matched-start-local",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "久保田",
+        "model": "LX2620",
+        "diagnosisMode": "knowledge_only",
+        "messages": [
+          {
+            "role": "user",
+            "content": "发动机启动困难或不能启动"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "Local structured response; zero provider generations",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "发动机启动困难或不能启动",
+        "symptomQuery": "发动机启动困难或不能启动",
+        "query": "久保田 LX2620 拖拉机 发动机启动困难或不能启动 发动机启动困难或不能启动",
+        "scope": {
+          "machineType": "拖拉机",
+          "brand": "久保田",
+          "model": "LX2620"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [
+        {
+          "entryId": "KB-LX2620-003",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+          "text": "- 可能原因选摘：供油不畅，燃油系统有空气或水，低温导致油黏度增大／带转慢，电池电量不足。\n- 原文方向：检查油箱和燃油滤清器、燃油软管及夹箍；核对适合温度的用油、电池接线和电池状态。排气按原手册对应程序进行。\n- 整理安全边界：不能把所有不启动都归结为缺油；不盲目拆开喷油管路排气或跨接启动，不用明火加热。\n- 待核实：本车环境温度对应的油品、启动系统状态和选装预热装置；不从其他型号补参数。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 33.9,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-005",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-005｜发动机过热",
+          "text": "- 适用现象：冷却温度接近／达到沸腾或温度指示到达 H 红区；应读取本型号的过热处置章节。\n- 该手册的特定流程：在安全地点停车，保持发动机无负荷怠速约 5 分钟后停机；随后远离机器至少按原文要求等待 10 分钟，仍有蒸汽喷出时保持远离。确认无烫伤等危险并排除过热原因后，才按手册重新启动。\n- 上述流程不能跨品牌套用；也不是对同时发生火灾、失油压等其他紧急故障的处理说明。多重危险不适用单一过热排查条目，应停止操作并联系专业救援／维修。\n- 故障表可能原因：超负荷、冷却液不足、风扇皮带松弛／损坏、散热器或格栅脏堵、冷却通路腐蚀。\n- 待冷却且停机后再检查；禁止热态开盖，不将「先怠速」解释成可以继续带负荷作业。\n- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 8,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-KB-LX-20261013-001",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+          "text": "- 故障现象：维护／操作主题：发动机只能从驾驶座起动；不表示实车已发生故障。\n- 可能原因：本页给出维护前提与操作要求，未将该主题作为独立故障确诊。\n- 诊断步骤：先匹配本册完整机型、市场和本条配置，再核对所指部位、状态与原页。未配相应附件时不套用本条。\n- 维修建议：手册事实概述：不得站在地面起动；起动前换挡杆空挡、PTO分离，并在通风处操作。\n- 资料来源：SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页；[原件／记录](../../../原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf)；[公开入口](https://www.gartontractor.com/resources/manuals/kubota-lx2620-operator-manual)。\n- 验证状态：已核对引用页原文文字；未全书审校、厂家复核或实车验证。\n- 适用限制：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。",
+          "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7.95,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 仅适用：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。\n- 资料性质：操作、日常维护及故障候选的独立概述，不是整册翻译或技术维修手册。\n- 整理日期：2026-10-13（上海）；新增100条，旧知识卡和原件保留。\n仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。"
+        },
+        {
+          "entryId": "KB-LX2620-006",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-006｜发动机突然停机",
+          "text": "- 此页列出的候选原因是燃油不足，处理方向为补充燃油并在必要时按手册排气。\n- 不得推论「所有突然停机都是缺油」。需记录停机前负载、油量、报警、异响和泄漏；这些是整理建议，不是原表新增的确定故障原因。\n- 整理安全边界：存在油压／温度异常、异响、泄漏或无法确认原因时，不反复启动，应先联系维修人员。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-007",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+          "text": "- 前提：原表明确限定发动机没有过热，且亮的是发动机警告指示灯；不是任意警灯或低油压报警。\n- 原文方向：停止发动机后重新启动；若无法重新启动或灯仍亮，立即联系当地 Kubota 经销商。\n- 整理安全边界：该处不是「清码后继续干活」授权，不反复重启掩盖故障；若无法确认警灯类型或伴随其他危险，不按此单独条目尝试。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        }
+      ],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【故障现象分析】**\n针对「拖拉机 久保田 LX2620」的咨询：“发动机启动困难或不能启动”。\n\n**【初步判断】**\n已找到对应品牌／型号的资料；市场、配置和手册版本仍需确认。下面是来源事实摘录，不代表已确诊。\n\n**【检索到的知识】**\n### KB-KB-LX-20261013-001｜发动机只能从驾驶座起动\n- 故障现象：维护／操作主题：发动机只能从驾驶座起动；不表示实车已发生故障。\n- 可能原因：本页给出维护前提与操作要求，未将该主题作为独立故障确诊。\n- 诊断步骤：先匹配本册完整机型、市场和本条配置，再核对所指部位、状态与原页。未配相应附件时不套用本条。\n- 维修建议：手册事实概述：不得站在地面起动；起动前换挡杆空挡、PTO分离，并在通风处操作。\n- 资料来源：SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页；[原件／记录](../../../原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf)；[公开入口](https://www.gartontractor.com/resources/manuals/kubota-lx2620-operator-manual)。\n- 验证状态：已核对引用页原文文字；未全书审校、厂家复核或实车验证。\n- 适用限制：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。\n\n**【知识依据】**\n条目：KB-KB-LX-20261013-001｜来源编号：SRC-KB-LX2620-6C82063118｜章节：KB-KB-LX-20261013-001｜发动机只能从驾驶座起动\n知识文档：知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_LX2620_20261013扩充.md\n品牌／型号：久保田／LX2620/LX2620SU｜资料版本：版权2023，6C820-6311-8\n原始资料：知识库/原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf｜来源网址：https://www.gartontractor.com/resources/manuals/kubota-lx2620-operator-manual\n原文定位：操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页\n核验状态：已核对引用页原文文字；未全书审校、厂家复核或实车验证。｜资料类别：操作/维护知识\n适用性：品牌／型号匹配，市场、配置及手册版本仍需核对\n适用限制：美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 仅适用：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。\n- 资料性质：操作、日常维护及故障候选的独立概述，不是整册翻译或技术维修手册。\n- 整理日期：2026-10-13（上海）；新增100条，旧知识卡和原件保留。\n仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。\n\n**【当前资料不足】**\n请确认完整机型、市场、配置和原手册版本；条目中的待核实内容不能用其他品牌或相近机型补齐。故障表中的可能原因需要检测验证，不能据单一症状决定换件。\n\n**【安全提醒】**\n遵守本机手册的停机与安全隔离规程；不要绕过安全联锁、带压拆修或在悬空机具下作业。高温、高压、电池高压和无人作业相关检查应交具备相应资质的人员处理。\n\n**【参考资料 · 适用或核验仍待确认】**\n- KB-LX2620-003／SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；PDF 第 130 页；印刷第 128 页；核验状态：沿用既有原文核对条目。\n  适用限制：美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用。\n- KB-LX2620-005／SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；PDF 第 60、130 页；印刷第 58、128 页；PDF 第 104 页／印刷第 102 页；核验状态：沿用既有原文核对条目。\n  适用限制：美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用。\n- KB-LX2620-006／SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；PDF 第 130 页；印刷第 128 页；核验状态：沿用既有原文核对条目。\n  适用限制：美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用。\n- KB-LX2620-007／SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；PDF 第 130 页；印刷第 128 页；核验状态：沿用既有原文核对条目。\n  适用限制：美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用。\n上述资料只作来源参考，本次不展示其具体操作步骤或参数。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 5,
+        "knowledgeSources": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-005｜发动机过热",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_LX2620_20261013扩充.md",
+            "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+            "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+            "referenceVerification": "verified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-006｜发动机突然停机",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "local-evidence",
+        "localSummary": "**【服务状态】** 本次直接使用本地资料，未调用外部 AI。\n\n**【继续确认】** 已记下：久保田 LX2620。当前关注：发动机启动困难或不能启动。\n\n**【本地资料】** 找到候选章节“KB-KB-LX-20261013-001｜发动机只能从驾驶座起动”，尚未确认适用于你的车辆或支持本次故障判断。展开下方资料可核对原文、页码及限制；不要直接据此换件。\n\n**【先确认两点】**\n1. 是否有报警或故障码？请提供原文。\n2. 问题在什么工况下出现，有哪些同时发生的现象？\n\n**【提醒】** 不必为回答问题新增试车或拆检；出现危险征兆时停止作业并联系专业维修人员。\n\n参考来源：KB-LX2620-003、KB-LX2620-005、KB-KB-LX-20261013-001、KB-LX2620-006、KB-LX2620-007。核验或适用条件待确认；请展开查看来源和限制，本次不据此提供维修步骤。",
+        "coordination": {
+          "requestedMode": "knowledge_only",
+          "effectiveMode": "knowledge_only",
+          "route": "local",
+          "reason": "local_requested",
+          "evidenceLevel": "partial",
+          "llmConfigured": true,
+          "knowledgeIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "aiRequired": false,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "KB-LX2620-003",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 33.9,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-005",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 8,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-KB-LX-20261013-001",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-006",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-007",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "按你的选择，仅使用本地知识库。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.015913999999611406,
+            "decisionMs": 0.2540919999992184,
+            "externalAiMs": 0,
+            "totalMs": 1.5945109999993292
+          }
+        }
+      }
+    },
+    {
+      "scenario": "matched-start-assisted",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "久保田",
+        "model": "LX2620",
+        "diagnosisMode": "ai_assisted",
+        "messages": [
+          {
+            "role": "user",
+            "content": "发动机启动困难或不能启动"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "One successful in-process provider stub generation",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "发动机启动困难或不能启动",
+        "symptomQuery": "发动机启动困难或不能启动",
+        "query": "久保田 LX2620 拖拉机 发动机启动困难或不能启动 发动机启动困难或不能启动",
+        "scope": {
+          "machineType": "拖拉机",
+          "brand": "久保田",
+          "model": "LX2620"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [
+        {
+          "entryId": "KB-LX2620-003",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+          "text": "- 可能原因选摘：供油不畅，燃油系统有空气或水，低温导致油黏度增大／带转慢，电池电量不足。\n- 原文方向：检查油箱和燃油滤清器、燃油软管及夹箍；核对适合温度的用油、电池接线和电池状态。排气按原手册对应程序进行。\n- 整理安全边界：不能把所有不启动都归结为缺油；不盲目拆开喷油管路排气或跨接启动，不用明火加热。\n- 待核实：本车环境温度对应的油品、启动系统状态和选装预热装置；不从其他型号补参数。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 33.9,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-005",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-005｜发动机过热",
+          "text": "- 适用现象：冷却温度接近／达到沸腾或温度指示到达 H 红区；应读取本型号的过热处置章节。\n- 该手册的特定流程：在安全地点停车，保持发动机无负荷怠速约 5 分钟后停机；随后远离机器至少按原文要求等待 10 分钟，仍有蒸汽喷出时保持远离。确认无烫伤等危险并排除过热原因后，才按手册重新启动。\n- 上述流程不能跨品牌套用；也不是对同时发生火灾、失油压等其他紧急故障的处理说明。多重危险不适用单一过热排查条目，应停止操作并联系专业救援／维修。\n- 故障表可能原因：超负荷、冷却液不足、风扇皮带松弛／损坏、散热器或格栅脏堵、冷却通路腐蚀。\n- 待冷却且停机后再检查；禁止热态开盖，不将「先怠速」解释成可以继续带负荷作业。\n- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 8,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-KB-LX-20261013-001",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+          "text": "- 故障现象：维护／操作主题：发动机只能从驾驶座起动；不表示实车已发生故障。\n- 可能原因：本页给出维护前提与操作要求，未将该主题作为独立故障确诊。\n- 诊断步骤：先匹配本册完整机型、市场和本条配置，再核对所指部位、状态与原页。未配相应附件时不套用本条。\n- 维修建议：手册事实概述：不得站在地面起动；起动前换挡杆空挡、PTO分离，并在通风处操作。\n- 资料来源：SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页；[原件／记录](../../../原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf)；[公开入口](https://www.gartontractor.com/resources/manuals/kubota-lx2620-operator-manual)。\n- 验证状态：已核对引用页原文文字；未全书审校、厂家复核或实车验证。\n- 适用限制：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。",
+          "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7.95,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 仅适用：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。\n- 资料性质：操作、日常维护及故障候选的独立概述，不是整册翻译或技术维修手册。\n- 整理日期：2026-10-13（上海）；新增100条，旧知识卡和原件保留。\n仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。"
+        },
+        {
+          "entryId": "KB-LX2620-006",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-006｜发动机突然停机",
+          "text": "- 此页列出的候选原因是燃油不足，处理方向为补充燃油并在必要时按手册排气。\n- 不得推论「所有突然停机都是缺油」。需记录停机前负载、油量、报警、异响和泄漏；这些是整理建议，不是原表新增的确定故障原因。\n- 整理安全边界：存在油压／温度异常、异响、泄漏或无法确认原因时，不反复启动，应先联系维修人员。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-007",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+          "text": "- 前提：原表明确限定发动机没有过热，且亮的是发动机警告指示灯；不是任意警灯或低油压报警。\n- 原文方向：停止发动机后重新启动；若无法重新启动或灯仍亮，立即联系当地 Kubota 经销商。\n- 整理安全边界：该处不是「清码后继续干活」授权，不反复重启掩盖故障；若无法确认警灯类型或伴随其他危险，不按此单独条目尝试。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        }
+      ],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "性能测试模拟回答；不是维修资料。"
+            }
+          }
+        ],
+        "model": "benchmark-stub",
+        "provider": "deepseek",
+        "fellBack": false,
+        "knowledgeChunks": 5,
+        "knowledgeSources": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-005｜发动机过热",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_LX2620_20261013扩充.md",
+            "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+            "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+            "referenceVerification": "verified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-006｜发动机突然停机",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "knowledge-grounded",
+        "coordination": {
+          "requestedMode": "ai_assisted",
+          "effectiveMode": "ai_assisted",
+          "route": "ai",
+          "reason": "ai_requested",
+          "evidenceLevel": "partial",
+          "llmConfigured": true,
+          "knowledgeIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "aiRequired": true,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "KB-LX2620-003",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 33.9,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-005",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 8,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-KB-LX-20261013-001",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-006",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-007",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "按你的选择，先检索资料，再使用外部 AI 辅助分析。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 1,
+          "aiSuccesses": 1,
+          "aiProvider": "deepseek",
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 5778,
+          "sentKnowledgeIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006",
+            "KB-LX2620-007"
+          ],
+          "timings": {
+            "retrievalMs": 0.010947000002488494,
+            "decisionMs": 0.246460999998817,
+            "externalAiMs": 0.0061390000009851065,
+            "totalMs": 1.5716759999995702
+          }
+        }
+      }
+    },
+    {
+      "scenario": "unknown-brake-risk",
+      "request": {
+        "machineType": "拖拉机",
+        "diagnosisMode": "auto",
+        "messages": [
+          {
+            "role": "user",
+            "content": "拖拉机制动失灵，刹不住"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "Local structured response; zero provider generations",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "拖拉机制动失灵，刹不住",
+        "symptomQuery": "制动失灵，刹不住",
+        "query": "拖拉机 拖拉机 制动失灵，刹不住 拖拉机制动失灵，刹不住",
+        "scope": {
+          "machineType": "拖拉机"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 0,
+        "knowledgeSources": [],
+        "answerMode": "local-evidence",
+        "localSummary": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "safe",
+          "reason": "high_risk_insufficient_evidence",
+          "evidenceLevel": "none",
+          "llmConfigured": true,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "high",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "涉及高风险系统且可靠依据不足；本次仅返回停机与安全确认提示，不调用外部 AI。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.01120699999955832,
+            "decisionMs": 0.17311100000006263,
+            "externalAiMs": 0,
+            "totalMs": 1.2165820000009262
+          }
+        }
+      }
+    },
+    {
+      "scenario": "missing-code-identity",
+      "request": {
+        "machineType": "拖拉机",
+        "diagnosisMode": "auto",
+        "messages": [
+          {
+            "role": "user",
+            "content": "故障码是什么意思"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "Local structured response; zero provider generations",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "故障码是什么意思",
+        "symptomQuery": "故障码是什么意思",
+        "query": "拖拉机 故障码是什么意思 故障码是什么意思",
+        "scope": {
+          "machineType": "拖拉机"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [
+        {
+          "heading": "四、液压系统故障",
+          "text": "- 信息收集：液压提升无力、农具沉降、系统噪音或过热具体指什么？涉及哪个功能和机具，发生工况及伴随报警是什么？\n- 已有记录：如已有仪表读数或检测报告，请提供原记录、单位及记录条件；本清单不要求测压或拆检。\n- 资料缺口：需要本机及配套机具匹配手册中的液压、安全和故障章节；不能提供通用压力、油温、油品或换油换件流程。",
+          "relevance": {
+            "score": 5,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          }
+        },
+        {
+          "heading": "五、电气系统故障",
+          "text": "- 信息收集：充电指示灯、灯光、喇叭或其他电气功能的具体异常是什么？何时发生，有哪些报警或故障代码？\n- 已有记录：是否已有检测报告、仪表读数、接线资料或维修记录？供电及附件配置是否已确认？\n- 资料缺口：需要本机匹配手册的电气配置、接线、故障及安全章节；不能提供通用电压阈值、接线或检测操作。",
+          "relevance": {
+            "score": 5,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          }
+        },
+        {
+          "heading": "一、发动机水温过高（开锅）",
+          "text": "- 信息收集：用户所说的水温过高或开锅具体表现是什么？仪表或报警显示了什么？发生时的作业、负荷、环境和伴随现象是什么？\n- 已有记录：是否留有故障代码、仪表照片或此前维修记录？仅描述已经观察到的情况。\n- 资料缺口：需要本机匹配手册中的水温报警、冷却系统及安全处置章节；未核对前不能给出温度阈值、等待时间、加液或拆检步骤。",
+          "relevance": {
+            "score": 3,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          }
+        },
+        {
+          "heading": "二、发动机启动困难 / 不能启动",
+          "text": "- 信息收集：启动马达不转、转动无力，还是转动但不着火？现象何时开始，是否有报警、故障代码或既有维修记录？\n- 机型确认：完整型号、发动机及传动配置、启动控制形式、手册编号和版次分别是什么？哪些信息尚未确认？\n- 资料缺口：需要本机匹配手册的启动条件、故障表和安全章节；本清单不提供排空气、预热、拆检或换件流程。",
+          "relevance": {
+            "score": 3,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          }
+        },
+        {
+          "heading": "六、制动与转向",
+          "text": "- 信息收集：制动跑偏、转向沉重或其他异常具体表现是什么？何时开始，发生条件及伴随现象是什么？\n- 机型确认：本机的制动、转向和配套配置是否有匹配手册或既有维修记录支持？\n- 资料缺口：需要本机匹配手册的制动、转向及安全章节；本清单不列候选故障原因，不提供调整或拆修流程。",
+          "relevance": {
+            "score": 3,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "high"
+          }
+        }
+      ],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【需要补充】** 请提供品牌和铭牌上的完整型号，再核对故障码或参数。不能用其他型号的数据代替。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 5,
+        "knowledgeSources": [
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "四、液压系统故障",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "五、电气系统故障",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "一、发动机水温过高（开锅）",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "二、发动机启动困难 / 不能启动",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "六、制动与转向",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          }
+        ],
+        "answerMode": "local-evidence",
+        "localSummary": "**【需要补充】** 请提供品牌和铭牌上的完整型号，再核对故障码或参数。不能用其他型号的数据代替。",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "clarify",
+          "reason": "identity_required",
+          "evidenceLevel": "none",
+          "llmConfigured": true,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "relevance": {
+                "score": 5,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 5,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "high",
+              "directEligible": false,
+              "excluded": false
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "解释专用故障码或参数需要品牌和完整型号，本次先追问。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.008432999999058666,
+            "decisionMs": 0.17627599999832455,
+            "externalAiMs": 0,
+            "totalMs": 1.2092400000001362
+          }
+        }
+      }
+    },
+    {
+      "scenario": "real-reference-lookup",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "久保田",
+        "model": "LX2620",
+        "diagnosisMode": "auto",
+        "messages": [
+          {
+            "role": "user",
+            "content": "查看原文 KB-LX2620-003 发动机启动困难或不能启动"
+          }
+        ]
+      },
+      "execution": [
+        "Express POST /api/chat",
+        "parseDiagnosticRequest",
+        "resolveDiagnosticContext",
+        "One retrieve(query, topK=5, scope)",
+        "DiagnosisRouter.decide with already retrieved metadata",
+        "One successful in-process provider stub generation",
+        "HTTP 200 JSON response"
+      ],
+      "retrievalContext": {
+        "currentQuery": "查看原文 KB-LX2620-003 发动机启动困难或不能启动",
+        "symptomQuery": "查看原文               发动机启动困难或不能启动",
+        "query": "久保田 LX2620 拖拉机 查看原文               发动机启动困难或不能启动 查看原文 KB-LX2620-003 发动机启动困难或不能启动",
+        "scope": {
+          "machineType": "拖拉机",
+          "brand": "久保田",
+          "model": "LX2620"
+        },
+        "clarificationNeeded": false
+      },
+      "retrievedKnowledge": [
+        {
+          "entryId": "KB-LX2620-003",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+          "text": "- 可能原因选摘：供油不畅，燃油系统有空气或水，低温导致油黏度增大／带转慢，电池电量不足。\n- 原文方向：检查油箱和燃油滤清器、燃油软管及夹箍；核对适合温度的用油、电池接线和电池状态。排气按原手册对应程序进行。\n- 整理安全边界：不能把所有不启动都归结为缺油；不盲目拆开喷油管路排气或跨接启动，不用明火加热。\n- 待核实：本车环境温度对应的油品、启动系统状态和选装预热装置；不从其他型号补参数。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 34.900000000000006,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-005",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-005｜发动机过热",
+          "text": "- 适用现象：冷却温度接近／达到沸腾或温度指示到达 H 红区；应读取本型号的过热处置章节。\n- 该手册的特定流程：在安全地点停车，保持发动机无负荷怠速约 5 分钟后停机；随后远离机器至少按原文要求等待 10 分钟，仍有蒸汽喷出时保持远离。确认无烫伤等危险并排除过热原因后，才按手册重新启动。\n- 上述流程不能跨品牌套用；也不是对同时发生火灾、失油压等其他紧急故障的处理说明。多重危险不适用单一过热排查条目，应停止操作并联系专业救援／维修。\n- 故障表可能原因：超负荷、冷却液不足、风扇皮带松弛／损坏、散热器或格栅脏堵、冷却通路腐蚀。\n- 待冷却且停机后再检查；禁止热态开盖，不将「先怠速」解释成可以继续带负荷作业。\n- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 9,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-LX2620-007",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+          "text": "- 前提：原表明确限定发动机没有过热，且亮的是发动机警告指示灯；不是任意警灯或低油压报警。\n- 原文方向：停止发动机后重新启动；若无法重新启动或灯仍亮，立即联系当地 Kubota 经销商。\n- 整理安全边界：该处不是「清码后继续干活」授权，不反复重启掩盖故障；若无法确认警灯类型或伴随其他危险，不按此单独条目尝试。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 8,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "low"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        },
+        {
+          "entryId": "KB-KB-LX-20261013-001",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+          "text": "- 故障现象：维护／操作主题：发动机只能从驾驶座起动；不表示实车已发生故障。\n- 可能原因：本页给出维护前提与操作要求，未将该主题作为独立故障确诊。\n- 诊断步骤：先匹配本册完整机型、市场和本条配置，再核对所指部位、状态与原页。未配相应附件时不套用本条。\n- 维修建议：手册事实概述：不得站在地面起动；起动前换挡杆空挡、PTO分离，并在通风处操作。\n- 资料来源：SRC-KB-LX2620-6C82063118；版权2023，6C820-6311-8；操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页；[原件／记录](../../../原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf)；[公开入口](https://www.gartontractor.com/resources/manuals/kubota-lx2620-operator-manual)。\n- 验证状态：已核对引用页原文文字；未全书审校、厂家复核或实车验证。\n- 适用限制：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。",
+          "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7.95,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 仅适用：仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。\n- 资料性质：操作、日常维护及故障候选的独立概述，不是整册翻译或技术维修手册。\n- 整理日期：2026-10-13（上海）；新增100条，旧知识卡和原件保留。\n仅6C820-6311-8美国版LX2620/LX2620SU及原件明确配置；SU、CAB及ROPS专用操纵不能互套。仅实际配备原文所指系统、附件及相应机构时使用。"
+        },
+        {
+          "entryId": "KB-LX2620-006",
+          "sourceId": "SRC-KB-LX2620-6C82063118",
+          "heading": "KB-LX2620-006｜发动机突然停机",
+          "text": "- 此页列出的候选原因是燃油不足，处理方向为补充燃油并在必要时按手册排气。\n- 不得推论「所有突然停机都是缺油」。需记录停机前负载、油量、报警、异响和泄漏；这些是整理建议，不是原表新增的确定故障原因。\n- 整理安全边界：存在油压／温度异常、异响、泄漏或无法确认原因时，不反复启动，应先联系维修人员。\n- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "status": "沿用既有原文核对条目",
+          "applicability": "matched",
+          "relevance": {
+            "score": 7,
+            "method": "keyword-weighted-overlap",
+            "calibrated": false
+          },
+          "diagnosticMetadata": {
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "riskLevel": "unknown"
+          },
+          "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+          "version": "版权2023，6C820-6311-8",
+          "scopeBoundary": "美国版LX2620/LX2620SU；CAB、ROPS及SU配置分别匹配，不能替代中国市场型号。选页摘要，未全书审校。\n- 型号：LX2620、LX2620SU，以及原规格表列明的LX2620HSD、LX2620SUHSD、LX2620HSDC、LX2620HSDCC；CAB 驾驶室、ROPS 防翻架及 SU 配置需要分别核对。具体序列号范围待核实；不用于中国市场其他久保田型号。\n- 整理日期：2026-10-01；续审日期：2026-10-04；状态：选摘已对照原文及关键表格图像，未经厂家复核／实车验证。以下 15 条是事实摘要，非完整译本；每条继承上述来源与适用限制。\n匹配型号、市场、配置后使用"
+        }
+      ],
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "性能测试模拟回答；不是维修资料。"
+            }
+          }
+        ],
+        "model": "benchmark-stub",
+        "provider": "deepseek",
+        "fellBack": false,
+        "knowledgeChunks": 5,
+        "knowledgeSources": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-003｜发动机启动困难或不能启动",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-005｜发动机过热",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Overheating countermeasures／Engine troubleshooting；PDF 第 60、130 页；印刷第 58、128 页；开盖安全见 PDF 第 104 页／印刷第 102 页。多重危险限制为整理安全边界。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-007｜未过热但发动机警告灯点亮",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting 页面底部 Operator's action 表；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_LX2620_20261013扩充.md",
+            "heading": "KB-KB-LX-20261013-001｜发动机只能从驾驶座起动",
+            "locator": "操作／保养对应主题：发动机只能从驾驶座起动；PDF第42页／印刷第40页",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "已核对引用页原文文字；未全书审校、厂家复核或实车验证。",
+            "referenceVerification": "verified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "source": "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md",
+            "heading": "KB-LX2620-006｜发动机突然停机",
+            "locator": "- 证据：SRC-KB-LX2620-6C82063118，Engine troubleshooting；PDF 第 130 页；印刷第 128 页。",
+            "version": "版权2023，6C820-6311-8",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "knowledge-grounded",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "ai",
+          "reason": "synthesis_requested",
+          "evidenceLevel": "partial",
+          "llmConfigured": true,
+          "knowledgeIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-LX2620-007",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006"
+          ],
+          "aiRequired": true,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "KB-LX2620-003",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 34.900000000000006,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-005",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 9,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-007",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 8,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-KB-LX-20261013-001",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-LX2620-006",
+              "sourceId": "SRC-KB-LX2620-6C82063118",
+              "relevance": {
+                "score": 7,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-LX2620-007",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006"
+          ],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "现有资料需要进一步综合或核对，尝试外部 AI 辅助分析。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 1,
+          "aiSuccesses": 1,
+          "aiProvider": "deepseek",
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 5778,
+          "sentKnowledgeIds": [
+            "KB-LX2620-003",
+            "KB-LX2620-005",
+            "KB-LX2620-007",
+            "KB-KB-LX-20261013-001",
+            "KB-LX2620-006"
+          ],
+          "timings": {
+            "retrievalMs": 0.010877000000618864,
+            "decisionMs": 0.5816349999986414,
+            "externalAiMs": 0.005918999999266816,
+            "totalMs": 1.8693639999983134
+          }
+        }
+      }
+    }
+  ]
+}

@@ -4,6 +4,8 @@ export interface RetrievalContext {
   machineType?: string;
   brand?: string;
   model?: string;
+  engineModel?: string;
+  faultCodes?: string[];
 }
 
 const BRAND_ALIASES: Record<string, string[]> = {

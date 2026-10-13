@@ -31,6 +31,7 @@ export interface LlmStatus {
 }
 
 export interface RouteOutcome {
+  attempts?: number;
   result: ChatResult;
   primary: ProviderName;
   fellBack: boolean;
@@ -115,18 +116,19 @@ export class LlmRouter {
     let primaryError: ProviderError;
     try {
       const result = await primary.chat(messages);
-      return { result, primary: primary.name, fellBack: false };
+      return { result, primary: primary.name, fellBack: false, attempts: 1 };
     } catch (error) {
       primaryError = asProviderError(primary.name, error);
       console.warn(`[llm] primary ${primary.name} failed (${primaryError.kind})`);
     }
 
-    if (!secondary.isConfigured()) throw primaryError;
+    if (!secondary.isConfigured()) { primaryError.attempts = 1; throw primaryError; }
     try {
       const result = await secondary.chat(messages);
-      return { result, primary: primary.name, fellBack: true, fallbackReason: primaryError.kind };
+      return { result, primary: primary.name, fellBack: true, fallbackReason: primaryError.kind, attempts: 2 };
     } catch (error) {
       const secondaryError = asProviderError(secondary.name, error);
+      secondaryError.attempts = 2;
       console.warn(`[llm] secondary ${secondary.name} failed (${secondaryError.kind})`);
       throw secondaryError;
     }

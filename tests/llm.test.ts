@@ -91,6 +91,7 @@ test('auto preserves Gemini priority and forwards grounded prompt and conversati
   assert.equal(outcome.result.model, 'actual-gemini-model');
   assert.equal(outcome.fellBack, false);
   assert.equal(outcome.fallbackReason, undefined);
+  assert.equal(outcome.attempts, 1);
   assert.equal(fetch.mock.callCount(), 1);
   assert.deepEqual(messages, originalMessages);
 });
@@ -138,6 +139,7 @@ test('primary auth failure uses secondary provider and never logs upstream respo
   assert.equal(outcome.result.provider, 'deepseek');
   assert.equal(outcome.fellBack, true);
   assert.equal(outcome.fallbackReason, 'auth');
+  assert.equal(outcome.attempts, 2);
   assert.equal(fetch.mock.callCount(), 2);
   assert.match(warnings.join(' '), /auth/);
   assert.doesNotMatch(warnings.join(' '), /echoed-secret|user prompt|test-key/);

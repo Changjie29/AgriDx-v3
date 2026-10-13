@@ -1,0 +1,58 @@
+{
+  "dateShanghai": "2026-10-13",
+  "baseCommit": "aa6f3db8be325a58522affdff2e6c4cff1da78b5",
+  "version": "3.6.0",
+  "dependencyInstall": {
+    "command": "npm ci --registry=https://registry.npmjs.org --replace-registry-host=always --no-audit --no-fund",
+    "packages": 597,
+    "lockDependencyChanges": false,
+    "note": "Use inherited proxy and workspace cache; original mirror was inaccessible, official package integrity retained."
+  },
+  "verify": {
+    "command": "npm run verify",
+    "passed": true,
+    "tests": 271,
+    "pass": 269,
+    "fail": 0,
+    "skipped": 2,
+    "skipReason": "Windows-specific checks skipped on Linux; other checks executed",
+    "checks": [
+      "version consistency",
+      "frontend/backend and Vite types",
+      "all test suites including actual development-preview browser build",
+      "lint (0 errors, existing button Fast Refresh warning)",
+      "production frontend build (existing Three.js chunk size warning)",
+      "backend build"
+    ]
+  },
+  "knowledgeIndex": {
+    "command": "python3 知识库/工具/校验索引.py",
+    "entries": 1213,
+    "sources": 26,
+    "chunks": 1222,
+    "errors": 0,
+    "factsAndOriginalsChanged": false,
+    "externalPdfRefetch": false
+  },
+  "productionHttp": {
+    "checks": 12,
+    "passed": true,
+    "actualNodeProductionListener": true,
+    "externalAiCalls": 0,
+    "evidenceFile": "production-http.json"
+  },
+  "benchmark": {
+    "sameScenarioHash": true,
+    "finalSourceHashesMatch": true,
+    "samplesPerScenario": 120,
+    "scenarios": 8,
+    "externalApiCalls": 0,
+    "successfulMockGenerationsBaseline": 720,
+    "successfulMockGenerationsAfter": 480,
+    "scope": "960 measured service requests; extra warmup/HTTP/cold groups tracked separately"
+  },
+  "github": {
+    "intent": "Independent PR targeting main, wait for review; no merge or website deployment"
+  },
+  "capturedAt": "2026-10-13T10:13:34.803661+00:00"
+}

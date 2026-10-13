@@ -128,7 +128,7 @@ test('rejects non-object JSON bodies with a JSON bad-request response', async ()
   }
 });
 
-test('the chat API returns archived facts with source IDs, page references and applicability limits', async () => {
+test('the chat API returns uncertain references with source IDs, pages and applicability limits without repair instructions', async () => {
   const response = await chat({ messages, ...identity });
   assert.equal(response.status, 200);
   assert.equal(response.body.provider, 'knowledge-base');
@@ -140,7 +140,9 @@ test('the chat API returns archived facts with source IDs, page references and a
   assert.match(reply, /SRC-NH-WM25-92157408/);
   assert.match(reply, /PDF 第 175 页/);
   assert.match(reply, /不适用于.*25S/);
-  assert.match(reply, /启动联锁条件未满足/);
+  assert.match(reply, /核验.*待确认|核验状态.*沿用既有/);
+  assert.match(reply, /不展示.*操作步骤或参数/);
+  assert.doesNotMatch(reply, /启动联锁条件未满足/);
 });
 
 test('source-rich local replies remain usable as assistant history in the next turn', async () => {

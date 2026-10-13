@@ -20,11 +20,15 @@ export function parseDiagnosticRequest(input: unknown): DiagnosticRequest {
     throw new DiagnosticInputError('请求体必须为 JSON 对象');
   }
   const body = input as Record<string, unknown>;
-  for (const field of ['machineType', 'brand', 'model'] as const) {
+  for (const field of ['machineType', 'brand', 'model', 'engineModel'] as const) {
     const value = body[field];
     if (value !== undefined && (typeof value !== 'string' || value.length > 100)) {
       throw new DiagnosticInputError('农机类型、品牌和型号必须为字符串（各上限 100 字符）');
     }
+  }
+  if (body.faultCodes !== undefined && (!Array.isArray(body.faultCodes) || body.faultCodes.length > 20 ||
+    body.faultCodes.some(code => typeof code !== 'string' || !code.trim() || code.length > 32))) {
+    throw new DiagnosticInputError('故障码必须为非空文本数组（最多20个，各上限32字符）');
   }
   if (!Array.isArray(body.messages) || body.messages.length === 0) {
     throw new DiagnosticInputError('messages 参数缺失或格式错误');
@@ -56,5 +60,7 @@ export function parseDiagnosticRequest(input: unknown): DiagnosticRequest {
     machineType: (body.machineType as string | undefined)?.trim(),
     brand: (body.brand as string | undefined)?.trim(),
     model: (body.model as string | undefined)?.trim(),
+    engineModel: (body.engineModel as string | undefined)?.trim(),
+    faultCodes: (body.faultCodes as string[] | undefined)?.map(code => code.trim()),
   };
 }

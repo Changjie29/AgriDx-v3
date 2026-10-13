@@ -1,58 +1,29 @@
 import type { KnowledgeChunk } from './retriever';
-import { queryWithoutIdentity, resolveScope, type RetrievalContext } from './scope';
-import { hasIndexedReference, mentionsEntryId, referenceVerification } from './evidence';
-
+import type { RetrievalContext } from './scope';
+import { DiagnosisRouter, DEFAULT_ROUTER_CONFIG, type DiagnosisRouterInput } from '../diagnosis/router';
 import { isDiagnosisMode, type DiagnosisMode, type CoordinationDecision, type RouteReason } from '../../shared/diagnosis';
 export { DIAGNOSIS_MODES, isDiagnosisMode, type DiagnosisMode, type CoordinationDecision, type RouteReason } from '../../shared/diagnosis';
+
+/** Environment parsing is kept outside the pure router. Invalid values fail closed. */
 export function coordinationConfig() {
   const env = typeof process === 'undefined' ? {} : process.env;
   const value = env.DIAGNOSIS_MODE?.trim() || 'auto';
   const external = env.ALLOW_EXTERNAL_AI?.trim() || 'true';
-  const valid = isDiagnosisMode(value) && ['true', 'false'].includes(external);
+  const highRelevanceThreshold = Number(env.DIAGNOSIS_RAW_HIGH_THRESHOLD?.trim() || DEFAULT_ROUTER_CONFIG.highRelevanceThreshold);
+  const mediumRelevanceThreshold = Number(env.DIAGNOSIS_RAW_MEDIUM_THRESHOLD?.trim() || DEFAULT_ROUTER_CONFIG.mediumRelevanceThreshold);
+  const valid = isDiagnosisMode(value) && ['true', 'false'].includes(external) &&
+    Number.isFinite(highRelevanceThreshold) && Number.isFinite(mediumRelevanceThreshold) && mediumRelevanceThreshold > 0 && highRelevanceThreshold >= mediumRelevanceThreshold;
   return { defaultMode: valid && isDiagnosisMode(value) ? value : 'knowledge_only' as DiagnosisMode, configValid: valid,
-    allowExternalAi: valid && external === 'true' && value !== 'knowledge_only' };
+    allowExternalAi: valid && external === 'true' && value !== 'knowledge_only', highRelevanceThreshold, mediumRelevanceThreshold };
 }
-const TECHNICAL = new Set(['维护/故障知识', '操作/维护知识', '安全操作', '系统安装/调试']);
 
-/** Conservative direct lookup, not an estimate of diagnostic confidence. */
+/** Backward-compatible evidence entry point, now backed by the same deterministic evaluator. */
 export function assessEvidence(query: string, currentQuery: string, found: KnowledgeChunk[], scope: RetrievalContext): CoordinationDecision['evidenceLevel'] {
-  const diagnostic = found.filter(c => hasIndexedReference(c) && TECHNICAL.has(c.entryType ?? ''));
-  if (!diagnostic.length) return 'none';
-  // A concrete lookup can be answered by an exact quotation. Free-form diagnosis
-  // and broad "what is wrong" questions must not become direct facts by score alone.
-  const normalize = (s: string) => queryWithoutIdentity(s).toLowerCase().replace(/[\s\p{P}]/gu, '');
-  const lookup = /查阅|查找|查看|原文|摘录|手册|资料|说明书/.test(currentQuery);
-  if (!lookup || /为什么|原因|分析|比较|综合|诊断|怎么办/.test(currentQuery) || !scope.brand || !scope.model) return 'partial';
-  const direct = diagnostic.filter(c => c.applicability === 'matched' && [c.locator, c.version, c.scopeBoundary].every(v => v?.trim()) &&
-    referenceVerification(c.status) === 'verified' && !/待核实|待核验|待确认|未确认|未核实|未核验|未知|不明确/.test(`${c.status} ${c.scopeBoundary}`) &&
-    (mentionsEntryId(currentQuery, c.entryId!) || (() => {
-      const heading = c.heading.split('｜').at(-1) ?? c.heading;
-      const normalized = normalize(heading);
-      return normalized.length >= 4 && normalize(currentQuery).includes(normalized);
-    })()));
-  // Ambiguous multiple source matches are not automatically considered sufficient.
-  return direct.length === 1 && direct[0] === found[0] && !resolveScope(query, scope).identityConflict ? 'direct_reference' : 'partial';
+  return DiagnosisRouter.decide({ query, currentQuery, retrieved: found, scope, clarificationNeeded: false, llmConfigured: false }).evidenceLevel;
 }
 
-export function decideCoordination(input: {
-  query: string; currentQuery: string; scope: RetrievalContext; retrieved: KnowledgeChunk[];
-  clarificationNeeded: boolean; requestedMode?: DiagnosisMode; llmConfigured: boolean; llmConfigValid?: boolean;
-}): CoordinationDecision {
-  const config = coordinationConfig();
-  const requestedMode = input.requestedMode ?? config.defaultMode;
-  const effectiveMode = config.allowExternalAi ? requestedMode : 'knowledge_only';
-  const evidenceLevel = assessEvidence(input.query, input.currentQuery, input.retrieved, input.scope);
-  const decision = (route: CoordinationDecision['route'], reason: RouteReason): CoordinationDecision =>
-    ({ requestedMode, effectiveMode, route, reason, evidenceLevel, llmConfigured: input.llmConfigured });
-  if (input.clarificationNeeded || resolveScope(input.query, input.scope).identityConflict) return decision('clarify', 'identity_conflict');
-  if ((!input.scope.brand || !input.scope.model) && /故障码.*(?:含义|意思|解释)|(?:压力|扭矩|间隙|电压|温度).*(?:标准|多少|参数)|(?:标准|规定).*(?:压力|扭矩|间隙|电压|温度)/.test(input.currentQuery)) return decision('clarify', 'identity_required');
-  if (!config.configValid) return decision('local', 'invalid_config');
-  if (!config.allowExternalAi) return decision('local', 'server_local_only');
-  if (effectiveMode === 'knowledge_only') return decision('local', 'local_requested');
-  if (effectiveMode === 'auto' && evidenceLevel === 'direct_reference') return decision('local', 'direct_reference');
-  if (input.llmConfigValid === false) return decision('local', 'llm_config_invalid');
-  if (!input.llmConfigured) return decision('local', 'llm_not_configured');
-  return decision('ai', effectiveMode === 'ai_assisted' ? 'ai_requested' : evidenceLevel === 'none' ? 'insufficient_evidence' : 'synthesis_requested');
+export function decideCoordination(input: DiagnosisRouterInput): CoordinationDecision {
+  return DiagnosisRouter.decide(input, coordinationConfig());
 }
 
 export const ROUTE_MESSAGES: Record<RouteReason, string> = {
@@ -62,10 +33,14 @@ export const ROUTE_MESSAGES: Record<RouteReason, string> = {
   server_local_only: '网站当前设置为仅使用本地知识库，不调用外部 AI。',
   invalid_config: '回答模式配置有误，已安全切换为仅本地资料。',
   local_requested: '按你的选择，仅使用本地知识库。',
-  direct_reference: '找到可定位的匹配资料，直接展示原文及适用限制，不代表故障已确诊。',
+  direct_reference: '找到相关且覆盖当前问题的匹配资料，直接展示资料排查建议及适用限制；资料审校不代表故障确诊或实车验证。',
   llm_not_configured: '本次需要进一步分析，但尚未配置外部 AI；先展示本地资料和追问。',
   insufficient_evidence: '未找到可直接支持诊断的资料，尝试外部 AI 提供待验证的通用分析。',
   synthesis_requested: '现有资料需要进一步综合或核对，尝试外部 AI 辅助分析。',
   ai_requested: '按你的选择，先检索资料，再使用外部 AI 辅助分析。',
   provider_unavailable: '外部 AI 本次调用失败，已退回本地资料。',
+  high_risk_insufficient_evidence: '涉及高风险系统且可靠依据不足；本次仅返回停机与安全确认提示，不调用外部 AI。',
+  high_risk_restricted: '涉及高风险系统；资料审校不等于操作许可，本次限制具体维修操作并建议专业人员核对。',
+  unknown_operation_risk: '当前资料无法确认操作风险，本次先补充设备与现场安全信息，限制具体维修步骤。',
+  knowledge_conflict: '资料或设备条件存在冲突，先核对适用范围，本次不调用外部 AI。',
 };

@@ -1,0 +1,605 @@
+{
+  "schemaVersion": 1,
+  "phase": "baseline",
+  "capturedAt": "2026-10-13T09:56:55.162Z",
+  "rootCommit": "aa6f3db8be325a58522affdff2e6c4cff1da78b5",
+  "scenarioSha256": "4f0d678d1ddac4f35039bc1827d6d03c36de6666980b20c79dd8a911f91bac57",
+  "measuredSourceSha256": {
+    "server/diagnosis/service.ts": "377dba20dea7f99a5a43ead7d158feabb4da3b8346792677640d1d992efaf474",
+    "server/knowledge/retriever.ts": "a24ffd27ab12fc09694270e08a23df44faf7d6f44b7ebc86f6bec75cdeab5226",
+    "server/knowledge/scope.ts": "fc07d1d769183e499d90f02346a5a6b50b7f5534bc344bcad7d29775ba503588",
+    "server/knowledge/coordination.ts": "12dea220b605a2dc93979f01e01b3a679bfdf48b64c5aaac12051cdbf79c15c6",
+    "server/knowledge/evidence.ts": "9bc775e5c8a4a71c58a9f8a836155aeb57d5f33306496d76c44f4115fd8261f6",
+    "server/knowledge/systemPrompt.ts": "46f82c06f46b783f3af9bf76d0ed08b376ced0feb7eb0efc549cd377a7fdd130",
+    "server/knowledge/fallbackDiagnosis.ts": "35a1e91f1c71260bef07416bcf7a7dd7d87c435c41e0e387e7c5c2ddea604882",
+    "server/app.ts": "5cdf3a0e60cc903b95d382b262e70dab7c69933b828f8a92ee0b3064023392e9",
+    "server/routes/chat.ts": "0cede34f51f8550eefd968cffb5469dd6c3aa61995f2fcc6dfef39c590689b25"
+  },
+  "projectVersion": "3.5.1",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "osRelease": "6.18.44",
+    "cpuModel": "AMD EPYC 9V45 96-Core Processor",
+    "logicalCpuCount": 3,
+    "memoryBytes": 10452496384,
+    "loadAverage": [
+      0.44,
+      0.25,
+      0.16
+    ],
+    "cgroupCpuMax": "200000 100000",
+    "cgroupMemoryMax": "8589934592"
+  },
+  "knowledge": {
+    "chunks": 1222,
+    "archivedEntries": 1213
+  },
+  "method": {
+    "iterationsPerScenario": 120,
+    "warmupPerScenario": 20,
+    "concurrency": 1,
+    "retrievalTopK": 5,
+    "serviceRetrievalTopK": 6,
+    "retrievalCache": "No retrieval cache in baseline",
+    "logging": "No routing decision logs in baseline",
+    "provider": "Immediate in-process stub; zero external API calls",
+    "http": "Actual Express /api/chat over localhost; unique simulated client IPs",
+    "percentiles": "Nearest rank on sorted durations",
+    "scope": "Warm-process local overhead, not production load capacity or real AI/network latency",
+    "stageIsolation": "Retrieval/compatibility-decision measured independently; service/HTTP measured end to end, not their sum",
+    "fixture": "Pure synthetic direct-reference fixture is measured separately from real indexed knowledge"
+  },
+  "scenarios": [
+    {
+      "id": "matched-start-auto",
+      "question": "发动机启动困难或不能启动",
+      "mode": "auto",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 8.449769000000288,
+        "p95Ms": 9.568691000000058,
+        "minMs": 8.078751999999895,
+        "maxMs": 11.392781999999897,
+        "meanMs": 8.628829283333323
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.22563900000000103,
+        "p95Ms": 0.3687639999999419,
+        "minMs": 0.1960039999999026,
+        "maxMs": 0.4225249999999505,
+        "meanMs": 0.24659408333333013
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 10.017816999999923,
+        "p95Ms": 11.526042999999959,
+        "minMs": 9.597665000000234,
+        "maxMs": 13.650805999999648,
+        "meanMs": 10.205238158333326
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.004376000000092972,
+        "p95Ms": 0.008391999999957989,
+        "minMs": 0.002072999999882086,
+        "maxMs": 0.027772000000140906,
+        "meanMs": 0.004873374999998722
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "synthesis_requested",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "synthesis_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-005",
+        "KB-LX2620-006",
+        "KB-LX2620-007",
+        "KB-LX2620-009"
+      ],
+      "responseChars": 16,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 10.781463999999687,
+        "p95Ms": 11.775312999998278,
+        "minMs": 10.2816419999981,
+        "maxMs": 21.029426999997668,
+        "meanMs": 11.045600066666612
+      },
+      "httpSuccessfulMockGenerations": 120
+    },
+    {
+      "id": "yto-starter-auto",
+      "question": "起动机不转",
+      "mode": "auto",
+      "brand": "东方红",
+      "model": "LF1504",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 7.941244999999981,
+        "p95Ms": 8.584251000000222,
+        "minMs": 7.660914000000048,
+        "maxMs": 9.265825999999834,
+        "meanMs": 7.998962116666606
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.20851399999992282,
+        "p95Ms": 0.28856400000040594,
+        "minMs": 0.1877519999998185,
+        "maxMs": 0.3498450000001867,
+        "meanMs": 0.2205649249999662
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 9.389140999999654,
+        "p95Ms": 10.019758999999794,
+        "minMs": 9.074067999999897,
+        "maxMs": 11.83761100000038,
+        "meanMs": 9.480638941666655
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.0040660000004209,
+        "p95Ms": 0.005577999999331951,
+        "minMs": 0.0016029999997044797,
+        "maxMs": 0.006348999999772786,
+        "meanMs": 0.004110741666636386
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "synthesis_requested",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "synthesis_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [
+        "KB-YTO-LF1504-007",
+        "KB-YTO-LF1504-003"
+      ],
+      "responseChars": 16,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 9.921532000000298,
+        "p95Ms": 10.363957000001392,
+        "minMs": 9.509933000001183,
+        "maxMs": 10.980924000003142,
+        "meanMs": 9.946612666666654
+      },
+      "httpSuccessfulMockGenerations": 120
+    },
+    {
+      "id": "matched-runaway-auto",
+      "question": "发动机自行加速失控",
+      "mode": "auto",
+      "brand": "东方红",
+      "model": "LX1004",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 7.882095999999365,
+        "p95Ms": 8.127274000000398,
+        "minMs": 7.664509999999609,
+        "maxMs": 8.458511999999246,
+        "meanMs": 7.89763996666655
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.20508799999970506,
+        "p95Ms": 0.26472800000010466,
+        "minMs": 0.1844570000002932,
+        "maxMs": 0.32499900000038906,
+        "meanMs": 0.21330108333339315
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 9.373938000000635,
+        "p95Ms": 9.718786999999793,
+        "minMs": 9.037672000000384,
+        "maxMs": 10.656204999999318,
+        "meanMs": 9.40297757500003
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.003975999999966007,
+        "p95Ms": 0.00535799999943265,
+        "minMs": 0.00156299999980547,
+        "maxMs": 0.020961000000170316,
+        "meanMs": 0.0039164333333398344
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "synthesis_requested",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "synthesis_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [
+        "KB-YTO-LX-MANUAL-001",
+        "KB-YTO-LX-MANUAL-002",
+        "KB-YTO-LX-MANUAL-003",
+        "KB-YTO-LX-MANUAL-004",
+        "KB-YTO-LX-MANUAL-005",
+        "KB-YTO-LX-MANUAL-006"
+      ],
+      "responseChars": 16,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 9.837664999999106,
+        "p95Ms": 10.623806999999942,
+        "minMs": 9.507048999999824,
+        "maxMs": 12.281548999999359,
+        "meanMs": 9.920589525000015
+      },
+      "httpSuccessfulMockGenerations": 120
+    },
+    {
+      "id": "matched-start-local",
+      "question": "发动机启动困难或不能启动",
+      "mode": "knowledge_only",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 8.51662000000033,
+        "p95Ms": 9.215299999999843,
+        "minMs": 8.166073999998844,
+        "maxMs": 12.359435999998823,
+        "meanMs": 8.63815207499991
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.2253789999995206,
+        "p95Ms": 0.2800409999999829,
+        "minMs": 0.19953999999961525,
+        "maxMs": 0.4204620000000432,
+        "meanMs": 0.23467001666664752
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 10.293080000001282,
+        "p95Ms": 11.851291999999376,
+        "minMs": 9.844145000000935,
+        "maxMs": 17.295373999999356,
+        "meanMs": 10.525997800000074
+      },
+      "providerStub": {
+        "samples": 0,
+        "p50Ms": null,
+        "p95Ms": null,
+        "minMs": null,
+        "maxMs": null,
+        "meanMs": null
+      },
+      "successfulMockGenerations": 0,
+      "mockGenerationsPerRequest": 0,
+      "route": "local",
+      "reason": "local_requested",
+      "coordination": {
+        "requestedMode": "knowledge_only",
+        "effectiveMode": "knowledge_only",
+        "route": "local",
+        "reason": "local_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-005",
+        "KB-LX2620-006",
+        "KB-LX2620-007",
+        "KB-LX2620-009"
+      ],
+      "responseChars": 1385,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 10.980792999998812,
+        "p95Ms": 15.040705000003072,
+        "minMs": 10.109073999999964,
+        "maxMs": 17.709407000002102,
+        "meanMs": 11.404651366666773
+      },
+      "httpSuccessfulMockGenerations": 0
+    },
+    {
+      "id": "matched-start-assisted",
+      "question": "发动机启动困难或不能启动",
+      "mode": "ai_assisted",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 8.29898300000059,
+        "p95Ms": 9.091484000000492,
+        "minMs": 8.07266300000083,
+        "maxMs": 9.638245000000097,
+        "meanMs": 8.414010491666582
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.20696099999986473,
+        "p95Ms": 0.242975999999544,
+        "minMs": 0.1879529999987426,
+        "maxMs": 0.3978080000015325,
+        "meanMs": 0.2116978250000405
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 9.726238999999623,
+        "p95Ms": 10.704938000000766,
+        "minMs": 9.473949000001085,
+        "maxMs": 12.02572500000133,
+        "meanMs": 9.875488691666776
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.0024439999997412087,
+        "p95Ms": 0.005527999999685562,
+        "minMs": 0.0014620000001741573,
+        "maxMs": 0.011167000000568805,
+        "meanMs": 0.0031003833333064297
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "ai_requested",
+      "coordination": {
+        "requestedMode": "ai_assisted",
+        "effectiveMode": "ai_assisted",
+        "route": "ai",
+        "reason": "ai_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-005",
+        "KB-LX2620-006",
+        "KB-LX2620-007",
+        "KB-LX2620-009"
+      ],
+      "responseChars": 16,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 10.348813000000519,
+        "p95Ms": 11.17225099999996,
+        "minMs": 9.903513999997813,
+        "maxMs": 17.506421000001865,
+        "meanMs": 10.52058149166681
+      },
+      "httpSuccessfulMockGenerations": 120
+    },
+    {
+      "id": "unknown-brake-risk",
+      "question": "拖拉机制动失灵，刹不住",
+      "mode": "auto",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 8.430830999999671,
+        "p95Ms": 8.829100000000835,
+        "minMs": 8.159684000000198,
+        "maxMs": 9.045804999999746,
+        "meanMs": 8.457413191666667
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.185830000000351,
+        "p95Ms": 0.24554900000111957,
+        "minMs": 0.17014600000038627,
+        "maxMs": 0.26536900000064634,
+        "meanMs": 0.19443980833326957
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 9.823614000000816,
+        "p95Ms": 10.321914000000106,
+        "minMs": 9.509883000000627,
+        "maxMs": 10.964358999999604,
+        "meanMs": 9.906705283333228
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.0027639999989332864,
+        "p95Ms": 0.004997000000003027,
+        "minMs": 0.001172000000224216,
+        "maxMs": 0.008241999999881955,
+        "meanMs": 0.003078391666713287
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "insufficient_evidence",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "insufficient_evidence",
+        "evidenceLevel": "none",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [],
+      "responseChars": 16,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 10.249744000000646,
+        "p95Ms": 11.024850000001607,
+        "minMs": 9.796904999999242,
+        "maxMs": 12.935702000002493,
+        "meanMs": 10.37729151666684
+      },
+      "httpSuccessfulMockGenerations": 120
+    },
+    {
+      "id": "missing-code-identity",
+      "question": "故障码是什么意思",
+      "mode": "auto",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 8.409489000001486,
+        "p95Ms": 9.173578000001726,
+        "minMs": 8.176729000000705,
+        "maxMs": 9.874852000000828,
+        "meanMs": 8.509701900000119
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.19090700000015204,
+        "p95Ms": 0.26786300000094343,
+        "minMs": 0.17248900000049616,
+        "maxMs": 0.33773700000165263,
+        "meanMs": 0.2033630166666929
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 9.906388999999763,
+        "p95Ms": 10.718539000001329,
+        "minMs": 9.538065999999162,
+        "maxMs": 11.29877199999828,
+        "meanMs": 9.955942483333395
+      },
+      "providerStub": {
+        "samples": 0,
+        "p50Ms": null,
+        "p95Ms": null,
+        "minMs": null,
+        "maxMs": null,
+        "meanMs": null
+      },
+      "successfulMockGenerations": 0,
+      "mockGenerationsPerRequest": 0,
+      "route": "clarify",
+      "reason": "identity_required",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "clarify",
+        "reason": "identity_required",
+        "evidenceLevel": "none",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [],
+      "responseChars": 49,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 10.649504999997589,
+        "p95Ms": 11.243377999999211,
+        "minMs": 9.72273199999836,
+        "maxMs": 12.448730000000069,
+        "meanMs": 10.658852200000062
+      },
+      "httpSuccessfulMockGenerations": 0
+    },
+    {
+      "id": "real-reference-lookup",
+      "question": "查看原文 KB-LX2620-003 发动机启动困难或不能启动",
+      "mode": "auto",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 8.383649999999761,
+        "p95Ms": 8.892445999998017,
+        "minMs": 8.119031999998697,
+        "maxMs": 10.369333999999071,
+        "meanMs": 8.453850075000082
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.2240060000003723,
+        "p95Ms": 0.3296249999984866,
+        "minMs": 0.1977870000009716,
+        "maxMs": 0.4693760000009206,
+        "meanMs": 0.23941218333338837
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 9.922032999998919,
+        "p95Ms": 10.475453999999445,
+        "minMs": 9.507589000000735,
+        "maxMs": 17.020657000000938,
+        "meanMs": 10.048009941666654
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.003585999998904299,
+        "p95Ms": 0.005527999997866573,
+        "minMs": 0.0013919999983045273,
+        "maxMs": 0.02134200000000419,
+        "meanMs": 0.0037417166665970098
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "synthesis_requested",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "synthesis_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-005",
+        "KB-LX2620-007",
+        "KB-LX2620-006",
+        "KB-LX2620-009"
+      ],
+      "responseChars": 16,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 10.318859000002703,
+        "p95Ms": 11.334225000002334,
+        "minMs": 9.855441999996401,
+        "maxMs": 20.475514000001567,
+        "meanMs": 10.567064758333435
+      },
+      "httpSuccessfulMockGenerations": 120
+    }
+  ],
+  "directReferenceFixture": {
+    "provenance": "Synthetic test fixture, not real maintenance knowledge",
+    "timing": {
+      "samples": 120,
+      "p50Ms": 0.6606830000018817,
+      "p95Ms": 0.6841280000007828,
+      "minMs": 0.6423959999992803,
+      "maxMs": 0.9224270000013348,
+      "meanMs": 0.6648847250001382
+    },
+    "decision": {
+      "requestedMode": "auto",
+      "effectiveMode": "auto",
+      "route": "local",
+      "reason": "direct_reference",
+      "evidenceLevel": "direct_reference",
+      "llmConfigured": true
+    }
+  }
+}

@@ -39,6 +39,8 @@ export interface ChatResult {
 
 /** 调用失败时抛出，router 据此决定是否 fallback */
 export class ProviderError extends Error {
+  /** Number of generation attempts made; no extra scoring/classification request. */
+  attempts = 0;
   constructor(
     public readonly provider: ProviderName,
     public readonly kind: ProviderErrorKind,
