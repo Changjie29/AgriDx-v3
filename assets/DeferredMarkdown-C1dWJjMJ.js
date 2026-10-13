@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/MarkdownContent-B2y868YN.js","assets/index-C52k_Ltf.js","assets/index-DIN3Rs9O.css"])))=>i.map(i=>d[i]);
+import{j as r,r as s,_ as a}from"./index-C52k_Ltf.js";const t=s.lazy(()=>a(()=>import("./MarkdownContent-B2y868YN.js"),__vite__mapDeps([0,1,2])));function n({children:e}){return r.jsx(s.Suspense,{fallback:r.jsx("div",{className:"whitespace-pre-wrap",children:e}),children:r.jsx(t,{children:e})})}export{n as D};
