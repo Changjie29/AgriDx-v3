@@ -97,6 +97,8 @@
 .console-login form input { width: 100%; min-height: 47px; padding: 11px 14px; border: 1px solid var(--border); border-radius: 9px; background: var(--muted); color: var(--muted-foreground); }
 .console-primary { display: inline-flex; justify-content: center; align-items: center; gap: 9px; border: 0; border-radius: 9px; padding: 12px 16px; background: var(--primary); color: var(--primary-foreground); font-weight: 600 !important; font-size: 12px !important; }
 .console-login form .console-primary { width: 100%; margin-top: 13px; }
+.console-login form .console-remember { display: flex; align-items: center; gap: 10px; min-height: 44px; margin: 8px 0 0; color: var(--foreground); cursor: pointer; }
+.console-login form .console-remember input { flex: none; width: 18px; height: 18px; min-height: 18px; margin: 0; padding: 0; accent-color: var(--primary); }
 .console-text-link { display: inline-flex; gap: 5px; align-items: center; font-size: 11px; padding: 10px 5px; background: transparent; color: var(--primary); border: 0; }
 .console-login-note { padding-top: 20px; margin-top: 15px; border-top: 1px solid var(--border); color: var(--muted-foreground) !important; font-size: 11px !important; }
 .console-spinning { animation: console-spin 1s linear infinite; }

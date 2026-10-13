@@ -78,12 +78,93 @@ test('GitHub验证管理员权限，令牌不落库，会话仅存摘要且能�
   assert.equal((await serveDevelopment(get('/api/dev-admin/questions', expires), { DB: db })).status, 401);
 });
 
+test('记住设备可在一小时后恢复登录，期限固定为30天且到期拒绝读取', async t => {
+  const { db, sqlite } = database(); t.after(() => sqlite.close());
+  const startedAt = Date.now();
+  let now = startedAt;
+  t.mock.method(Date, 'now', () => now);
+  const response = await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential, remember: true }), { DB: db }, {}, upstream);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get('Set-Cookie')!, /Max-Age=2592000; HttpOnly; Secure; SameSite=Strict/);
+  const cookies = cookieValue(response);
+  const expiresAt = startedAt + 30 * 86_400_000;
+  assert.equal((await response.json()).user.expiresAt, expiresAt);
+  const saved = sqlite.prepare('SELECT * FROM preview_admin_sessions').get()!;
+  assert.equal(saved.expires_at, expiresAt);
+  assert.equal(JSON.stringify(saved).includes(fakeCredential), false);
+  assert.notEqual(saved.token_hash, cookies.split('=')[1]);
+
+  for (const elapsed of [2 * 3_600_000, 29 * 86_400_000, 30 * 86_400_000 - 1]) {
+    now = startedAt + elapsed;
+    const restored = await serveDevelopment(get('/api/dev-admin/session', cookies), { DB: db });
+    assert.deepEqual((await restored.json()).user, { login: 'owner', id: 123, expiresAt });
+    assert.equal(restored.headers.get('Set-Cookie'), null);
+    assert.equal((await serveDevelopment(get('/api/dev-admin/summary', cookies), { DB: db })).status, 200);
+    assert.equal(sqlite.prepare('SELECT expires_at FROM preview_admin_sessions').get()!.expires_at, expiresAt);
+  }
+  now = expiresAt;
+  assert.equal((await (await serveDevelopment(get('/api/dev-admin/session', cookies), { DB: db })).json()).user, null);
+  for (const path of ['questions', 'visitors', 'export?kind=questions']) {
+    assert.equal((await serveDevelopment(get(`/api/dev-admin/${path}`, cookies), { DB: db })).status, 401);
+  }
+});
+
+test('取消记住设备及旧客户端保留一小时会话，并按服务器期限失效', async t => {
+  const { db, sqlite } = database(); t.after(() => sqlite.close());
+  const startedAt = Date.now();
+  let now = startedAt;
+  t.mock.method(Date, 'now', () => now);
+  const cookies: string[] = [];
+  for (const option of [{ remember: false }, {}]) {
+    const response = await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential, ...option }), { DB: db }, {}, upstream);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get('Set-Cookie')!, /Max-Age=3600;/);
+    assert.equal((await response.json()).user.expiresAt, startedAt + 3_600_000);
+    cookies.push(cookieValue(response));
+  }
+  now = startedAt + 3_600_000 - 1;
+  for (const value of cookies) assert.equal((await (await serveDevelopment(get('/api/dev-admin/session', value), { DB: db })).json()).user.login, 'owner');
+  now++;
+  for (const value of cookies) {
+    assert.equal((await (await serveDevelopment(get('/api/dev-admin/session', value), { DB: db })).json()).user, null);
+    assert.equal((await serveDevelopment(get('/api/dev-admin/summary', value), { DB: db })).status, 401);
+  }
+});
+
+test('记住设备仍需有效会话，退出立即撤销所有读取和导出权限', async t => {
+  const { db, sqlite } = database(); t.after(() => sqlite.close());
+  const response = await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential, remember: true }), { DB: db }, {}, upstream);
+  const cookies = cookieValue(response);
+  assert.equal((await (await serveDevelopment(get('/api/dev-admin/session'), { DB: db })).json()).user, null);
+  assert.equal((await (await serveDevelopment(get('/api/dev-admin/session', '__Host-agridx-admin=' + 'a'.repeat(64)), { DB: db })).json()).user, null);
+  const out = await serveDevelopment(post('/api/dev-admin/logout', {}, cookies), { DB: db });
+  assert.equal(out.status, 200);
+  assert.match(out.headers.get('Set-Cookie')!, /^__Host-agridx-admin=; Path=\/; Max-Age=0; HttpOnly; Secure; SameSite=Strict$/);
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM preview_admin_sessions').get()!.count, 0);
+  assert.equal((await (await serveDevelopment(get('/api/dev-admin/session', cookies), { DB: db })).json()).user, null);
+  for (const path of ['summary', 'questions', 'visitors', 'system', 'export?kind=questions']) {
+    assert.equal((await serveDevelopment(get(`/api/dev-admin/${path}`, cookies), { DB: db })).status, 401);
+  }
+});
+
+test('记住设备选项拒绝非布尔值，验证失败不访问GitHub或创建会话', async t => {
+  const { db, sqlite } = database(); t.after(() => sqlite.close());
+  const reject = async () => { throw new Error('Must not perform an external request'); };
+  for (const remember of ['false', 1, null, {}, []]) {
+    const response = await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential, remember }), { DB: db }, {}, reject);
+    assert.equal(response.status, 400);
+    assert.match((await response.json()).error, /选项格式无效/);
+    assert.equal(response.headers.get('Set-Cookie'), null);
+  }
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM preview_admin_sessions').get()!.count, 0);
+});
+
 test('普通GitHub用户、无效令牌及跨站登录无法建立管理员会话', async t => {
   const { db, sqlite } = database(); t.after(() => sqlite.close());
   const reader = async (url: string) => Response.json(url.endsWith('/user') ? { login: 'reader', id: 999 } : { permissions: { pull: true, push: true } });
-  assert.equal((await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential }), { DB: db }, {}, reader)).status, 403);
-  assert.equal((await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential }), { DB: db }, {}, async () => new Response('', { status: 401 }))).status, 401);
-  assert.equal((await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential }, '', 'https://attacker.example'), { DB: db }, {}, upstream)).status, 403);
+  assert.equal((await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential, remember: true }), { DB: db }, {}, reader)).status, 403);
+  assert.equal((await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential, remember: true }), { DB: db }, {}, async () => new Response('', { status: 401 }))).status, 401);
+  assert.equal((await serveDevelopment(post('/api/dev-admin/login', { token: fakeCredential, remember: true }, '', 'https://attacker.example'), { DB: db }, {}, upstream)).status, 403);
   assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM preview_admin_sessions').get()!.count, 0);
 });
 
