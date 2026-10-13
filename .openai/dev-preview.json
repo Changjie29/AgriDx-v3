@@ -5,7 +5,10 @@
   "source_branch": "main",
   "artifact_branch": "dev-preview-built",
   "audience": "public",
-  "gateway_source_commit": "55b38da96acbe558dbdf41c53c4602ecfb157bf7",
-  "gateway_deployment_id": "appgdep_6accee3cf5f48191ba3088c161657a0f",
-  "management": "existing-github-account"
+  "gateway_source_commit": "2447071c000b8bfc415e2359795f200b2f5c724b",
+  "gateway_deployment_id": "appgdep_6acdca372b908191aaf45ebc6bc7fa29",
+  "management": "existing-github-account",
+  "gateway_saved_version": "appgprj_6accea9518e08191ba29e1f8b0f8725e~appgver_d6fcdc47d5bc81918167708ee066d495",
+  "developer_path": "/#/developer",
+  "storage_binding": "DB"
 }
