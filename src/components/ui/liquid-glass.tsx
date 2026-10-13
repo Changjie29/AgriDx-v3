@@ -13,7 +13,7 @@ interface LiquidGlassProps extends HTMLAttributes<HTMLDivElement> {
 
 const GlassLens = lazy(() => import('./glass-lens'));
 
-/** Keep content in normal flow. The upstream engine renders only the decorative backdrop. */
+/** Keep content in normal flow; the native optical filter only samples its backdrop. */
 export function LiquidGlass({ children, className = '', contentClassName = '', variant = 'regular', lens = false, displacementScale = 28, ...props }: LiquidGlassProps) {
   const ref = useRef<HTMLDivElement>(null);
   const optics = useRef<GlassOpticsHandle>(null);
@@ -61,11 +61,23 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
 
   useEffect(() => {
     const element = ref.current;
-    if (!element || !lens || mode === 'solid' || reducedMotion) return;
+    if (!element || mode === 'solid' || reducedMotion) return;
     let frame = 0;
     let point: Pick<PointerEvent, 'clientX' | 'clientY' | 'target'> | null = null;
     let pressedControl: HTMLElement | null = null;
     const touched = new Set<HTMLElement>();
+    const ripples = new Set<HTMLElement>();
+    const ripple = (control: HTMLElement, x: number, y: number) => {
+      for (const old of control.querySelectorAll('.material-ripple')) { ripples.delete(old as HTMLElement); old.remove(); }
+      const rect = control.getBoundingClientRect();
+      const node = document.createElement('span');
+      node.className = 'material-ripple'; node.setAttribute('aria-hidden', 'true');
+      node.style.setProperty('--ripple-x', `${x - rect.left}px`);
+      node.style.setProperty('--ripple-y', `${y - rect.top}px`);
+      node.style.setProperty('--ripple-size', `${Math.hypot(rect.width, rect.height) * 2}px`);
+      node.addEventListener('animationend', () => { node.remove(); ripples.delete(node); }, { once: true });
+      ripples.add(node); control.appendChild(node);
+    };
     const updateOptics = (next: Partial<GlassInteraction>) => {
       Object.assign(interaction.current, next);
       optics.current?.update(interaction.current);
@@ -92,7 +104,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       if (frame) cancelAnimationFrame(frame);
       frame = 0;
       if (!point) return;
-      const control = pressedControl ?? (point.target instanceof Element ? point.target.closest<HTMLElement>('button, a') : null);
+      const control = pressedControl ?? findControl(point.target);
       for (const target of [element, control]) {
         if (!target || !element.contains(target)) continue;
         const rect = target.getBoundingClientRect();
@@ -116,7 +128,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
     };
     const findControl = (target: EventTarget | null) => {
       const control = target instanceof Element ? target.closest<HTMLElement>('button, a') : null;
-      if (!control || !element.contains(control) || (control instanceof HTMLButtonElement && control.disabled) || control.getAttribute('aria-disabled') === 'true') return null;
+      if (!control || !element.contains(control) || control.closest('.agri-liquid-glass') !== element || (control instanceof HTMLButtonElement && control.disabled) || control.getAttribute('aria-disabled') === 'true') return null;
       return control;
     };
     const press = (event: PointerEvent) => {
@@ -128,6 +140,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       control.setAttribute('data-glass-pressed', 'true');
       element.setAttribute('data-glass-pressed', 'true');
       point = event;
+      ripple(control, event.clientX, event.clientY);
       flush();
     };
     const release = (event: PointerEvent) => {
@@ -135,6 +148,10 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       if (event.pointerType === 'touch') clear();
     };
     const visibility = () => { if (document.hidden) clear(); };
+    const focusOut = (event: FocusEvent) => {
+      if (!(event.relatedTarget instanceof Node) || !element.contains(event.relatedTarget)) clear();
+      else if (pressedControl && !pressedControl.contains(event.relatedTarget)) clearPress();
+    };
     const keyPress = (event: KeyboardEvent) => {
       if (event.repeat || !['Enter', ' '].includes(event.key)) return;
       const control = findControl(event.target);
@@ -145,6 +162,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       element.setAttribute('data-glass-pressed', 'true');
       const rect = control.getBoundingClientRect();
       point = { target: control, clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2 };
+      ripple(control, point.clientX, point.clientY);
       flush();
     };
     element.addEventListener('pointermove', move, { passive: true });
@@ -152,7 +170,7 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
     element.addEventListener('pointerleave', clear);
     element.addEventListener('pointercancel', clear);
     element.addEventListener('keydown', keyPress);
-    element.addEventListener('focusout', clear);
+    element.addEventListener('focusout', focusOut);
     window.addEventListener('pointerup', release);
     window.addEventListener('keyup', clearPress);
     window.addEventListener('blur', clear);
@@ -163,16 +181,18 @@ export function LiquidGlass({ children, className = '', contentClassName = '', v
       element.removeEventListener('pointerleave', clear);
       element.removeEventListener('pointercancel', clear);
       element.removeEventListener('keydown', keyPress);
-      element.removeEventListener('focusout', clear);
+      element.removeEventListener('focusout', focusOut);
       window.removeEventListener('pointerup', release);
       window.removeEventListener('keyup', clearPress);
       window.removeEventListener('blur', clear);
       document.removeEventListener('visibilitychange', visibility);
+      for (const node of ripples) node.remove();
+      ripples.clear();
       clear();
     };
   }, [lens, mode, reducedMotion]);
 
-  return <div {...props} ref={ref} className={`liquid-glass agri-liquid-glass lg-${variant} ${className}`} data-glass-mode={mode}>
+  return <div {...props} ref={ref} className={`liquid-glass agri-liquid-glass lg-${variant} ${className}`} data-glass-mode={mode} data-glass-design="material-you">
     {refract && size.width > 0 && size.height > 0 ? <div className="liquid-glass-effect agri-glass-lens" aria-hidden="true">
       <Suspense fallback={<div className="agri-glass-frost" />}><GlassLens
         key={`${size.width}x${size.height}`}

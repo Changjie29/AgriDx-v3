@@ -1,0 +1,178 @@
+@import './styles/material-you-tokens.css';
+
+/* Material You color roles sit above the live optical layer. */
+:root, :root.theme-light, :root.theme-dark {
+  --primary: var(--md-primary);
+  --primary-foreground: var(--md-on-primary);
+  --background: var(--md-surface);
+  --foreground: var(--md-on-surface);
+  --card: var(--md-surface-container-low);
+  --card-foreground: var(--md-on-surface);
+  --popover: var(--md-surface-container-high);
+  --popover-foreground: var(--md-on-surface);
+  --secondary: var(--md-secondary-container);
+  --secondary-foreground: var(--md-on-secondary-container);
+  --accent: var(--md-secondary-container);
+  --accent-foreground: var(--md-on-secondary-container);
+  --border: var(--md-outline-variant);
+  --input: var(--md-outline-variant);
+  --muted-foreground: var(--md-on-surface-variant);
+  --muted: var(--md-surface-container);
+  --agri-paper: var(--md-surface);
+  --agri-surface: var(--md-surface-container-low);
+  --agri-raised: var(--md-surface-container-low);
+  --agri-line: var(--md-outline-variant);
+  --agri-forest: var(--md-primary);
+  --agri-leaf: var(--md-primary);
+  --ring: var(--md-primary);
+  --selection-fill: var(--md-secondary-container);
+  --selection-shadow: none;
+}
+:root :is(.expo-page, .new-version-shell, .dev-console) {
+  --primary: var(--md-primary);
+  --primary-foreground: var(--md-on-primary);
+  --foreground: var(--md-on-surface);
+  --background: var(--md-surface);
+  --card: var(--md-surface-container-low);
+  --card-foreground: var(--md-on-surface);
+  --popover: var(--md-surface-container-high);
+  --popover-foreground: var(--md-on-surface);
+  --secondary: var(--md-secondary-container);
+  --secondary-foreground: var(--md-on-secondary-container);
+  --accent: var(--md-secondary-container);
+  --accent-foreground: var(--md-on-secondary-container);
+  --muted-foreground: var(--md-on-surface-variant);
+  --muted: var(--md-surface-container);
+  --border: var(--md-outline-variant);
+  --input: var(--md-outline-variant);
+  --agri-paper: var(--md-surface);
+  --agri-surface: var(--md-surface-container-low);
+  --agri-raised: var(--md-surface-container-low);
+  --agri-line: var(--md-outline-variant);
+  --ring: var(--md-primary);
+  --expo-text: var(--md-on-surface);
+  --expo-muted: var(--md-on-surface-variant);
+  --expo-accent: var(--md-primary);
+  --selection-fill: var(--md-secondary-container);
+  --selection-shadow: none;
+}
+
+:root .agri-liquid-glass {
+  --lg-radius: 28px;
+  --lg-saturate: 115%;
+  --lg-solid: var(--md-surface-container-high);
+  --lg-border: var(--md-outline-variant);
+  --glass-control-tint: color-mix(in srgb, var(--md-surface-container) 62%, transparent);
+  --glass-control-edge: color-mix(in srgb, var(--md-outline-variant) 48%, transparent);
+  --glass-press-light: color-mix(in srgb, var(--md-primary) 24%, transparent);
+  border-color: var(--glass-control-edge);
+  box-shadow: 0 6px 22px -15px rgb(0 0 0 / 28%);
+}
+:root .agri-liquid-glass.lg-clear {
+  --glass-control-tint: color-mix(in srgb, var(--md-surface-container) 48%, transparent);
+}
+:root .agri-liquid-glass > .liquid-glass-shine {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--md-primary-container) 28%, transparent);
+}
+:root .agri-liquid-glass > .liquid-glass-shine::before { display: none; }
+:root .agri-liquid-glass > .liquid-glass-shine::after {
+  background: radial-gradient(ellipse 180px 100px at var(--mx, 50%) var(--my, 50%), var(--glass-press-light), transparent 80%);
+}
+:root .agri-liquid-glass[data-glass-pressed] > .liquid-glass-shine {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--md-primary) 38%, transparent);
+}
+:root .site-nav-glass { --lg-radius: 32px; --lg-blur: 9px; }
+:root .site-version-mobile-glass { --lg-radius: 999px; }
+:root .hero-model-entry { --lg-radius: 32px; }
+:root .new-version-header-glass { --lg-radius: 28px; border-radius: 28px; }
+:root .floating-panel-glass { --lg-radius: 28px; }
+:root .model-control-glass { --lg-radius: 28px; }
+:root .catalog-browser.catalog-filter-glass { --lg-radius: 28px; border-color: var(--md-outline-variant); }
+:root .chat-bar-glass, :root .chat-input-glass { --lg-radius: 28px; --glass-control-tint: color-mix(in srgb, var(--md-surface-container) 88%, transparent); }
+:root .new-version-header::after { box-shadow: none; }
+
+:root .ui-version-switch {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--md-surface-container-high) 65%, transparent);
+  --selection-fill: var(--md-secondary-container);
+  --selection-shadow: none;
+}
+:root .ui-version-switch button { color: var(--md-on-surface-variant); }
+:root .ui-version-switch button[aria-pressed='true'] { color: var(--md-on-secondary-container); }
+:root .ui-version-switch.is-exhibition {
+  --selection-fill: var(--md-gold-container);
+}
+:root .ui-version-switch.is-exhibition button[aria-pressed='true'] { color: var(--md-on-gold-container); }
+:root :is(.site-nav-indicator, .site-mobile-indicator, .new-version-nav-indicator, .model-view-indicator) {
+  --selection-fill: var(--md-secondary-container);
+  --selection-shadow: none;
+  border: 0;
+  background: transparent;
+}
+:root :is(.site-nav-item.is-active, .site-mobile-item, .new-version-nav-item.is-active, .model-view-button[aria-pressed='true']) {
+  color: var(--md-on-secondary-container);
+}
+:root :is(.site-tool-button, .new-version-language) {
+  color: var(--md-on-surface-variant);
+  border-color: transparent;
+  background: color-mix(in srgb, var(--md-surface-container-high) 40%, transparent);
+  border-radius: 999px;
+}
+:root .agri-liquid-glass :is(button, a) { position: relative; }
+:root .agri-liquid-glass :is(button, a):focus-visible { outline-color: var(--md-primary); }
+:root .agri-liquid-glass :is(button, a)[data-glass-pressed] {
+  transform: translate(var(--lg-press-x, 0), var(--lg-press-y, 0)) scale(.98);
+}
+:root .agri-liquid-glass :is(.site-tool-button, .site-nav-item, .model-icon-button, .model-view-button, .ui-version-switch button) {
+  transition: transform 300ms cubic-bezier(.2, 0, 0, 1), color 180ms ease, background-color 180ms ease;
+}
+
+:root .expo-page :is(.expo-icon-button, .expo-start-button, .expo-zone-actions button, .expo-catalog-trigger, .expo-direct-links button) { border-radius: 24px; }
+:root .expo-page .expo-icon-button { color: var(--md-on-surface-variant); }
+:root .expo-page .expo-guide-glass { --lg-radius: 28px; }
+:root .expo-zone-nav > button { border-radius: 24px; color: var(--md-on-surface-variant); }
+:root .expo-zone-selection {
+  --selection-fill: color-mix(in srgb, var(--zone-color) 14%, var(--md-secondary-container));
+  --selection-shadow: none;
+}
+:root .expo-zone-nav > button[aria-pressed='true'] { color: var(--md-on-secondary-container); }
+:root .expo-zone-nav > button > svg:last-child { color: var(--md-on-surface-variant); }
+:root .expo-start-button { border: 0; color: var(--md-on-primary-container); background: var(--md-primary-container); box-shadow: none; }
+:root .expo-dock-glass { --lg-radius: 28px; }
+:root .expo-world-dock > button { color: var(--md-on-surface-variant); }
+:root .expo-world-dock > button[aria-pressed='true'] {
+  border-color: transparent; background: var(--md-secondary-container); color: var(--md-on-secondary-container); box-shadow: none;
+}
+:root .expo-search { border-radius: 24px; background: var(--md-surface-container-high); border-color: var(--md-outline-variant); }
+:root .expo-zone-actions button { background: var(--md-primary-container); color: var(--md-on-primary-container); border-color: transparent; }
+:root .new-version-shell .prose {
+  --tw-prose-body: var(--md-on-surface-variant);
+  --tw-prose-headings: var(--md-on-surface);
+  --tw-prose-links: var(--md-primary);
+  --tw-prose-bold: var(--md-on-surface);
+}
+:root .new-version-shell :is(.bg-primary, .catalog-action) { color: var(--md-on-primary); }
+:root .new-version-skip-link { background: var(--md-primary); }
+
+.material-ripple { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; z-index: 2; }
+.material-ripple::before {
+  content: ''; position: absolute;
+  left: var(--ripple-x); top: var(--ripple-y);
+  width: var(--ripple-size); height: var(--ripple-size); border-radius: 50%;
+  background: currentColor; opacity: .14;
+  transform: translate(-50%, -50%) scale(0);
+  animation: material-ripple-enter 520ms cubic-bezier(.2, 0, 0, 1) forwards;
+}
+@keyframes material-ripple-enter {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: .14; }
+  65% { opacity: .1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .material-ripple { display: none; }
+  :root .agri-liquid-glass :is(button, a)[data-glass-pressed] { transform: none; }
+}
+@media (forced-colors: active) {
+  :root .agri-liquid-glass[data-glass-mode='solid'] { background: Canvas !important; border-color: CanvasText !important; }
+  :root :is(.ui-version-switch button[aria-pressed='true'], .model-view-button[aria-pressed='true'], .site-nav-item.is-active, .new-version-nav-item.is-active) { color: HighlightText; background: Highlight; }
+}

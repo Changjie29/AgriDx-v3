@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "name": "production: new secondary route uses blue shell and glass",
+      "result": "passed"
+    },
+    {
+      "name": "production: local diagnosis returns concise answer and expandable original evidence",
+      "result": "passed"
+    },
+    {
+      "name": "production: saved diagnosis has a persistent session id",
+      "result": "passed"
+    },
+    {
+      "name": "production: profile, conversation and progress restore on reload",
+      "result": "passed"
+    },
+    {
+      "name": "production: new diagnosis clears active checks and retains selected device",
+      "result": "passed"
+    },
+    {
+      "name": "production: blue shell persists when navigating to knowledge",
+      "result": "passed"
+    },
+    {
+      "name": "production: classic route retains classic live glass",
+      "result": "passed"
+    },
+    {
+      "name": "preview: new secondary route uses blue shell and glass",
+      "result": "passed"
+    },
+    {
+      "name": "preview: local diagnosis returns concise answer and expandable original evidence",
+      "result": "passed"
+    },
+    {
+      "name": "preview: saved diagnosis has a persistent session id",
+      "result": "passed"
+    },
+    {
+      "name": "preview: profile, conversation and progress restore on reload",
+      "result": "passed"
+    },
+    {
+      "name": "preview: new diagnosis clears active checks and retains selected device",
+      "result": "passed"
+    },
+    {
+      "name": "preview: blue shell persists when navigating to knowledge",
+      "result": "passed"
+    },
+    {
+      "name": "preview: classic route retains classic live glass",
+      "result": "passed"
+    },
+    {
+      "name": "mobile new: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "mobile new: reply modes and memory controls available",
+      "result": "passed"
+    },
+    {
+      "name": "mobile old: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "mobile old: reply modes and memory controls available",
+      "result": "passed"
+    },
+    {
+      "name": "all browser sessions have no page script errors",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": [],
+  "version": "3.5.3",
+  "date": "2026-10-13"
+}

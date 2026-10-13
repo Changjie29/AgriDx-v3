@@ -1,0 +1,102 @@
+{
+  "version": "3.5.3",
+  "checks": [
+    {
+      "name": "old light: selected navigation has readable tonal colors",
+      "result": "passed",
+      "detail": 7.31
+    },
+    {
+      "name": "old light: selected version has readable tonal colors",
+      "result": "passed",
+      "detail": 7.31
+    },
+    {
+      "name": "old light: diagnosis action uses readable primary colors",
+      "result": "passed",
+      "detail": 6.5
+    },
+    {
+      "name": "old dark: selected navigation has readable tonal colors",
+      "result": "passed",
+      "detail": 7.31
+    },
+    {
+      "name": "old dark: selected version has readable tonal colors",
+      "result": "passed",
+      "detail": 7.31
+    },
+    {
+      "name": "old dark: diagnosis action uses readable primary colors",
+      "result": "passed",
+      "detail": 7.72
+    },
+    {
+      "name": "new light: selected navigation has readable tonal colors",
+      "result": "passed",
+      "detail": 7.29
+    },
+    {
+      "name": "new light: selected version has readable tonal colors",
+      "result": "passed",
+      "detail": 7.23
+    },
+    {
+      "name": "new light: diagnosis action uses readable primary colors",
+      "result": "passed",
+      "detail": 6.49
+    },
+    {
+      "name": "new dark: selected navigation has readable tonal colors",
+      "result": "passed",
+      "detail": 7.29
+    },
+    {
+      "name": "new dark: selected version has readable tonal colors",
+      "result": "passed",
+      "detail": 7.23
+    },
+    {
+      "name": "new dark: diagnosis action uses readable primary colors",
+      "result": "passed",
+      "detail": 7.7
+    },
+    {
+      "name": "new mobile theme control retains a 44px hit area",
+      "result": "passed",
+      "detail": {
+        "x": 132.03125,
+        "y": 74,
+        "width": 44,
+        "height": 44
+      }
+    },
+    {
+      "name": "new mobile touch press reaches its own optical surface",
+      "result": "passed"
+    },
+    {
+      "name": "new mobile touch creates a real ripple and releases cleanly",
+      "result": "passed"
+    },
+    {
+      "name": "new mobile theme selection survives reload",
+      "result": "passed"
+    },
+    {
+      "name": "reduced transparency removes native optics and uses an opaque surface",
+      "result": "passed"
+    },
+    {
+      "name": "restoring transparency preference remounts one optical filter",
+      "result": "passed"
+    },
+    {
+      "name": "theme and preference checks have no script errors",
+      "result": "passed",
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "scope": "Actual UI, opaque selected fills and primary actions; mobile touch; Chromium emulated transparency"
+}
