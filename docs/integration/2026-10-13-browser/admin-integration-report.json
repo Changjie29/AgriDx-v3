@@ -1,0 +1,27 @@
+{
+  "checks": [
+    {
+      "name": "memory-enabled local diagnosis still reports current question and outcome",
+      "result": "passed"
+    },
+    {
+      "name": "telemetry excludes saved transcript, device notes and inspection progress",
+      "result": "passed"
+    },
+    {
+      "name": "anonymous console only requests its public session endpoint",
+      "result": "passed"
+    },
+    {
+      "name": "console login has no horizontal overflow at 390px",
+      "result": "passed"
+    },
+    {
+      "name": "integrated preview has no page script errors",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": [],
+  "scope": "Local preview; event/session transport fixtures; real local RAG and memory",
+  "version": "3.5.0"
+}
