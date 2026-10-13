@@ -1,0 +1,51 @@
+{
+  "browser": "Chromium 151.0.7922.173",
+  "mode": "Actual Vite development React StrictMode; WebGL disabled to isolate effect cleanup",
+  "checks": [
+    {
+      "name": "React StrictMode resize 1280px, cycle 0",
+      "result": "passed",
+      "detail": {
+        "filters": 1,
+        "offsets": 1,
+        "masks": 1,
+        "live": true
+      }
+    },
+    {
+      "name": "React StrictMode resize 1024px, cycle 1",
+      "result": "passed",
+      "detail": {
+        "filters": 1,
+        "offsets": 1,
+        "masks": 1,
+        "live": true
+      }
+    },
+    {
+      "name": "React StrictMode resize 375px, cycle 2",
+      "result": "passed",
+      "detail": {
+        "filters": 1,
+        "offsets": 1,
+        "masks": 1,
+        "live": true
+      }
+    },
+    {
+      "name": "React StrictMode resize 1280px, cycle 3",
+      "result": "passed",
+      "detail": {
+        "filters": 1,
+        "offsets": 1,
+        "masks": 1,
+        "live": true
+      }
+    },
+    {
+      "name": "StrictMode cleanup and remount have no DOM or script errors",
+      "result": "passed"
+    }
+  ],
+  "errors": []
+}

@@ -2,7 +2,6 @@ import { useSyncExternalStore } from 'react';
 
 export type GlassMode = 'refract' | 'blur' | 'solid';
 const QUERIES = [
-  '(hover: hover) and (pointer: fine)',
   '(prefers-reduced-motion: reduce)',
   '(prefers-reduced-transparency: reduce)',
   '(forced-colors: active)',
@@ -10,13 +9,13 @@ const QUERIES = [
 
 function getMode(): GlassMode {
   if (typeof window === 'undefined') return 'solid';
-  const [finePointer, reducedMotion, reducedTransparency, forcedColors] = QUERIES.map(query => window.matchMedia(query).matches);
+  const [reducedMotion, reducedTransparency, forcedColors] = QUERIES.map(query => window.matchMedia(query).matches);
   const backdrop = CSS.supports('backdrop-filter', 'blur(1px)') || CSS.supports('-webkit-backdrop-filter', 'blur(1px)');
   if (!backdrop || reducedTransparency || forcedColors || document.documentElement.classList.contains('glass-off')) return 'solid';
   if (document.documentElement.classList.contains('lg-blur-only')) return 'blur';
   // The upstream SVG displacement is a Chromium enhancement; other engines use frosting.
   const chromium = /Chrome|Chromium|Edg\//.test(navigator.userAgent) && !/iPhone|iPad|iPod/.test(navigator.userAgent);
-  return chromium && finePointer && !reducedMotion ? 'refract' : 'blur';
+  return chromium && !reducedMotion ? 'refract' : 'blur';
 }
 
 function subscribe(callback: () => void) {

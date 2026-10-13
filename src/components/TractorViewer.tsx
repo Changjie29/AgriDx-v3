@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect, useRef, useCallback } from 'react';
+import { Suspense, useState, useEffect, useRef, useCallback, useId } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Grid } from '@react-three/drei';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -10,6 +10,8 @@ import TractorModel from './TractorModel';
 import { TRACTOR_MODEL_URL, type TractorComponent } from './tractor-model-info';
 import { useLang } from '@/hooks/useLang';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
+import { LiquidSelection } from '@/components/ui/liquid-selection';
+import { LayoutGroup } from 'framer-motion';
 import '@/control-glass.css';
 
 // 相机初始配置（常量避免重渲染触发重置）
@@ -100,6 +102,7 @@ function ResizeFrame({ modelRef, fit }: { modelRef: React.RefObject<THREE.Object
  * - WebGL 不可用时降级为占位提示
  */
 export default function TractorViewer({ component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL, controls = false }: { component?: TractorComponent; exploded?: boolean; modelUrl?: string; controls?: boolean }) {
+  const selectionGroup = useId();
   const lang = useLang();
   const [view, setView] = useState<View>('isometric');
   // 无控制栏的首页预览保持静止，避免移除暂停入口后出现无法停止的自转。
@@ -361,12 +364,12 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
         <button type="button" onClick={() => setAutoRotate(value => !value)} aria-label={lang === 'zh' ? autoRotate ? '暂停自转' : '开启自转' : autoRotate ? 'Pause rotation' : 'Start rotation'} aria-pressed={autoRotate} className="model-icon-button">
           {autoRotate ? <Pause size={16} /> : <Play size={16} />}
         </button>
-        <div className="model-view-segment" role="group" aria-label={lang === 'zh' ? '选择模型视角' : 'Select model view'}>
-          <span className="model-view-indicator" aria-hidden="true" style={{ transform: `translateX(${VIEWS.findIndex(item => item.id === view) * 100}%)` }} />
+        <LayoutGroup id={selectionGroup}><div className="model-view-segment" role="group" aria-label={lang === 'zh' ? '选择模型视角' : 'Select model view'}>
           {VIEWS.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)} className="model-view-button">
-            {lang === 'zh' ? item.zh : item.en}
+            {view === item.id && <LiquidSelection className="model-view-indicator" />}
+            <span className="model-view-label">{lang === 'zh' ? item.zh : item.en}</span>
           </button>)}
-        </div>
+        </div></LayoutGroup>
         <button type="button" aria-label={lang === 'zh' ? '恢复模型视角' : 'Reset model view'} onClick={() => { setView('isometric'); if (modelObjectRef.current) fitCameraToModel(modelObjectRef.current); }} className="model-icon-button"><RotateCcw size={16} /></button>
       </LiquidGlass></div>}
       <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-muted-foreground/70">

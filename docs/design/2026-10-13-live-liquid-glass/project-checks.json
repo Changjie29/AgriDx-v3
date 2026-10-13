@@ -1,0 +1,28 @@
+{
+  "version": "3.2.2",
+  "date": "2026-10-13",
+  "timezone": "Asia/Shanghai",
+  "baseline_main": "99e0722ad76a087e0465d40888b8cd36005ff587",
+  "scope": "Final local working tree after preserving public main development preview. GitHub CI recorded separately; Tencent was not deployed.",
+  "checks": {
+    "npm ci": "passed",
+    "npm run verify": "passed",
+    "tests": {
+      "total": 148,
+      "passed": 146,
+      "skipped": 2,
+      "failed": 0,
+      "skip_scope": "Windows-only checks skipped on Linux"
+    },
+    "types": "passed (app, node, server)",
+    "lint": "passed, existing Fast Refresh warning",
+    "build": "passed, client and server",
+    "npm run build:dev-preview": "passed, dist-preview served locally; not published",
+    "git diff --check": "passed"
+  },
+  "notes": [
+    "HTTP unit tests used an uncommitted loopback-only undici dispatcher for this cloud proxy environment. External requests kept the environment proxy.",
+    "Existing Three.js chunk-size warning retained.",
+    "No keys, external LLM calls or production deployment."
+  ]
+}

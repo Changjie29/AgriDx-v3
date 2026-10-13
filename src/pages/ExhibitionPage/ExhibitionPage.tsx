@@ -5,6 +5,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useId,
   type CSSProperties,
   type KeyboardEvent,
   type PointerEvent,
@@ -32,8 +33,11 @@ import {
   Tractor,
   X,
 } from 'lucide-react';
-import { useReducedMotion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, useReducedMotion } from 'framer-motion';
 import VersionSwitch from '@/components/VersionSwitch';
+import FloatingPanel from '@/components/FloatingPanel';
+import { LiquidSelection } from '@/components/ui/liquid-selection';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
 import DeferredScene from '@/components/DeferredScene';
 import { preloadPage } from '@/lib/page-loaders';
 import { useLang, setLang } from '@/hooks/useLang';
@@ -89,6 +93,7 @@ const ZONE_DETAILS = {
 };
 
 export default function ExhibitionPage() {
+  const zoneSelection = useId();
   const lang = useLang();
   const t = (zh: string, en: string) => (lang === 'zh' ? zh : en);
   const navigate = useNavigate();
@@ -317,7 +322,7 @@ export default function ExhibitionPage() {
           <span>KNOWLEDGE IN EVERY DIRECTION</span>
           <h1>{t('农机装备数字展示大厅', 'Agricultural equipment hub')}</h1>
         </div>
-        <div className="expo-header-tools">
+        <LiquidGlass lens variant="clear" displacementScale={24} className="expo-header-glass" contentClassName="expo-header-tools">
           <VersionSwitch exhibition />
           <button
             type="button"
@@ -336,7 +341,7 @@ export default function ExhibitionPage() {
           >
             <Maximize size={17} />
           </button>
-        </div>
+        </LiquidGlass>
       </header>
       <main id="expo-main" className="expo-main">
         <div className="expo-scene-bar">
@@ -422,7 +427,7 @@ export default function ExhibitionPage() {
               {mode === 'drive' ? t('继续漫游', 'Continue exploring') : t('开始漫游', 'Start exploring')}
               <ArrowUpRight size={16} />
             </button>
-            <nav className="expo-zone-nav" aria-label={t('展区导览', 'Zone guide')}>
+            <LiquidGlass lens displacementScale={24} className="expo-guide-glass"><LayoutGroup id={zoneSelection}><nav className="expo-zone-nav" aria-label={t('展区导览', 'Zone guide')}>
               {WORLD_ZONES.map((zone) => {
                 const Icon = ZONE_ICONS[zone.id];
                 return (
@@ -433,6 +438,7 @@ export default function ExhibitionPage() {
                     aria-pressed={selected === zone.id}
                     style={{ '--zone-color': zone.color } as CSSProperties}
                   >
+                    {selected === zone.id && <LiquidSelection className="expo-zone-selection" />}
                     <span>{zone.number}</span>
                     <Icon size={17} strokeWidth={1.5} />
                     <strong>{t(zone.zh, zone.en)}</strong>
@@ -440,17 +446,20 @@ export default function ExhibitionPage() {
                   </button>
                 );
               })}
-            </nav>
+            </nav></LayoutGroup></LiquidGlass>
           </aside>
           <div className="expo-world-coordinate" aria-hidden="true">
             <span>AGRIDX CAMPUS / 001</span>
             <small>{t('结构与空间示意', 'SCHEMATIC WORLD')}</small>
           </div>
-          {selectedZone && detail && !catalogOpen && (
-            <aside
+          <AnimatePresence initial={false}>{selectedZone && detail && !catalogOpen && (
+            <FloatingPanel
+              key={selectedZone.id}
+              as="aside"
               className="expo-zone-card"
+              glass
               style={{ '--zone-color': selectedZone.color } as CSSProperties}
-              aria-label={t('当前展区', 'Selected zone')}
+              label={t('当前展区', 'Selected zone')}
             >
               <div className="expo-zone-card-top">
                 <span>
@@ -494,13 +503,16 @@ export default function ExhibitionPage() {
                   {t('驶向这里', 'Drive here')}
                 </button>
               </div>
-            </aside>
-          )}
-          {catalogOpen && (
-            <aside
+            </FloatingPanel>
+          )}</AnimatePresence>
+          <AnimatePresence initial={false}>{catalogOpen && (
+            <FloatingPanel
+              key="catalog"
+              as="aside"
               id="world-catalog"
               className="expo-catalog-sheet"
-              aria-label={t('设备资料目录', 'Machine evidence catalog')}
+              glass
+              label={t('设备资料目录', 'Machine evidence catalog')}
             >
               <div className="expo-sheet-heading">
                 <div>
@@ -599,8 +611,8 @@ export default function ExhibitionPage() {
                 {t('打开完整知识库', 'Open the complete catalog')}
                 <ArrowRight size={14} />
               </Link>
-            </aside>
-          )}
+            </FloatingPanel>
+          )}</AnimatePresence>
           <div className="expo-world-bottom">
             <div className="expo-mini-map" aria-label={t('园区示意地图', 'Campus schematic map')}>
               <span className="expo-map-title">
@@ -638,7 +650,7 @@ export default function ExhibitionPage() {
                 </span>
               </div>
             </div>
-            <div className="expo-world-dock" role="group" aria-label={t('空间控制', 'World controls')}>
+            <LiquidGlass lens variant="clear" displacementScale={30} className="expo-dock-glass" contentClassName="expo-world-dock" role="group" aria-label={t('空间控制', 'World controls')}>
               <button type="button" aria-pressed={mode === 'overview' && !focus} onClick={overview}>
                 <Compass size={17} />
                 <span>{t('园区总览', 'Overview')}</span>
@@ -652,7 +664,7 @@ export default function ExhibitionPage() {
                 <RotateCcw size={16} />
                 <span>{t('回到起点', 'Reset')}</span>
               </button>
-            </div>
+            </LiquidGlass>
             <div className="expo-world-hint" aria-live="polite">
               {nearby ? (
                 <>

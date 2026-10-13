@@ -1,0 +1,28 @@
+{
+  "version": "3.1.2",
+  "date_shanghai": "2026-10-12",
+  "npm_ci": "passed",
+  "verify": "passed",
+  "tests": {
+    "total": 140,
+    "passed": 138,
+    "skipped": 2,
+    "failed": 0,
+    "skip_reason": "Windows-specific checks skipped on Linux"
+  },
+  "browser_checks": {
+    "motion": 38,
+    "navigation_model_campus_regression": 32,
+    "total": 70
+  },
+  "knowledge_archive_entries": 412,
+  "knowledge_chunks": 421,
+  "live_llm_calls": false,
+  "deployed": false,
+  "warnings": [
+    "Existing ui/button Fast Refresh warning",
+    "Existing Three.js chunk over 500kB"
+  ],
+  "recording_scope": "Isolated navigation and panel clips disable WebGL; model controls and campus regression use actual WebGL. Touch/mobile/OS preferences emulated in Chromium, not physical-device FPS benchmarks.",
+  "browser_tested_build_version": "3.1.1 before metadata-only bump to 3.1.2; motion source unchanged"
+}

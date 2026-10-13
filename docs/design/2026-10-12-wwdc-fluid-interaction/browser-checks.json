@@ -1,0 +1,203 @@
+{
+  "version": "3.1.1",
+  "browser": "Chromium 151.0.7922.173",
+  "checks": [
+    {
+      "name": "mouse press immediately energizes the glass and control",
+      "result": "passed"
+    },
+    {
+      "name": "control flex remains bounded and produces a visible transform",
+      "result": "passed",
+      "detail": {
+        "x": 0.75,
+        "y": 0.30000008477105045,
+        "transform": "matrix(0.966719, 0, 0, 0.952456, 0.713157, 0.285263)"
+      }
+    },
+    {
+      "name": "releasing a control clears pressure state",
+      "result": "passed"
+    },
+    {
+      "name": "keyboard activation has the same local feedback",
+      "result": "passed"
+    },
+    {
+      "name": "keyboard release clears pressure without changing the focus target",
+      "result": "passed"
+    },
+    {
+      "name": "navigation selection moves continuously to its next control",
+      "result": "passed",
+      "detail": {
+        "previous_x": 447.796875,
+        "during": {
+          "x": 519.69580078125,
+          "parent": 531.8125
+        },
+        "settled": {
+          "x": 531.8125,
+          "parent": 531.8125
+        }
+      }
+    },
+    {
+      "name": "page transition preserves the original header DOM",
+      "result": "passed"
+    },
+    {
+      "name": "page transition releases its transform when complete",
+      "result": "passed"
+    },
+    {
+      "name": "settled text interface adds no continuing animation frames",
+      "result": "passed",
+      "detail": {
+        "idle_raf_callbacks": 0
+      }
+    },
+    {
+      "name": "interaction does not restore external fonts or automatic diagnosis",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh version controls preserve 44px targets",
+      "result": "passed",
+      "detail": [
+        {
+          "w": 46.015625,
+          "h": 44
+        },
+        {
+          "w": 46.015625,
+          "h": 44
+        }
+      ]
+    },
+    {
+      "name": "320px zh header has no horizontal clipping",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh touch feedback works in blur mode",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh cancelled touch clears all pressed state",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh menu grows from its launcher side",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh dismissed menu becomes inert during exit",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh animated menu still navigates and closes",
+      "result": "passed"
+    },
+    {
+      "name": "375px en version controls preserve 44px targets",
+      "result": "passed",
+      "detail": [
+        {
+          "w": 60.671875,
+          "h": 44
+        },
+        {
+          "w": 60.671875,
+          "h": 44
+        }
+      ]
+    },
+    {
+      "name": "375px en header has no horizontal clipping",
+      "result": "passed"
+    },
+    {
+      "name": "375px en touch feedback works in blur mode",
+      "result": "passed"
+    },
+    {
+      "name": "375px en cancelled touch clears all pressed state",
+      "result": "passed"
+    },
+    {
+      "name": "375px en menu grows from its launcher side",
+      "result": "passed"
+    },
+    {
+      "name": "375px en dismissed menu becomes inert during exit",
+      "result": "passed"
+    },
+    {
+      "name": "375px en animated menu still navigates and closes",
+      "result": "passed"
+    },
+    {
+      "name": "new zone guide shares a continuous selected capsule",
+      "result": "passed"
+    },
+    {
+      "name": "zone panel changes with the active guide entry",
+      "result": "passed"
+    },
+    {
+      "name": "closed zone panel cannot receive input during exit",
+      "result": "passed"
+    },
+    {
+      "name": "animated catalog retains its search focus and real data",
+      "result": "passed"
+    },
+    {
+      "name": "catalog search remains editable during the new presentation",
+      "result": "passed"
+    },
+    {
+      "name": "closed catalog immediately becomes inert and returns focus",
+      "result": "passed"
+    },
+    {
+      "name": "reduced motion removes route animation",
+      "result": "passed"
+    },
+    {
+      "name": "reduced motion omits press morph and glow state",
+      "result": "passed"
+    },
+    {
+      "name": "reduced motion opens the menu without scaling",
+      "result": "passed"
+    },
+    {
+      "name": "forced colors uses a visible system selected fill",
+      "result": "passed"
+    },
+    {
+      "name": "forced colors removes decorative selection optics",
+      "result": "passed"
+    },
+    {
+      "name": "all four model views retain their operation and moving indicator",
+      "result": "passed"
+    },
+    {
+      "name": "paused model settles after selection springs",
+      "result": "passed",
+      "detail": {
+        "idle_raf_callbacks": 0
+      }
+    },
+    {
+      "name": "no browser script errors in motion checks",
+      "result": "passed",
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "scope": "Local production. Actual pointer, touch, keyboard and WebGL model controls; WebGL disabled only for isolated text/panel recordings. No live LLM calls or production deployment."
+}
