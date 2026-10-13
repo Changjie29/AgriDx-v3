@@ -26,6 +26,12 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 导航、版本切换、模型视角和展区选中态采用连续移动的胶囊，按压时有局部高光与回弹；菜单及说明面板从操作侧展开，减少动态设置下直接切换。实现参考及动效预览见 [WWDC 交互记录](docs/design/2026-10-12-wwdc-fluid-interaction/README.md)。
 
+## 诊断模式与记忆
+
+诊断工作台可选自动协调、仅本地知识库和 AI 辅助，服务端 `ALLOW_EXTERNAL_AI=false` 或 `DIAGNOSIS_MODE=knowledge_only` 优先。身份冲突先确认机型，外部模型失败时保留本地资料答复；本地摘要可展开原文、来源和适用限制。
+
+设备档案、对话及用户检查进度可恢复、新建、清空和删除。同一浏览器使用匿名身份，Express 数据默认保存在运行用户的 `~/.agridx/memory.sqlite`；可用 `MEMORY_DB_PATH` 指向独立持久目录。开发预览只在当前浏览器保存，清除网站数据会删除预览记录。使用与限制见[诊断记忆说明](docs/diagnostic-memory.md)。
+
 ## 腾讯云现有服务器更新
 
 用户已于 2026-10-11 授权配置现有腾讯云轻量服务器。服务器为 Ubuntu 24.04.4，网站使用 `/opt/agridx/current` 版本软链接、`agridx.service`、本机 8787 接口及现有 Nginx HTTPS；运行密钥文件为 `/etc/agridx.env`。

@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "name": "3105: new secondary route uses blue shell and glass",
+      "result": "passed"
+    },
+    {
+      "name": "3105: local diagnosis returns concise answer and expandable original evidence",
+      "result": "passed"
+    },
+    {
+      "name": "3105: saved diagnosis has a persistent session id",
+      "result": "passed"
+    },
+    {
+      "name": "3105: profile, conversation and progress restore on reload",
+      "result": "passed"
+    },
+    {
+      "name": "3105: new diagnosis clears active checks and retains selected device",
+      "result": "passed"
+    },
+    {
+      "name": "3105: blue shell persists when navigating to knowledge",
+      "result": "passed"
+    },
+    {
+      "name": "3105: classic route retains classic live glass",
+      "result": "passed"
+    },
+    {
+      "name": "3106: new secondary route uses blue shell and glass",
+      "result": "passed"
+    },
+    {
+      "name": "3106: local diagnosis returns concise answer and expandable original evidence",
+      "result": "passed"
+    },
+    {
+      "name": "3106: saved diagnosis has a persistent session id",
+      "result": "passed"
+    },
+    {
+      "name": "3106: profile, conversation and progress restore on reload",
+      "result": "passed"
+    },
+    {
+      "name": "3106: new diagnosis clears active checks and retains selected device",
+      "result": "passed"
+    },
+    {
+      "name": "3106: blue shell persists when navigating to knowledge",
+      "result": "passed"
+    },
+    {
+      "name": "3106: classic route retains classic live glass",
+      "result": "passed"
+    },
+    {
+      "name": "mobile new: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "mobile new: reply modes and memory controls available",
+      "result": "passed"
+    },
+    {
+      "name": "mobile old: no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "mobile old: reply modes and memory controls available",
+      "result": "passed"
+    },
+    {
+      "name": "all browser sessions have no page script errors",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": [],
+  "version": "3.5.0",
+  "date": "2026-10-13"
+}
