@@ -561,5 +561,252 @@
     "One development homepage catalog request was aborted on unmount; production smoke had no request failures.",
     "The initial production QA expected the previous dark palette; it was corrected to the retained main theme (#18232e) and verified again.",
     "Software GPU completion is polled until animation settles; paused production draw calls remained constant."
-  ]
+  ],
+  "finalIntegration": {
+    "version": "3.4.4",
+    "upstream": "f203d0b",
+    "npmCi": "passed",
+    "verify": "passed",
+    "tests": 227,
+    "passed": 225,
+    "skipped": 2,
+    "failed": 0,
+    "browser": {
+      "version": "3.4.4",
+      "base": "f203d0b",
+      "renderer": "Chromium SwiftShader; functional verification only",
+      "results": [
+        {
+          "width": 1280,
+          "checks": [
+            {
+              "name": "seven verified hotspots load",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "actual hotspot and side selection agree",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "outline respects device default",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "lazy outline chunk loads",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "floating details readable",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "retained dark theme changes palette without remounting or resetting camera",
+              "passed": true,
+              "evidence": {
+                "theme": "dark",
+                "fog": "18232e",
+                "same": true
+              }
+            },
+            {
+              "name": "retained light theme restores",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "all overlay and Material You controls are reachable above hotspots",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "no horizontal overflow",
+              "passed": true,
+              "evidence": {
+                "width": 1280,
+                "documentWidth": 1280,
+                "bodyWidth": 1280
+              }
+            },
+            {
+              "name": "paused actual rendering converges",
+              "passed": true,
+              "evidence": {
+                "before": 1081,
+                "after": 1081
+              }
+            },
+            {
+              "name": "no shader errors",
+              "passed": true,
+              "evidence": []
+            },
+            {
+              "name": "no page, application or duplicate Three errors",
+              "passed": true,
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "checks": [
+            {
+              "name": "seven verified hotspots load",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "actual hotspot and side selection agree",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "outline respects device default",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "lazy outline chunk loads",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "floating details readable",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "retained dark theme changes palette without remounting or resetting camera",
+              "passed": true,
+              "evidence": {
+                "theme": "dark",
+                "fog": "18232e",
+                "same": true
+              }
+            },
+            {
+              "name": "retained light theme restores",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "all overlay and Material You controls are reachable above hotspots",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "no horizontal overflow",
+              "passed": true,
+              "evidence": {
+                "width": 390,
+                "documentWidth": 390,
+                "bodyWidth": 390
+              }
+            },
+            {
+              "name": "paused actual rendering converges",
+              "passed": true,
+              "evidence": {
+                "before": 911,
+                "after": 911
+              }
+            },
+            {
+              "name": "no shader errors",
+              "passed": true,
+              "evidence": []
+            },
+            {
+              "name": "no page, application or duplicate Three errors",
+              "passed": true,
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "width": 320,
+          "checks": [
+            {
+              "name": "seven verified hotspots load",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "actual hotspot and side selection agree",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "outline respects device default",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "lazy outline chunk loads",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "floating details readable",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "retained dark theme changes palette without remounting or resetting camera",
+              "passed": true,
+              "evidence": {
+                "theme": "dark",
+                "fog": "18232e",
+                "same": true
+              }
+            },
+            {
+              "name": "retained light theme restores",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "all overlay and Material You controls are reachable above hotspots",
+              "passed": true,
+              "evidence": null
+            },
+            {
+              "name": "no horizontal overflow",
+              "passed": true,
+              "evidence": {
+                "width": 320,
+                "documentWidth": 320,
+                "bodyWidth": 320
+              }
+            },
+            {
+              "name": "paused actual rendering converges",
+              "passed": true,
+              "evidence": {
+                "before": 968,
+                "after": 968
+              }
+            },
+            {
+              "name": "no shader errors",
+              "passed": true,
+              "evidence": []
+            },
+            {
+              "name": "no page, application or duplicate Three errors",
+              "passed": true,
+              "evidence": []
+            }
+          ]
+        }
+      ]
+    },
+    "browserChecksPassed": 36,
+    "totalBrowserChecksAcrossPhases": 206
+  }
 }
