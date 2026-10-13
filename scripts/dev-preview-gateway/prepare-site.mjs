@@ -15,7 +15,7 @@ if (manifest.project_id !== config.project_id) throw new Error('Site identity mu
 const { version } = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8'));
 const release = { version, sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(), builtAt: new Date().toISOString() };
 // The Site provisioning layer owns the actual D1 database identity.
-manifest.d1 = { DB: { migrations_dir: 'drizzle' } };
+manifest.d1 = 'DB';
 mkdirSync(path.join(target, 'worker'), { recursive: true });
 mkdirSync(path.join(target, 'scripts'), { recursive: true });
 cpSync(path.join(source, 'worker.js'), path.join(target, 'worker/index.js'));
