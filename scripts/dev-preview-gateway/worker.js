@@ -24,7 +24,7 @@ export async function servePreview(request, upstreamFetch = fetch) {
     }, { headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } });
   }
   if (file.split('/').some((part) => !part || part === '.' || part === '..') || /[\\\u0000-\u001f]/.test(file) ||
-    !(/^(assets|images|models|licenses|fonts)\//.test(file) || ['index.html', 'favicon.svg', 'dev-preview.json'].includes(file))) {
+    !(/^(assets|images|models|licenses|fonts)\//.test(file) || ['index.html', 'favicon.svg', 'dev-preview.json', 'theme-init.js'].includes(file))) {
     return new Response('Not found', { status: 404 });
   }
   const mutable = !/^assets\/.+-[A-Za-z0-9_-]{8}\.(js|css)$/.test(file);
