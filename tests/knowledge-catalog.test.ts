@@ -58,7 +58,9 @@ test('catalogue counts only archived entries and exposes the expansion target as
 
 test('part browsing returns original evidence paragraphs and their applicability limits', () => {
   const selected = getKnowledgeCatalog({ brand: '东方红', model: 'LF804S', component: 'electrical', part: 'starter' }).selected!;
-  assert.deepEqual(selected.entries.map((entry) => entry.entryId), ['KB-YTO-LF-MANUAL-007', 'KB-YTO-LF-MANUAL-008']);
+  const entryIds = selected.entries.map((entry) => entry.entryId);
+  assert.ok(['KB-YTO-LF-MANUAL-007', 'KB-YTO-LF-MANUAL-008'].every((id) => entryIds.includes(id)),
+    'existing starter evidence remains available as the archive grows');
   for (const entry of selected.entries) {
     const chunk = archive.find((item) => item.entryId === entry.entryId)!;
     assert.equal(entry.content, chunk.text);
