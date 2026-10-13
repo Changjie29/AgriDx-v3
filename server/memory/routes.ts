@@ -1,0 +1,69 @@
+import { Router, type Request, type Response, type NextFunction } from 'express';
+import { randomBytes, createHash } from 'node:crypto';
+import { getMemoryStore, MemoryError, profileFrom, validId } from './store';
+
+const COOKIE = 'agridx_memory';
+/** Anonymous browser identity. HttpOnly capability, not a user account or device fingerprint. */
+export function memoryOwner(req: Request, res: Response): string {
+  const cookie = req.headers.cookie?.split(';').map((s) => s.trim()).find((s) => s.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1);
+  const token = cookie && /^[a-f0-9]{64}$/.test(cookie) ? cookie : randomBytes(32).toString('hex');
+  if (token !== cookie) res.cookie(COOKIE, token, { httpOnly: true, secure: req.secure, sameSite: 'strict', maxAge: 365 * 24 * 3600 * 1000, path: '/api' });
+  return createHash('sha256').update(token).digest('hex');
+}
+export function sameOrigin(req: Request, res: Response, next: NextFunction) {
+  const origin = req.headers.origin;
+  if (origin) {
+    try {
+      const expected = new URL(`${req.protocol}://${req.get('host')}`).origin;
+      if (new URL(origin).origin !== expected) throw new Error('origin');
+    } catch {
+      res.status(403).json({ code: 'memory_origin', error: '请从本站访问诊断记忆' }); return;
+    }
+  }
+  if (req.get('sec-fetch-site') === 'cross-site') {
+    res.status(403).json({ code: 'memory_origin', error: '请从本站访问诊断记忆' }); return;
+  }
+  next();
+}
+export function revisionFrom(value: unknown): number {
+  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 0) throw new MemoryError(400, 'bad_request', '请提供有效的诊断记录版本');
+  return value;
+}
+export function memoryFailure(error: unknown, res: Response) {
+  if (error instanceof MemoryError) res.status(error.status).json({ code: error.code, error: error.message });
+  else {
+    console.warn('[memory] storage operation failed');
+    res.status(503).json({ code: 'memory_unavailable', error: '诊断记忆暂时无法保存或读取，请稍后重试；已有记录不会被清空' });
+  }
+}
+export function createMemoryRoutes(store = getMemoryStore) {
+const memoryRouter = Router();
+memoryRouter.use(sameOrigin);
+memoryRouter.use((_req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
+memoryRouter.use((req, res, next) => { res.locals.memoryOwner = memoryOwner(req, res); next(); });
+const route = (callback: (req: Request, res: Response, owner: string) => unknown) => (req: Request, res: Response) => {
+  try { callback(req, res, res.locals.memoryOwner as string); } catch (error) { memoryFailure(error, res); }
+};
+const id = (value: unknown): string => {
+  if (!validId(value)) throw new MemoryError(400, 'bad_request', '记录编号格式错误');
+  return value;
+};
+memoryRouter.get('/', route((_req, res, owner) => res.json(store().overview(owner))));
+memoryRouter.post('/devices', route((req, res, owner) => res.status(201).json(store().saveDevice(owner, profileFrom(req.body)))));
+memoryRouter.patch('/devices/:id', route((req, res, owner) => res.json(store().saveDevice(owner, profileFrom(req.body), id(req.params.id)))));
+memoryRouter.delete('/devices/:id', route((req, res, owner) => { store().deleteDevice(owner, id(req.params.id)); res.json({ ok: true }); }));
+memoryRouter.post('/sessions', route((req, res, owner) => res.status(201).json(store().createSession(owner, id(req.body?.deviceId)))));
+memoryRouter.get('/sessions/:id', route((req, res, owner) => res.json(store().session(owner, id(req.params.id)))));
+memoryRouter.patch('/sessions/:id', route((req, res, owner) => {
+  if (typeof req.body?.progress !== 'string' || req.body.progress.length > 2000) throw new MemoryError(400, 'bad_request', '检查进度须为文本（上限2000字符）');
+  res.json(store().updateProgress(owner, id(req.params.id), revisionFrom(req.body.revision), req.body.progress.trim()));
+}));
+memoryRouter.post('/sessions/:id/clear', route((req, res, owner) => {
+  const sessionId = id(req.params.id);
+  store().clearSession(owner, sessionId, revisionFrom(req.body?.revision));
+  res.json(store().session(owner, sessionId));
+}));
+memoryRouter.delete('/sessions/:id', route((req, res, owner) => { store().deleteSession(owner, id(req.params.id)); res.json({ ok: true }); }));
+
+return memoryRouter;
+}

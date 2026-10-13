@@ -1,3 +1,5 @@
+import { createMemoryRoutes } from './memory/routes';
+import { getMemoryStore } from './memory/store';
 import express from 'express';
 import cors from 'cors';
 import { apiNotFound, createChatRateLimiter, errorHandler, securityHeaders } from './http/middleware';
@@ -15,7 +17,9 @@ export function createApp(runtime: ServerRuntime): express.Express {
   app.use(cors());
   app.use(express.json({ limit: '256kb' }));
   app.use('/api/chat', createChatRateLimiter());
-  app.use('/api', createStatusRoutes(runtime), createCatalogRoutes(runtime.getCatalog), createChatRoutes(runtime.diagnose));
+  const memory = runtime.getMemoryStore ?? getMemoryStore;
+  app.use('/api/memory', createMemoryRoutes(memory));
+  app.use('/api', createStatusRoutes(runtime), createCatalogRoutes(runtime.getCatalog), createChatRoutes(runtime.diagnose, memory));
   app.use('/api', apiNotFound);
   app.use(errorHandler);
   return app;

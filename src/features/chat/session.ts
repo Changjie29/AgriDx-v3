@@ -10,6 +10,8 @@ export interface ChatMessage {
   answerMode?: AnswerMode;
   fallbackReason?: FallbackReason;
   knowledgeChunks?: number;
+  localSummary?: string;
+  coordinationMessage?: string;
 }
 
 export interface ChatSession {
@@ -49,6 +51,8 @@ export function parseHistory(value: unknown): ChatMessage[] {
       id: message.id as string,
       role: message.role as 'user' | 'assistant',
       content: message.content as string,
+      localSummary: typeof message.localSummary === 'string' && message.localSummary.length <= 4000 ? message.localSummary : undefined,
+      coordinationMessage: typeof message.coordinationMessage === 'string' && message.coordinationMessage.length <= 500 ? message.coordinationMessage : undefined,
       model: typeof message.model === 'string' ? message.model : undefined,
       provider: isChatProvider(message.provider) ? message.provider : undefined,
       answerMode: isAnswerMode(message.answerMode) ? message.answerMode : undefined,
@@ -109,9 +113,9 @@ export function saveMachineContext(context: MachineContext, storage?: SessionSto
   } catch { /* Active chat does not depend on browser storage. */ }
 }
 
-export function createChatRequest(messages: ChatMessage[], question: string, context: MachineContext): ChatRequest {
+export function createChatRequest(messages: ChatMessage[], question: string, context: MachineContext, historyLimit = 20): ChatRequest {
   return {
-    messages: [...parseHistory(messages).slice(-20).map(({ role, content }) => ({
+    messages: [...parseHistory(messages).slice(-Math.min(38, Math.max(0, historyLimit))).map(({ role, content }) => ({
       role: role as 'user' | 'assistant', content,
     })), { role: 'user', content: question }],
     machineType: context.machineType || undefined,

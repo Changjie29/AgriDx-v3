@@ -1,3 +1,4 @@
+import { coordinationConfig } from '../knowledge/coordination';
 import { Router } from 'express';
 import path from 'node:path';
 import type { ServerRuntime } from '../runtime';
@@ -7,6 +8,7 @@ export function createStatusRoutes(runtime: ServerRuntime): Router {
   router.get('/health', (_req, res) => {
     res.json({
       ok: true, version: runtime.version, timestamp: new Date().toISOString(),
+      coordination: coordinationConfig(),
       knowledge: runtime.getKnowledgeStats(), llm: runtime.getLlmStatus(),
     });
   });

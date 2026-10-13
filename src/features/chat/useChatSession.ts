@@ -1,4 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDiagnosticMemory } from '../../hooks/useDiagnosticMemory';
+import { isRecord } from '../../lib/api-client';
+import type { DeviceProfile, MemoryDevice, SessionDetail } from '../../../shared/memory';
+import type { DiagnosisMode } from '../../../shared/diagnosis';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { toast } from 'sonner';
 import type { ChatProvider, FallbackReason } from '../../../shared/chat';
 import { requestChat } from './api';
@@ -25,6 +29,11 @@ export function useChatSession({ handoff, translate: t, focusInput }: ChatSessio
   const [currentModel, setCurrentModel] = useState('');
   const [currentProvider, setCurrentProvider] = useState<ChatProvider | ''>('');
   const [currentFallbackReason, setCurrentFallbackReason] = useState<FallbackReason | undefined>();
+  const [diagnosisMode, setDiagnosisMode] = useState<DiagnosisMode>('auto');
+  const [deviceName, setDeviceName] = useState('我的设备');
+  const [hours, setHours] = useState('');
+  const [deviceNotes, setDeviceNotes] = useState('');
+  const [progress, setProgress] = useState('');
   const requestRef = useRef<AbortController | null>(null);
 
   useEffect(() => () => {
@@ -40,9 +49,22 @@ export function useChatSession({ handoff, translate: t, focusInput }: ChatSessio
     setCurrentFallbackReason(undefined);
   }, []);
 
+  const onRestore = useCallback((detail: SessionDetail | null) => {
+    requestRef.current?.abort(); requestRef.current = null; setIsLoading(false);
+    setMessages(detail?.messages || []); setProgress(detail?.progress || ''); resetStatus();
+  }, [resetStatus]);
+  const onDevice = useCallback((device: MemoryDevice | null) => {
+    setDeviceName(device?.name || '我的设备'); setHours(device?.hours === null || !device ? '' : String(device.hours));
+    setDeviceNotes(device?.notes || '');
+    setMachineType(device?.machineType || ''); setBrand(device?.brand || ''); setModel(device?.model || '');
+  }, []);
+  const resumeOnBoot = !(isRecord(handoff) && ['machineType', 'brand', 'model', 'question'].some(key => typeof handoff[key] === 'string'));
+  const memory = useDiagnosticMemory(onRestore, onDevice, resumeOnBoot);
+  const profile: DeviceProfile = useMemo(() => ({ name: deviceName.trim(), machineType, brand: brand.trim(), model: model.trim(), hours: hours.trim() ? Number(hours) : null, notes: deviceNotes.trim() }), [deviceName, machineType, brand, model, hours, deviceNotes]);
+
   const sendMessage = useCallback(async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || trimmed.length > MAX_QUESTION_LENGTH || requestRef.current) return;
+    if (!trimmed || trimmed.length > MAX_QUESTION_LENGTH || requestRef.current || memory.busy) return;
     const controller = new AbortController();
     requestRef.current = controller;
     // Leave time for sequential provider fallback and transport of the local answer.
@@ -53,19 +75,24 @@ export function useChatSession({ handoff, translate: t, focusInput }: ChatSessio
     setInput('');
     setIsLoading(true);
     try {
+      const session = memory.ready ? await memory.prepare(profile) : null;
+      if (requestRef.current !== controller) return;
+      const request = { ...createChatRequest(messages, trimmed, { machineType, brand, model }, session?.revision === 0 ? 38 : 20), diagnosisMode,
+        ...(session ? { sessionId: session.id, revision: session.revision } : {}) };
       const reply = await requestChat(
-        createChatRequest(messages, trimmed, { machineType, brand, model }),
+        request,
         controller.signal,
         t('智能诊断服务暂时无法连接，请稍后重试。', 'AI service unavailable, please try again later.'),
       );
       // Stop, clear or unmount can invalidate this request while its body is being read.
       if (requestRef.current !== controller) return;
+      if (reply.memory) memory.updateSession(reply.memory);
       setCurrentModel(reply.model || '');
       setCurrentProvider(reply.provider || '');
       setCurrentFallbackReason(reply.fallbackReason);
       setMessages((previous) => previous.map((message) => message.id === loadingMessage.id
         ? { id: message.id, ...reply } : message));
-    } catch {
+    } catch (error) {
       if (requestRef.current !== controller) return;
       resetStatus();
       setMessages((previous) => previous.map((message) => message.id === loadingMessage.id ? {
@@ -73,7 +100,7 @@ export function useChatSession({ handoff, translate: t, focusInput }: ChatSessio
         role: 'error',
         content: t('对话请求未完成，请稍后重试；已有对话仍保留。', 'The chat request did not complete. Please retry; your previous messages are preserved.'),
       } : message));
-      toast.error(t('对话服务暂不可用', 'Chat service unavailable'));
+      toast.error(error instanceof Error && error.name !== 'AbortError' ? error.message : t('对话服务暂不可用', 'Chat service unavailable'));
     } finally {
       window.clearTimeout(timeout);
       if (requestRef.current === controller) {
@@ -82,7 +109,7 @@ export function useChatSession({ handoff, translate: t, focusInput }: ChatSessio
         window.setTimeout(focusInput, 0);
       }
     }
-  }, [messages, machineType, brand, model, t, focusInput, resetStatus]);
+  }, [messages, machineType, brand, model, t, focusInput, resetStatus, memory, profile, diagnosisMode]);
 
   const stopRequest = useCallback(() => {
     requestRef.current?.abort();
@@ -92,16 +119,18 @@ export function useChatSession({ handoff, translate: t, focusInput }: ChatSessio
     focusInput();
   }, [focusInput]);
 
-  const handleClear = useCallback(() => {
+  const handleClear = useCallback(async () => {
     stopRequest();
+    try { await memory.clear(); } catch (error) { toast.error(error instanceof Error ? error.message : "清空失败"); return; }
     resetStatus();
     setMessages([]);
     toast.success(t('对话已清空', 'Chat cleared'));
-  }, [stopRequest, resetStatus, t]);
+  }, [stopRequest, resetStatus, t, memory]);
 
   return {
     messages, input, setInput, machineType, setMachineType, brand, setBrand, model, setModel,
     isLoading, currentModel, currentProvider, currentFallbackReason,
-    sendMessage, stopRequest, handleClear,
+    sendMessage, stopRequest, handleClear, memory, profile,
+    diagnosisMode, setDiagnosisMode, deviceName, setDeviceName, hours, setHours, deviceNotes, setDeviceNotes, progress, setProgress,
   };
 }

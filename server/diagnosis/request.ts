@@ -1,7 +1,9 @@
 import type { ChatMessage } from '../llm/types';
+import { isDiagnosisMode, type DiagnosisMode } from '../knowledge/coordination';
 import type { RetrievalContext } from '../knowledge/scope';
 
 export interface DiagnosticRequest extends RetrievalContext {
+  diagnosisMode?: DiagnosisMode;
   history: (ChatMessage & { role: 'user' | 'assistant' })[];
 }
 
@@ -30,6 +32,7 @@ export function parseDiagnosticRequest(input: unknown): DiagnosticRequest {
   if (body.messages.length > 40) {
     throw new DiagnosticInputError('对话轮次过多，请新开对话', 'too_long');
   }
+  if (body.diagnosisMode !== undefined && !isDiagnosisMode(body.diagnosisMode)) throw new DiagnosticInputError('回答模式无效');
   const roles = new Set(['system', 'user', 'assistant']);
   for (const message of body.messages) {
     if (!message || typeof message !== 'object' || !roles.has(message.role) || typeof message.content !== 'string') {
@@ -42,13 +45,14 @@ export function parseDiagnosticRequest(input: unknown): DiagnosticRequest {
   }
   const history: DiagnosticRequest['history'] = body.messages
     .filter((message) => message.role === 'user' || message.role === 'assistant')
-    .slice(-20)
+    .slice(body.sessionId ? -40 : -20)
     .map((message) => ({ role: message.role, content: message.content }));
   if (history.at(-1)?.role !== 'user' || !history.at(-1)?.content.trim()) {
     throw new DiagnosticInputError('请提供非空的当前用户问题');
   }
   return {
     history,
+    diagnosisMode: body.diagnosisMode as DiagnosisMode | undefined,
     machineType: (body.machineType as string | undefined)?.trim(),
     brand: (body.brand as string | undefined)?.trim(),
     model: (body.model as string | undefined)?.trim(),

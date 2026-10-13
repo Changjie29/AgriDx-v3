@@ -1,3 +1,4 @@
+import { getMemoryStore } from './memory/store';
 import fs from 'node:fs';
 import path from 'node:path';
 import { initializeEnvironment } from './config/environment';
@@ -13,6 +14,7 @@ export interface ServerRuntime {
   getKnowledgeStats: typeof stats;
   getLlmStatus: () => LlmStatus;
   getCatalog: typeof getKnowledgeCatalog;
+  getMemoryStore?: typeof getMemoryStore;
 }
 
 /** Explicit startup composition; importing the app factory performs no initialization. */
@@ -24,7 +26,7 @@ export function createServerRuntime(): ServerRuntime {
   const rootDirectory = process.cwd();
   const version: string = JSON.parse(fs.readFileSync(path.resolve(rootDirectory, 'package.json'), 'utf8')).version;
   return {
-    rootDirectory, version,
+    rootDirectory, version, getMemoryStore,
     diagnose: createDiagnosticService(llm),
     getKnowledgeStats: stats,
     getLlmStatus: () => llm.getStatus(),

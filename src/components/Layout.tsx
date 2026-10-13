@@ -12,6 +12,7 @@ import { useLang, setLang } from '@/hooks/useLang';
 import { setUiVersion, useUiVersion } from '@/hooks/useUiVersion';
 import VersionSwitch from '@/components/VersionSwitch';
 import { preloadPage } from '@/lib/page-loaders';
+import { NewVersionShell } from '@/components/NewVersionShell';
 
 const NAV_ZH = [
   { label: '首页', path: '/' },
@@ -73,10 +74,18 @@ export function Layout() {
     }
   };
 
+  // The exhibition home owns its complete chrome. Secondary routes keep the
+  // same blue version through a shared shell instead of falling back to the
+  // classic green navigation.
+  if (uiVersion === 'new' && location.pathname !== '/') return <NewVersionShell />;
   if (location.pathname === '/' && uiVersion === 'new') return <Outlet />;
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div
+      className="flex min-h-screen flex-col bg-background text-foreground"
+      data-ui-version={uiVersion}
+      data-route={location.pathname}
+    >
       <a className="skip-link" href="#main-content">{lang === 'zh' ? '跳到主要内容' : 'Skip to content'}</a>
       {/* 顶部导航栏 */}
       <header className="site-header sticky top-0 z-50 w-full">

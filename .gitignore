@@ -11,3 +11,8 @@ server/.env
 
 # Independent development preview build
 dist-preview
+# Private diagnostic memory, including SQLite WAL/SHM files
+server/data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

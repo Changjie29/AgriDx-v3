@@ -1,6 +1,6 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.3.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.5.0**。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -26,9 +26,15 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 导航、版本切换、模型视角和展区选中态采用连续移动的胶囊，按压时有局部高光与回弹；菜单及说明面板从操作侧展开，减少动态设置下直接切换。实现参考及动效预览见 [WWDC 交互记录](docs/design/2026-10-12-wwdc-fluid-interaction/README.md)。
 
+## 诊断模式与记忆
+
+诊断工作台可选自动协调、仅本地知识库和 AI 辅助，服务端 `ALLOW_EXTERNAL_AI=false` 或 `DIAGNOSIS_MODE=knowledge_only` 优先。身份冲突先确认机型，外部模型失败时保留本地资料答复；本地摘要可展开原文、来源和适用限制。
+
+设备档案、对话及用户检查进度可恢复、新建、清空和删除。同一浏览器使用匿名身份，Express 数据默认保存在运行用户的 `~/.agridx/memory.sqlite`；可用 `MEMORY_DB_PATH` 指向独立持久目录。开发预览只在当前浏览器保存，清除网站数据会删除预览记录。使用与限制见[诊断记忆说明](docs/diagnostic-memory.md)。
+
 ## 开发版内部数据
 
-独立开发站新增[开发控制台](https://agridx-dev-preview.z3464715478.chatgpt.site/#/developer)，集中查看匿名访问、当前用户提问及诊断结果、GitHub 主干和构建状态。内部接口须验证 GitHub 仓库管理员/维护者身份；开发站普通访问继续公开，正式站记录尚未接入。数据从功能上线后采集，保存最近30天；使用和维护见[控制台说明](docs/deployment/dev-console.md)。
+独立开发站新增[开发控制台](https://agridx-dev-preview.z3464715478.chatgpt.site/#/developer)，查看匿名访问、当前提问及诊断结果、GitHub 主干和构建状态。内部接口须验证 GitHub 仓库管理员/维护者身份；普通访问继续公开，腾讯记录未接入。数据从功能上线后采集，保存最近30天；入口存储迁移与线上验证独立于前端自动构建，见[控制台说明](docs/deployment/dev-console.md)。
 
 ## 腾讯云现有服务器更新
 
@@ -38,12 +44,18 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 2026-10-12按用户要求整合[PR #6](https://github.com/srt2777/AgriDx-v3/pull/6)和[PR #7](https://github.com/srt2777/AgriDx-v3/pull/7)的两批共200条知识，当前为26来源、412条归档知识、421个检索片段。同步来源已核对页、分层导航、品牌入口和概要图表；保留原件、完整型号及配置限制，未厂家复核、全书审校或实车验证。详见[整合验收](知识库/整理后的知识库/农用拖拉机知识库/采集记录/20261012_两批拖拉机知识合入验收.md)。
 
+2026-10-13累计沿用既有整理流程扩充800条（首批500条、追加300条），同时保留5E照明故障补漏。当前26来源、1213条归档、1222个检索片段；完整型号、配置限制及证据核验见[500条记录](知识库/整理后的知识库/农用拖拉机知识库/采集记录/20261013_500条知识扩充.md)与[300条记录](知识库/整理后的知识库/农用拖拉机知识库/采集记录/20261013_再增300条知识.md)。
+
+2026-10-11 已成功部署主线 [0b8a670](https://github.com/srt2777/AgriDx-v3/commit/0b8a670a547f89b1349e1f49b0d8a347e90d3367) 的 3.1.1（当时实际运行版本；该迭代日志现编号 3.0.3）到 [agridx.xyz](https://agridx.xyz)。服务器成功回执、独立公网 HTTPS 29 项检查及浏览器 9 项检查均通过：归档仍为 212 条/221 片段，首页、全部 JS/CSS、徽章和模型与已验证构建一致，新旧界面切换与刷新记忆正常。保留旧版本及现有 HTTPS、密钥文件，真实外部模型问答未验收。
+
+上述验收来自代理出口和远程浏览器。用户随后报告不开代理时域名连接关闭，IP 的 HTTP 访问也失败；当前网络直连可用性仍在排查，尚未确认所有网络可访问，实际诊断进展见同一部署记录。
+
 ## 技术栈
 
 - **前端**：React 19 + Vite + TypeScript + Tailwind CSS + React Router + React Three Fiber
 - **后端**：Node.js + Express + tsx（ESM）
 - **LLM**：Gemini（默认 `gemini-3.8-flash`，可配置）/ DeepSeek（默认 `deepseek-v4-flash`，可配置），OpenAI 兼容协议
-- **知识库**：通用信息收集提示 + 412 条索引化拖拉机及配套系统资料，按章节提取 + 关键词重叠打分，零向量库
+- **知识库**：通用信息收集提示 + 1213 条索引化拖拉机及配套系统资料，按章节提取 + 关键词重叠打分，零向量库
 - **3D**：Three.js / React Three Fiber，程序化 RoomEnvironment 光照，零 HDR 网络请求
 
 ## 快速开始
@@ -220,7 +232,7 @@ AgriDx-v3/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "3.2.2", "timestamp": "...", "knowledge": { "chunks": 421, "archivedEntries": 412 } }
+{ "ok": true, "version": "3.5.0", "timestamp": "...", "knowledge": { "chunks": 1222, "archivedEntries": 1213 } }
 ```
 
 ### `POST /api/chat`
