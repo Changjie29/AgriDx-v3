@@ -1,0 +1,151 @@
+{
+  "browser": "Chromium 151.0.7922.173",
+  "checks": [
+    {
+      "name": "new homepage shell and direct access remain visible while 3D code is blocked",
+      "result": "passed"
+    },
+    {
+      "name": "navigation and content placeholder appear without waiting for page or 3D code",
+      "result": "passed",
+      "detail": {
+        "elapsed_ms": 310
+      }
+    },
+    {
+      "name": "theme remains operable during a pending page load",
+      "result": "passed"
+    },
+    {
+      "name": "rapid navigation discards the earlier knowledge route",
+      "result": "passed"
+    },
+    {
+      "name": "header DOM persists across pending secondary routes",
+      "result": "passed"
+    },
+    {
+      "name": "diagnosis remains editable without a 3D download",
+      "result": "passed"
+    },
+    {
+      "name": "no external font stylesheet or font requests",
+      "result": "passed"
+    },
+    {
+      "name": "model intent preloads its lightweight page",
+      "result": "passed"
+    },
+    {
+      "name": "model prefetch does not import the renderer or download GLB",
+      "result": "passed"
+    },
+    {
+      "name": "model page heading and upload controls precede its renderer",
+      "result": "passed"
+    },
+    {
+      "name": "all model views operate after deferred loading",
+      "result": "passed"
+    },
+    {
+      "name": "paused model stops continuous drawing",
+      "result": "passed",
+      "detail": {
+        "before": 1856,
+        "after": 1856
+      }
+    },
+    {
+      "name": "component selection draws again while paused",
+      "result": "passed",
+      "detail": {
+        "before": 1856,
+        "after": 1909
+      }
+    },
+    {
+      "name": "exploded view draws again while paused",
+      "result": "passed",
+      "detail": {
+        "before": 1909,
+        "after": 1962
+      }
+    },
+    {
+      "name": "rotation resumes from demand rendering",
+      "result": "passed"
+    },
+    {
+      "name": "four-level knowledge browsing still returns evidence",
+      "result": "passed"
+    },
+    {
+      "name": "deferred campus still responds to keyboard driving",
+      "result": "passed"
+    },
+    {
+      "name": "escape returns the campus to overview",
+      "result": "passed"
+    },
+    {
+      "name": "zone selection remains available",
+      "result": "passed"
+    },
+    {
+      "name": "campus zone navigates to its actual feature",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh new homepage has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh direct mobile diagnosis route opens",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh classic homepage still works",
+      "result": "passed"
+    },
+    {
+      "name": "375px en new homepage has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "375px en direct mobile diagnosis route opens",
+      "result": "passed"
+    },
+    {
+      "name": "375px en classic homepage still works",
+      "result": "passed"
+    },
+    {
+      "name": "768px zh new homepage has no horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "768px zh direct mobile diagnosis route opens",
+      "result": "passed"
+    },
+    {
+      "name": "768px zh classic homepage still works",
+      "result": "passed"
+    },
+    {
+      "name": "data saver suppresses optional page warming",
+      "result": "passed"
+    },
+    {
+      "name": "data saver still allows explicit navigation",
+      "result": "passed"
+    },
+    {
+      "name": "no browser page errors",
+      "result": "passed",
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "scope": "Local production browser checks; stalled modules simulated where stated, actual WebGL for model and campus controls. No live LLM calls."
+}

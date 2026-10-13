@@ -69,7 +69,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .site-nav-item:hover { color: var(--primary); background: color-mix(in srgb, var(--accent) 65%, transparent); }
 .site-nav-item.is-active { font-weight: 600; }
 .site-nav-label { position: relative; z-index: 1; }
-.site-nav-indicator { position: absolute; inset: 0; border-radius: inherit; background: var(--accent); box-shadow: inset 0 1px 0 var(--glass-control-edge), 0 2px 5px -3px rgba(21,54,39,.22); }
+.site-nav-indicator { --selection-fill: var(--accent); --selection-shadow: inset 0 1px 0 var(--glass-control-edge), 0 2px 5px -3px rgba(21,54,39,.22); }
 .site-tool-button { flex: none; background: color-mix(in srgb, var(--agri-raised) 45%, transparent); border-color: color-mix(in srgb, var(--agri-line) 72%, transparent); transition: background .2s, color .2s, box-shadow .2s, transform .2s; }
 .site-tool-button:hover { color: var(--primary); background: var(--accent); box-shadow: inset 0 1px 0 var(--glass-control-edge); }
 .press-control { position: relative; transition: transform .24s var(--ease-apple-out, ease), background .2s, color .2s; }
@@ -78,7 +78,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .site-tool-button:active::after, .site-diagnosis-button:active::after { opacity: 1; }
 .site-mobile-menu { max-width: 1200px; margin-inline: auto; }
 .site-mobile-item { position: relative; }
-.site-mobile-indicator { position: absolute; inset: 0; border-radius: inherit; background: var(--accent); }
+.site-mobile-indicator { --selection-fill: var(--accent); }
 .chat-bar-glass { --lg-radius: 18px; }
 .chat-input-glass { --lg-radius: 20px; }
 .chat-bar-glass, .chat-input-glass, .catalog-filter-glass { --glass-control-tint: color-mix(in srgb, var(--card) 88%, transparent); }

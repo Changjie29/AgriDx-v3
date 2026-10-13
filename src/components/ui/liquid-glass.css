@@ -8,6 +8,8 @@
   overflow: hidden;
   border-radius: var(--lg-radius);
   background: transparent;
+  -webkit-backdrop-filter: var(--lg-live-filter, blur(var(--lg-blur)) saturate(var(--lg-saturate)));
+  backdrop-filter: var(--lg-live-filter, blur(var(--lg-blur)) saturate(var(--lg-saturate)));
   box-shadow: 0 12px 32px -20px rgb(21 54 39 / 30%);
 }
 .agri-liquid-glass > :is(.liquid-glass-effect, .liquid-glass-tint, .liquid-glass-shine) {
@@ -16,14 +18,13 @@
   border-radius: inherit;
   pointer-events: none;
 }
-.agri-glass-frost {
-  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
-  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
-}
 .agri-glass-lens { overflow: hidden; }
+.agri-live-optics { position: absolute; inset: 0; border-radius: inherit; }
+.agri-live-optics > :not(.agri-glass-engine) { display: none; }
+.agri-live-optics .glass__warp { display: none; }
 /* The engine defaults to centering, elastic transforms, white text and drop shadows.
    It sits behind a separate content layer, so none of those defaults affect controls. */
-.agri-glass-lens > :not(.agri-glass-engine, .agri-glass-frost) { display: none; }
+.agri-glass-lens > :not(.agri-live-optics, .agri-glass-frost) { display: none; }
 .agri-glass-lens > .agri-glass-frost { position: absolute; inset: 0; }
 .agri-glass-engine { border-radius: inherit; transform: none !important; transition: none !important; pointer-events: none; }
 .agri-glass-engine > svg { inset: 0; width: 0 !important; height: 0 !important; }
@@ -63,7 +64,7 @@
 .agri-liquid-glass[data-glass-active] > .liquid-glass-shine::after { opacity: .2; }
 .agri-liquid-glass > .liquid-glass-content { position: relative; z-index: 3; }
 html.dark .agri-liquid-glass > .liquid-glass-shine { box-shadow: inset 0 1px 0 rgb(230 248 237 / 22%), inset 0 -1px 0 rgb(230 248 237 / 10%); }
-.agri-liquid-glass[data-glass-mode="solid"] { background: var(--card); border: 1px solid var(--border); }
+.agri-liquid-glass[data-glass-mode="solid"] { background: var(--lg-solid, var(--card)); border: 1px solid var(--lg-border, var(--border)); -webkit-backdrop-filter: none; backdrop-filter: none; }
 .agri-liquid-glass[data-glass-mode="solid"] > :is(.liquid-glass-effect, .liquid-glass-tint, .liquid-glass-shine) { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .agri-liquid-glass .liquid-glass-shine::after { display: none; }
