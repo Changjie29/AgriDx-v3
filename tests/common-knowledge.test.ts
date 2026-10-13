@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { test } from 'node:test';
-import { isCommonFramework, type CommonFrameworkDefinition } from '../shared/common-knowledge';
+import { buildCommonDiagnosisQuestion, isCommonFramework, type CommonFrameworkDefinition } from '../shared/common-knowledge';
 import { loadArchive } from '../server/knowledge/archive';
 import { validateCommonDefinition } from '../server/knowledge/common';
 import { getKnowledgeCatalog, loadKnowledgeCatalog } from '../server/knowledge/catalog';
 import { parseKnowledgeCatalog } from '../src/features/knowledge/catalog-api';
+import { resolveScope } from '../server/knowledge/scope';
+import { resolveDiagnosticContext } from '../server/knowledge/conversation';
 
 const root = '知识库/整理后的知识库/农用拖拉机知识库';
 const definition: CommonFrameworkDefinition = JSON.parse(fs.readFileSync(`${root}/通用框架.json`, 'utf8'));
@@ -13,6 +15,26 @@ const hierarchy = JSON.parse(fs.readFileSync(`${root}/hierarchy.json`, 'utf8'));
 const archive = loadArchive().chunks;
 const validate = (input: unknown) => validateCommonDefinition(input, archive, hierarchy.entries, hierarchy.components.map((x: { id: string }) => x.id));
 loadKnowledgeCatalog();
+
+test('通用问诊预填不把配置追问变成已确认的四驱条件，仍保留用户选择', () => {
+  const tyre = definition.symptoms.find(x => x.id === 'tyre-wear')!;
+  assert.ok(tyre.questions.some(x => x.includes('四驱')));
+  const context = { machineType: '拖拉机', brand: '久保田', model: 'M6060' };
+  const questionScope = (configurationText?: string) => {
+    const resolved = resolveDiagnosticContext([{ role: 'user', content: buildCommonDiagnosisQuestion(tyre, configurationText) }], context);
+    return resolveScope(resolved.query, resolved.scope);
+  };
+  const unknown = questionScope();
+  assert.deepEqual(unknown.driveConfigurations, []);
+  assert.deepEqual(unknown.configurations, []);
+  assert.deepEqual(unknown.emissions, []);
+  const confirmed = questionScope('ROPS、2WD、国三');
+  assert.deepEqual(confirmed.driveConfigurations, ['2WD']);
+  assert.deepEqual(confirmed.configurations, ['ROPS']);
+  assert.deepEqual(confirmed.emissions, ['国三']);
+  assert.equal(confirmed.identityConflict, false);
+  assert.deepEqual(questionScope('4WD').driveConfigurations, ['4WD']);
+});
 
 test('通用入口组织全部目标，不返回跨机型维修正文，不把线索计为性能覆盖', () => {
   const catalog = getKnowledgeCatalog({ symptom: 'engine-power' });

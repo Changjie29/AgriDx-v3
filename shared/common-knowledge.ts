@@ -51,6 +51,11 @@ export interface CommonKnowledgeFramework {
   gapCells: number;
 }
 
+/** Intake questions are prompts for missing facts, not confirmed machine conditions. */
+export function buildCommonDiagnosisQuestion(symptom: Pick<CommonSymptom, 'name'>, configurationText?: string): string {
+  return `${symptom.name}。${configurationText ? `已确认配置：${configurationText}。` : ''}请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。`;
+}
+
 const record = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const text = (v: unknown): v is string => typeof v === 'string' && !!v.trim();
 const strings = (v: unknown): v is string[] => Array.isArray(v) && v.every(text) && new Set(v).size === v.length;

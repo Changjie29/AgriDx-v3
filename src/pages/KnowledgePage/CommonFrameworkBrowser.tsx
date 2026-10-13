@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, ClipboardList } from 'lucide-react';
-import type { CommonKnowledgeFramework } from '@shared/common-knowledge';
+import { buildCommonDiagnosisQuestion, type CommonKnowledgeFramework } from '@shared/common-knowledge';
 import './common-framework.css';
 
 interface Props {
@@ -15,7 +15,7 @@ export default function CommonFrameworkBrowser({ framework, lang, onSymptomChang
   const symptom = framework.symptoms.find(x => x.id === framework.selectedSymptom);
   const relevantTargets = symptom ? new Set(symptom.performanceIds) : undefined;
   const systems = framework.systems.filter(x => !relevantTargets || x.performanceTargets.some(p => relevantTargets.has(p.id)));
-  const prompt = symptom ? `${symptom.name}。${diagnosisState.configurationText ? `已确认配置：${diagnosisState.configurationText}。` : ''}${framework.questions.join('\n')}` : '';
+  const prompt = symptom ? buildCommonDiagnosisQuestion(symptom, diagnosisState.configurationText) : '';
   return <section className="common-framework" aria-labelledby="common-framework-heading">
     <div className="common-heading"><div><div className="section-eyebrow">{t('拖拉机通用框架', 'COMMON TRACTOR FRAMEWORK')}</div>
       <h2 id="common-framework-heading">{t('先描述表现，再匹配本机依据。', 'Describe the behavior, then match the machine.')}</h2>
