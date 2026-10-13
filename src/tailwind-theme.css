@@ -5,52 +5,74 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: hsl(42 38% 97%);
-  --foreground: hsl(120 8% 15%);
-  --card: hsl(0 0% 100% / 0.92);
-  --card-foreground: hsl(120 8% 15%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(120 8% 15%);
-  --primary: hsl(127 26% 29%);
-  --primary-foreground: hsl(42 40% 98%);
-  --secondary: hsl(42 25% 92%);
-  --secondary-foreground: hsl(127 26% 25%);
-  --muted: hsl(42 25% 92%);
-  --muted-foreground: hsl(30 5% 45%);
-  --accent: hsl(120 20% 94%);
-  --accent-foreground: hsl(127 26% 25%);
-  --wheat: hsl(41 60% 52%);
-  --wheat-foreground: hsl(120 8% 15%);
-  --info: hsl(221 83% 53%);
-  --info-foreground: hsl(230 100% 98%);
-  --destructive: hsl(0 84% 60%);
-  --destructive-foreground: hsl(42 40% 98%);
-  --success: hsl(130 54% 42%);
-  --success-foreground: hsl(115 77% 97%);
-  --warning: hsl(26 90% 49%);
-  --warning-foreground: hsl(33 100% 96%);
-  --border: hsl(35 12% 86%);
-  --input: hsl(35 12% 86%);
-  --ring: hsl(127 26% 29%);
-  --chart-1: hsl(127 26% 45%);
-  --chart-2: hsl(41 60% 52%);
-  --chart-3: hsl(187 26% 45%);
-  --chart-4: hsl(217 26% 45%);
-  --chart-5: hsl(247 26% 45%);
-  --sidebar: hsl(220 14% 96%);
-  --sidebar-foreground: hsl(220 14% 14%);
-  --sidebar-primary: hsl(221 83% 53%);
-  --sidebar-primary-foreground: hsl(220 14% 98%);
-  --sidebar-accent: hsl(222 100% 94%);
-  --sidebar-accent-foreground: hsl(221 83% 53%);
-  --sidebar-border: hsl(220 14% 89%);
-  --sidebar-ring: hsl(221 83% 53%);
+  color-scheme: light;
+  --background: #f8faf8;
+  --foreground: #20302d;
+  --card: #ffffff;
+  --card-foreground: var(--foreground);
+  --popover: #ffffff;
+  --popover-foreground: var(--foreground);
+  --primary: #20553f;
+  --primary-foreground: #ffffff;
+  --secondary: #e9f0ec;
+  --secondary-foreground: #285340;
+  --muted: #edf2ef;
+  --muted-foreground: #53665e;
+  --accent: #e3eee7;
+  --accent-foreground: #20553f;
+  --wheat: #886423;
+  --wheat-foreground: #ffffff;
+  --info: #285d95;
+  --info-foreground: #ffffff;
+  --destructive: #ad3548;
+  --destructive-foreground: #ffffff;
+  --success: #196b4c;
+  --success-foreground: #ffffff;
+  --warning: #8d5218;
+  --warning-foreground: #ffffff;
+  --border: #d4dfd9;
+  --input: #aebfb6;
+  --ring: var(--primary);
+  --chart-1: #367a63;
+  --chart-2: #8c6aaf;
+  --chart-3: #2c7185;
+  --chart-4: #346eaa;
+  --chart-5: #aa7934;
+  --sidebar: var(--muted);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --agri-paper: var(--background);
+  --agri-surface: var(--muted);
+  --agri-raised: var(--card);
+  --agri-line: var(--border);
+  --agri-forest: var(--primary);
+  --agri-leaf: #376b52;
+  --hub-background: #f4f7fa;
+  --hub-surface: #eaf0f5;
+  --hub-card: #ffffff;
+  --hub-foreground: #203346;
+  --hub-muted: #53697c;
+  --hub-primary: #245d7d;
+  --hub-primary-foreground: #ffffff;
+  --hub-accent: #e0edf3;
+  --hub-accent-foreground: #24546e;
+  --hub-border: #cad8e2;
+  --hub-input: #a8bece;
+  --glass-control-tint: rgb(255 255 255 / 82%);
+  --glass-control-edge: rgb(255 255 255 / 80%);
+  --glass-press-light: rgb(255 255 255 / 50%);
+  --surface-shadow: rgb(26 46 61 / 14%);
 
-  --primary-border: hsl(from hsl(221 83% 53%) h s calc(l + var(--opaque-button-border-intensity)));
-  --secondary-border: hsl(from hsl(220 14% 96%) h s calc(l + var(--opaque-button-border-intensity)));
-  --destructive-border: hsl(from hsl(2 84% 62%) h s calc(l + var(--opaque-button-border-intensity)));
-  --accent-border: hsl(from hsl(220 14% 96%) h s calc(l + var(--opaque-button-border-intensity)));
-  --muted-border: hsl(from hsl(220 14% 96%) h s calc(l + var(--opaque-button-border-intensity)));
+  --primary-border: color-mix(in srgb, var(--border) 65%, var(--primary));
+  --secondary-border: color-mix(in srgb, var(--border) 65%, var(--primary));
+  --destructive-border: color-mix(in srgb, var(--border) 65%, var(--primary));
+  --accent-border: color-mix(in srgb, var(--border) 65%, var(--primary));
+  --muted-border: color-mix(in srgb, var(--border) 65%, var(--primary));
   --font-sans:
     'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC',
     -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -82,60 +104,59 @@
   --spacing: 0.25rem;
 }
 
-/* ===== 暗色主题：跟随系统自动切换 ===== */
-@media (prefers-color-scheme: dark) {
-  :root:not(.theme-light) {
-    --background: hsl(130 18% 10%);
-    --foreground: hsl(40 30% 92%);
-    --card: hsl(130 16% 14% / 0.92);
-    --card-foreground: hsl(40 30% 92%);
-    --popover: hsl(130 16% 14%);
-    --popover-foreground: hsl(40 30% 92%);
-    --primary: hsl(130 35% 45%);
-    --primary-foreground: hsl(130 20% 8%);
-    --secondary: hsl(130 15% 20%);
-    --secondary-foreground: hsl(40 30% 90%);
-    --muted: hsl(130 12% 20%);
-    --muted-foreground: hsl(40 15% 65%);
-    --accent: hsl(130 20% 22%);
-    --accent-foreground: hsl(130 40% 70%);
-    --wheat: hsl(41 55% 58%);
-    --wheat-foreground: hsl(130 18% 10%);
-    --border: hsl(130 12% 25%);
-    --input: hsl(130 12% 25%);
-    --ring: hsl(130 35% 45%);
-    --elevate-1: rgba(255,255,255, .04);
-    --elevate-2: rgba(255,255,255, .08);
-  }
-}
-
-/* 手动切到暗色 */
+/* The controller resolves system preference before paint; pages never choose their own mode. */
 :root.theme-dark {
-  --background: hsl(130 18% 10%);
-  --foreground: hsl(40 30% 92%);
-  --card: hsl(130 16% 14% / 0.92);
-  --card-foreground: hsl(40 30% 92%);
-  --popover: hsl(130 16% 14%);
-  --popover-foreground: hsl(40 30% 92%);
-  --primary: hsl(130 35% 45%);
-  --primary-foreground: hsl(130 20% 8%);
-  --secondary: hsl(130 15% 20%);
-  --secondary-foreground: hsl(40 30% 90%);
-  --muted: hsl(130 12% 20%);
-  --muted-foreground: hsl(40 15% 65%);
-  --accent: hsl(130 20% 22%);
-  --accent-foreground: hsl(130 40% 70%);
-  --wheat: hsl(41 55% 58%);
-  --wheat-foreground: hsl(130 18% 10%);
-  --border: hsl(130 12% 25%);
-  --input: hsl(130 12% 25%);
-  --ring: hsl(130 35% 45%);
-  --elevate-1: rgba(255,255,255, .04);
-  --elevate-2: rgba(255,255,255, .08);
+  color-scheme: dark;
+  --button-outline: rgb(221 235 244 / 18%);
+  --badge-outline: rgb(221 235 244 / 12%);
+  --background: #111820;
+  --foreground: #e5edf3;
+  --card: #1c2732;
+  --popover: #222f3b;
+  --primary: #a5ddc0;
+  --primary-foreground: #142b22;
+  --secondary: #293641;
+  --secondary-foreground: #d5e6dc;
+  --muted: #18222c;
+  --muted-foreground: #aebdca;
+  --accent: #293e38;
+  --accent-foreground: #c4ead6;
+  --wheat: #e4c48a;
+  --wheat-foreground: #282014;
+  --info: #a8cef5;
+  --info-foreground: #152b42;
+  --destructive: #f2a6b0;
+  --destructive-foreground: #371b25;
+  --success: #a0dabb;
+  --success-foreground: #172d24;
+  --warning: #e8c48e;
+  --warning-foreground: #302516;
+  --border: #3b4c5b;
+  --input: #586d7d;
+  --chart-1: #a0dabb;
+  --chart-2: #c5b3e6;
+  --chart-3: #90c8d7;
+  --chart-4: #a8cef5;
+  --chart-5: #e8c48e;
+  --agri-leaf: #a5ddc0;
+  --hub-background: #111820;
+  --hub-surface: #18232e;
+  --hub-card: #1d2b38;
+  --hub-foreground: #e5edf3;
+  --hub-muted: #aec0cf;
+  --hub-primary: #a3d4ec;
+  --hub-primary-foreground: #142b39;
+  --hub-accent: #293e50;
+  --hub-accent-foreground: #cee7f2;
+  --hub-border: #3c5164;
+  --hub-input: #587289;
+  --glass-control-tint: rgb(29 43 56 / 88%);
+  --glass-control-edge: rgb(199 222 237 / 20%);
+  --glass-press-light: rgb(199 222 237 / 16%);
+  --surface-shadow: rgb(0 0 0 / 32%);
+  --elevate-1: rgb(255 255 255 / 5%);
+  --elevate-2: rgb(255 255 255 / 9%);
 }
-
-/* 手动锁定亮色 */
-:root.theme-light { color-scheme: light; }
 
 @theme inline {
   --color-background: var(--background);
@@ -271,15 +292,15 @@
   /* 工程图纸网格底纹 */
   .bg-grid-paper {
     background-image:
-      linear-gradient(to right, hsl(35 12% 86% / 0.4) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(35 12% 86% / 0.4) 1px, transparent 1px);
+      linear-gradient(to right, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px);
     background-size: 32px 32px;
   }
 
   .bg-grid-paper-sm {
     background-image:
-      linear-gradient(to right, hsl(35 12% 86% / 0.35) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(35 12% 86% / 0.35) 1px, transparent 1px);
+      linear-gradient(to right, color-mix(in srgb, var(--border) 35%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--border) 35%, transparent) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 }

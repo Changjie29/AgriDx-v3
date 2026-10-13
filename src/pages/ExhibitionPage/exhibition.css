@@ -1,14 +1,9 @@
 .expo-page {
-  --expo-bg: #080f1b;
-  --expo-text: #e8eff5;
-  --expo-muted: #9bafbe;
-  --expo-accent: #b5e6dd;
-  --glass-control-tint: linear-gradient(145deg, rgb(42 65 80 / 58%), rgb(12 27 40 / 68%));
-  --glass-press-light: rgb(212 244 246 / 45%);
-  --lg-solid: #152a38;
-  --lg-border: #688898;
+  --expo-bg: var(--background);
+  --expo-text: var(--foreground);
+  --expo-muted: var(--muted-foreground);
+  --expo-accent: var(--primary);
   color: var(--expo-text);
-  color-scheme: dark;
   background: var(--expo-bg);
   min-height: 100dvh;
   padding: 0 36px;
@@ -42,8 +37,8 @@
   left: 24px;
   border-radius: 8px;
   padding: 12px 20px;
-  background: #b5e6dd;
-  color: #183d3d;
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 .expo-page .skip-link:focus {
   top: 14px;
@@ -56,7 +51,7 @@
 .expo-page button:focus-visible,
 .expo-page input:focus-visible,
 .expo-world-stage:focus-visible {
-  outline: 2px solid #b5e6dd;
+  outline: 2px solid var(--ring);
   outline-offset: 4px;
 }
 .expo-header,
@@ -71,7 +66,7 @@
   grid-template-columns: 1fr 1.4fr 1fr;
   align-items: center;
   gap: 24px;
-  border-bottom: 1px solid #283746;
+  border-bottom: 1px solid var(--border);
 }
 .expo-brand {
   display: flex;
@@ -100,7 +95,7 @@
 }
 .expo-wordmark small {
   display: block;
-  color: #7895a7;
+  color: var(--muted-foreground);
   font-size: 8px;
   letter-spacing: 1.3px;
   margin-top: 6px;
@@ -112,7 +107,7 @@
   display: block;
   font-size: 8px;
   letter-spacing: 2.6px;
-  color: #7793a5;
+  color: var(--muted-foreground);
   margin-bottom: 9px;
 }
 .expo-title h1 {
@@ -136,14 +131,14 @@
   min-width: 40px;
   min-height: 44px;
   background: transparent;
-  color: #a7bbca;
+  color: var(--muted-foreground);
   border: 0;
   font-size: 11px !important;
   border-radius: 9px;
 }
 .expo-icon-button:hover {
-  color: #fff;
-  background: #c2e5ff0c;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--muted) 5%, transparent);
 }
 .expo-scene-bar {
   display: flex;
@@ -156,7 +151,7 @@
   display: flex;
   gap: 9px;
   align-items: center;
-  color: #98aebf;
+  color: var(--muted-foreground);
   font-size: 10px;
   letter-spacing: 1px;
 }
@@ -164,7 +159,7 @@
 .expo-world-hint i {
   width: 5px;
   height: 5px;
-  background: #a7d8c8;
+  background: var(--chart-1);
   border-radius: 50%;
   flex: none;
 }
@@ -172,7 +167,7 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #b6c7d4;
+  color: var(--muted-foreground);
   min-height: 44px;
   padding: 0 12px;
   border: 1px solid transparent;
@@ -182,13 +177,13 @@
 }
 .expo-catalog-trigger:hover,
 .expo-catalog-trigger[aria-expanded='true'] {
-  background: #172532;
-  border-color: #354b5b;
+  background: var(--accent);
+  border-color: var(--border);
 }
 .expo-catalog-trigger kbd {
-  color: #8095a5;
+  color: var(--muted-foreground);
   font: inherit;
-  border: 1px solid #354554;
+  border: 1px solid var(--border);
   width: 18px;
   height: 19px;
   text-align: center;
@@ -202,11 +197,10 @@
   height: clamp(680px, 76vh, 940px);
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid #344653;
-  background: radial-gradient(ellipse at 63% 45%, #21394a 0%, #101e2c 45%, #080f1b 82%);
-  box-shadow:
-    0 35px 70px #0005,
-    inset 0 1px 0 #b5def218;
+  border: 1px solid var(--border);
+  background: radial-gradient(ellipse at 63% 45%, var(--card) 0%, var(--muted) 45%, var(--background) 82%);
+  box-shadow: 0 35px 70px var(--surface-shadow),
+    inset 0 1px 0 var(--glass-control-edge);
 }
 .expo-world-canvas {
   position: absolute;
@@ -221,9 +215,8 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, #08101bbb, transparent 28%, transparent 83%, #08101b55),
-    linear-gradient(0deg, #080f1bcc, transparent 22%, transparent 86%, #080f1b33);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--background) 73%, transparent), transparent 28%, transparent 83%, color-mix(in srgb, var(--background) 33%, transparent)),
+    linear-gradient(0deg, color-mix(in srgb, var(--background) 80%, transparent), transparent 22%, transparent 86%, color-mix(in srgb, var(--background) 20%, transparent));
 }
 .expo-world-guide {
   position: absolute;
@@ -236,7 +229,7 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #b1c7ce;
+  color: var(--muted-foreground);
   font-size: 8px;
   letter-spacing: 1.6px;
 }
@@ -246,15 +239,15 @@
   font-weight: 500;
   line-height: 1.5;
   margin-top: 22px;
-  text-shadow: 0 4px 20px #0008;
+  text-shadow: 0 4px 20px var(--surface-shadow);
 }
 .expo-world-guide h2 > span {
-  color: #b5dcd2;
+  color: var(--primary);
 }
 .expo-world-guide > p {
   font-size: 11px;
   line-height: 1.9;
-  color: #a5b9c6;
+  color: var(--muted-foreground);
   max-width: 204px;
   margin-top: 15px;
 }
@@ -263,13 +256,12 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  border: 1px solid #c5e9dd;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: linear-gradient(135deg, #d2ece3, #a0cfc4);
-  box-shadow:
-    0 6px 20px #0004,
-    inset 0 1px 0 #fff8;
-  color: #183d3d;
+  background: linear-gradient(135deg, var(--primary), var(--primary));
+  box-shadow: 0 6px 20px var(--surface-shadow),
+    inset 0 1px 0 var(--glass-control-edge);
+  color: var(--primary-foreground);
   min-height: 46px;
   padding: 0 17px;
   font-size: 12px !important;
@@ -280,7 +272,7 @@
 }
 .expo-start-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px #0005;
+  box-shadow: 0 10px 25px var(--surface-shadow);
 }
 .expo-zone-nav {
   margin-top: 0;
@@ -298,7 +290,7 @@
   gap: 12px;
   min-height: 48px;
   width: 100%;
-  color: #a2b9c7;
+  color: var(--muted-foreground);
   border: 1px solid transparent;
   padding: 0 11px;
   border-radius: 8px;
@@ -310,16 +302,16 @@
 }
 .expo-zone-selection {
   z-index: -1;
-  --selection-fill: #233e4de6;
-  --selection-shadow: inset 0 0 0 1px var(--zone-color), inset 0 1px 0 #fff2, 0 3px 12px -9px var(--zone-color);
+  --selection-fill: color-mix(in srgb, var(--accent) 90%, transparent);
+  --selection-shadow: inset 0 0 0 1px var(--zone-color), inset 0 1px 0 color-mix(in srgb, var(--accent) 13%, transparent), 0 3px 12px -9px var(--zone-color);
 }
 .expo-zone-nav > button > span {
-  color: #8499aa;
+  color: var(--muted-foreground);
   font-size: 9px;
   font-variant-numeric: tabular-nums;
 }
 .expo-zone-nav > button > svg:first-of-type {
-  color: var(--zone-color);
+  color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
 }
 .expo-zone-nav > button > strong {
   font-size: 12px;
@@ -327,13 +319,13 @@
   flex: 1;
 }
 .expo-zone-nav > button > svg:last-child {
-  color: #6d8c9c;
+  color: var(--muted-foreground);
 }
 .expo-zone-nav > button:hover,
 .expo-zone-nav > button[aria-pressed='true'] {
-  color: #e7f1f6;
-  background: #233e4d99;
-  border-color: #74959a42;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--accent) 60%, transparent);
+  border-color: color-mix(in srgb, var(--border) 26%, transparent);
 }
 .expo-zone-nav > button[aria-pressed='true'] { background: transparent; border-color: transparent; }
 .expo-world-coordinate {
@@ -345,13 +337,13 @@
   pointer-events: none;
 }
 .expo-world-coordinate > span {
-  color: #a4c2ce;
+  color: var(--muted-foreground);
   font-size: 8px;
   letter-spacing: 2px;
 }
 .expo-world-coordinate small {
   display: block;
-  color: #889da8;
+  color: var(--muted-foreground);
   font-size: 9px;
   letter-spacing: 1px;
   margin-top: 8px;
@@ -359,14 +351,13 @@
 .world-zone-label {
   min-width: 126px;
   text-align: left;
-  border: 1px solid #a6c2d344;
+  border: 1px solid color-mix(in srgb, var(--border) 27%, transparent);
   border-radius: 10px;
-  color: #ddeaf3;
+  color: var(--foreground);
   padding: 10px 14px;
-  background: linear-gradient(135deg, #234156ed, #101e2bf0);
-  box-shadow:
-    0 12px 28px #0006,
-    inset 0 1px 0 #c9e8f522;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--card) 93%, transparent), color-mix(in srgb, var(--card) 94%, transparent));
+  box-shadow: 0 12px 28px var(--surface-shadow),
+    inset 0 1px 0 var(--glass-control-edge);
   transition:
     border-color 0.2s,
     transform 0.2s;
@@ -382,7 +373,7 @@
   left: 50%;
 }
 .world-zone-label > span {
-  color: var(--zone-color);
+  color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
   display: block;
   font-size: 8px;
   letter-spacing: 1.5px;
@@ -399,7 +390,7 @@
 }
 .world-zone-label:hover,
 .world-zone-label.is-selected {
-  border-color: var(--zone-color);
+  border-color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
   transform: translateY(-3px);
 }
 .expo-zone-card,
@@ -409,19 +400,18 @@
   top: 86px;
   right: 26px;
   width: 292px;
-  border: 1px solid #809aab66;
+  border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
   border-radius: 26px;
-  color: #e5eef4;
+  color: var(--foreground);
   background: transparent;
-  box-shadow:
-    0 24px 55px #0006,
-    inset 0 1px 0 #b2d3e92b;
+  box-shadow: 0 24px 55px var(--surface-shadow),
+    inset 0 1px 0 var(--glass-control-edge);
 }
 .floating-panel-glass { --lg-blur: 16px; border-radius: inherit; width: 100%; height: 100%; }
 .floating-panel-content { padding: var(--expo-panel-padding); }
 .expo-zone-card {
   --expo-panel-padding: 19px 22px 22px;
-  border-top-color: var(--zone-color);
+  border-top-color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
 }
 .expo-zone-card-top {
   display: flex;
@@ -432,13 +422,13 @@
 .expo-zone-card-top > span {
   font-size: 8px;
   letter-spacing: 1.6px;
-  color: var(--zone-color);
+  color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
 }
 .expo-zone-card-top .expo-icon-button {
   min-width: 36px;
 }
 .expo-zone-card-icon {
-  color: var(--zone-color);
+  color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
   margin-top: 11px;
 }
 .expo-zone-card h2 {
@@ -456,7 +446,7 @@
 .expo-zone-card .floating-panel-content > p {
   font-size: 11px;
   line-height: 1.95;
-  color: #a6bdcc;
+  color: var(--muted-foreground);
   margin-top: 12px;
 }
 .expo-zone-tags {
@@ -470,10 +460,10 @@
   align-items: center;
   gap: 5px;
   font-size: 9px;
-  color: #b7c7d1;
+  color: var(--muted-foreground);
 }
 .expo-zone-tags svg {
-  color: var(--zone-color);
+  color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
 }
 .expo-zone-actions {
   display: flex;
@@ -487,16 +477,16 @@
   justify-content: space-between;
   padding: 0 15px;
   min-height: 44px;
-  border: 1px solid #a6c9d4;
+  border: 1px solid var(--border);
   border-radius: 7px;
-  color: #132d3a;
-  background: #c1dce3;
+  color: var(--primary-foreground);
+  background: var(--primary);
   font-size: 11px;
 }
 .expo-zone-actions > .expo-visit-button {
-  border-color: #607f905c;
-  background: #c3e5ed08;
-  color: #b4cfda;
+  border-color: color-mix(in srgb, var(--border) 36%, transparent);
+  background: color-mix(in srgb, var(--muted) 3%, transparent);
+  color: var(--primary);
   justify-content: center;
   gap: 8px;
 }
@@ -523,15 +513,15 @@
   padding: 11px;
   width: 150px;
   border-radius: 12px;
-  background: #122330ed;
-  border: 1px solid #6b8da044;
-  box-shadow: 0 10px 25px #0004;
+  background: color-mix(in srgb, var(--card) 93%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 27%, transparent);
+  box-shadow: 0 10px 25px var(--surface-shadow);
 }
 .expo-map-title {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: #9eb8c8;
+  color: var(--muted-foreground);
   font-size: 8px;
   letter-spacing: 0.9px;
 }
@@ -539,10 +529,9 @@
   position: relative;
   height: 96px;
   margin-top: 8px;
-  background:
-    linear-gradient(0deg, transparent 44%, #6d91921d 44%, #6d91921d 56%, transparent 56%),
-    linear-gradient(90deg, transparent 43%, #6d91921d 43%, #6d91921d 57%, transparent 57%);
-  border: 1px solid #617a8d2e;
+  background: linear-gradient(0deg, transparent 44%, color-mix(in srgb, var(--muted) 11%, transparent) 44%, color-mix(in srgb, var(--muted) 11%, transparent) 56%, transparent 56%),
+    linear-gradient(90deg, transparent 43%, color-mix(in srgb, var(--muted) 11%, transparent) 43%, color-mix(in srgb, var(--muted) 11%, transparent) 57%, transparent 57%);
+  border: 1px solid color-mix(in srgb, var(--border) 18%, transparent);
   border-radius: 5px;
 }
 .expo-map-grid > button {
@@ -550,10 +539,10 @@
   width: 28px;
   height: 24px;
   min-width: 28px;
-  border: 1px solid #708b965c;
+  border: 1px solid color-mix(in srgb, var(--border) 36%, transparent);
   border-radius: 4px;
-  background: #1c3341;
-  color: var(--zone-color);
+  background: var(--accent);
+  color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
   transform: translate(-50%, -50%);
   font-size: 8px;
   padding: 0;
@@ -565,16 +554,16 @@
 }
 .expo-map-grid > button:hover,
 .expo-map-grid > button.is-nearby {
-  border-color: var(--zone-color);
-  background: #2d495b;
+  border-color: color-mix(in srgb, var(--zone-color) var(--zone-tone), var(--foreground));
+  background: var(--accent);
 }
 .expo-map-player {
-  color: #edf8f2;
+  color: var(--muted-foreground);
   position: absolute;
   display: flex;
   pointer-events: none;
   z-index: 2;
-  filter: drop-shadow(0 0 4px #bdffdb);
+  filter: drop-shadow(0 0 4px var(--glass-control-edge));
 }
 .expo-world-dock {
   display: flex;
@@ -583,7 +572,7 @@
   padding: 6px;
   gap: 4px;
 }
-.expo-dock-glass { --lg-radius: 999px; --lg-blur: 5px; justify-self: center; box-shadow: 0 12px 35px #0005; }
+.expo-dock-glass { --lg-radius: 999px; --lg-blur: 5px; justify-self: center; box-shadow: 0 12px 35px var(--surface-shadow); }
 .expo-world-dock > button {
   display: flex;
   align-items: center;
@@ -591,7 +580,7 @@
   gap: 9px;
   min-height: 44px;
   padding: 0 16px;
-  color: #afc6d2;
+  color: var(--muted-foreground);
   border-radius: 999px;
   border: 1px solid transparent;
   background: transparent;
@@ -599,23 +588,23 @@
   white-space: nowrap;
 }
 .expo-world-dock > button[aria-pressed='true'] {
-  color: #d9eee8;
-  border-color: #90b4b544;
-  background: #426b7066;
-  box-shadow: 0 2px 5px #0002;
+  color: var(--muted-foreground);
+  border-color: color-mix(in srgb, var(--border) 27%, transparent);
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow: 0 2px 5px var(--surface-shadow);
 }
 .expo-world-dock > button:hover {
-  background: #7398a322;
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
   color: white;
 }
 .expo-dock-divider {
   width: 1px;
   height: 22px;
   margin-inline: 3px;
-  background: #647d8d44;
+  background: color-mix(in srgb, var(--muted) 27%, transparent);
 }
 .expo-world-hint {
-  color: #a0b8c6;
+  color: var(--muted-foreground);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -627,8 +616,8 @@
 }
 .expo-world-hint kbd {
   display: block;
-  color: #d3e1e8;
-  border: 1px solid #819baa66;
+  color: var(--foreground);
+  border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
   border-radius: 5px;
   padding: 7px 9px;
   font-size: 10px;
@@ -637,7 +626,7 @@
 .expo-world-hint > small {
   font-size: 8px;
   display: block;
-  color: #809aa9;
+  color: var(--muted-foreground);
   width: 100%;
 }
 .expo-drive-pad {
@@ -654,16 +643,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #708f9e80;
+  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
   border-radius: 8px;
-  background: #1d3444ef;
-  color: #c0d8e5;
+  background: color-mix(in srgb, var(--muted) 94%, transparent);
+  color: var(--foreground);
   touch-action: none;
   user-select: none;
 }
 .expo-drive-pad button:active {
-  color: #f7fff9;
-  background: #4d797b;
+  color: var(--foreground);
+  background: var(--accent);
 }
 .drive-forward {
   grid-column: 2;
@@ -699,7 +688,7 @@
 }
 .expo-sheet-heading span {
   display: block;
-  color: #86a4b7;
+  color: var(--muted-foreground);
   font-size: 8px;
   letter-spacing: 1.4px;
 }
@@ -720,21 +709,21 @@
 }
 .expo-sheet-counts strong {
   font-size: 23px;
-  color: #d0e2e8;
+  color: var(--foreground);
   font-weight: 450;
 }
 .expo-sheet-counts span {
   font-size: 8px;
-  color: #a0b3c2;
+  color: var(--muted-foreground);
 }
 .expo-search {
   display: flex;
   align-items: center;
   gap: 9px;
-  border: 1px solid #718c9e66;
+  border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
   border-radius: 7px;
-  background: #07152266;
-  color: #99b6c9;
+  background: color-mix(in srgb, var(--muted) 40%, transparent);
+  color: var(--muted-foreground);
   padding: 0 11px;
   min-height: 44px;
   flex: none;
@@ -742,7 +731,7 @@
 .expo-search input {
   background: transparent;
   border: 0;
-  color: #e1edf5;
+  color: var(--foreground);
   width: 100%;
   min-width: 0;
   font: inherit;
@@ -750,13 +739,13 @@
   padding: 0;
 }
 .expo-search input::placeholder {
-  color: #98aebd;
+  color: var(--muted-foreground);
 }
 .expo-search input:focus {
   outline: 0;
 }
 .expo-search:focus-within {
-  outline: 2px solid #b5e6dd;
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 .expo-catalog-list {
@@ -764,7 +753,7 @@
   min-height: 80px;
   overflow-y: auto;
   margin-top: 15px;
-  scrollbar-color: #688799 #122531;
+  scrollbar-color: var(--border) var(--border);
   scrollbar-width: thin;
 }
 .expo-catalog-row {
@@ -774,10 +763,10 @@
   gap: 10px;
   min-height: 64px;
   padding: 12px 5px;
-  border-bottom: 1px solid #789aaf26;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 15%, transparent);
 }
 .expo-catalog-row:hover {
-  background: #365d762e;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
 }
 .expo-catalog-row > div {
   min-width: 0;
@@ -790,7 +779,7 @@
 }
 .expo-catalog-row small {
   font-size: 9px;
-  color: #a0b5c2;
+  color: var(--muted-foreground);
   display: block;
   margin-top: 6px;
 }
@@ -800,36 +789,36 @@
   flex: none;
   padding: 4px 6px;
   border-radius: 4px;
-  border: 1px solid #7799aa44;
-  background: #42667930;
-  color: #b1d2e7;
+  border: 1px solid color-mix(in srgb, var(--border) 27%, transparent);
+  background: color-mix(in srgb, var(--accent) 19%, transparent);
+  color: var(--primary);
 }
 .expo-scope.scope-series {
-  color: #a5d7c8;
-  background: #3b716730;
+  color: var(--success);
+  background: color-mix(in srgb, var(--success-surface) 19%, transparent);
 }
 .expo-scope.scope-pending {
-  color: #dfc59b;
-  background: #716a4330;
+  color: var(--warning);
+  background: color-mix(in srgb, var(--warning-surface) 19%, transparent);
 }
 .expo-catalog-state {
   text-align: center;
   padding: 25px 10px;
-  color: #acbdc9;
+  color: var(--muted-foreground);
   font-size: 11px;
   line-height: 1.9;
 }
 .expo-catalog-state button {
   min-height: 44px;
   margin-top: 12px;
-  background: #315266;
-  color: #e2f0f7;
+  background: var(--accent);
+  color: var(--muted-foreground);
   padding: 0 16px;
-  border: 1px solid #779bae;
+  border: 1px solid var(--border);
   border-radius: 7px;
 }
 .expo-catalog-note {
-  color: #8fa9ba;
+  color: var(--muted-foreground);
   font-size: 9px;
   line-height: 1.9;
   margin-top: 14px !important;
@@ -838,7 +827,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #c3ddd9 !important;
+  color: var(--primary) !important;
   padding-top: 17px;
   min-height: 44px;
   font-size: 11px;
@@ -852,9 +841,9 @@
   justify-content: center;
   gap: 11px;
   font-size: 12px;
-  color: #a7bfce;
+  color: var(--muted-foreground);
   pointer-events: none;
-  background: #0b172055;
+  background: color-mix(in srgb, var(--muted) 33%, transparent);
 }
 .world-loading {
   z-index: 3;
@@ -887,7 +876,7 @@
 }
 .expo-strip-label {
   display: block;
-  color: #869eae;
+  color: var(--muted-foreground);
   font-size: 8px;
   letter-spacing: 1.8px;
   margin-bottom: 11px;
@@ -912,15 +901,15 @@
   font-weight: 400;
   margin: 0;
   font-variant-numeric: tabular-nums;
-  color: #c0d9dd;
+  color: var(--muted-foreground);
 }
 .expo-evidence-strip dt {
   font-size: 9px;
-  color: #8da7b6;
+  color: var(--muted-foreground);
   white-space: nowrap;
 }
 .expo-evidence-strip > p {
-  color: #98afbd;
+  color: var(--muted-foreground);
   font-size: 10px;
   line-height: 1.9;
   max-width: 300px;
@@ -931,10 +920,10 @@
   align-items: center;
   gap: 14px 28px;
   padding: 15px 10px;
-  border-top: 1px solid #2f4351;
+  border-top: 1px solid var(--border);
 }
 .expo-direct-links > span {
-  color: #7897aa;
+  color: var(--muted-foreground);
   font-size: 9px;
   letter-spacing: 1px;
   margin-right: auto;
@@ -944,13 +933,13 @@
   align-items: center;
   gap: 9px;
   min-height: 44px;
-  color: #b3c8d5;
+  color: var(--muted-foreground);
   border: 0;
   background: transparent;
   font-size: 11px;
 }
 .expo-direct-links button:hover {
-  color: #e0f6ed;
+  color: var(--primary);
 }
 .expo-footer {
   display: flex;
@@ -958,7 +947,7 @@
   flex-wrap: wrap;
   gap: 15px;
   padding: 28px 10px;
-  color: #7895a6;
+  color: var(--muted-foreground);
   font-size: 8px;
   letter-spacing: 1px;
 }
@@ -970,7 +959,7 @@
 .expo-footer i {
   width: 2px;
   height: 2px;
-  background: #6e8a99;
+  background: var(--muted);
 }
 .expo-notice {
   position: fixed;
@@ -980,10 +969,10 @@
   max-width: 85%;
   padding: 15px 20px;
   border-radius: 10px;
-  border: 1px solid #83a7ba;
-  background: #193344;
-  color: #e0f1f8;
-  box-shadow: 0 12px 30px #0006;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  box-shadow: 0 12px 30px var(--surface-shadow);
   z-index: 60;
   font-size: 12px;
 }
@@ -1217,8 +1206,7 @@
     border-radius: 15px;
   }
   .expo-world-vignette {
-    background:
-      linear-gradient(0deg, #080f1bcc, transparent 40%), linear-gradient(180deg, #08111bdd, transparent 37%);
+    background: linear-gradient(0deg, color-mix(in srgb, var(--background) 80%, transparent), transparent 40%), linear-gradient(180deg, color-mix(in srgb, var(--background) 87%, transparent), transparent 37%);
   }
   .expo-world-canvas {
     top: 245px;
@@ -1271,8 +1259,8 @@
     min-height: 44px;
     padding: 0 8px;
     gap: 8px;
-    background: #1c2c39aa;
-    border-color: #63849922;
+    background: color-mix(in srgb, var(--card) 67%, transparent);
+    border-color: color-mix(in srgb, var(--border) 13%, transparent);
   }
   .expo-zone-nav > button > strong {
     font-size: 10px;
@@ -1480,7 +1468,7 @@
   .expo-zone-card,
   .expo-catalog-sheet,
   .expo-world-dock {
-    background: #152a38;
+    background: var(--card);
     backdrop-filter: none;
   }
 }
@@ -1488,10 +1476,22 @@
   .expo-zone-card,
   .expo-catalog-sheet,
   .expo-world-dock {
-    background: #152a38;
+    background: var(--card);
   }
 }
 @media (forced-colors: active) {
   .expo-zone-nav > button[aria-pressed='true'] { background: Highlight; color: HighlightText; border-color: Highlight; }
   .expo-zone-nav > button > svg { color: inherit; }
 }
+
+/* Keep every tool reachable on narrow screens after adding the global theme control. */
+@media (max-width: 760px) {
+  .expo-header { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-block: 18px; }
+  .expo-brand { grid-column: 1; grid-row: 1; }
+  .expo-header-glass { grid-column: 1; grid-row: 2; justify-self: start; max-width: 100%; }
+  .expo-header-tools { gap: 4px; flex-wrap: wrap; }
+  .expo-title { grid-column: 1; grid-row: 3; padding-bottom: 0; text-align: left; }
+}
+
+.expo-title > span, .expo-guide-eyebrow { color: var(--wheat); }
+.expo-header { border-bottom-color: color-mix(in srgb, var(--wheat) 35%, var(--border)); }

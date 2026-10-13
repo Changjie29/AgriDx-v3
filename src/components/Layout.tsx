@@ -1,7 +1,7 @@
 import { publicAsset } from '@/lib/public-asset';
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, NavLink } from 'react-router-dom';
-import { Menu, X, MessageSquare, Sun, Moon, Globe } from 'lucide-react';
+import { Menu, X, MessageSquare, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
 import { LiquidSelection } from '@/components/ui/liquid-selection';
@@ -13,6 +13,8 @@ import { setUiVersion, useUiVersion } from '@/hooks/useUiVersion';
 import VersionSwitch from '@/components/VersionSwitch';
 import { preloadPage } from '@/lib/page-loaders';
 import { NewVersionShell } from '@/components/NewVersionShell';
+import { useTheme } from '@/hooks/useTheme';
+import ThemeSwitch from '@/components/ThemeSwitch';
 
 const NAV_ZH = [
   { label: '首页', path: '/' },
@@ -29,13 +31,7 @@ const NAV_EN = [
 
 export function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    let saved: string | null = null;
-    try { saved = localStorage.getItem('srt-theme'); } catch { /* Browser privacy settings may disable storage. */ }
-    if (saved === 'dark') return 'dark';
-    if (saved === 'light') return 'light';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+  const theme = useTheme();
   const lang = useLang();
   const uiVersion = useUiVersion();
   const location = useLocation();
@@ -46,14 +42,6 @@ export function Layout() {
     setMobileOpen(false);
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname]);
-
-  useEffect(() => {
-    document.documentElement.classList.remove('theme-light', 'theme-dark');
-    document.documentElement.classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
-    // 材质与院徽使用 html.dark 切换暗色显示。
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    try { localStorage.setItem('srt-theme', theme); } catch { /* Theme selection still works in this tab. */ }
-  }, [theme]);
 
   useEffect(() => {
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -150,15 +138,7 @@ export function Layout() {
           {/* 右侧工具按钮（主题 + 语言 + 移动端菜单） */}
           <div className="site-tools flex items-center gap-2">
             <VersionSwitch onChange={() => navigate('/')} />
-            <button
-              type="button"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="site-tool-button lg-nav-btn press-control flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground"
-              aria-label={lang === 'zh' ? '切换主题' : 'Switch theme'}
-              title={theme === 'dark' ? (lang === 'zh' ? '切到亮色' : 'Use light theme') : (lang === 'zh' ? '切到暗色' : 'Use dark theme')}
-            >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
+            <ThemeSwitch className="site-tool-button lg-nav-btn" />
             <button
               type="button"
               onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}

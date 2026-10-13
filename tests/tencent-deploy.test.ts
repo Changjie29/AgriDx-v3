@@ -36,6 +36,7 @@ function fixture(t: { after: (cleanup: () => void) => void }, options: {
   failure?: 'preflight' | 'build' | 'stage' | 'production' | 'nginx';
   previousDropin?: boolean;
   blockedNpmCache?: boolean;
+  expandedArchive?: boolean;
 } = {}) {
   const temporaryRoot = path.resolve(os.tmpdir());
   const directory = mkdtempSync(path.join(temporaryRoot, 'agridx-tencent-deploy-'));
@@ -95,7 +96,8 @@ function run(command, rest, extra = {}) {
   process.exit(result.status === null ? 1 : result.status);
 }
 function health(version) {
-  console.log(JSON.stringify({ ok: true, version, knowledge: { chunks: 221, archivedEntries: 212 } }));
+  const expanded = version !== '3.0.0' && process.env.AGRIDX_FIXTURE_EXPANDED === '1';
+  console.log(JSON.stringify({ ok: true, version, knowledge: { chunks: expanded ? 1222 : 221, archivedEntries: expanded ? 1213 : 212 } }));
 }
 if (name === 'id') {
   if (args.join(' ') !== '-u') process.exit(90);
@@ -149,7 +151,7 @@ if (name === 'id') {
     else if (failure === 'nginx') console.log('<title>stale page</title>');
     else {
       const resource = url === 'http://127.0.0.1/' ? 'index.html' : url.slice('http://127.0.0.1/'.length);
-      if (!['index.html', 'assets/fixture.js'].includes(resource)) process.exit(97);
+      if (!['index.html', 'assets/fixture.js', 'theme-init.js'].includes(resource)) process.exit(97);
       process.stdout.write(fs.readFileSync(path.join(current, 'dist', resource)));
     }
     process.exit(0);
@@ -172,6 +174,10 @@ if (name === 'id') {
     fs.mkdirSync(path.join(release, 'server'), { recursive: true });
     fs.mkdirSync(path.join(release, 'public', 'models'), { recursive: true });
     fs.writeFileSync(path.join(release, 'package.json'), JSON.stringify({ version: '3.1.0' }));
+    const archive = path.join(release, '知识库', '整理后的知识库', '农用拖拉机知识库');
+    fs.mkdirSync(archive, { recursive: true });
+    const entries = process.env.AGRIDX_FIXTURE_EXPANDED === '1' ? 1213 : 212;
+    fs.writeFileSync(path.join(archive, 'entries.jsonl'), Array.from({ length: entries }, (_, i) => JSON.stringify({ id: i })).join('\\n'));
     fs.writeFileSync(path.join(release, 'server.ts'), '// fixture application');
     fs.writeFileSync(path.join(release, 'public', 'models', 'tractor-detailed-v1.glb'), 'fixture model');
   } else if (args[0] === '-C' && args[2] === 'checkout') {
@@ -195,6 +201,7 @@ if (name === 'id') {
     fs.mkdirSync(path.join(process.cwd(), 'dist', 'assets'), { recursive: true });
     fs.writeFileSync(path.join(process.cwd(), 'dist', 'index.html'), '<title>built fixture</title><script src="/assets/fixture.js"></script>');
     fs.writeFileSync(path.join(process.cwd(), 'dist', 'assets', 'fixture.js'), '// fixture application');
+    fs.writeFileSync(path.join(process.cwd(), 'dist', 'theme-init.js'), '// theme bootstrap');
   } else if (!['ci', 'prune'].includes(args[0])) process.exit(99);
 } else if (name === 'install') {
   const operands = [];
@@ -235,6 +242,7 @@ if (name === 'id') {
     AGRIDX_FIXTURE_ROOT: directory, AGRIDX_FIXTURE_FAILURE: options.failure ?? '',
     AGRIDX_FIXTURE_STAGE_PID: String(process.pid),
     AGRIDX_FIXTURE_BLOCKED_CACHE: options.blockedNpmCache ? '1' : '',
+    AGRIDX_FIXTURE_EXPANDED: options.expandedArchive ? '1' : '',
     npm_config_cache: legacyCache, NPM_CONFIG_CACHE: legacyCache,
   };
   // These fake commands make no HTTP calls; an inherited project test loader is
@@ -430,4 +438,14 @@ test('腾讯正式启动命令从 current 软链接工作目录启动真实 Type
     '知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl'), 'utf8')
     .trim().split(/\r?\n/).length;
   assert.deepEqual(status.knowledge, { chunks: archivedEntries + 9, archivedEntries });
+});
+
+
+test('腾讯旧212条版本可更新到1213条，暂存和正式服务数量一致且主题初始化脚本经过Nginx核对', { skip: unixOnly }, t => {
+  const context = fixture(t, { expandedArchive: true });
+  const result = context.execute();
+  assert.equal(result.status, 0, result.stderr || result.error?.message);
+  assert.match(result.stdout, /chunks=1222 archivedEntries=1213/);
+  assert.ok(context.calls().some(call => call.command === 'curl' && call.args.at(-1) === 'http://127.0.0.1/theme-init.js'));
+  context.assertPreserved();
 });

@@ -64,14 +64,21 @@ validate_health() {
       try {
         const value = JSON.parse(body);
         const expected = process.argv[1];
+        const chunks = value.knowledge?.chunks;
+        const entries = value.knowledge?.archivedEntries;
+        const expectedChunks = Number(process.argv[2] || 0);
+        const expectedEntries = Number(process.argv[3] || 0);
         if (value.ok !== true || typeof value.version !== "string" ||
             !/^\d+\.\d+\.\d+$/.test(value.version) ||
             (expected && value.version !== expected) ||
-            value.knowledge?.chunks !== 221 || value.knowledge?.archivedEntries !== 212) process.exit(1);
-        console.log(`version=${value.version} chunks=221 archivedEntries=212`);
+            !Number.isSafeInteger(chunks) || !Number.isSafeInteger(entries) ||
+            entries <= 0 || chunks < entries ||
+            (expectedChunks && chunks !== expectedChunks) ||
+            (expectedEntries && entries !== expectedEntries)) process.exit(1);
+        console.log(`version=${value.version} chunks=${chunks} archivedEntries=${entries}`);
       } catch { process.exit(1); }
     });
-  ' "${1:-}"
+  ' "${1:-}" "${2:-0}" "${3:-0}"
 }
 
 check_existing() {
@@ -127,6 +134,9 @@ check_existing() {
     fail '现有8787健康检查未通过，停止更新以保留当前服务。'
   ORIGINAL_VERSION=${BASELINE_HEALTH%% *}
   ORIGINAL_VERSION=${ORIGINAL_VERSION#version=}
+  ORIGINAL_CHUNKS=${BASELINE_HEALTH#*chunks=}
+  ORIGINAL_CHUNKS=${ORIGINAL_CHUNKS%% *}
+  ORIGINAL_ENTRIES=${BASELINE_HEALTH##*archivedEntries=}
   UNIT_SIGNATURE=$(unit_signature)
   info "$BASELINE_HEALTH"
 }
@@ -182,7 +192,7 @@ finish() {
     fi
     restore_current || restored=false
     systemctl daemon-reload || restored=false
-    if ! systemctl restart "$SERVICE" || ! wait_health "$APP_PORT" "$ORIGINAL_VERSION" ''; then
+    if ! systemctl restart "$SERVICE" || ! wait_health "$APP_PORT" "$ORIGINAL_VERSION" '' "$ORIGINAL_CHUNKS" "$ORIGINAL_ENTRIES"; then
       restored=false
     fi
     [[ "$(readlink -f "$CURRENT")" == "$ORIGINAL_RELEASE" &&
@@ -215,13 +225,13 @@ wait_health() {
       if nsenter --target "$namespace_pid" --net curl --noproxy 127.0.0.1 \
           --fail --silent --max-time 2 "http://127.0.0.1:$port/api/health" \
           >"$WORK_DIR/health.json" 2>/dev/null &&
-          validate_health "$expected" <"$WORK_DIR/health.json" >"$WORK_DIR/health-summary"; then
+          validate_health "$expected" "${4:-0}" "${5:-0}" <"$WORK_DIR/health.json" >"$WORK_DIR/health-summary"; then
         cat "$WORK_DIR/health-summary"
         return 0
       fi
     elif curl --noproxy 127.0.0.1 --fail --silent --max-time 2 \
         "http://127.0.0.1:$port/api/health" >"$WORK_DIR/health.json" 2>/dev/null &&
-        validate_health "$expected" <"$WORK_DIR/health.json" >"$WORK_DIR/health-summary"; then
+        validate_health "$expected" "${4:-0}" "${5:-0}" <"$WORK_DIR/health.json" >"$WORK_DIR/health-summary"; then
       cat "$WORK_DIR/health-summary"
       return 0
     fi
@@ -245,8 +255,13 @@ check_nginx_release() {
   curl --noproxy 127.0.0.1 --fail --silent --show-error --max-time 5 \
     --header "Host: $NGINX_HOST" "http://127.0.0.1$script_path" >"$WORK_DIR/nginx-script.js" || return 1
   cmp -s "$RELEASE/dist$script_path" "$WORK_DIR/nginx-script.js" || return 1
+  if [[ -s "$RELEASE/dist/theme-init.js" ]]; then
+    curl --noproxy 127.0.0.1 --fail --silent --show-error --max-time 5 \
+      --header "Host: $NGINX_HOST" http://127.0.0.1/theme-init.js >"$WORK_DIR/nginx-theme.js" || return 1
+    cmp -s "$RELEASE/dist/theme-init.js" "$WORK_DIR/nginx-theme.js" || return 1
+  fi
   curl --noproxy 127.0.0.1 --fail --silent --show-error --max-time 5 \
-    --header "Host: $NGINX_HOST" http://127.0.0.1/api/health | validate_health "$EXPECTED_VERSION"
+    --header "Host: $NGINX_HOST" http://127.0.0.1/api/health | validate_health "$EXPECTED_VERSION" "$EXPECTED_CHUNKS" "$EXPECTED_ENTRIES"
 }
 
 info "准备独立版本目录：$RELEASE；现有服务继续运行。"
@@ -262,6 +277,13 @@ EXPECTED_VERSION=$(as_app "$NODE_BIN" -e '
   process.stdout.write(value);
 ' "$RELEASE/package.json")
 [[ -n "$EXPECTED_VERSION" ]] || fail '源码中没有有效的项目版本号。'
+EXPECTED_ENTRIES=$(as_app "$NODE_BIN" -e '
+  const fs = require("node:fs");
+  const lines = fs.readFileSync(process.argv[1], "utf8").split(/\r?\n/).filter(line => line.trim());
+  lines.forEach(line => JSON.parse(line));
+  if (!lines.length) process.exit(1);
+  process.stdout.write(String(lines.length));
+' "$RELEASE/知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl")
 
 # Existing dotenv files may hold credentials. Copy without reading or logging them.
 # Unit EnvironmentFile paths and contents are not touched or used during staging.
@@ -298,11 +320,12 @@ systemd-run --quiet --unit="$STAGE_UNIT" --property=Type=exec \
   "$NODE_BIN" --import tsx "$RELEASE/server.ts"
 STAGE_PID=$(systemctl show "$STAGE_UNIT" --property=MainPID --value)
 [[ "$STAGE_PID" =~ ^[1-9][0-9]*$ ]] || fail '临时服务未启动。'
-wait_health "$STAGE_PORT" "$EXPECTED_VERSION" "$STAGE_PID" ||
+wait_health "$STAGE_PORT" "$EXPECTED_VERSION" "$STAGE_PID" 0 "$EXPECTED_ENTRIES" ||
   fail '独立版本健康检查未通过；current 和原服务未切换。'
 nsenter --target "$STAGE_PID" --net curl --noproxy 127.0.0.1 --fail \
   --silent --show-error --max-time 5 "http://127.0.0.1:$STAGE_PORT/" >/dev/null ||
   fail '独立版本静态网页检查未通过。'
+EXPECTED_CHUNKS=$("$NODE_BIN" -e 'process.stdout.write(String(JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).knowledge.chunks))' "$WORK_DIR/health.json")
 stop_stage
 
 [[ "$(readlink "$CURRENT")" == "$ORIGINAL_TARGET" &&
@@ -331,7 +354,7 @@ systemctl daemon-reload
 ln -s "$RELEASE" "$WORK_DIR/new-current"
 mv -Tf "$WORK_DIR/new-current" "$CURRENT"
 systemctl restart "$SERVICE"
-wait_health "$APP_PORT" "$EXPECTED_VERSION" '' || fail '正式服务健康检查未通过。'
+wait_health "$APP_PORT" "$EXPECTED_VERSION" '' "$EXPECTED_CHUNKS" "$EXPECTED_ENTRIES" || fail '正式服务健康检查未通过。'
 check_nginx_release || fail 'Nginx 网页、脚本或 API 检查未通过。'
 [[ "$(service_property ActiveState)" == active && "$(readlink -f "$CURRENT")" == "$RELEASE" ]] ||
   fail '正式服务或 current 状态不匹配。'
