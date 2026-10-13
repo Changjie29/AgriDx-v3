@@ -4,6 +4,7 @@ import { getKnowledgeCatalog, loadKnowledgeCatalog } from '../../server/knowledg
 import { createDiagnosticService } from '../../server/diagnosis/service';
 import { DiagnosticInputError, parseDiagnosticRequest } from '../../server/diagnosis/request';
 import type { CatalogFilters } from '../../shared/knowledge-catalog';
+import { recordQuestion } from './telemetry';
 
 let ready = false;
 const diagnose = createDiagnosticService({
@@ -50,7 +51,18 @@ export async function previewFetch(input: string, options: RequestInit = {}): Pr
       let body: unknown;
       try { body = JSON.parse(String(options.body ?? '')); }
       catch { return json({ error: '请求体必须为有效的 JSON 对象', code: 'bad_request' }, 400); }
-      response = json(await diagnose(parseDiagnosticRequest(body)));
+      const request = parseDiagnosticRequest(body);
+      const started = performance.now();
+      const question = { question: request.history.at(-1)!.content, machineType: request.machineType, brand: request.brand, model: request.model };
+      try {
+        const result = await diagnose(request);
+        options.signal?.throwIfAborted();
+        recordQuestion({ ...question, outcome: 'success', knowledgeChunks: result.knowledgeChunks, latencyMs: performance.now() - started });
+        response = json(result);
+      } catch (error) {
+        recordQuestion({ ...question, outcome: options.signal?.aborted ? 'cancelled' : 'error', knowledgeChunks: 0, latencyMs: performance.now() - started });
+        throw error;
+      }
     } else {
       return json({ error: '接口不存在', code: 'not_found' }, 404);
     }

@@ -1,11 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useLang } from '../hooks/useLang';
 import { version } from '../../package.json';
+import { recordVisit } from './telemetry';
 import './preview.css';
 
 export default function PreviewStatus() {
   const lang = useLang();
+  const { pathname } = useLocation();
+  const lastVisit = useRef('');
   const [updateReady, setUpdateReady] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  useEffect(() => {
+    if (lastVisit.current === pathname) return;
+    lastVisit.current = pathname;
+    recordVisit(pathname);
+  }, [pathname]);
   useEffect(() => {
     const controller = new AbortController();
     let checking = false;
@@ -28,8 +38,12 @@ export default function PreviewStatus() {
       document.removeEventListener('visibilitychange', check);
     };
   }, []);
+  if (pathname === '/developer') return null;
   return <aside className="dev-preview-status" aria-label={lang === 'zh' ? '开发预览状态' : 'Development preview status'}>
     <span>{lang === 'zh' ? '开发预览 · 本地知识检索' : 'Dev preview · local knowledge'} · {version}</span>
+    <Link to="/developer">{lang === 'zh' ? '开发控制台' : 'Developer console'}</Link>
+    <button type="button" className="preview-privacy-toggle" aria-expanded={showPrivacy} onClick={() => setShowPrivacy(v => !v)} aria-label={lang === 'zh' ? '使用记录说明' : 'Usage records'}>ⓘ</button>
+    {showPrivacy && <p className="preview-privacy">{lang === 'zh' ? '开发站记录匿名访问、提问及诊断结果，保存30天，仅仓库管理员可查看。启用“请勿跟踪”时不采集。' : 'Anonymous visits, questions and diagnosis outcomes are stored for 30 days and visible only to repository administrators. Do Not Track is respected.'}</p>}
     {updateReady && <button type="button" onClick={() => window.location.reload()}>{lang === 'zh' ? '新版已就绪，刷新' : 'Update ready · reload'}</button>}
   </aside>;
 }
