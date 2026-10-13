@@ -1,6 +1,8 @@
 # 耕知·耘诊 · 农业机械智能诊断平台
 
-当前项目版本：**3.6.0**。开发版与正式版共用全局深浅主题，首次跟随系统；导航中的主题按钮可手动切换，跨页面、新旧版、刷新与同源标签页保持一致。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+当前项目版本：**3.4.4**。开发版与正式版共用全局深浅主题，首次跟随系统；导航中的主题按钮可手动切换，跨页面、新旧版、刷新与同源标签页保持一致。开发网关支持首屏主题初始化脚本，避免最新主干页面及控制台因脚本被拦截而空白。v3初始版本同步自AgriDx-v2的2.4.5已提交基线，继续采用现有React/Vite/Express架构。每次更新的版本、改动和验证结果见[版本日志](CHANGELOG.md)。网站页脚展示构建版本，`/api/health`返回运行服务版本；线上是否更新以部署及实际验收为准。
+
+按2026-10-13最新约定，两批累计800条知识扩充合并为3.3.0，功能整合由原3.5.0调整为3.4.0；后续主题修复与开发网关修复由原3.5.1、3.5.2对应协调为3.4.1、3.4.2。本阶段后续更新按3.4.x补丁递进，项目版本不超过**3.4.9**；历史验证输出保留当时编号。
 
 v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指南](CONTRIBUTING.md)。初始化来源为v2提交[`38f5bbb`](https://github.com/Changjie29/AgriDx-v2/commit/38f5bbba0f484505525a69ebbe394cc6c8601ee0)，将v3原基线之后的液态玻璃界面改动与最终验证记录同步到本仓库。保留v2的历史、资源署名和知识来源；未合并的[PR #1](https://github.com/Changjie29/AgriDx-v3/pull/1)独立改动不纳入本次初始化。
 
@@ -20,7 +22,7 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 资料概览与设备目录读取 `/api/knowledge/catalog`，可按品牌 / 型号搜索并跳转；加载或失败时不填入推测数量，保留型号 / 系列 / 待核实的范围。模型和园区均为结构示意。GitHub 案例、分层可编辑 SVG、预览与验证见 [三维园区设计说明](docs/design/2026-10-11-spatial-campus/README.md)；此前 3.0.2 大屏设计保留在 [历史设计记录](docs/design/2026-10-11-digital-exhibition/README.md)。本轮保存到 GitHub PR，未部署服务器。
 
-新版与旧版共用基于 [rdev/liquid-glass-react](https://github.com/rdev/liquid-glass-react) 的实时光学层：玻璃直接采样背后的页面和 WebGL 场景，按实际圆角生成边缘折射，鼠标、触摸和键盘按压改变镜面弯曲并回弹。覆盖旧版导航、版本胶囊、模型入口与控制栏，以及新版顶部工具、导览、底部控制栏、展区说明和设备目录；文字与操作区域独立保持清晰。Chromium 桌面及触摸设备启用实时折射；Safari、Firefox及减少动态时采用雾面，减少透明度、高对比或不支持背景滤镜时使用实色。验证与真实三维录屏见 [两版实时液态玻璃](docs/design/2026-10-13-live-liquid-glass/README.md)，此前旧版实现保留在 [历史优化记录](docs/design/2026-10-12-classic-liquid-glass/README.md)。
+新版与旧版共用 **Material You 风格液态玻璃**：采用 [Google Material Color Utilities](https://github.com/material-foundation/material-color-utilities) 生成的浅/深色语义色阶，使用柔和选中容器、圆润控件和有边界的涟漪反馈。项目内原生 SVG 光学层直接采样页面与 WebGL 背景，保留按压折射与回弹，文字独立保持清晰；已移除原 liquid-glass-react 运行依赖。Chromium 使用实时折射，其他浏览器及减少动态采用雾面，减少透明度/高对比采用实色；配色工具只在维护时运行。此前实现与三维光学验证保留在[历史实时玻璃记录](docs/design/2026-10-13-live-liquid-glass/README.md)，当前改动见[Material You 设计记录](docs/design/2026-10-13-material-you-glass/README.md)。
 
 首屏不再等待外部字体服务，导航和功能入口先显示，三维视图随后按需加载。二级页面在意图明确时预热，内容加载期间保留导航；短期复用已验证的目录数据，资料展开或答复显示时才加载正文解析器。性能对比和线上 CDN 排查见 [加载与导航优化记录](docs/performance/2026-10-12-loading-navigation.md)。
 
@@ -238,7 +240,7 @@ AgriDx-v3/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "3.5.0", "timestamp": "...", "knowledge": { "chunks": 1222, "archivedEntries": 1213 } }
+{ "ok": true, "version": "3.4.3", "timestamp": "...", "knowledge": { "chunks": 1222, "archivedEntries": 1213 } }
 ```
 
 ### `POST /api/chat`

@@ -13,7 +13,7 @@ function getMode(): GlassMode {
   const backdrop = CSS.supports('backdrop-filter', 'blur(1px)') || CSS.supports('-webkit-backdrop-filter', 'blur(1px)');
   if (!backdrop || reducedTransparency || forcedColors || document.documentElement.classList.contains('glass-off')) return 'solid';
   if (document.documentElement.classList.contains('lg-blur-only')) return 'blur';
-  // The upstream SVG displacement is a Chromium enhancement; other engines use frosting.
+  // Native SVG backdrop displacement is a Chromium enhancement; other engines use frosting.
   const chromium = /Chrome|Chromium|Edg\//.test(navigator.userAgent) && !/iPhone|iPad|iPod/.test(navigator.userAgent);
   return chromium && !reducedMotion ? 'refract' : 'blur';
 }
