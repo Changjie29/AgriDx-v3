@@ -14,6 +14,13 @@ declare module '*.glb' {
 export {};
 
 declare global {
+  interface Window {
+    agridxTheme: {
+      getSnapshot: () => 'light' | 'dark';
+      subscribe: (listener: () => void) => () => void;
+      setTheme: (theme: 'light' | 'dark') => void;
+    };
+  }
   const __AGRIDX_DEV_PREVIEW__: boolean;
   const __AGRIDX_PREVIEW_RELEASE__: { version: string; commit: string; branch: string; repository: string; builtAt: string };
 }

@@ -1,57 +1,5 @@
 /* Gengzhi · Yunzhen: forest accent, neutral surfaces, restrained glass controls.
    The web glass is an approximation, not Apple's native Liquid Glass renderer. */
-:root, :root.theme-light {
-  --agri-forest: #20553f;
-  --agri-leaf: #376b52;
-  --agri-paper: #f8faf8;
-  --agri-surface: #eef3ef;
-  --agri-raised: #ffffff;
-  --agri-line: #dce5de;
-  --background: #f8faf8;
-  --foreground: #1d2c23;
-  --muted-foreground: #58675f;
-  --primary: #20553f;
-  --primary-foreground: #ffffff;
-  --accent: #e8f0ea;
-  --accent-foreground: #20553f;
-  --card: #ffffff;
-  --card-foreground: #1d2c23;
-  --border: #dce5de;
-  --input: #c8d6cc;
-  --secondary: #e8f0ea;
-  --secondary-foreground: #20553f;
-  --wheat: #376b52;
-  --wheat-foreground: #20553f;
-  --glass-control-tint: rgba(250, 253, 250, .56);
-  --glass-control-edge: rgba(255, 255, 255, .8);
-  --glass-press-light: rgba(255, 255, 255, .75);
-}
-:root.theme-dark {
-  --agri-forest: #a0d6b4;
-  --agri-leaf: #a0d6b4;
-  --agri-paper: #121c17;
-  --agri-surface: #1b2921;
-  --agri-raised: #203027;
-  --agri-line: #34463b;
-  --background: #121c17;
-  --foreground: #edf4ef;
-  --muted-foreground: #b0bfb5;
-  --primary: #a0d6b4;
-  --primary-foreground: #10291b;
-  --accent: #293e31;
-  --accent-foreground: #c0e6ce;
-  --card: #203027;
-  --card-foreground: #edf4ef;
-  --border: #34463b;
-  --input: #4c6555;
-  --secondary: #293e31;
-  --secondary-foreground: #c0e6ce;
-  --wheat: #a0d6b4;
-  --wheat-foreground: #c0e6ce;
-  --glass-control-tint: rgba(28, 43, 34, .64);
-  --glass-control-edge: rgba(220, 247, 230, .16);
-  --glass-press-light: rgba(208, 245, 219, .18);
-}
 body { font-family: var(--font-sans); }
 button, a { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outline-offset: 5px; }
@@ -124,7 +72,7 @@ html.dark .glass-hero { background: radial-gradient(ellipse at 88% 28%, rgba(86,
 .hero-text-link svg { transition: transform .2s; }
 .hero-text-link:hover svg { transform: translateX(4px); }
 .hero-model-visual { min-width: 0; margin: 0; padding: 12px; background: linear-gradient(145deg, #d8e8dc, #eef4ef 48%, #c8dacd); border: 1px solid rgba(255,255,255,.8); border-radius: 36px; box-shadow: 0 24px 58px -36px rgba(24,67,41,.32), inset 0 1px 0 rgba(255,255,255,.8); }
-html.dark .hero-model-visual { background: linear-gradient(145deg, #2e4c39, #1b2d22 48%, #3b5746); border-color: rgba(213,246,224,.13); box-shadow: 0 24px 58px -36px rgba(0,0,0,.55), inset 0 1px 0 rgba(213,246,224,.09); }
+html.dark .hero-model-visual { background: linear-gradient(145deg, var(--accent), var(--muted) 48%, var(--secondary)); border-color: rgba(213,246,224,.13); box-shadow: 0 24px 58px -36px rgba(0,0,0,.55), inset 0 1px 0 rgba(213,246,224,.09); }
 .hero-model-stage { height: clamp(330px, 33vw, 440px); overflow: hidden; border-radius: 24px; }
 .hero-model-caption { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 8px 2px; color: var(--muted-foreground); font-size: 11px; }
 .hero-model-caption > span { min-width: 0; line-height: 1.65; }

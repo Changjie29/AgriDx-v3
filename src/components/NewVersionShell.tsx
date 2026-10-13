@@ -6,6 +6,7 @@ import { Globe } from 'lucide-react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useLang, setLang } from '@/hooks/useLang';
 import VersionSwitch from '@/components/VersionSwitch';
+import ThemeSwitch from '@/components/ThemeSwitch';
 import './new-version-shell.css';
 
 const NAV_ZH = [
@@ -60,6 +61,7 @@ export function NewVersionShell() {
 
         <div className="new-version-tools">
           <VersionSwitch exhibition onChange={() => navigate('/')} />
+          <ThemeSwitch />
           <button type="button" className="new-version-language" onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')} aria-label={t('切换语言', 'Switch language')}>
             <Globe size={16} />
             <span>{lang === 'zh' ? 'EN' : '中'}</span>

@@ -3,10 +3,8 @@
 .ui-version-label { position: relative; z-index: 1; }
 .ui-version-switch button[aria-pressed="true"] { color: var(--primary-foreground); font-weight: 600; }
 .ui-version-switch button:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
-.ui-version-switch.is-exhibition { border-color: #335579; background: #0a2039; --selection-fill: #b5e6dd; --selection-shadow: inset 0 1px 0 #e2fff266, 0 3px 10px -6px #91d7cf88; }
-.ui-version-switch.is-exhibition button { color: #a5bfd6; }
-.ui-version-switch.is-exhibition button[aria-pressed="true"] { color: #153038; }
-.ui-version-switch.is-exhibition button:focus-visible { outline-color: #7ce6ff; }
+.ui-version-switch.is-exhibition { background: color-mix(in srgb, var(--card) 88%, transparent); --selection-fill: var(--wheat); --selection-shadow: inset 0 1px 0 var(--glass-control-edge); }
+.ui-version-switch.is-exhibition button[aria-pressed="true"] { color: var(--wheat-foreground); }
 .site-header .ui-version-switch {
   background: color-mix(in srgb, var(--card) 38%, transparent);
 }
