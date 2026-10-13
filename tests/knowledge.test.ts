@@ -274,8 +274,21 @@ test('national-emission spellings work in queries and model fields without equat
 test('ranks a model-specific starting fault ahead of the generic sample', () => {
   const found = retrieve(startQuery, 6, workmaster);
   assert.equal(found[0]?.entryId, 'NH-WM25-003');
-  assert.ok(found.every((chunk) => chunk.entryId?.startsWith('NH-WM25-')));
+  assert.ok(found.every((chunk) => chunk.sourceId === 'SRC-NH-WM25-92157408'));
   assert.equal(expectEntry(found, 'NH-WM25-003').applicability, 'matched');
+});
+
+test('electric hand tools preserve diesel-manual scope while electric tractors stay excluded', () => {
+  const context = { ...tractor, brand: '久保田', model: 'M5-091' };
+  for (const query of ['DEF排放塞装回不用电动工具', 'DEF排放塞能用电动扳手吗', 'DEF drain plug electric tools']) {
+    assert.equal(resolveScope(query, context).electric, false, query);
+    expectEntry(retrieve(query, 912, context), 'KB-KB-M5-20261013-092');
+  }
+  for (const query of ['电动拖拉机的DEF排放塞能用电动工具吗', 'electric tractor DEF drain plug electric tools']) {
+    assert.equal(resolveScope(query, context).electric, true, query);
+    assert.equal(archived(retrieve(query, 912, context)).length, 0, query);
+  }
+  assert.equal(archived(retrieve('DEF排放塞电动工具', 912, { ...context, machineType: '新能源农机' })).length, 0);
 });
 
 test('finds representative steering, storage and autonomous-operation entries', () => {

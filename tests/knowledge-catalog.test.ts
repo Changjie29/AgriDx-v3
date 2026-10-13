@@ -51,7 +51,9 @@ test('catalogue counts only archived entries and exposes the expansion target as
   assert.equal(catalog.selected, undefined);
   assert.ok(catalog.limitations.some((line) => line.includes('尚未实现')));
   assert.ok(catalog.limitations.some((line) => line.includes('分层计数不可相加')));
-  assert.ok(Buffer.byteLength(JSON.stringify(catalog)) < 300_000, 'directory does not duplicate the fact bodies');
+  const directory = JSON.stringify(catalog);
+  assert.ok(archive.every((chunk) => !directory.includes(JSON.stringify(chunk.text).slice(1, -1))),
+    'directory does not duplicate the fact bodies as the archive grows');
 });
 
 test('part browsing returns original evidence paragraphs and their applicability limits', () => {
@@ -74,8 +76,9 @@ test('catalogue preserves exact CAB subsets and never exposes their entries to S
   const cab = getKnowledgeCatalog({ brand: '久保田', model: 'LX2620HSDC', component: 'cab' }).selected!;
   assert.ok(cab.entries.some((entry) => entry.entryId === 'KB-LX2620-014' && entry.configuration === 'CAB'));
   const su = getKnowledgeCatalog({ brand: '久保田', model: 'LX2620SUHSD', component: 'cab' }).selected!;
-  assert.equal(su.entries.length, 0);
-  assert.ok(su.gaps.some((line) => line.includes('没有归档条目')));
+  assert.ok(su.entries.length > 0, 'SU has its own archived ROPS evidence');
+  assert.ok(su.entries.every((entry) => entry.configuration === 'ROPS'));
+  assert.ok(su.entries.every((entry) => !['KB-LX2620-014', 'KB-LX2620-015'].includes(entry.entryId)));
   assert.throws(() => getKnowledgeCatalog({ brand: '久保田', model: 'LX2620HSDCX' }), RangeError);
   assert.throws(() => getKnowledgeCatalog({ brand: '东方红', model: 'LF1504(G4)' }), RangeError);
 });
