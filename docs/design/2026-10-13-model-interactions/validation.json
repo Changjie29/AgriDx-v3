@@ -1,0 +1,565 @@
+{
+  "version": "3.6.0",
+  "date": "2026-10-13",
+  "scope": "Local Chromium/ANGLE SwiftShader. Development functional coverage, then stable production assets after retaining main global themes. No real-device GPU performance, external LLM or Tencent deployment validation.",
+  "project": {
+    "npmCi": "passed",
+    "verify": "passed",
+    "tests": 225,
+    "passed": 223,
+    "skipped": 2,
+    "failed": 0,
+    "skips": "Windows-specific checks on Linux",
+    "existingWarnings": [
+      "Fast Refresh warning in an existing component",
+      "Existing Three.js engine chunk exceeds 500 kB"
+    ]
+  },
+  "development": {
+    "renderer": "/usr/bin/chromium, headless ANGLE SwiftShader; functional checks only, no real-device GPU performance claim",
+    "base": "http://127.0.0.1:3116",
+    "caseSummaries": [
+      {
+        "case": "desktop",
+        "passed": 26,
+        "total": 26,
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      {
+        "case": "mobile",
+        "passed": 26,
+        "total": 26,
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      {
+        "case": "narrow",
+        "passed": 26,
+        "total": 26,
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      {
+        "case": "reduced",
+        "passed": 30,
+        "total": 30,
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      {
+        "case": "webgl",
+        "passed": 6,
+        "total": 6,
+        "pageErrors": [],
+        "requestFailures": []
+      },
+      {
+        "case": "home",
+        "passed": 7,
+        "total": 7,
+        "pageErrors": [],
+        "requestFailures": [
+          {
+            "url": "http://127.0.0.1:3116/api/knowledge/catalog",
+            "failure": "net::ERR_ABORTED"
+          }
+        ]
+      },
+      {
+        "case": "desktop-regression",
+        "passed": 8,
+        "total": 8,
+        "pageErrors": [],
+        "requestFailures": []
+      }
+    ],
+    "failedChecks": [],
+    "knownWarnings": [
+      "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+      "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+      "THREE.WARNING: Multiple instances of Three.js being imported.",
+      "You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled"
+    ],
+    "passedChecks": 129,
+    "totalChecks": 129
+  },
+  "production": {
+    "renderer": "headless Chromium SwiftShader, functional QA, not real GPU performance",
+    "results": [
+      {
+        "case": "production-desktop",
+        "checks": [
+          {
+            "name": "Production model loaded and actually drew",
+            "passed": true,
+            "evidence": {
+              "drawCalls": 474,
+              "shaderLogs": [],
+              "camera": [
+                -4.492013059408198,
+                3.3068258598333515,
+                4.396059582946209
+              ],
+              "target": [
+                0,
+                0.551362782360477,
+                0
+              ],
+              "frameloop": "demand",
+              "renderer": "WebKit WebGL",
+              "renderFrame": 43,
+              "selectedMeshes": []
+            }
+          },
+          {
+            "name": "Production outline respects device default",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production uses built assets without Vite client",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production outline is lazy before part selection",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Real production hotspot changes camera and side selection",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Selected description is visible",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Lazy outline chunk loaded on demand",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Theme switch updates 3D palette and preserves canvas selection",
+            "passed": true,
+            "evidence": {
+              "light": {
+                "theme": "light",
+                "palette": "eef3ef",
+                "camera": [
+                  -2.4823066289962235,
+                  1.8409056487900406,
+                  1.923660149274665
+                ]
+              },
+              "dark": {
+                "theme": "dark",
+                "palette": "18232e",
+                "camera": [
+                  -2.4823066289962235,
+                  1.8409056487900406,
+                  1.923660149274665
+                ],
+                "sameCanvas": true,
+                "saved": "dark"
+              }
+            }
+          },
+          {
+            "name": "Theme switch preserves user camera",
+            "passed": true,
+            "evidence": 0.0
+          },
+          {
+            "name": "Theme returns to light with correct 3D palette",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production component controls stay above true scene hotspots",
+            "passed": true,
+            "evidence": [
+              {
+                "label": "显示部件热点",
+                "reachable": true
+              },
+              {
+                "label": "选中部件描边",
+                "reachable": true
+              },
+              {
+                "label": "返回整机",
+                "reachable": true
+              },
+              {
+                "label": "聚焦部件",
+                "reachable": true
+              },
+              {
+                "label": "开启自转",
+                "reachable": true
+              },
+              {
+                "label": "总览",
+                "reachable": true
+              },
+              {
+                "label": "正面",
+                "reachable": true
+              },
+              {
+                "label": "侧面",
+                "reachable": true
+              },
+              {
+                "label": "俯视",
+                "reachable": true
+              },
+              {
+                "label": "恢复模型视角",
+                "reachable": true
+              }
+            ]
+          },
+          {
+            "name": "Production keyboard Enter selects cab",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production direct mesh interaction selects actual component",
+            "passed": true,
+            "evidence": {
+              "x": 421.1135544994954,
+              "y": 623.0103227240977,
+              "component": "engine",
+              "name": "engine-steel"
+            }
+          },
+          {
+            "name": "Preserved original GLB served byte-for-byte with its metadata",
+            "passed": true,
+            "evidence": {
+              "bytes": 7371372,
+              "sha256": "0b550a7bacff50c73d1941ac61275729d2dd6c0d5f2e4fd89b46b92ed02aea67"
+            }
+          },
+          {
+            "name": "Production custom GLB supports preview without invented component labels",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production import restore returns verified original hotspots",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production paused rendering converges",
+            "passed": true,
+            "evidence": {
+              "before": 2682,
+              "after": 2682,
+              "frameloop": "demand",
+              "settlingSamples": 1
+            }
+          },
+          {
+            "name": "Production outline has no shader errors",
+            "passed": true,
+            "evidence": []
+          },
+          {
+            "name": "Production no horizontal overflow",
+            "passed": true,
+            "evidence": {
+              "width": 1280,
+              "documentWidth": 1280,
+              "bodyWidth": 1280
+            }
+          },
+          {
+            "name": "Production no page or application console errors",
+            "passed": true,
+            "evidence": {
+              "pageErrors": [],
+              "console": [
+                {
+                  "type": "warning",
+                  "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+                },
+                {
+                  "type": "warning",
+                  "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+                }
+              ]
+            }
+          },
+          {
+            "name": "Production no duplicate Three.js instance warning",
+            "passed": true,
+            "evidence": [
+              {
+                "type": "warning",
+                "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+              },
+              {
+                "type": "warning",
+                "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+              }
+            ]
+          }
+        ],
+        "console": [
+          {
+            "type": "warning",
+            "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+          },
+          {
+            "type": "warning",
+            "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+          }
+        ],
+        "pageErrors": [],
+        "failedRequests": []
+      },
+      {
+        "case": "production-mobile",
+        "checks": [
+          {
+            "name": "Production model loaded and actually drew",
+            "passed": true,
+            "evidence": {
+              "drawCalls": 474,
+              "shaderLogs": [],
+              "camera": [
+                -4.489946618825323,
+                3.3068258598333515,
+                4.3981701357275895
+              ],
+              "target": [
+                0,
+                0.551362782360477,
+                0
+              ],
+              "frameloop": "demand",
+              "renderer": "WebKit WebGL",
+              "renderFrame": 43,
+              "selectedMeshes": []
+            }
+          },
+          {
+            "name": "Production outline respects device default",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production uses built assets without Vite client",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production outline is lazy before part selection",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Real production hotspot changes camera and side selection",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Selected description is visible",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production mobile manually enables selected outline",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production mobile omits duplicate card focus",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Lazy outline chunk loaded on demand",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Theme switch updates 3D palette and preserves canvas selection",
+            "passed": true,
+            "evidence": {
+              "light": {
+                "theme": "light",
+                "palette": "eef3ef",
+                "camera": [
+                  -2.4823066289962235,
+                  1.8409056487900406,
+                  1.923660149274665
+                ]
+              },
+              "dark": {
+                "theme": "dark",
+                "palette": "18232e",
+                "camera": [
+                  -2.4823066289962235,
+                  1.8409056487900406,
+                  1.923660149274665
+                ],
+                "sameCanvas": true,
+                "saved": "dark"
+              }
+            }
+          },
+          {
+            "name": "Theme switch preserves user camera",
+            "passed": true,
+            "evidence": 0.0
+          },
+          {
+            "name": "Theme returns to light with correct 3D palette",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production component controls stay above true scene hotspots",
+            "passed": true,
+            "evidence": [
+              {
+                "label": "显示部件热点",
+                "reachable": true
+              },
+              {
+                "label": "选中部件描边",
+                "reachable": true
+              },
+              {
+                "label": "返回整机",
+                "reachable": true
+              },
+              {
+                "label": "开启自转",
+                "reachable": true
+              },
+              {
+                "label": "总览",
+                "reachable": true
+              },
+              {
+                "label": "正面",
+                "reachable": true
+              },
+              {
+                "label": "侧面",
+                "reachable": true
+              },
+              {
+                "label": "俯视",
+                "reachable": true
+              },
+              {
+                "label": "恢复模型视角",
+                "reachable": true
+              }
+            ]
+          },
+          {
+            "name": "Production keyboard Enter selects cab",
+            "passed": true,
+            "evidence": null
+          },
+          {
+            "name": "Production direct mesh interaction selects actual component",
+            "passed": true,
+            "evidence": {
+              "x": 191.82744094021717,
+              "y": 610.3347285283254,
+              "component": "body",
+              "name": "body-lightGreen"
+            }
+          },
+          {
+            "name": "Production paused rendering converges",
+            "passed": true,
+            "evidence": {
+              "before": 2490,
+              "after": 2490,
+              "frameloop": "demand",
+              "settlingSamples": 2
+            }
+          },
+          {
+            "name": "Production outline has no shader errors",
+            "passed": true,
+            "evidence": []
+          },
+          {
+            "name": "Production no horizontal overflow",
+            "passed": true,
+            "evidence": {
+              "width": 390,
+              "documentWidth": 390,
+              "bodyWidth": 390
+            }
+          },
+          {
+            "name": "Production no page or application console errors",
+            "passed": true,
+            "evidence": {
+              "pageErrors": [],
+              "console": [
+                {
+                  "type": "warning",
+                  "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+                },
+                {
+                  "type": "warning",
+                  "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+                }
+              ]
+            }
+          },
+          {
+            "name": "Production no duplicate Three.js instance warning",
+            "passed": true,
+            "evidence": [
+              {
+                "type": "warning",
+                "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+              },
+              {
+                "type": "warning",
+                "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+              }
+            ]
+          }
+        ],
+        "console": [
+          {
+            "type": "warning",
+            "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+          },
+          {
+            "type": "warning",
+            "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+          }
+        ],
+        "pageErrors": [],
+        "failedRequests": []
+      }
+    ]
+  },
+  "browserChecksPassed": 170,
+  "notes": [
+    "The early Vite dependency reoptimization emitted one duplicate Three.js warning; neither stable production context emitted it.",
+    "One development homepage catalog request was aborted on unmount; production smoke had no request failures.",
+    "The initial production QA expected the previous dark palette; it was corrected to the retained main theme (#18232e) and verified again.",
+    "Software GPU completion is polled until animation settles; paused production draw calls remained constant."
+  ]
+}
