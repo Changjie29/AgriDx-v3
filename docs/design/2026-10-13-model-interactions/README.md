@@ -1,0 +1,23 @@
+# 模型部件交互 · AgriDx 3.6.0
+
+上海 2026-10-13。从最新 main 的 `e997175` 创建 `codex/model-hotspots-20261013`，保留已合入的开发控制台修正。用户授权按 Three.js 选型建议完成模型工坊交互并推送合并。
+
+## 实现
+
+- 七个部件采用原创 GLB 的已知 `userData.component` 分组。Drei Html 将 DOM 热点锚定到真实部件边界，随展开移动；支持鼠标、触屏和键盘，模型几何直接点击与侧栏选择同步。拖拽不触发点选。
+- 中文/英文说明描述示意结构位置，不提供实机尺寸、维修事实或诊断映射。浮层与侧栏共享轻量 metadata，不下载三维字体。手机浮层缩短，完整说明与重新聚焦保留在侧栏。
+- Drei Bounds 根据选中 mesh 的世界坐标包围盒定位，支持已有总览/正面/侧面/俯视。加载、视角、窗口变化和明确选择才触发 framing；材质淡入淡出不会重新聚焦，手动控制取消待执行的布局聚焦。
+- 描边通过延迟加载的 `@react-three/postprocessing@3.2.0` 与 `postprocessing@6.39.5` 实现，ACES_FILMIC 与原渲染色调保持一致。仅指定原始模型部件启用，手机默认关闭且可手动开启；返回整机后卸载效果。保留按需渲染，无额外常驻 Canvas。
+- 导入 GLB 不开放部件标注、点选或展开，即使未知模型带有同名 extras。导入校验与内嵌资源限制沿用原实现。
+
+## 依赖与来源
+
+使用既有 [Drei](https://github.com/pmndrs/drei) 的 Html/Bounds/OrbitControls。新增 [React Three Postprocessing](https://github.com/pmndrs/react-postprocessing)（MIT）和 [Postprocessing](https://github.com/pmndrs/postprocessing)（Zlib），许可证随 `public/licenses/` 分发，署名保存在 `src/ATTRIBUTIONS`。
+
+锁文件原有 `registry.npmmirror.com` 地址在选定环境返回 HTTP 403，因此改为同路径的官方 `registry.npmjs.org` 下载地址；既有包版本与完整性字段保持不变，仅新增描边依赖及其依赖项。
+
+本轮没有引入 UIKit、React Bits 或物理引擎；当前网页操作继续使用既有 DOM、液态玻璃与侧栏。
+
+## 验证与交付
+
+最终完整检查与本地桌面/手机浏览器结果待本轮收尾记录。浏览器基于本机 Chromium/WebGL，软件 GPU 的结果不能当作真实手机硬件帧率；腾讯服务器与原 Sites 未在本轮执行部署，main 合入后的独立开发预览由既有工作流自动构建。

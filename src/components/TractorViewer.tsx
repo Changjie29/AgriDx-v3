@@ -1,18 +1,23 @@
-import { Suspense, useState, useEffect, useRef, useCallback, useId } from 'react';
+import { lazy, Suspense, useState, useEffect, useRef, useCallback, useId } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
-import { OrbitControls, Grid } from '@react-three/drei';
+import { Bounds, OrbitControls, Grid } from '@react-three/drei';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Loader2, MonitorPlay, Pause, Play, RotateCcw } from 'lucide-react';
+import { Focus, Loader2, MapPin, MonitorPlay, Pause, Play, RotateCcw, ScanLine, X } from 'lucide-react';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import TractorModel from './TractorModel';
-import { TRACTOR_MODEL_URL, type TractorComponent } from './tractor-model-info';
+import { TRACTOR_COMPONENTS, TRACTOR_MODEL_URL, type TractorComponent } from './tractor-model-info';
+import TractorFraming from './TractorFraming';
+import { TRACTOR_VIEWS, type TractorView } from './tractor-view-config';
 import { useLang } from '@/hooks/useLang';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
 import { LiquidSelection } from '@/components/ui/liquid-selection';
-import { LayoutGroup } from 'framer-motion';
+import { LayoutGroup, useReducedMotion } from 'framer-motion';
 import '@/control-glass.css';
+import './tractor-viewer.css';
+
+const TractorOutline = lazy(() => import('./TractorOutline'));
 
 // 相机初始配置（常量避免重渲染触发重置）
 const CAMERA_CONFIG = { position: [6.5, 4, 6.5] as [number, number, number], fov: 40 };
@@ -78,21 +83,6 @@ function ProgrammaticEnvironment() {
   return null;
 }
 
-type View = 'isometric' | 'front' | 'side' | 'top';
-const VIEWS: { id: View; zh: string; en: string; direction: [number, number, number] }[] = [
-  { id: 'isometric', zh: '总览', en: 'Overview', direction: [-1, .62, 1] },
-  { id: 'front', zh: '正面', en: 'Front', direction: [-1, .12, 0] },
-  { id: 'side', zh: '侧面', en: 'Side', direction: [0, .12, 1] },
-  { id: 'top', zh: '俯视', en: 'Top', direction: [.01, 1, .01] },
-];
-function ResizeFrame({ modelRef, fit }: { modelRef: React.RefObject<THREE.Object3D | null>; fit: (object: THREE.Object3D) => void }) {
-  const size = useThree(state => state.size);
-  useEffect(() => {
-    if (modelRef.current) fit(modelRef.current);
-  }, [size.width, size.height, modelRef, fit]);
-  return null;
-}
-
 /**
  * 3D 拖拉机查看器
  * - 使用本地原创分组件拖拉机结构示意 GLB，保留旧模型原件
@@ -101,10 +91,26 @@ function ResizeFrame({ modelRef, fit }: { modelRef: React.RefObject<THREE.Object
  * - 支持鼠标/触屏拖拽旋转、滚轮缩放
  * - WebGL 不可用时降级为占位提示
  */
-export default function TractorViewer({ component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL, controls = false }: { component?: TractorComponent; exploded?: boolean; modelUrl?: string; controls?: boolean }) {
+export default function TractorViewer({ component = 'all', exploded = false, modelUrl = TRACTOR_MODEL_URL, controls = false, onComponentChange, focusRequest = 0 }: {
+  component?: TractorComponent;
+  exploded?: boolean;
+  modelUrl?: string;
+  controls?: boolean;
+  onComponentChange?: (component: TractorComponent) => void;
+  focusRequest?: number;
+}) {
   const selectionGroup = useId();
   const lang = useLang();
-  const [view, setView] = useState<View>('isometric');
+  const reducedMotion = useReducedMotion();
+  const [view, setView] = useState<TractorView>('isometric');
+  const [showHotspots, setShowHotspots] = useState(true);
+  const [outlineEnabled, setOutlineEnabled] = useState(() => window.innerWidth >= 640 && !window.matchMedia('(pointer: coarse)').matches);
+  const [outlineFailed, setOutlineFailed] = useState(false);
+  const [localFocusRequest, setLocalFocusRequest] = useState(0);
+  const [layoutRevision, setLayoutRevision] = useState(0);
+  const interactive = controls && modelUrl === TRACTOR_MODEL_URL && !!onComponentChange;
+  const selectedComponent = modelUrl === TRACTOR_MODEL_URL ? component : 'all';
+  const selectedInfo = TRACTOR_COMPONENTS.find(item => item.id === selectedComponent)!;
   // 无控制栏的首页预览保持静止，避免移除暂停入口后出现无法停止的自转。
   const [autoRotate, setAutoRotate] = useState(() => controls && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [webglSupported] = useState(() => {
@@ -116,18 +122,14 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
       return false;
     }
   });
-  const [modelError, setModelError] = useState<string | null>(null);
-  const [modelLoaded, setModelLoaded] = useState(false);
+  const [modelError, setModelError] = useState<{ url: string; message: string } | null>(null);
+  const [loadedModel, setLoadedModel] = useState<{ url: string; object: THREE.Object3D } | null>(null);
+  const modelObject = loadedModel?.url === modelUrl ? loadedModel.object : null;
+  const modelLoaded = !!modelObject;
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const autoRotateTimerRef = useRef<number | null>(null);
-  // OrbitControls 尚未挂载时暂存待 fit 的模型，挂载后补做一次相机 fit
-  const pendingFitRef = useRef<THREE.Object3D | null>(null);
-  const modelObjectRef = useRef<THREE.Object3D | null>(null);
-
-  useEffect(() => {
-    setModelLoaded(false);
-    setModelError(null);
-  }, [modelUrl]);
+  const refitAfterLayout = useRef(true);
+  useEffect(() => { refitAfterLayout.current = true; }, [modelUrl, exploded]);
 
   // 跟随暗色模式：监听 html 上的 theme-dark/theme-light class
   const [isDark, setIsDark] = useState(
@@ -162,6 +164,15 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedComponent !== 'all' || reducedMotion) {
+      setAutoRotate(false);
+      setAutoRotateByRef(false);
+      if (autoRotateTimerRef.current) window.clearTimeout(autoRotateTimerRef.current);
+      autoRotateTimerRef.current = null;
+    }
+  }, [selectedComponent, reducedMotion, focusRequest, localFocusRequest, view, setAutoRotateByRef]);
+
   // 用户停止交互后延迟 3 秒恢复自动旋转
   const handleInteractionEnd = useCallback(() => {
     if (autoRotateTimerRef.current) {
@@ -174,45 +185,14 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
 
   // 用户开始交互时停止自动旋转
   const handleInteractionStart = useCallback(() => {
+    // A later exploded-layout completion must not steal a user's manual view.
+    refitAfterLayout.current = false;
     if (autoRotateTimerRef.current) {
       window.clearTimeout(autoRotateTimerRef.current);
       autoRotateTimerRef.current = null;
     }
     setAutoRotateByRef(false);
   }, [setAutoRotateByRef]);
-
-  // 模型加载后自动 fit：按实际包围盒对准中心 + 按模型大小定相机距离（只计算一次）
-  const fitCameraToModel = useCallback((object: THREE.Object3D) => {
-    const controls = controlsRef.current;
-    if (!controls) return;
-
-    const box = new THREE.Box3().setFromObject(object);
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z) || 1;
-
-    // 目标点：模型几何中心略偏上（视觉重心）
-    const target = new THREE.Vector3(center.x, center.y + size.y * 0.05, center.z);
-    controls.target.copy(target);
-
-    // 按 fov 计算刚好装下模型的距离，并留 40% 留白
-    const camera = controls.object as THREE.PerspectiveCamera;
-    const verticalFov = THREE.MathUtils.degToRad(camera.fov);
-    const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * camera.aspect);
-    const radius = size.length() / 2;
-    const distance = radius / Math.sin(Math.min(verticalFov, horizontalFov) / 2) * 1.13;
-
-    // 45° 俯视角
-    const dir = new THREE.Vector3(...VIEWS.find(item => item.id === view)!.direction).normalize();
-    const cameraPos = target.clone().add(dir.multiplyScalar(distance));
-    controls.object.position.copy(cameraPos);
-
-    // 根据模型大小动态设置缩放范围
-    controls.minDistance = maxDim * 0.6;
-    controls.maxDistance = Math.max(maxDim * 4, distance * 1.8);
-
-    controls.update();
-  }, [view]);
 
   // 清理定时器
   useEffect(() => {
@@ -223,65 +203,70 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
     };
   }, [autoRotate, view]);
 
-  // OrbitControls 挂载完成后开启初始自动旋转；若模型已加载但此前 fit 未执行，补做一次
+  // Bounds handles framing; OrbitControls remains the single manual controller.
   const handleControlsRef = useCallback(
     (node: OrbitControlsImpl | null) => {
       controlsRef.current = node;
       if (node) {
         node.autoRotate = autoRotate && view === 'isometric';
         node.autoRotateSpeed = AUTO_ROTATE_SPEED;
-        if (pendingFitRef.current) {
-          fitCameraToModel(pendingFitRef.current);
-          pendingFitRef.current = null;
-        }
       }
     },
-    [fitCameraToModel, autoRotate, view],
+    [autoRotate, view],
   );
 
   const handleModelLoaded = useCallback(
     (object: THREE.Object3D) => {
-      setModelLoaded(true);
-      modelObjectRef.current = object;
-
-      // 模型加载后自动 fit：OrbitControls 已就绪则立即执行，否则暂存待挂载后补做
-      if (controlsRef.current) {
-        fitCameraToModel(object);
-      } else {
-        pendingFitRef.current = object;
-      }
+      setLoadedModel({ url: modelUrl, object });
     },
-    [fitCameraToModel],
+    [modelUrl],
   );
+  const handleLayoutSettled = useCallback(() => {
+    if (!refitAfterLayout.current) return;
+    refitAfterLayout.current = false;
+    setLayoutRevision(value => value + 1);
+  }, []);
+  const focusSelected = () => {
+    setAutoRotate(false);
+    setAutoRotateByRef(false);
+    if (autoRotateTimerRef.current) window.clearTimeout(autoRotateTimerRef.current);
+    autoRotateTimerRef.current = null;
+    setLocalFocusRequest(value => value + 1);
+  };
+  const handleComponentSelect = (next: TractorComponent) => {
+    focusSelected();
+    onComponentChange?.(next);
+  };
 
   if (!webglSupported) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-2xl border border-border/50 bg-gradient-to-br from-muted/30 to-transparent text-muted-foreground">
         <MonitorPlay className="size-16 opacity-40" />
-        <div className="text-sm font-medium">3D 模型预览</div>
-        <div className="text-xs opacity-60">当前浏览器环境不支持 WebGL</div>
-        <div className="text-xs opacity-60">支持的设备上可查看可交互 3D 拖拉机模型</div>
+        <div className="text-sm font-medium">{lang === 'zh' ? '3D 模型预览' : '3D model preview'}</div>
+        <div className="text-xs opacity-60">{lang === 'zh' ? '当前浏览器环境不支持 WebGL' : 'WebGL is unavailable in this browser'}</div>
+        <div className="text-xs opacity-60">{lang === 'zh' ? '支持的设备上可查看可交互 3D 拖拉机模型' : 'Use a supported device to explore the interactive tractor model'}</div>
       </div>
     );
   }
 
-  if (modelError) {
-    return <ModelFallback error={modelError} />;
+  if (modelError?.url === modelUrl) {
+    return <ModelFallback error={modelError.message} />;
   }
 
   const palette = isDark ? LIGHT_COLORS.dark : LIGHT_COLORS.light;
 
   return (
-    <div className="relative h-full w-full">
+    <div className="tractor-viewer relative h-full w-full" data-component={selectedComponent} data-model-state={modelLoaded ? 'ready' : 'loading'}>
       <ErrorBoundary
         resetKeys={[modelUrl]}
         FallbackComponent={ModelFallback}
         onError={(e: unknown) => {
           const msg = e instanceof Error ? e.message : String(e);
-          setModelError(msg);
+          setModelError({ url: modelUrl, message: msg });
         }}
       >
         <Canvas
+          className="tractor-canvas"
           frameloop={autoRotate && view === 'isometric' ? 'always' : 'demand'}
           shadows
           camera={CAMERA_CONFIG}
@@ -326,11 +311,22 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
 
           {/* Suspense fallback 必须是 three.js 对象，不能放 HTML 元素 */}
           <Suspense fallback={<CanvasLoadingPlaceholder />}>
-            <TractorModel onLoaded={handleModelLoaded} component={component} exploded={exploded} modelUrl={modelUrl} />
-            <ResizeFrame modelRef={modelObjectRef} fit={fitCameraToModel} />
+            <Bounds margin={1.25} maxDuration={reducedMotion ? 0 : .45}>
+              <TractorModel onLoaded={handleModelLoaded} onLayoutSettled={handleLayoutSettled} component={selectedComponent}
+                exploded={exploded} modelUrl={modelUrl} interactive={interactive} showHotspots={interactive && showHotspots}
+                onComponentSelect={handleComponentSelect} />
+              <TractorFraming model={modelObject} component={selectedComponent} view={view}
+                request={focusRequest + localFocusRequest} layoutRevision={layoutRevision} />
+            </Bounds>
           </Suspense>
 
+          {interactive && modelObject && selectedComponent !== 'all' && outlineEnabled && !outlineFailed && <ErrorBoundary
+            fallback={null} onError={() => setOutlineFailed(true)}>
+            <Suspense fallback={null}><TractorOutline model={modelObject} component={selectedComponent} /></Suspense>
+          </ErrorBoundary>}
+
           <OrbitControls
+            makeDefault
             ref={handleControlsRef}
             enableDamping={autoRotate && view === 'isometric'}
             dampingFactor={0.05}
@@ -355,22 +351,36 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
         </div>
       )}
 
-      <div className="absolute left-3 top-3 rounded-full border border-border/50 bg-card/85 px-3 py-1.5 text-[10px] text-muted-foreground backdrop-blur">
+      <div className="tractor-model-badge absolute left-3 top-3 rounded-full border border-border/50 bg-card/85 px-3 py-1.5 text-[10px] text-muted-foreground backdrop-blur">
         {modelUrl === TRACTOR_MODEL_URL
           ? lang === 'zh' ? '原创结构示意 · 非实机 CAD' : 'Original schematic · Not machine CAD'
           : lang === 'zh' ? '本地模型 · 尺寸待核验' : 'Local model · Dimensions unverified'}
       </div>
+      {interactive && <div className="tractor-viewer-tools" role="group" aria-label={lang === 'zh' ? '模型标注与描边' : 'Model annotations and outline'}>
+        <button type="button" className="tractor-tool-button" aria-label={lang === 'zh' ? '显示部件热点' : 'Show component hotspots'}
+          title={lang === 'zh' ? '部件热点' : 'Component hotspots'} aria-pressed={showHotspots} onClick={() => setShowHotspots(value => !value)}><MapPin size={16} /></button>
+        <button type="button" className="tractor-tool-button" aria-label={lang === 'zh' ? '选中部件描边' : 'Selected component outline'}
+          title={lang === 'zh' ? '选中描边' : 'Selection outline'} aria-pressed={outlineEnabled && !outlineFailed}
+          disabled={selectedComponent === 'all' || outlineFailed} onClick={() => setOutlineEnabled(value => !value)}><ScanLine size={16} /></button>
+      </div>}
+      {interactive && selectedComponent !== 'all' && <section className="tractor-component-card" aria-label={lang === 'zh' ? '所选部件说明' : 'Selected component details'}>
+        <header><h3>{lang === 'zh' ? selectedInfo.zh : selectedInfo.en}</h3>
+          <button type="button" className="tractor-card-close" aria-label={lang === 'zh' ? '返回整机' : 'Return to whole machine'} onClick={() => handleComponentSelect('all')}><X size={14} /></button>
+        </header>
+        <p>{lang === 'zh' ? selectedInfo.descriptionZh : selectedInfo.descriptionEn}</p>
+        <button type="button" className="tractor-card-focus" onClick={focusSelected}><Focus size={13} />{lang === 'zh' ? '聚焦部件' : 'Focus component'}</button>
+      </section>}
       {controls && <div className="model-control-shell" role="group" aria-label={lang === 'zh' ? '模型视角与旋转控制' : 'Model view and rotation controls'}><LiquidGlass variant="regular" lens displacementScale={36} className="model-control-glass" contentClassName="model-control-content">
         <button type="button" onClick={() => setAutoRotate(value => !value)} aria-label={lang === 'zh' ? autoRotate ? '暂停自转' : '开启自转' : autoRotate ? 'Pause rotation' : 'Start rotation'} aria-pressed={autoRotate} className="model-icon-button">
           {autoRotate ? <Pause size={16} /> : <Play size={16} />}
         </button>
         <LayoutGroup id={selectionGroup}><div className="model-view-segment" role="group" aria-label={lang === 'zh' ? '选择模型视角' : 'Select model view'}>
-          {VIEWS.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)} className="model-view-button">
+          {TRACTOR_VIEWS.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => setView(item.id)} className="model-view-button">
             {view === item.id && <LiquidSelection className="model-view-indicator" />}
             <span className="model-view-label">{lang === 'zh' ? item.zh : item.en}</span>
           </button>)}
         </div></LayoutGroup>
-        <button type="button" aria-label={lang === 'zh' ? '恢复模型视角' : 'Reset model view'} onClick={() => { setView('isometric'); if (modelObjectRef.current) fitCameraToModel(modelObjectRef.current); }} className="model-icon-button"><RotateCcw size={16} /></button>
+        <button type="button" aria-label={lang === 'zh' ? '恢复模型视角' : 'Reset model view'} onClick={() => { setView('isometric'); handleComponentSelect('all'); }} className="model-icon-button"><RotateCcw size={16} /></button>
       </LiquidGlass></div>}
       <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-muted-foreground/70">
         {lang === 'zh' ? '拖动旋转 · 滚轮缩放' : 'Drag to rotate · Scroll to zoom'}
