@@ -73,3 +73,17 @@ Author: Lassi Kaukonen / thesidekick
 Source: https://sketchfab.com/3d-models/david-brown-25d-tractor-85720bad20b341ec8508ddbc84f11795
 License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 Original GLB extras retain author, source and license metadata; the previous asset remains available but is not the current default model.
+
+## React Three Postprocessing
+
+Repository: https://github.com/pmndrs/react-postprocessing
+Package: @react-three/postprocessing 3.2.0
+License: MIT. Full license: public/licenses/react-three-postprocessing.txt.
+Usage: lazily loaded selection outlines in the schematic model studio, with explicit ACES tone mapping.
+
+## Postprocessing
+
+Repository: https://github.com/pmndrs/postprocessing
+Package: postprocessing 6.39.5
+License: Zlib. Full license: public/licenses/postprocessing.txt.
+Usage: outline effects and tone mapping for identified schematic tractor components.

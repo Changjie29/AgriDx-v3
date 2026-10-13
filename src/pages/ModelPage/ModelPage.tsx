@@ -1,19 +1,13 @@
 import { lazy, useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Box, Download, ExternalLink, ImagePlus, Layers3, Upload, X } from 'lucide-react';
+import { ArrowRight, Box, Download, ExternalLink, Focus, ImagePlus, Layers3, Upload, X } from 'lucide-react';
 import DeferredScene from '@/components/DeferredScene';
 import SceneLoading from '@/components/SceneLoading';
-import { TRACTOR_MODEL_URL, type TractorComponent } from '@/components/tractor-model-info';
+import { TRACTOR_COMPONENTS, TRACTOR_MODEL_URL, type TractorComponent } from '@/components/tractor-model-info';
 import { useLang } from '@/hooks/useLang';
 
 const TractorViewer = lazy(() => import('@/components/TractorViewer'));
 
-const COMPONENTS: { id: TractorComponent; zh: string; en: string }[] = [
-  { id: 'all', zh: '整机', en: 'Whole machine' }, { id: 'engine', zh: '发动机', en: 'Engine' },
-  { id: 'drivetrain', zh: '传动', en: 'Drivetrain' }, { id: 'hydraulics', zh: '液压', en: 'Hydraulics' },
-  { id: 'electrical', zh: '电气', en: 'Electrical' }, { id: 'wheels', zh: '行走', en: 'Wheels' },
-  { id: 'cab', zh: '驾驶室', en: 'Cab' }, { id: 'body', zh: '车身', en: 'Body' },
-];
 const ANGLES = [
   { id: 'front', zh: '正面', en: 'Front' }, { id: 'left', zh: '左侧', en: 'Left' },
   { id: 'back', zh: '背面', en: 'Back' }, { id: 'right', zh: '右侧', en: 'Right' },
@@ -24,12 +18,14 @@ export default function ModelPage() {
   const lang = useLang();
   const t = (zh: string, en: string) => lang === 'zh' ? zh : en;
   const [component, setComponent] = useState<TractorComponent>('all');
+  const [focusRequest, setFocusRequest] = useState(0);
   const [exploded, setExploded] = useState(false);
   const [photos, setPhotos] = useState<ReferencePhoto[]>([]);
   const [customModel, setCustomModel] = useState<{ url: string; name: string } | null>(null);
   const [error, setError] = useState('');
   const [identity, setIdentity] = useState('');
   const urls = useRef(new Set<string>());
+  const selectedComponent = TRACTOR_COMPONENTS.find(item => item.id === component) ?? TRACTOR_COMPONENTS[0];
 
   useEffect(() => () => { urls.current.forEach(url => URL.revokeObjectURL(url)); }, []);
   function makeUrl(file: File) {
@@ -92,23 +88,30 @@ export default function ModelPage() {
       <p className="mt-4 text-sm leading-7 text-muted-foreground">{t('观察整机与组件，准备同一实物的多角度参考照片，再核对生成模型。三维展示帮助理解结构，具体维修仍需匹配机型资料。', 'Explore the machine and its components, prepare reference photos, then inspect the resulting model. Use model-specific evidence for maintenance decisions.')}</p>
     </div>
     <div className="grid gap-5 lg:grid-cols-[1.65fr_1fr]">
-      <section className="overflow-hidden rounded-3xl border border-border bg-card">
+      <section className="min-w-0 overflow-hidden rounded-3xl border border-border bg-card">
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <span className="flex min-w-0 items-center gap-2 text-sm font-medium"><Box className="size-4 text-primary" /><span className="truncate">{customModel?.name ?? t('原创拖拉机结构示意', 'Original tractor schematic')}</span></span>
           <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] text-primary">{customModel ? t('本地预览', 'Local preview') : 'GLB · 0.65 MB'}</span>
         </div>
-        <div className="h-[350px] sm:h-[420px] lg:h-[480px]"><DeferredScene fallback={<SceneLoading />}><TractorViewer controls modelUrl={customModel?.url ?? TRACTOR_MODEL_URL} component={component} exploded={exploded} /></DeferredScene></div>
+        <div className="h-[350px] sm:h-[420px] lg:h-[480px]"><DeferredScene fallback={<SceneLoading />}><TractorViewer controls modelUrl={customModel?.url ?? TRACTOR_MODEL_URL} component={component} exploded={exploded} onComponentChange={setComponent} focusRequest={focusRequest} /></DeferredScene></div>
         <div className="flex flex-wrap items-center gap-3 border-t border-border px-5 py-4 text-xs">
           <a href={TRACTOR_MODEL_URL} download className="flex items-center gap-1.5 font-medium text-primary"><Download className="size-3.5" />{t('下载示意模型', 'Download schematic GLB')}</a>
           <label className="flex cursor-pointer items-center gap-1.5 text-muted-foreground hover:text-primary"><Upload className="size-3.5" />{t('导入 GLB 预览', 'Import GLB')}<input type="file" accept=".glb" className="sr-only" aria-label={t('导入 GLB 模型', 'Import GLB model')} onChange={selectModel} /></label>
           {customModel && <button type="button" className="text-muted-foreground hover:text-primary" onClick={() => { URL.revokeObjectURL(customModel.url); urls.current.delete(customModel.url); setCustomModel(null); setComponent('all'); setExploded(false); }}>{t('恢复示意模型', 'Restore schematic')}</button>}
         </div>
       </section>
-      <aside className="rounded-3xl border border-border bg-card p-6">
+      <aside className="min-w-0 rounded-3xl border border-border bg-card p-5 sm:p-6">
         <p className="flex items-center gap-2 text-sm font-semibold"><Layers3 className="size-4 text-primary" />{t('从整机到组件', 'From machine to component')}</p>
         <p className="mt-3 text-xs leading-6 text-muted-foreground">{customModel ? t('本地模型的组件名称与尺寸尚未核验，先查看整体结构。', 'Component names and dimensions of the local model are not verified. Inspect its overall geometry first.') : t('选中组件，观察位置关系；展开示意查看被外壳遮挡的结构。模型没有绑定真实故障或实车尺寸。', 'Select a component or expand the schematic to inspect concealed structures. The model is not bound to real faults or measured dimensions.')}</p>
-        <div className="mt-5 grid grid-cols-2 gap-2">{COMPONENTS.map(item => <button type="button" key={item.id} disabled={!!customModel && item.id !== 'all'} aria-pressed={component === item.id} onClick={() => setComponent(item.id)} className={`rounded-xl border px-3 py-3 text-left text-xs transition disabled:opacity-35 ${component === item.id ? 'border-primary/40 bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/30'}`}>{t(item.zh, item.en)}</button>)}</div>
+        {!customModel && <p className="mt-3 text-xs leading-6 text-primary">{t('点击模型或热点选择部件，视角会自动聚焦。拖动旋转，滚动缩放。', 'Click the model or a hotspot to select a component and focus the view. Drag to rotate and scroll to zoom.')}</p>}
+        <div className="mt-5 grid grid-cols-2 gap-2">{TRACTOR_COMPONENTS.map(item => <button type="button" key={item.id} disabled={!!customModel && item.id !== 'all'} aria-pressed={component === item.id} onClick={() => setComponent(item.id)} className={`min-w-0 break-words rounded-xl border px-3 py-3 text-left text-xs transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-35 ${component === item.id ? 'border-primary/40 bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/30'}`}>{t(item.zh, item.en)}</button>)}</div>
+        <div aria-live="polite" aria-atomic="true" className="mt-4 rounded-xl border border-primary/15 bg-primary/5 p-4">
+          <p className="text-xs font-semibold text-foreground">{customModel ? t('本地模型 · 整机', 'Local model · Whole machine') : t(selectedComponent.zh, selectedComponent.en)}</p>
+          <p className="mt-2 break-words text-xs leading-6 text-muted-foreground">{customModel ? t('当前导入模型仅支持整机预览。部件分类、热点与聚焦需要先核验模型结构。', 'The imported model supports whole-machine preview. Component selection, hotspots and focus require its structure to be verified first.') : t(selectedComponent.descriptionZh, selectedComponent.descriptionEn)}</p>
+        </div>
+        <button type="button" disabled={!!customModel || component === 'all'} onClick={() => setFocusRequest(previous => previous + 1)} className="mt-4 flex w-full min-w-0 items-center justify-center gap-2 rounded-xl border border-primary/30 bg-primary/5 px-3 py-3 text-xs font-medium text-primary transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"><Focus className="size-4 shrink-0" /><span>{t('聚焦所选部件', 'Focus selected component')}</span></button>
         <label className="mt-5 flex items-center justify-between rounded-xl border border-border px-3 py-3 text-xs"><span>{t('展开结构示意', 'Expand schematic')}</span><input type="checkbox" checked={exploded} disabled={!!customModel} onChange={event => setExploded(event.target.checked)} className="size-4 accent-green-700" /></label>
+        <p className="mt-4 text-[11px] leading-6 text-muted-foreground">{t('结构示意与观察定位不能代替实测 CAD 或机型维修手册。', 'Structural illustrations and viewing positions do not replace measured CAD or model-specific service manuals.')}</p>
         <Link to="/knowledge" className="mt-6 flex items-center justify-between rounded-xl bg-primary px-4 py-3 text-xs font-medium text-primary-foreground">{t('查阅组件的资料与策略', 'Find component evidence')}<ArrowRight className="size-4" /></Link>
       </aside>
     </div>
