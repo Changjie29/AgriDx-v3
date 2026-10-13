@@ -103,7 +103,8 @@ function removeDeniedIdentities(text: string, scope: RetrievalContext): { text: 
 function isContinuation(text: string): boolean {
   const clean = text.trim();
   return clean.length <= 100 && (
-    /^(?:那|还|也|只|只有|仅|但是|不过|现在|刚才|补充|继续|怎么|为什么|需要|应该|能不能|可以|是否|多久|多长|多少|什么油|有什么|怎么办|会不会|是的|对|不是|请问|具体)/.test(clean) ||
+    /^(?:那|还|也|只|只有|仅|但是|不过|现在|刚才|补充|继续|下一步|已经|已检查|检查结果|测量结果|怎么|为什么|需要|应该|能不能|可以|是否|多久|多长|多少|什么油|有什么|怎么办|会不会|是的|对|不是|请问|具体)/.test(clean) ||
+    /已(?:经)?(?:检查|测量|更换|排除)|检查.*(?:正常|异常|完成)|换过|测过/.test(clean) ||
     /空载|负载|带负荷|怠速|加油门|热车|冷车|挂挡|行驶时|作业时|启动时|起动时|报警|故障码/.test(clean)
   );
 }
@@ -117,7 +118,9 @@ export function resolveDiagnosticContext(
   history: readonly DiagnosticHistoryMessage[],
   explicitScope: RetrievalContext = {},
 ): DiagnosticContext {
-  const users = history.filter((message) => message.role === 'user').slice(-12);
+  // Legacy API already limits its input. Persistent sessions supply the full,
+  // bounded user transcript so early symptoms and corrections remain available.
+  const users = history.filter((message) => message.role === 'user');
   const scope: RetrievalContext = {};
   let symptoms: string[] = [];
   let emissions: string[] = [];
@@ -191,7 +194,7 @@ export function resolveDiagnosticContext(
 
     const body = withoutSelection(text);
     if (!body || identityOnly(text, model)) continue;
-    if (symptoms.length && isContinuation(body)) symptoms = [...symptoms.slice(-2), body];
+    if (symptoms.length && isContinuation(body)) symptoms = [symptoms[0], ...(symptoms.length > 1 ? symptoms.slice(-1) : []), body];
     else symptoms = [body];
   }
 
