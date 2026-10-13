@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "batches": [
+    {
+      "id": "version-policy-20261013",
+      "kind": "maintenance",
+      "base": "3.4.4",
+      "version": "3.4.5",
+      "date": "2026-10-13"
+    },
+    {
+      "id": "remember-console-login-20261013",
+      "kind": "fix",
+      "base": "3.4.5",
+      "version": "3.4.6",
+      "date": "2026-10-13"
+    }
+  ]
+}

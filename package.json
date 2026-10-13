@@ -1,6 +1,6 @@
 {
   "name": "agri-fault-diagnosis",
-  "version": "3.4.5",
+  "version": "3.4.6",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,7 +18,8 @@
     "sync": "node scripts/sync.mjs",
     "build:dev-preview": "node scripts/build-dev-preview.mjs",
     "preview:publish": "node scripts/publish-dev-preview.mjs",
-    "design:palette": "node --import tsx scripts/material-you-tokens.mjs"
+    "design:palette": "node --import tsx scripts/material-you-tokens.mjs",
+    "version:update": "node scripts/version-update.mjs"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.14",
