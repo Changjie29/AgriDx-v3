@@ -62,6 +62,7 @@ test('indexes each archived entry exactly once and preserves the 9 existing chun
     const found = retrieve(title, indexed.length, { ...tractor, brand, model: exactModel });
     const chunk = expectEntry(found, entry_id);
     assert.ok(chunk.sourceId);
+    assert.deepEqual(chunk.indexedReference, { entryId: chunk.entryId, sourceId: chunk.sourceId });
     assert.ok(chunk.sourceUrl);
     assert.ok(chunk.originalPath);
     assert.ok(chunk.locator);
