@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
-import { useThree } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 import * as THREE from 'three';
 
@@ -29,6 +29,10 @@ export default function TractorModel({ onLoaded, component = 'all', exploded = f
       const copies = materials.map(material => {
         const copy = material.clone();
         copy.userData = { ...copy.userData, baseOpacity: material.opacity, baseTransparent: material.transparent, baseDepthWrite: material.depthWrite };
+        if (copy instanceof THREE.MeshStandardMaterial) {
+          copy.envMapIntensity = Math.max(copy.envMapIntensity, 1.25);
+          copy.roughness = THREE.MathUtils.clamp(copy.roughness, 0.2, 0.88);
+        }
         return copy;
       });
       node.material = Array.isArray(node.material) ? copies : copies[0];
@@ -50,6 +54,40 @@ export default function TractorModel({ onLoaded, component = 'all', exploded = f
     return cloned;
   }, [scene]);
 
+  // Keep component separation fluid when switching between overview and exploded
+  // views. The previous implementation snapped every group to its offset, which
+  // made the structure feel disconnected and could briefly occlude the chassis.
+  useEffect(() => {
+    model.traverse(node => {
+      const id = node.userData.component as string | undefined;
+      if (modelUrl === TRACTOR_MODEL_URL && id && OFFSETS[id]) {
+        node.userData.explosionTarget = new THREE.Vector3(...OFFSETS[id].map(n => exploded ? n : 0));
+      }
+    });
+    invalidate();
+  }, [model, exploded, modelUrl, invalidate]);
+
+  useFrame((state, delta) => {
+    const alpha = 1 - Math.exp(-delta * 8);
+    let moving = false;
+    model.traverse(node => {
+      const target = node.userData.explosionTarget as THREE.Vector3 | undefined;
+      if (target) {
+        node.position.lerp(target, alpha);
+        if (node.position.distanceToSquared(target) > 0.0004) moving = true;
+      }
+      if (!(node instanceof THREE.Mesh)) return;
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      materials.forEach(material => {
+        const targetOpacity = material.userData.targetOpacity as number | undefined;
+        if (targetOpacity === undefined) return;
+        material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, alpha);
+        if (Math.abs(material.opacity - targetOpacity) > 0.002) moving = true;
+      });
+    });
+    if (moving) state.invalidate();
+  });
+
   useEffect(() => () => model.traverse(node => {
     if (node instanceof THREE.Mesh) {
       const materials = Array.isArray(node.material) ? node.material : [node.material];
@@ -59,13 +97,15 @@ export default function TractorModel({ onLoaded, component = 'all', exploded = f
 
   useEffect(() => {
     model.traverse(node => {
-      const id = node.userData.component as string | undefined;
-      if (modelUrl === TRACTOR_MODEL_URL && id && OFFSETS[id]) node.position.set(...OFFSETS[id].map(n => exploded ? n : 0) as [number, number, number]);
       if (!(node instanceof THREE.Mesh)) return;
-      const selected = component === 'all' || node.parent?.userData.component === component;
+      let owner = node.parent;
+      while (owner && !owner.userData.component) owner = owner.parent;
+      const selected = component === 'all' || owner?.userData.component === component;
+      node.castShadow = selected;
       const materials = Array.isArray(node.material) ? node.material : [node.material];
       materials.forEach(material => {
-        material.opacity = selected ? material.userData.baseOpacity : .09;
+        const targetOpacity = selected ? material.userData.baseOpacity : .09;
+        material.userData.targetOpacity = targetOpacity;
         material.transparent = selected ? material.userData.baseTransparent : true;
         material.depthWrite = selected ? material.userData.baseDepthWrite : false;
         material.needsUpdate = true;

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { ApiError, requestJson, type FetchImplementation } from '../src/lib/api-client';
 import { parseChatResponse, parseLlmHealth, requestChat } from '../src/features/chat/api';
@@ -6,6 +7,10 @@ import {
   createChatRequest, loadChatSession, META_KEY, parseHistory, saveHistory, saveMachineContext, STORAGE_KEY,
 } from '../src/features/chat/session';
 import { parseKnowledgeCatalog } from '../src/features/knowledge/catalog-api';
+
+const layoutSource = readFileSync(new URL('../src/components/Layout.tsx', import.meta.url), 'utf8');
+const appSource = readFileSync(new URL('../src/app.tsx', import.meta.url), 'utf8');
+const newShellSource = readFileSync(new URL('../src/components/NewVersionShell.tsx', import.meta.url), 'utf8');
 
 function memoryStorage(initial: Record<string, string> = {}) {
   const values = new Map(Object.entries(initial));
@@ -165,4 +170,15 @@ test('四级目录拒绝畸形嵌套数组与选择结果，不让成功HTTP造�
   assert.throws(() => parseKnowledgeCatalog({ ...catalog, selected: { brand: 'brand', model: 'model', entries: {}, gaps: [] } }));
   assert.throws(() => parseKnowledgeCatalog({ ...catalog, limitations: [123] }));
   assert.throws(() => parseKnowledgeCatalog({ ...catalog, totals: { ...catalog.totals, sources: -1 } }));
+});
+
+test('新版二级路由统一进入蓝色展厅 shell，并标记为新版', () => {
+  for (const route of ['/knowledge', '/chat', '/models']) {
+    assert.match(appSource, new RegExp(`path="${route.slice(1)}"`), `missing secondary route ${route}`);
+    assert.match(newShellSource, new RegExp(`path: ['"]${route.replace('/', '\\/')}['"]`), `new shell does not link ${route}`);
+  }
+  assert.match(layoutSource, /uiVersion === 'new' && location\.pathname !== '\/'/);
+  assert.match(layoutSource, /<NewVersionShell \/>/);
+  assert.match(newShellSource, /data-ui-version="new"/);
+  assert.match(newShellSource, /<Outlet \/>/);
 });
