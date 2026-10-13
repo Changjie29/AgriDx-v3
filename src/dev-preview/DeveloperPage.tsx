@@ -88,6 +88,7 @@ export default function DeveloperPage() {
   const [user, setUser] = useState<User | null | undefined>(undefined);
   const [configured, setConfigured] = useState(true);
   const [tokenInput, setTokenInput] = useState('');
+  const [rememberDevice, setRememberDevice] = useState(true);
   const [loginError, setLoginError] = useState('');
   const [loggingIn, setLoggingIn] = useState(false);
   const [tab, setTab] = useState<'overview' | 'visitors' | 'questions' | 'system'>('overview');
@@ -111,7 +112,7 @@ export default function DeveloperPage() {
   async function login(event: FormEvent) {
     event.preventDefault(); setLoggingIn(true); setLoginError('');
     try {
-      const data = await api<{ user: User }>('login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: tokenInput.trim() }), signal: AbortSignal.timeout(20_000) });
+      const data = await api<{ user: User }>('login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: tokenInput.trim(), remember: rememberDevice }), signal: AbortSignal.timeout(20_000) });
       setUser(data.user); setTokenInput('');
     } catch (error) { setLoginError(error instanceof Error ? error.message : '登录失败。'); }
     finally { setLoggingIn(false); }
@@ -142,8 +143,13 @@ export default function DeveloperPage() {
           <div className="console-login-icon"><Github size={30} /></div><Badge>{t('内部数据 · 管理员可见', 'Internal data · administrators only')}</Badge>
           <h2>{t('用 GitHub 账号验证身份', 'Verify your GitHub account')}</h2>
           <p>{t('仅 AgriDx-v3 仓库管理员或维护者可以查看访问和问答记录。公开网站仍可直接访问。', 'Access is limited to AgriDx-v3 repository administrators and maintainers. The website remains public.')}</p>
-          <form onSubmit={event => { void login(event); }}><label htmlFor="github-token">{t('GitHub 令牌', 'GitHub token')}</label><input id="github-token" type="password" autoComplete="off" spellCheck={false} minLength={20} maxLength={255} value={tokenInput} onChange={event => setTokenInput(event.target.value)} required aria-describedby="console-login-help" placeholder="github_pat_… / ghp_…" /><button type="submit" className="console-primary" disabled={loggingIn || !configured}><ShieldCheck size={17} />{loggingIn ? t('验证中…', 'Verifying…') : t('验证并进入', 'Verify and enter')}</button></form>
-          <p id="console-login-help" className="console-help">{t('令牌只发送到开发站服务端，用于读取 GitHub 身份和仓库 Metadata；不需要代码写入权限，不保存令牌。登录会话有效期1小时。', 'The token is used only to verify your GitHub identity and repository metadata. Code write access is unnecessary. The token is not saved; the session lasts one hour.')}</p>
+          <form onSubmit={event => { void login(event); }}>
+            <label htmlFor="github-token">{t('GitHub 令牌', 'GitHub token')}</label>
+            <input id="github-token" type="password" autoComplete="off" spellCheck={false} minLength={20} maxLength={255} value={tokenInput} onChange={event => setTokenInput(event.target.value)} required aria-describedby="console-login-help" placeholder="github_pat_… / ghp_…" />
+            <label className="console-remember"><input type="checkbox" checked={rememberDevice} onChange={event => setRememberDevice(event.target.checked)} disabled={loggingIn} /><span>{t('记住这台设备（30天）', 'Remember this device (30 days)')}</span></label>
+            <button type="submit" className="console-primary" disabled={loggingIn || !configured}><ShieldCheck size={17} />{loggingIn ? t('验证中…', 'Verifying…') : t('验证并进入', 'Verify and enter')}</button>
+          </form>
+          <p id="console-login-help" className="console-help">{t('勾选后，同一浏览器30天内自动恢复登录；取消勾选则保留1小时。GitHub令牌仅用于验证身份和仓库管理权限，不保存。退出登录或清除网站数据后需重新验证。', 'The same browser restores your session for 30 days when selected, or one hour otherwise. Your GitHub token only verifies identity and repository management access and is not saved. Signing out or clearing site data requires verification again.')}</p>
           <a className="console-text-link" href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">{t('管理或创建 GitHub 令牌', 'Manage or create a GitHub token')}<ArrowUpRight size={14} /></a>
           {!configured && <p className="console-error" role="alert">{t('开发站数据库尚未连接，记录和管理员登录暂不可用。', 'The development database is not connected yet.')}</p>}
           {loginError && <p className="console-error" role="alert">{loginError}</p>}

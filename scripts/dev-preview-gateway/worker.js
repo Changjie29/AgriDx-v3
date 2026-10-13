@@ -232,6 +232,7 @@ export async function serveDevelopment(request, env = {}, ctx = {}, upstreamFetc
       await rateLimit(request, db, 'login', 8);
       const body = await bodyJson(request);
       if (typeof body.token !== 'string' || !/^[A-Za-z0-9_]{20,255}$/.test(body.token)) fail(400, '请填写有效的 GitHub 令牌。');
+      if (body.remember !== undefined && typeof body.remember !== 'boolean') fail(400, '记住设备的选项格式无效。');
       const headers = { Authorization: `Bearer ${body.token}`, Accept: 'application/vnd.github+json', 'User-Agent': 'AgriDx-development-console', 'X-GitHub-Api-Version': '2022-11-28' };
       const profileResponse = await upstreamFetch('https://api.github.com/user', { headers, redirect: 'manual', signal: AbortSignal.timeout(8000) });
       if (profileResponse.status === 401) fail(401, 'GitHub 令牌无效或已过期。');
@@ -242,9 +243,10 @@ export async function serveDevelopment(request, env = {}, ctx = {}, upstreamFetc
       const repo = await repoResponse.json();
       if (!repo.permissions?.admin && !repo.permissions?.maintain) fail(403, '只有该仓库的管理员或维护者可以查看内部数据。');
       if (typeof profile.login !== 'string' || !Number.isSafeInteger(profile.id)) fail(502, 'GitHub 身份响应无效。');
-      const value = token(), expiresAt = Date.now() + 3_600_000;
+      const lifetime = body.remember ? 30 * 86_400 : 3600;
+      const value = token(), expiresAt = Date.now() + lifetime * 1000;
       await db.prepare('INSERT INTO preview_admin_sessions (token_hash, github_login, github_id, expires_at) VALUES (?, ?, ?, ?)').bind(await hash(value), profile.login, profile.id, expiresAt).run();
-      return apiJson({ user: { login: profile.login, id: profile.id, expiresAt } }, 200, { 'Set-Cookie': cookie(adminCookie, value, 3600) });
+      return apiJson({ user: { login: profile.login, id: profile.id, expiresAt } }, 200, { 'Set-Cookie': cookie(adminCookie, value, lifetime) });
     }
     if (path === '/api/dev-admin/logout' && request.method === 'POST') {
       await db.prepare('DELETE FROM preview_admin_sessions WHERE token_hash = ?').bind(await hash(readCookie(request, adminCookie))).run();
