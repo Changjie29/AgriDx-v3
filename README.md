@@ -20,9 +20,11 @@ v3由Changjie29与另外三位协作者共同改进，协作流程见[贡献指�
 
 资料概览与设备目录读取 `/api/knowledge/catalog`，可按品牌 / 型号搜索并跳转；加载或失败时不填入推测数量，保留型号 / 系列 / 待核实的范围。模型和园区均为结构示意。GitHub 案例、分层可编辑 SVG、预览与验证见 [三维园区设计说明](docs/design/2026-10-11-spatial-campus/README.md)；此前 3.0.2 大屏设计保留在 [历史设计记录](docs/design/2026-10-11-digital-exhibition/README.md)。本轮保存到 GitHub PR，未部署服务器。
 
-旧版界面的导航、模型入口和控制栏使用 [rdev/liquid-glass-react](https://github.com/rdev/liquid-glass-react) 实现边缘折射、薄亮边与局部高光；顶部导航采用同心胶囊轮廓，小屏的版本切换独立为紧凑胶囊。触摸设备及减少动态设置采用雾面材质，减少透明度、高对比或不支持背景滤镜时使用实色。实现和本地验证见 [旧版液态玻璃优化](docs/design/2026-10-12-classic-liquid-glass/README.md)。
+新版与旧版共用基于 [rdev/liquid-glass-react](https://github.com/rdev/liquid-glass-react) 的实时光学层：玻璃直接采样背后的页面和 WebGL 场景，按实际圆角生成边缘折射，鼠标、触摸和键盘按压改变镜面弯曲并回弹。覆盖旧版导航、版本胶囊、模型入口与控制栏，以及新版顶部工具、导览、底部控制栏、展区说明和设备目录；文字与操作区域独立保持清晰。Chromium 桌面及触摸设备启用实时折射；Safari、Firefox及减少动态时采用雾面，减少透明度、高对比或不支持背景滤镜时使用实色。验证与真实三维录屏见 [两版实时液态玻璃](docs/design/2026-10-13-live-liquid-glass/README.md)，此前旧版实现保留在 [历史优化记录](docs/design/2026-10-12-classic-liquid-glass/README.md)。
 
 首屏不再等待外部字体服务，导航和功能入口先显示，三维视图随后按需加载。二级页面在意图明确时预热，内容加载期间保留导航；短期复用已验证的目录数据，资料展开或答复显示时才加载正文解析器。性能对比和线上 CDN 排查见 [加载与导航优化记录](docs/performance/2026-10-12-loading-navigation.md)。
+
+导航、版本切换、模型视角和展区选中态采用连续移动的胶囊，按压时有局部高光与回弹；菜单及说明面板从操作侧展开，减少动态设置下直接切换。实现参考及动效预览见 [WWDC 交互记录](docs/design/2026-10-12-wwdc-fluid-interaction/README.md)。
 
 ## 腾讯云现有服务器更新
 
@@ -218,7 +220,7 @@ AgriDx-v3/
 ### `GET /api/health`
 
 ```json
-{ "ok": true, "version": "3.1.1", "timestamp": "...", "knowledge": { "chunks": 421, "archivedEntries": 412 } }
+{ "ok": true, "version": "3.2.2", "timestamp": "...", "knowledge": { "chunks": 421, "archivedEntries": 412 } }
 ```
 
 ### `POST /api/chat`

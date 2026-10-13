@@ -1,0 +1,245 @@
+{
+  "version": "3.2.2",
+  "browser": "Chromium 151.0.7922.173",
+  "checks": [
+    {
+      "name": "classic secondary page uses a live native backdrop",
+      "result": "passed"
+    },
+    {
+      "name": "actual WebGL pixels bend differently from identical frosting",
+      "result": "passed",
+      "detail": {
+        "mean_rgb_difference": 14.9095
+      }
+    },
+    {
+      "name": "press changes actual refracted pixels with content and shine hidden",
+      "result": "passed",
+      "detail": {
+        "mean_rgb_difference": 6.4855
+      }
+    },
+    {
+      "name": "release returns the real optical filter to its resting curvature",
+      "result": "passed"
+    },
+    {
+      "name": "backdrop redraw immediately updates glass without input or screenshots-as-textures",
+      "result": "passed",
+      "detail": {
+        "mean_rgb_difference": 50.6207
+      }
+    },
+    {
+      "name": "keyboard pressure drives the optical spring",
+      "result": "passed"
+    },
+    {
+      "name": "classic homepage and model entry share the live material",
+      "result": "passed"
+    },
+    {
+      "name": "settled text page adds no continuous optical animation",
+      "result": "passed"
+    },
+    {
+      "name": "glass adds no external fonts, background downloads or diagnosis calls",
+      "result": "passed"
+    },
+    {
+      "name": "resizing replaces the geometry without duplicate filters",
+      "result": "passed"
+    },
+    {
+      "name": "disabling glass releases its real optical engine",
+      "result": "passed"
+    },
+    {
+      "name": "reenabling glass restores a single working lens",
+      "result": "passed"
+    },
+    {
+      "name": "new header, zone guide and dock all use the shared live material",
+      "result": "passed"
+    },
+    {
+      "name": "glass guide stays clear of the campus map controls",
+      "result": "passed"
+    },
+    {
+      "name": "zone panel uses a geometry-matched live lens",
+      "result": "passed"
+    },
+    {
+      "name": "actual campus WebGL backdrop is refracted under the dock",
+      "result": "passed",
+      "detail": {
+        "mean_rgb_difference": 0.4377
+      }
+    },
+    {
+      "name": "glass catalog retains search focus and real model filtering",
+      "result": "passed"
+    },
+    {
+      "name": "catalog flex layout and scrollable list stay within the sheet",
+      "result": "passed"
+    },
+    {
+      "name": "dismissed catalog becomes inert and restores trigger focus",
+      "result": "passed"
+    },
+    {
+      "name": "real campus driving remains functional through live overlays",
+      "result": "passed"
+    },
+    {
+      "name": "parked real campus and glass settle without a persistent render loop",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh new UI enables bounded touch refraction",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh new UI fits without horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh real touch pressure changes optical curvature",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh touch cancellation clears pressure and springs",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh below-fold dock releases its SVG renderer",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh classic nav and version capsule share touch optics",
+      "result": "passed"
+    },
+    {
+      "name": "320px zh classic menu remains usable",
+      "result": "passed"
+    },
+    {
+      "name": "375px en new UI enables bounded touch refraction",
+      "result": "passed"
+    },
+    {
+      "name": "375px en new UI fits without horizontal overflow",
+      "result": "passed"
+    },
+    {
+      "name": "375px en real touch pressure changes optical curvature",
+      "result": "passed"
+    },
+    {
+      "name": "375px en touch cancellation clears pressure and springs",
+      "result": "passed"
+    },
+    {
+      "name": "375px en below-fold dock releases its SVG renderer",
+      "result": "passed"
+    },
+    {
+      "name": "375px en classic nav and version capsule share touch optics",
+      "result": "passed"
+    },
+    {
+      "name": "375px en classic menu remains usable",
+      "result": "passed"
+    },
+    {
+      "name": "reduced fallback on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "reduced fallback on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "forced fallback on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "forced removes background sampling on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "forced fallback on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "forced removes background sampling on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "glass-off fallback on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "glass-off removes background sampling on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "glass-off fallback on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "glass-off removes background sampling on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "transparency fallback on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "transparency removes background sampling on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "transparency fallback on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "transparency removes background sampling on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "unsupported fallback on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "unsupported removes background sampling on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "unsupported fallback on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "unsupported removes background sampling on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "safari-fallback fallback on .expo-dock-glass",
+      "result": "passed"
+    },
+    {
+      "name": "safari-fallback fallback on .site-nav-glass",
+      "result": "passed"
+    },
+    {
+      "name": "no browser script errors",
+      "result": "passed"
+    }
+  ],
+  "errors": [],
+  "scope": "Local production. Real WebGL pixel probe and real campus; no WebGL only for fallback/mobile UI isolation. Touch/preferences simulated in Chromium. No live LLM calls or deployment.",
+  "report_origin": "Recovered from all 56 passing assertions in the final 3.2.2 run. The CLI exited during report serialization because its version variable was reused as a locator; the report function and variable have been repaired and serialization checked independently."
+}

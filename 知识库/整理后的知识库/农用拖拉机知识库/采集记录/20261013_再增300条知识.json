@@ -909,8 +909,8 @@
     "index_validation": "0 errors; 15 retained PDFs and supplied 6M external PDF verified; six other remote PDFs not repeated this batch",
     "verify": "passed",
     "tests": {
-      "total": 146,
-      "passed": 144,
+      "total": 149,
+      "passed": 147,
       "failed": 0,
       "skipped": 2
     },
@@ -924,5 +924,21 @@
   "source_fact_storage": "facts only in three new Markdown cards; indexes, hierarchy and receipts contain locating/scope/validation metadata",
   "external_model_validation": "not called; provider credentials explicitly disabled for local HTTP checks",
   "publication": "continue existing personal branch and PR 23 for review; no merge or website deployment",
-  "overview_validation": "input hashes match; both PDF pages visually checked"
+  "overview_validation": "input hashes match; both PDF pages visually checked",
+  "pre_main_validation": {
+    "total": 146,
+    "passed": 144,
+    "failed": 0,
+    "skipped": 2
+  },
+  "integrated_main_commit": "4c47c19c9192ea56bc201edc23c715e98410be91",
+  "knowledge_commit": "bc23b4dc2e59c3319bf62a628f4f3fca4b2c64b0",
+  "post_main_validation": {
+    "verify": "passed",
+    "http_checks": 29,
+    "retrieval_combinations": 1500,
+    "retrieval_failures": 0,
+    "index_preservation_audit": "passed",
+    "runtime_version": "3.4.0"
+  }
 }
