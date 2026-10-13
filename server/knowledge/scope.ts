@@ -218,7 +218,9 @@ export function resolveScope(query: string, context: RetrievalContext): Resolved
   const typeConflict = Boolean(type && (tractorContext ? nonTractor.test(queryTypeIdentity)
     : nonTractor.test(type) && /拖拉机|\btractor\b/i.test(queryTypeIdentity)));
   const identityConflict = brandConflict || modelConflict || typeConflict;
-  const electric = /电动|新能源|无人|electric|autonomous|new-energy/i.test([type, explicitBrand, context.model, queryIdentity].filter(Boolean).join(' ')) ||
+  // Powered hand tools do not identify the tractor's propulsion system.
+  const queryPowerIdentity = queryIdentity.replace(/电动(?:工具|扳手|螺丝刀)|\belectric\s+(?:tools?|wrenches?|screwdrivers?)\b/gi, ' ');
+  const electric = /电动|新能源|无人|electric|autonomous|new-energy/i.test([type, explicitBrand, context.model, queryPowerIdentity].filter(Boolean).join(' ')) ||
     brand === '鸿鹄' || models.includes('t70');
   const ambiguous = queryBrands.length > 1 || contextBrands.length > 1;
   return { brand, models, emissions, configurations, driveConfigurations, ambiguous, identityConflict, tractorArchive, electric, genericKnowledge: tractorArchive && !identityConflict && !electric && !brand && models.length === 0 && emissions.length === 0 && !ambiguous };
