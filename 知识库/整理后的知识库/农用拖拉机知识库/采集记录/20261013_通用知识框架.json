@@ -1,0 +1,387 @@
+{
+  "date_shanghai": "2026-10-13",
+  "project_version": "3.6.0",
+  "schema_version": 1,
+  "scope": "通用分类、问诊与已有知识关联；不新增维修事实、不扩大机型范围、不证明实车性能覆盖",
+  "upstream_base": "aa6f3db8be325a58522affdff2e6c4cff1da78b5",
+  "archive": {
+    "sources": 26,
+    "entries": 1213,
+    "knowledge_documents": 32,
+    "retained_pdf_files": 15,
+    "link_only_pdf_sources": 7,
+    "entry_types": {
+      "安全操作": 53,
+      "操作/维护知识": 809,
+      "维护/故障知识": 313,
+      "机型资料": 5,
+      "资料缺口": 3,
+      "资料索引": 13,
+      "系统适用边界": 2,
+      "资料核验": 9,
+      "系统安装/调试": 6
+    },
+    "errors": 0
+  },
+  "common_framework": {
+    "systems": 15,
+    "performance_targets": 36,
+    "symptoms": 37,
+    "linked_entries": 46,
+    "matrix_cells": 216
+  },
+  "input_sha256": {
+    "entries.jsonl": "466814d7c01b799ee33cbc8c63276dc67abb83c00664cd1be3f472d67b43a760",
+    "sources.json": "7ccf908fb1696d47b896721cf9e63b18b5018cae74a27693dae4b3ff588cec49",
+    "hierarchy.json": "ca7028ca47561332c26e4c26d352ef604269e7cea71e2373a478e6663e49276d",
+    "通用框架.json": "274cfe7c1501004a1acc0b9b897ce28ec0d811330c56e52e827ecd9791ed4923"
+  },
+  "http_validation": {
+    "checks": [
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=starter-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=starter-slow",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-start",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-power",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-unstable",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-noise",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=smoke-dark",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=smoke-white",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=coolant-hot",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=coolant-reading-low",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=oil-pressure",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=oil-consumption",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=fuel-consumption",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=shift-difficult",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=drive-slip",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=vehicle-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=transmission-hot",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=lift-slow",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=hitch-sinking",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=hydraulic-hot",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=remote-slow",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=steering-heavy",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=steering-lost",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=brake-weak",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=brake-pull",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=brake-drag",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=charging",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=vehicle-power",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=lighting",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=axle-leak",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=tyre-wear",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=pto-slip",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=pto-release",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=cab-cooling",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=nav-position",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=nav-track",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=aftertreatment-alert",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94&model=5E-1004&symptom=starter-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94&model=5E-1004&symptom=engine-power&emissionStage=%E5%9B%BD%E5%9B%9B",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E9%B8%BF%E9%B9%84&model=T70&symptom=engine-power",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E4%B9%85%E4%BF%9D%E7%94%B0&model=M6060&symptom=aftertreatment-alert&driveConfiguration=2WD",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=unknown",
+        "status": 404
+      },
+      {
+        "path": "/api/knowledge/catalog?configuration=unknown",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?driveConfiguration=AWD",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?emissionStage=Tier4",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=a&symptom=b",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?model=LF804S",
+        "status": 400
+      },
+      {
+        "chat": "东方红 LF804S",
+        "knowledgeChunks": 6,
+        "provider": "knowledge-base"
+      },
+      {
+        "chat": "约翰迪尔 5E-1004",
+        "knowledgeChunks": 6,
+        "provider": "knowledge-base"
+      },
+      {
+        "chat": "东方红 LF1504(G4)",
+        "knowledgeChunks": 0,
+        "provider": "knowledge-base"
+      }
+    ],
+    "total": 53
+  },
+  "browser_validation": {
+    "results": [
+      {
+        "shell": "old",
+        "viewport": "desktop-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "old",
+        "viewport": "desktop-dark",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "old",
+        "viewport": "mobile-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "old",
+        "viewport": "mobile-dark",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "desktop-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "desktop-dark",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "mobile-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "mobile-dark",
+        "checks": 12,
+        "pageErrors": []
+      }
+    ],
+    "checks": 96
+  },
+  "verification": {
+    "complete_verify": "passed",
+    "external_llm": false,
+    "deployment": false,
+    "field_validation": false,
+    "tests": {
+      "tests": 230,
+      "pass": 228,
+      "fail": 0,
+      "skipped": 2
+    },
+    "version_consistency": true,
+    "typecheck": true,
+    "lint_errors": 0,
+    "production_build": true,
+    "git_diff_check": true
+  },
+  "limitations": [
+    "正常功能基准与恢复验收阶段保留待补",
+    "已有原件及外链来源记录沿用，本次未重新取得外链PDF或全书审校",
+    "资料阶段关联不代表完整检测程序、诊断确诊或所有配置互换"
+  ],
+  "contrast_validation": {
+    "checks": [
+      {
+        "shell": "old",
+        "theme": "light",
+        "width": 390,
+        "contrast": 8.63
+      },
+      {
+        "shell": "old",
+        "theme": "light",
+        "width": 1440,
+        "contrast": 8.63
+      },
+      {
+        "shell": "old",
+        "theme": "dark",
+        "width": 390,
+        "contrast": 9.8
+      },
+      {
+        "shell": "old",
+        "theme": "dark",
+        "width": 1440,
+        "contrast": 9.8
+      },
+      {
+        "shell": "new",
+        "theme": "light",
+        "width": 390,
+        "contrast": 7.15
+      },
+      {
+        "shell": "new",
+        "theme": "light",
+        "width": 1440,
+        "contrast": 7.15
+      },
+      {
+        "shell": "new",
+        "theme": "dark",
+        "width": 390,
+        "contrast": 9.19
+      },
+      {
+        "shell": "new",
+        "theme": "dark",
+        "width": 1440,
+        "contrast": 9.19
+      }
+    ],
+    "total": 8
+  }
+}

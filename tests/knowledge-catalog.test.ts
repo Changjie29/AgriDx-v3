@@ -118,7 +118,8 @@ test('every advertised part has matching evidence and counts are independently d
 });
 
 test('read-only catalogue HTTP API rejects malformed hierarchy filters and unknown parts', async () => {
-  for (const query of ['model=LF804S', 'component=electrical', 'part=starter', 'brand=a&brand=b', 'brand=']) {
+  for (const query of ['model=LF804S', 'component=electrical', 'part=starter', 'brand=a&brand=b', 'brand=',
+    'symptom=starter-slow&symptom=starter-stopped', 'configuration=unknown', 'driveConfiguration=AWD', 'emissionStage=Tier4']) {
     const response = await requestCatalog(query);
     assert.equal(response.status, 400, query);
     assert.equal((await response.json() as { code: string }).code, 'bad_request');
@@ -127,6 +128,20 @@ test('read-only catalogue HTTP API rejects malformed hierarchy filters and unkno
   const response = await requestCatalog(query);
   assert.equal(response.status, 404);
   assert.equal((await response.json() as { code: string }).code, 'knowledge_not_found');
+});
+
+test('通用表现HTTP入口不返回维修正文，完整型号查询与未知配置保留原范围', async () => {
+  const generic = await requestCatalog('symptom=starter-stopped');
+  assert.equal(generic.status, 200);
+  const overview = await generic.json() as KnowledgeCatalog;
+  assert.equal(overview.selected, undefined);
+  assert.equal(overview.common?.selectedSymptom, 'starter-stopped');
+  const model = await requestCatalog(new URLSearchParams({ brand: '东方红', model: 'LF804S', symptom: 'starter-stopped' }));
+  const selected = await model.json() as KnowledgeCatalog;
+  assert.deepEqual(selected.selected?.entries.map(x => x.entryId), ['KB-YTO-LF-MANUAL-007']);
+  const unverified = await requestCatalog(new URLSearchParams({ brand: '东方红', model: 'LF804S', symptom: 'starter-stopped', emissionStage: '国四' }));
+  assert.deepEqual((await unverified.json() as KnowledgeCatalog).selected?.entries, []);
+  assert.equal((await requestCatalog('symptom=unknown')).status, 404);
 });
 
 test('catalogue HTTP selection serves source-backed content without asking an external model', async () => {

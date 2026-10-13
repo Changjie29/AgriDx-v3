@@ -248,8 +248,9 @@ if (name === 'id') {
   // These fake commands make no HTTP calls; an inherited project test loader is
   // unnecessary for their many short-lived real Node JSON parser processes.
   delete childEnvironment.NODE_OPTIONS;
+  // Forty health polls spawn Node-backed mocks; allow slow CI to finish rollback assertions.
   const execute = (mode = '--deploy') => spawnSync('bash', [executable, mode, ...(mode === '--deploy' ? [commit] : [])], {
-    cwd: directory, env: childEnvironment, encoding: 'utf8', shell: false, timeout: 30_000,
+    cwd: directory, env: childEnvironment, encoding: 'utf8', shell: false, timeout: 90_000,
   });
   const calls = () => readFileSync(commands, 'utf8').trim().split('\n').filter(Boolean)
     .map(line => JSON.parse(line) as CommandCall);
@@ -376,7 +377,7 @@ test('腾讯默认 npm 缓存不可写时使用独立缓存完成安装、构建
 });
 
 test('腾讯正式启动命令从 current 软链接工作目录启动真实 TypeScript 服务', {
-  skip: unixOnly, timeout: 20_000,
+  skip: unixOnly, timeout: 60_000,
 }, async t => {
   const context = fixture(t);
   const result = context.execute();

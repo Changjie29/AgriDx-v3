@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 from urllib.parse import urlparse
+from 校验通用框架 import validate_common_framework
 
 ENTRY_TYPES = {
     '维护/故障知识', '操作/维护知识', '安全操作', '系统安装/调试',
@@ -224,18 +225,26 @@ def main():
         except (ValueError, OSError) as error:
             errors.append(f'{label}：{error}')
 
+    common_summary = None
+    try:
+        common_summary = validate_common_framework(REPO)
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        errors.append(f'通用框架：{error}')
+
     report = {
         'generated_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
         'scope': '文件/来源/编号/标题/证据范围校验；不等于全文事实审校、厂家确认或实车验证',
         'summary': {'sources': len(sources), 'entries': len(entries), 'knowledge_documents': len(documents),
                     'retained_pdf_files': retained_pdfs, 'link_only_pdf_sources': external_pdfs,
                     'entry_types': dict(kinds), 'errors': len(errors)},
-        'sources': checked, 'errors': errors, 'notes': notes,
+        'sources': checked, 'errors': errors, 'notes': notes, 'common_framework': common_summary,
     }
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', 'utf8')
     print(json.dumps(report['summary'], ensure_ascii=False))
+    if common_summary:
+        print(json.dumps({'common_framework': common_summary}, ensure_ascii=False))
     for message in errors + notes:
         print(message)
     return 1 if errors else 0

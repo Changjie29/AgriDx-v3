@@ -1,0 +1,2588 @@
+{
+  "schemaVersion": 1,
+  "purpose": "跨品牌共用性能、表现和问诊框架；条目关联仅用于定位原证据，不扩大机型范围或证明故障因果与性能全覆盖。",
+  "questions": [
+    "请记录完整品牌、型号、铭牌/序列号和相关配置。",
+    "请记录冷机/热机、空载/负载、环境与作业工况。",
+    "请区分持续/偶发，记录开始时间、伴随报警及近期维护。",
+    "请提供已有检测结果与维修记录；缺少资料的参数和操作保留待补。"
+  ],
+  "stages": [
+    {
+      "id": "normal",
+      "name": "正常功能与基准"
+    },
+    {
+      "id": "symptom",
+      "name": "故障表现"
+    },
+    {
+      "id": "cause",
+      "name": "候选原因"
+    },
+    {
+      "id": "check",
+      "name": "检查与排除"
+    },
+    {
+      "id": "action",
+      "name": "条件化处置"
+    },
+    {
+      "id": "retest",
+      "name": "恢复验收"
+    }
+  ],
+  "systems": [
+    {
+      "id": "machine",
+      "name": "整机与作业",
+      "componentIds": [
+        "machine"
+      ],
+      "configurationNotes": "结合机具、土壤、负载与配重记录作业表现；整机指标需匹配测试工况。",
+      "performanceTargets": [
+        {
+          "id": "machine-work",
+          "name": "牵引与作业质量"
+        },
+        {
+          "id": "machine-reliability",
+          "name": "运行稳定性与可用性"
+        }
+      ]
+    },
+    {
+      "id": "engine",
+      "name": "发动机与进排气",
+      "componentIds": [
+        "engine"
+      ],
+      "configurationNotes": "机械喷油、电控共轨及增压配置分别核对。",
+      "performanceTargets": [
+        {
+          "id": "engine-start",
+          "name": "发动机着车能力"
+        },
+        {
+          "id": "engine-power",
+          "name": "动力与负载响应"
+        },
+        {
+          "id": "engine-stability",
+          "name": "运转稳定性与异响"
+        },
+        {
+          "id": "engine-smoke",
+          "name": "排烟表现"
+        }
+      ]
+    },
+    {
+      "id": "fuel",
+      "name": "燃油供给",
+      "componentIds": [
+        "fuel"
+      ],
+      "configurationNotes": "燃油种类、供油结构和喷油系统按本机资料确认。",
+      "performanceTargets": [
+        {
+          "id": "fuel-supply",
+          "name": "供油连续性"
+        },
+        {
+          "id": "fuel-economy",
+          "name": "燃油消耗"
+        }
+      ]
+    },
+    {
+      "id": "cooling",
+      "name": "冷却系统",
+      "componentIds": [
+        "cooling"
+      ],
+      "configurationNotes": "温度显示与实际温度分别记录；测量工况和限值来自本机资料。",
+      "performanceTargets": [
+        {
+          "id": "cooling-temperature",
+          "name": "冷却与温度显示"
+        }
+      ]
+    },
+    {
+      "id": "lubrication",
+      "name": "发动机润滑",
+      "componentIds": [
+        "lubrication"
+      ],
+      "configurationNotes": "机油压力、用油与消耗限值需匹配发动机、温度和转速。",
+      "performanceTargets": [
+        {
+          "id": "lubrication-pressure",
+          "name": "润滑压力"
+        },
+        {
+          "id": "lubrication-consumption",
+          "name": "机油消耗与密封"
+        }
+      ]
+    },
+    {
+      "id": "electrical",
+      "name": "起动与电气",
+      "componentIds": [
+        "electrical"
+      ],
+      "configurationNotes": "供电电压、联锁、充电和仪表配置需核对。",
+      "performanceTargets": [
+        {
+          "id": "electrical-start",
+          "name": "起动机转动能力"
+        },
+        {
+          "id": "electrical-charge",
+          "name": "充电能力"
+        },
+        {
+          "id": "electrical-power",
+          "name": "整车供电"
+        },
+        {
+          "id": "electrical-lighting",
+          "name": "照明与信号"
+        },
+        {
+          "id": "electrical-instruments",
+          "name": "仪表与报警"
+        }
+      ]
+    },
+    {
+      "id": "transmission",
+      "name": "离合与传动",
+      "componentIds": [
+        "transmission"
+      ],
+      "configurationNotes": "机械变速、动力换挡、换向和静液压传动分别匹配。",
+      "performanceTargets": [
+        {
+          "id": "transmission-shift",
+          "name": "换挡与换向"
+        },
+        {
+          "id": "transmission-transfer",
+          "name": "动力传递与行驶响应"
+        },
+        {
+          "id": "transmission-temperature",
+          "name": "传动油温与润滑"
+        }
+      ]
+    },
+    {
+      "id": "hydraulics",
+      "name": "液压与三点悬挂",
+      "componentIds": [
+        "hydraulics"
+      ],
+      "configurationNotes": "提升器、远置阀、油缸和液压回路按实际配置区分。",
+      "performanceTargets": [
+        {
+          "id": "hydraulics-lift",
+          "name": "提升能力与速度"
+        },
+        {
+          "id": "hydraulics-hold",
+          "name": "保持与下降控制"
+        },
+        {
+          "id": "hydraulics-temperature",
+          "name": "液压油温"
+        },
+        {
+          "id": "hydraulics-remote",
+          "name": "远置液压响应"
+        }
+      ]
+    },
+    {
+      "id": "steering",
+      "name": "转向",
+      "componentIds": [
+        "steering"
+      ],
+      "configurationNotes": "机械、液压或电控转向按本机配置确认。",
+      "performanceTargets": [
+        {
+          "id": "steering-response",
+          "name": "转向操纵与响应"
+        }
+      ]
+    },
+    {
+      "id": "brakes",
+      "name": "制动",
+      "componentIds": [
+        "brakes"
+      ],
+      "configurationNotes": "机械或液压制动及左右联锁分别核对。",
+      "performanceTargets": [
+        {
+          "id": "brakes-effectiveness",
+          "name": "制动能力与方向稳定性"
+        },
+        {
+          "id": "brakes-release",
+          "name": "制动释放与踏板表现"
+        }
+      ]
+    },
+    {
+      "id": "chassis",
+      "name": "行走、前桥与轮胎",
+      "componentIds": [
+        "chassis"
+      ],
+      "configurationNotes": "两驱、四驱、轮胎规格及配重按实车核对。",
+      "performanceTargets": [
+        {
+          "id": "chassis-traction",
+          "name": "牵引与轮胎滑转"
+        },
+        {
+          "id": "chassis-wear",
+          "name": "轮胎与轮系磨损"
+        },
+        {
+          "id": "chassis-sealing",
+          "name": "前桥及轮系密封"
+        }
+      ]
+    },
+    {
+      "id": "pto",
+      "name": "动力输出与机具接口",
+      "componentIds": [
+        "pto"
+      ],
+      "configurationNotes": "PTO转速、离合、联动和机具要求需匹配。",
+      "performanceTargets": [
+        {
+          "id": "pto-drive",
+          "name": "动力输出与负载响应"
+        },
+        {
+          "id": "pto-disengage",
+          "name": "动力输出接合与分离"
+        }
+      ]
+    },
+    {
+      "id": "cab",
+      "name": "驾驶室与保护装置",
+      "componentIds": [
+        "cab"
+      ],
+      "configurationNotes": "CAB、ROPS及空调配置单独确认；过滤器不推定防护等级。",
+      "performanceTargets": [
+        {
+          "id": "cab-climate",
+          "name": "送风与制冷"
+        },
+        {
+          "id": "cab-protection",
+          "name": "防翻与保护装置状态"
+        }
+      ]
+    },
+    {
+      "id": "navigation",
+      "name": "配套导航与辅助转向",
+      "componentIds": [
+        "navigation"
+      ],
+      "configurationNotes": "仅配置相应系统时纳入；配套品牌资料与拖拉机整机资料分别匹配。",
+      "performanceTargets": [
+        {
+          "id": "navigation-position",
+          "name": "定位与通信状态"
+        },
+        {
+          "id": "navigation-track",
+          "name": "轨迹与作业衔接"
+        }
+      ]
+    },
+    {
+      "id": "aftertreatment",
+      "name": "排气后处理",
+      "componentIds": [
+        "engine"
+      ],
+      "configurationNotes": "按实际DPF、SCR等配置纳入；排放标签、系统结构及软件版本需匹配。",
+      "performanceTargets": [
+        {
+          "id": "aftertreatment-state",
+          "name": "后处理报警与再生状态"
+        }
+      ]
+    }
+  ],
+  "symptoms": [
+    {
+      "id": "starter-stopped",
+      "name": "起动机不转",
+      "aliases": [
+        "起动机不工作",
+        "启动马达不转"
+      ],
+      "systemIds": [
+        "electrical"
+      ],
+      "performanceIds": [
+        "electrical-start"
+      ],
+      "questions": [
+        "钥匙操作后完全不转，还是能转但不能着车？",
+        "仪表与照明是否同时失效？"
+      ]
+    },
+    {
+      "id": "starter-slow",
+      "name": "起动机转动慢或无力",
+      "aliases": [
+        "起动过慢",
+        "启动马达没劲"
+      ],
+      "systemIds": [
+        "electrical"
+      ],
+      "performanceIds": [
+        "electrical-start"
+      ],
+      "questions": [
+        "冷机和热机的起动转速表现有何不同？",
+        "是否已有电瓶、接线或起动机检测记录？"
+      ]
+    },
+    {
+      "id": "engine-start",
+      "name": "发动机难着车或不能着车",
+      "aliases": [
+        "启动困难",
+        "打不着火"
+      ],
+      "systemIds": [
+        "engine",
+        "fuel"
+      ],
+      "performanceIds": [
+        "engine-start",
+        "fuel-supply"
+      ],
+      "questions": [
+        "起动机是否转动，转动速度和平时相比怎样？",
+        "是否伴随排烟、报警或近期燃油维护？"
+      ]
+    },
+    {
+      "id": "engine-power",
+      "name": "动力不足",
+      "aliases": [
+        "发动机没劲",
+        "功率不足"
+      ],
+      "systemIds": [
+        "engine",
+        "fuel"
+      ],
+      "performanceIds": [
+        "engine-power",
+        "fuel-supply"
+      ],
+      "questions": [
+        "发动机转速、车速和负载变化分别是什么？",
+        "换了机具、土壤或配重后才出现，还是原工况也出现？"
+      ]
+    },
+    {
+      "id": "engine-unstable",
+      "name": "运转不稳或熄火",
+      "aliases": [
+        "憋熄",
+        "突然停机"
+      ],
+      "systemIds": [
+        "engine",
+        "fuel"
+      ],
+      "performanceIds": [
+        "engine-stability",
+        "fuel-supply"
+      ],
+      "questions": [
+        "怠速和带负载时是否都发生？",
+        "是突然熄火，还是转速波动后熄火？"
+      ]
+    },
+    {
+      "id": "engine-noise",
+      "name": "发动机异响",
+      "aliases": [
+        "爆震",
+        "异常响声"
+      ],
+      "systemIds": [
+        "engine"
+      ],
+      "performanceIds": [
+        "engine-stability"
+      ],
+      "questions": [
+        "响声何时出现，是否随转速或负载变化？",
+        "有无同步温度、压力或报警记录？"
+      ]
+    },
+    {
+      "id": "smoke-dark",
+      "name": "黑烟或灰烟",
+      "aliases": [
+        "冒黑烟",
+        "冒灰烟"
+      ],
+      "systemIds": [
+        "engine"
+      ],
+      "performanceIds": [
+        "engine-smoke"
+      ],
+      "questions": [
+        "排烟发生于起动、加速还是持续负载？",
+        "是否同时动力下降或负载变化？"
+      ]
+    },
+    {
+      "id": "smoke-white",
+      "name": "白烟",
+      "aliases": [
+        "冒白烟"
+      ],
+      "systemIds": [
+        "engine"
+      ],
+      "performanceIds": [
+        "engine-smoke"
+      ],
+      "questions": [
+        "冷机、热机和带负载时的排烟表现是什么？",
+        "有无温度变化、燃油变化及近期维护记录？"
+      ]
+    },
+    {
+      "id": "coolant-hot",
+      "name": "发动机过热",
+      "aliases": [
+        "开锅",
+        "水温过高"
+      ],
+      "systemIds": [
+        "cooling"
+      ],
+      "performanceIds": [
+        "cooling-temperature"
+      ],
+      "questions": [
+        "具体显示、报警和已有测量读数是什么？",
+        "发生时的负载、环境温度与持续时间是什么？"
+      ]
+    },
+    {
+      "id": "coolant-reading-low",
+      "name": "温度显示偏低",
+      "aliases": [
+        "水温表偏低"
+      ],
+      "systemIds": [
+        "cooling",
+        "electrical"
+      ],
+      "performanceIds": [
+        "cooling-temperature",
+        "electrical-instruments"
+      ],
+      "questions": [
+        "仅仪表显示偏低，还是已有实际温度测量？",
+        "是否存在传感器、仪表更换或检测记录？"
+      ]
+    },
+    {
+      "id": "oil-pressure",
+      "name": "机油压力异常",
+      "aliases": [
+        "机油压力低",
+        "油压报警"
+      ],
+      "systemIds": [
+        "lubrication"
+      ],
+      "performanceIds": [
+        "lubrication-pressure"
+      ],
+      "questions": [
+        "是警告灯、仪表读数还是检测报告提示？",
+        "对应的发动机温度和转速是什么？"
+      ]
+    },
+    {
+      "id": "oil-consumption",
+      "name": "机油消耗或渗漏异常",
+      "aliases": [
+        "烧机油",
+        "机油消耗高"
+      ],
+      "systemIds": [
+        "lubrication"
+      ],
+      "performanceIds": [
+        "lubrication-consumption"
+      ],
+      "questions": [
+        "使用时长、补油量和油位记录是否齐全？",
+        "是否有外部渗漏或排烟变化？"
+      ]
+    },
+    {
+      "id": "fuel-consumption",
+      "name": "燃油消耗偏高",
+      "aliases": [
+        "油耗高"
+      ],
+      "systemIds": [
+        "fuel"
+      ],
+      "performanceIds": [
+        "fuel-economy"
+      ],
+      "questions": [
+        "相同机具、作业量和工况下如何比较油耗？",
+        "是否同时有负载、动力或排烟变化？"
+      ]
+    },
+    {
+      "id": "shift-difficult",
+      "name": "换挡困难或挂挡异响",
+      "aliases": [
+        "挂挡困难",
+        "挂挡响"
+      ],
+      "systemIds": [
+        "transmission"
+      ],
+      "performanceIds": [
+        "transmission-shift"
+      ],
+      "questions": [
+        "具体挡位、换向方向和发生工况是什么？",
+        "变速箱类型及离合操纵配置是否已确认？"
+      ]
+    },
+    {
+      "id": "drive-slip",
+      "name": "传动打滑",
+      "aliases": [
+        "离合器打滑"
+      ],
+      "systemIds": [
+        "transmission"
+      ],
+      "performanceIds": [
+        "transmission-transfer"
+      ],
+      "questions": [
+        "发动机转速、车速与轮胎滑转分别怎样变化？",
+        "空载和负载下表现是否不同？"
+      ]
+    },
+    {
+      "id": "vehicle-stopped",
+      "name": "操纵后车辆不动",
+      "aliases": [
+        "拖拉机不走"
+      ],
+      "systemIds": [
+        "transmission"
+      ],
+      "performanceIds": [
+        "transmission-transfer"
+      ],
+      "questions": [
+        "发动机是否正常运转，具体操纵与挡位状态是什么？",
+        "机械、动力换挡或HST配置是什么，有无代码？"
+      ]
+    },
+    {
+      "id": "transmission-hot",
+      "name": "变速箱油温异常",
+      "aliases": [
+        "变速箱过热"
+      ],
+      "systemIds": [
+        "transmission"
+      ],
+      "performanceIds": [
+        "transmission-temperature"
+      ],
+      "questions": [
+        "油温异常由什么显示或检测记录支持？",
+        "发生时的负载、持续时间与油品记录是什么？"
+      ]
+    },
+    {
+      "id": "lift-slow",
+      "name": "农具不能提升或提升缓慢",
+      "aliases": [
+        "提升无力",
+        "升不起来"
+      ],
+      "systemIds": [
+        "hydraulics"
+      ],
+      "performanceIds": [
+        "hydraulics-lift"
+      ],
+      "questions": [
+        "不能提升、速度慢和抖动分别是否存在？",
+        "机具负载、冷油/热油及远置液压表现是什么？"
+      ]
+    },
+    {
+      "id": "hitch-sinking",
+      "name": "农具自行下沉或下降异常",
+      "aliases": [
+        "频繁点头",
+        "下降过快",
+        "下降缓慢"
+      ],
+      "systemIds": [
+        "hydraulics"
+      ],
+      "performanceIds": [
+        "hydraulics-hold"
+      ],
+      "questions": [
+        "发动机运行和停机后是否都下沉？",
+        "下降速度、负载及控制配置是否有记录？"
+      ]
+    },
+    {
+      "id": "hydraulic-hot",
+      "name": "液压油温异常",
+      "aliases": [
+        "液压油过热"
+      ],
+      "systemIds": [
+        "hydraulics"
+      ],
+      "performanceIds": [
+        "hydraulics-temperature"
+      ],
+      "questions": [
+        "对应读数、报警和发生工况是什么？",
+        "是否伴随悬挂或远置液压响应变化？"
+      ]
+    },
+    {
+      "id": "remote-slow",
+      "name": "远置液压动作缓慢",
+      "aliases": [
+        "外置油缸无力"
+      ],
+      "systemIds": [
+        "hydraulics"
+      ],
+      "performanceIds": [
+        "hydraulics-remote"
+      ],
+      "questions": [
+        "具体油缸、接口与阀位配置是什么？",
+        "方向、速度和负载变化分别是什么？"
+      ]
+    },
+    {
+      "id": "steering-heavy",
+      "name": "转向沉重或不灵活",
+      "aliases": [
+        "方向重"
+      ],
+      "systemIds": [
+        "steering"
+      ],
+      "performanceIds": [
+        "steering-response"
+      ],
+      "questions": [
+        "左右方向、冷机/热机和行驶工况是否有差别？",
+        "转向系统及辅助转向配置是否已确认？"
+      ]
+    },
+    {
+      "id": "steering-lost",
+      "name": "转向无响应",
+      "aliases": [
+        "转向失灵"
+      ],
+      "systemIds": [
+        "steering"
+      ],
+      "performanceIds": [
+        "steering-response"
+      ],
+      "questions": [
+        "完全无响应还是间歇异常？",
+        "已有报警、检测及专业支持记录是什么？"
+      ]
+    },
+    {
+      "id": "brake-weak",
+      "name": "制动能力下降",
+      "aliases": [
+        "制动不灵",
+        "刹不住"
+      ],
+      "systemIds": [
+        "brakes"
+      ],
+      "performanceIds": [
+        "brakes-effectiveness"
+      ],
+      "questions": [
+        "左右制动表现及踏板状态分别是什么？",
+        "已有检测记录和本机制动结构是什么？"
+      ]
+    },
+    {
+      "id": "brake-pull",
+      "name": "制动跑偏",
+      "aliases": [
+        "刹车跑偏"
+      ],
+      "systemIds": [
+        "brakes"
+      ],
+      "performanceIds": [
+        "brakes-effectiveness"
+      ],
+      "questions": [
+        "偏向是否固定，是否伴随轮胎或路面变化？",
+        "左右制动及联锁状态有无记录？"
+      ]
+    },
+    {
+      "id": "brake-drag",
+      "name": "制动拖滞或踏板异常",
+      "aliases": [
+        "踏板无坚实感",
+        "制动器拖滞"
+      ],
+      "systemIds": [
+        "brakes"
+      ],
+      "performanceIds": [
+        "brakes-release"
+      ],
+      "questions": [
+        "踏板感觉、释放情况和温升分别是什么？",
+        "具体制动配置及近期维护是什么？"
+      ]
+    },
+    {
+      "id": "charging",
+      "name": "充电异常",
+      "aliases": [
+        "电瓶不充电",
+        "充电灯亮"
+      ],
+      "systemIds": [
+        "electrical"
+      ],
+      "performanceIds": [
+        "electrical-charge"
+      ],
+      "questions": [
+        "是充电警告灯、检测值还是电瓶使用表现？",
+        "发动机运转状态及已有检测记录是什么？"
+      ]
+    },
+    {
+      "id": "vehicle-power",
+      "name": "整车电气失效",
+      "aliases": [
+        "全车断电"
+      ],
+      "systemIds": [
+        "electrical"
+      ],
+      "performanceIds": [
+        "electrical-power"
+      ],
+      "questions": [
+        "仪表、照明、起动功能是否同时失效？",
+        "发生于停车后、起动时还是运行中？"
+      ]
+    },
+    {
+      "id": "lighting",
+      "name": "照明或信号异常",
+      "aliases": [
+        "灯不亮"
+      ],
+      "systemIds": [
+        "electrical"
+      ],
+      "performanceIds": [
+        "electrical-lighting"
+      ],
+      "questions": [
+        "只有某盏灯失效，还是多个电气功能同时失效？",
+        "具体灯具配置与近期更换记录是什么？"
+      ]
+    },
+    {
+      "id": "axle-leak",
+      "name": "前桥或轮系漏油",
+      "aliases": [
+        "前驱桥漏油"
+      ],
+      "systemIds": [
+        "chassis"
+      ],
+      "performanceIds": [
+        "chassis-sealing"
+      ],
+      "questions": [
+        "渗漏部位、程度和发生工况是否有记录？",
+        "驱动配置、桥型号和近期维护是什么？"
+      ]
+    },
+    {
+      "id": "tyre-wear",
+      "name": "轮胎或轮系异常磨损",
+      "aliases": [
+        "轮胎偏磨"
+      ],
+      "systemIds": [
+        "chassis"
+      ],
+      "performanceIds": [
+        "chassis-wear"
+      ],
+      "questions": [
+        "磨损位置、左右差异及使用工况是什么？",
+        "轮胎规格、配重和四驱使用记录是什么？"
+      ]
+    },
+    {
+      "id": "pto-slip",
+      "name": "动力输出打滑或负载响应异常",
+      "aliases": [
+        "PTO打滑"
+      ],
+      "systemIds": [
+        "pto"
+      ],
+      "performanceIds": [
+        "pto-drive"
+      ],
+      "questions": [
+        "是轴转速变化，还是机具作业表现变化？",
+        "PTO与机具型号、挡位及负载是否已确认？"
+      ]
+    },
+    {
+      "id": "pto-release",
+      "name": "动力输出接合或分离异常",
+      "aliases": [
+        "PTO不能分离"
+      ],
+      "systemIds": [
+        "pto"
+      ],
+      "performanceIds": [
+        "pto-disengage"
+      ],
+      "questions": [
+        "具体接合、分离和联动表现是什么？",
+        "本机PTO离合与控制配置是否已确认？"
+      ]
+    },
+    {
+      "id": "cab-cooling",
+      "name": "驾驶室送风或制冷异常",
+      "aliases": [
+        "空调不制冷",
+        "送风量小"
+      ],
+      "systemIds": [
+        "cab"
+      ],
+      "performanceIds": [
+        "cab-climate"
+      ],
+      "questions": [
+        "有无送风，制冷是持续异常还是间歇异常？",
+        "是否为CAB车型，空调和风机配置是什么？"
+      ]
+    },
+    {
+      "id": "nav-position",
+      "name": "配套导航定位或通信异常",
+      "aliases": [
+        "未定位",
+        "导航断联"
+      ],
+      "systemIds": [
+        "navigation"
+      ],
+      "performanceIds": [
+        "navigation-position"
+      ],
+      "questions": [
+        "配套系统品牌、完整型号和版本是什么？",
+        "具体卫星、通信显示及发生条件是什么？"
+      ]
+    },
+    {
+      "id": "nav-track",
+      "name": "辅助转向轨迹或作业衔接异常",
+      "aliases": [
+        "交接垄不准"
+      ],
+      "systemIds": [
+        "navigation"
+      ],
+      "performanceIds": [
+        "navigation-track"
+      ],
+      "questions": [
+        "配套型号及拖拉机安装配置是否明确？",
+        "误差表现、方向和作业工况是什么？"
+      ]
+    },
+    {
+      "id": "aftertreatment-alert",
+      "name": "后处理报警或再生异常",
+      "aliases": [
+        "DPF报警",
+        "再生异常"
+      ],
+      "systemIds": [
+        "aftertreatment"
+      ],
+      "performanceIds": [
+        "aftertreatment-state"
+      ],
+      "questions": [
+        "实际后处理配置、报警原文或代码是什么？",
+        "手册版本、运行工况与再生记录是否齐全？"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "entryId": "KB-JD-5E-D0-057",
+      "symptomIds": [
+        "engine-start"
+      ],
+      "performanceIds": [
+        "engine-start",
+        "fuel-supply"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-058",
+      "symptomIds": [
+        "engine-noise"
+      ],
+      "performanceIds": [
+        "engine-stability"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-059",
+      "symptomIds": [
+        "engine-unstable"
+      ],
+      "performanceIds": [
+        "engine-stability",
+        "fuel-supply"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-060",
+      "symptomIds": [
+        "coolant-reading-low"
+      ],
+      "performanceIds": [
+        "cooling-temperature",
+        "electrical-instruments"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-061",
+      "symptomIds": [
+        "engine-power"
+      ],
+      "performanceIds": [
+        "engine-power",
+        "fuel-supply"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-062",
+      "symptomIds": [
+        "oil-pressure"
+      ],
+      "performanceIds": [
+        "lubrication-pressure"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-063",
+      "symptomIds": [
+        "oil-consumption"
+      ],
+      "performanceIds": [
+        "lubrication-consumption"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-064",
+      "symptomIds": [
+        "smoke-dark"
+      ],
+      "performanceIds": [
+        "engine-smoke"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-065",
+      "symptomIds": [
+        "smoke-white"
+      ],
+      "performanceIds": [
+        "engine-smoke"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-066",
+      "symptomIds": [
+        "coolant-hot"
+      ],
+      "performanceIds": [
+        "cooling-temperature"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-067",
+      "symptomIds": [
+        "fuel-consumption"
+      ],
+      "performanceIds": [
+        "fuel-economy"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-068",
+      "symptomIds": [
+        "transmission-hot"
+      ],
+      "performanceIds": [
+        "transmission-temperature"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-070",
+      "symptomIds": [
+        "shift-difficult"
+      ],
+      "performanceIds": [
+        "transmission-shift"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-072",
+      "symptomIds": [
+        "hydraulic-hot"
+      ],
+      "performanceIds": [
+        "hydraulics-temperature"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-073",
+      "symptomIds": [
+        "brake-drag"
+      ],
+      "performanceIds": [
+        "brakes-release"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-074",
+      "symptomIds": [
+        "brake-drag"
+      ],
+      "performanceIds": [
+        "brakes-release"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-076",
+      "symptomIds": [
+        "hitch-sinking"
+      ],
+      "performanceIds": [
+        "hydraulics-hold"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-077",
+      "symptomIds": [
+        "lift-slow"
+      ],
+      "performanceIds": [
+        "hydraulics-lift"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-079",
+      "symptomIds": [
+        "lift-slow"
+      ],
+      "performanceIds": [
+        "hydraulics-lift"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-081",
+      "symptomIds": [
+        "hitch-sinking"
+      ],
+      "performanceIds": [
+        "hydraulics-hold"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-084",
+      "symptomIds": [
+        "remote-slow"
+      ],
+      "performanceIds": [
+        "hydraulics-remote"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-086",
+      "symptomIds": [
+        "charging"
+      ],
+      "performanceIds": [
+        "electrical-charge"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-087",
+      "symptomIds": [
+        "charging"
+      ],
+      "performanceIds": [
+        "electrical-charge"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-088",
+      "symptomIds": [
+        "starter-stopped"
+      ],
+      "performanceIds": [
+        "electrical-start"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-089",
+      "symptomIds": [
+        "starter-slow"
+      ],
+      "performanceIds": [
+        "electrical-start"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-090",
+      "symptomIds": [
+        "vehicle-power"
+      ],
+      "performanceIds": [
+        "electrical-power"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-092",
+      "symptomIds": [
+        "drive-slip"
+      ],
+      "performanceIds": [
+        "transmission-transfer"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-093",
+      "symptomIds": [
+        "shift-difficult"
+      ],
+      "performanceIds": [
+        "transmission-shift"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-094",
+      "symptomIds": [
+        "steering-heavy"
+      ],
+      "performanceIds": [
+        "steering-response"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-095",
+      "symptomIds": [
+        "steering-lost"
+      ],
+      "performanceIds": [
+        "steering-response"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-096",
+      "symptomIds": [
+        "axle-leak"
+      ],
+      "performanceIds": [
+        "chassis-sealing"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-5E-D0-097",
+      "symptomIds": [
+        "lighting",
+        "vehicle-power"
+      ],
+      "performanceIds": [
+        "electrical-lighting",
+        "electrical-power"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "照明失灵但其他电气功能正常"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "候选"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "核对"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "指向授权经销商"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "ZL-PL-027",
+      "symptomIds": [
+        "vehicle-stopped"
+      ],
+      "performanceIds": [
+        "transmission-transfer"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "ZL-PL-035",
+      "symptomIds": [
+        "remote-slow"
+      ],
+      "performanceIds": [
+        "hydraulics-remote"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "ZL-PL-016",
+      "symptomIds": [
+        "tyre-wear"
+      ],
+      "performanceIds": [
+        "chassis-wear"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "轮胎磨损"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "核查胎压"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "咨询授权经销商"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "ZL-PL-014",
+      "symptomIds": [
+        "pto-slip",
+        "pto-release"
+      ],
+      "performanceIds": [
+        "pto-drive",
+        "pto-disengage"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "PTO离合器打滑",
+            "离合器不能分离"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能起因"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "检查"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "咨询授权经销商"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-YTO-LF-MANUAL-007",
+      "symptomIds": [
+        "starter-stopped"
+      ],
+      "performanceIds": [
+        "electrical-start"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "起动机不转"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "原因包括"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "检查蓄电池充电状态"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "清洁并紧固"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-YTO-LF-MANUAL-008",
+      "symptomIds": [
+        "starter-slow"
+      ],
+      "performanceIds": [
+        "electrical-start"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "起动机转动无力"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "其他可能原因"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "核对充电状态"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "按检测结果处理"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-YTO-LF-MANUAL-012",
+      "symptomIds": [
+        "lift-slow"
+      ],
+      "performanceIds": [
+        "hydraulics-lift"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "不能提升"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "检查方向"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "核对油位"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "按检查结果"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-YTO-LF-MANUAL-013",
+      "symptomIds": [
+        "hitch-sinking"
+      ],
+      "performanceIds": [
+        "hydraulics-hold"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "静沉降快"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "泄漏"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "检查应围绕"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "确认泄漏部位后"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-YTO-LF-MANUAL-015",
+      "symptomIds": [
+        "brake-weak",
+        "brake-pull"
+      ],
+      "performanceIds": [
+        "brakes-effectiveness"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "制动不灵",
+            "制动跑偏"
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "摩擦片严重磨损"
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "按检查结果处理"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-6M-20261013-111",
+      "symptomIds": [
+        "cab-cooling"
+      ],
+      "performanceIds": [
+        "cab-climate"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-6M-20261013-113",
+      "symptomIds": [
+        "cab-cooling"
+      ],
+      "performanceIds": [
+        "cab-climate"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-JD-6M-20261013-114",
+      "symptomIds": [
+        "cab-cooling"
+      ],
+      "performanceIds": [
+        "cab-climate"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "cause",
+          "evidenceTerms": [
+            "可能原因："
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "诊断步骤："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "维修建议："
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-QX-QY210PRO-V01-003",
+      "symptomIds": [
+        "nav-position",
+        "nav-track"
+      ],
+      "performanceIds": [
+        "navigation-position",
+        "navigation-track"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "未定位",
+            "交接垄不准"
+          ]
+        },
+        {
+          "id": "check",
+          "evidenceTerms": [
+            "先查天线遮挡与连接",
+            "先查农具固定和宽度设置"
+          ]
+        }
+      ]
+    },
+    {
+      "entryId": "KB-KB-M60-20261013-079",
+      "symptomIds": [
+        "aftertreatment-alert"
+      ],
+      "performanceIds": [
+        "aftertreatment-state"
+      ],
+      "stages": [
+        {
+          "id": "symptom",
+          "evidenceTerms": [
+            "故障现象："
+          ]
+        },
+        {
+          "id": "action",
+          "evidenceTerms": [
+            "须经销商维修"
+          ]
+        }
+      ]
+    }
+  ]
+}
