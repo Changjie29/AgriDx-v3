@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ThemeSwitch from '@/components/ThemeSwitch';
 
 export default function NotFoundPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-6">
       <div className="text-center">
+        <ThemeSwitch className="mx-auto mb-6" />
         <div className="font-serif text-7xl font-bold text-primary/30">404</div>
         <h1 className="mt-4 font-serif text-2xl font-bold text-foreground">页面未找到</h1>
         <p className="mt-2 text-sm text-muted-foreground">

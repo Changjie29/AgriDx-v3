@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, LayoutGroup, useReducedMotion } from 'framer-motion';
 import VersionSwitch from '@/components/VersionSwitch';
+import ThemeSwitch from '@/components/ThemeSwitch';
 import FloatingPanel from '@/components/FloatingPanel';
 import { LiquidSelection } from '@/components/ui/liquid-selection';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
@@ -324,6 +325,7 @@ export default function ExhibitionPage() {
         </div>
         <LiquidGlass lens variant="clear" displacementScale={24} className="expo-header-glass" contentClassName="expo-header-tools">
           <VersionSwitch exhibition />
+          <ThemeSwitch />
           <button
             type="button"
             className="expo-icon-button"

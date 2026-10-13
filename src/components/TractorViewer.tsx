@@ -9,6 +9,7 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import TractorModel from './TractorModel';
 import { TRACTOR_MODEL_URL, type TractorComponent } from './tractor-model-info';
 import { useLang } from '@/hooks/useLang';
+import { useTheme } from '@/hooks/useTheme';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
 import { LiquidSelection } from '@/components/ui/liquid-selection';
 import { LayoutGroup } from 'framer-motion';
@@ -24,7 +25,7 @@ const AUTO_ROTATE_SPEED = 0.8;
 const GL_CONFIG = { antialias: true, alpha: true } as const;
 const DPR_CONFIG: [number, number] = [1, 1.5];
 const LIGHT_COLORS = {
-  dark: { background: '#1a2420', fog: '#1a2420', cell: '#2e3a34', section: '#4a5a50' },
+  dark: { background: '#18232e', fog: '#18232e', cell: '#344654', section: '#657c8b' },
   light: { background: '#eef3ef', fog: '#eef3ef', cell: '#d9e3dc', section: '#c3d2c7' },
 } as const;
 
@@ -129,30 +130,7 @@ export default function TractorViewer({ component = 'all', exploded = false, mod
     setModelError(null);
   }, [modelUrl]);
 
-  // 跟随暗色模式：监听 html 上的 theme-dark/theme-light class
-  const [isDark, setIsDark] = useState(
-    () =>
-      document.documentElement.classList.contains('theme-dark') ||
-      (!document.documentElement.classList.contains('theme-light') &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches),
-  );
-  useEffect(() => {
-    const update = () => {
-      const next =
-        document.documentElement.classList.contains('theme-dark') ||
-        (!document.documentElement.classList.contains('theme-light') &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches);
-      // 先比较再 setState，避免 MutationObserver 触发无意义重渲染
-      setIsDark((prev) => (prev === next ? prev : next));
-    };
-    const observer = new MutationObserver(update);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', update);
-    return () => {
-      observer.disconnect();
-      window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', update);
-    };
-  }, []);
+  const isDark = useTheme() === 'dark';
 
   // 通过 ref 直接启停 OrbitControls 内置自动旋转
   // 不用 React state 驱动 prop，避免 prop 变化触发组件重渲染导致相机重置

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type FormEvent, type ReactNode } from
 import { Link } from 'react-router-dom';
 import { Activity, ArrowLeft, ArrowUpRight, ChevronLeft, ChevronRight, Download, Github, LayoutDashboard, LogOut, MessageSquare, RefreshCw, Search, Server, ShieldCheck, Users } from 'lucide-react';
 import { useLang } from '../hooks/useLang';
+import ThemeSwitch from '../components/ThemeSwitch';
 import { version } from '../../package.json';
 import './developer.css';
 
@@ -132,7 +133,7 @@ export default function DeveloperPage() {
   return <div className="dev-console">
     <header className="console-header">
       <Link to="/" className="console-back"><ArrowLeft size={18} /><span>{t('返回开发站', 'Back to website')}</span></Link>
-      <div className="console-header-actions"><Badge>DEV · {version}</Badge><a href="https://github.com/srt2777/AgriDx-v3" target="_blank" rel="noreferrer"><Github size={17} /><span>AgriDx-v3</span><ArrowUpRight size={14} /></a></div>
+      <div className="console-header-actions"><ThemeSwitch /><Badge>DEV · {version}</Badge><a href="https://github.com/srt2777/AgriDx-v3" target="_blank" rel="noreferrer"><Github size={17} /><span>AgriDx-v3</span><ArrowUpRight size={14} /></a></div>
     </header>
     <main className="console-main">
       <div className="console-title"><div><p className="console-eyebrow">AGRIDX / DEVELOPMENT</p><h1>{t('开发控制台', 'Developer console')}</h1><p>{t('看清访问、提问和当前运行版本。', 'Visits, questions and the versions running now.')}</p></div>{user && <div className="console-account"><ShieldCheck size={18} /><span>{user.login}</span><button type="button" onClick={() => { void logout(); }} aria-label={t('退出登录', 'Sign out')}><LogOut size={17} /></button></div>}</div>

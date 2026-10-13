@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import { ArrowUpRight, Loader2, Tractor } from 'lucide-react';
 import TractorModel from '@/components/TractorModel';
 import { useLang } from '@/hooks/useLang';
+import { useTheme } from '@/hooks/useTheme';
 import {
   initialDriveState,
   nearbyZone,
@@ -307,11 +308,12 @@ function Pavilion({
 }
 
 function CampusFloor() {
+  const dark = useTheme() === 'dark';
   const small = useThree((state) => state.size.width < 700);
   const posts = useMemo(() => Array.from({ length: 12 }, (_, i) => -11 + i * 2), []);
   return (
     <group>
-      <Block position={[0, -0.5, 0]} size={[29, 0.9, 24]} color="#101c2a" />
+      <Block position={[0, -0.5, 0]} size={[29, 0.9, 24]} color={dark ? '#202e3a' : '#c4d3df'} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.035, 0]} receiveShadow>
         <planeGeometry args={[28.7, 23.7]} />
         <MeshReflectorMaterial
@@ -320,7 +322,7 @@ function CampusFloor() {
           mixBlur={small ? 0 : 0.75}
           mixStrength={1.3}
           mirror={0.3}
-          color="#132232"
+          color={dark ? '#293c4b' : '#b5c9d7'}
           roughness={0.65}
           metalness={0.7}
           depthScale={0.4}
@@ -358,7 +360,7 @@ function CampusFloor() {
           <Block position={[0, 0.012, value]} size={[0.025, 0.018, 0.6]} color="#94aab4" />
         </group>
       ))}
-      <Ring position={[0, 0.025, 0]} radius={3.2} color="#416978" thickness={0.013} />
+      <Ring position={[0, 0.025, 0]} radius={3.2} color={dark ? '#cfb785' : '#a17c38'} thickness={0.013} />
       <Ring position={[0, 0.025, 0]} radius={2.9} color="#254353" thickness={0.014} />
       {[-1, 1].map((sign) => (
         <group key={sign} position={[sign * 13.15, 0, 0]}>
@@ -412,6 +414,8 @@ function WorldScene({
   const viewTarget = useMemo(() => new THREE.Vector3(), []);
   const viewPosition = useMemo(() => new THREE.Vector3(), []);
   const { camera, size, invalidate } = useThree();
+  const theme = useTheme();
+  useEffect(() => { invalidate(); }, [theme, invalidate]);
 
   useEffect(() => {
     input.wake = invalidate;
@@ -511,8 +515,8 @@ function WorldScene({
 
   return (
     <>
-      <fog attach="fog" args={['#080f1b', 42, 100]} />
-      <ambientLight intensity={0.7} color="#b4c9dc" />
+      <fog attach="fog" args={[theme === 'dark' ? '#18232e' : '#eaf0f5', 42, 100]} />
+      <ambientLight intensity={theme === 'dark' ? 0.85 : 1.15} color="#d6e2eb" />
       <directionalLight
         position={[-8, 18, 10]}
         intensity={3.2}
