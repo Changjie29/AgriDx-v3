@@ -25,6 +25,7 @@ const BRAND_ALIASES: Record<string, string[]> = {
 };
 
 let indexedManualNumbers: string[] = [];
+let indexedReferenceIds = new Set<string>();
 
 function escapeRegex(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -34,6 +35,10 @@ function escapeRegex(text: string): string {
 function withoutReferences(text: string): string {
   let clean = text.replace(/\[[^\]\r\n]*\]\((?:https?:\/\/|\/)[^)\r\n]*\)|https?:\/\/[^\s<>，；。！？、：,;!:]+?\.(?:pdf|md)(?=\.[\u4e00-\u9fff])|https?:\/\/[^\s<>，；。！？、：,;!:]+|\b(?:SRC|KB|NH|ZL|LV|DF|HH)-[A-Z0-9-]+\b|(?:\/|知识库\/|server\/)[^\s<>，；。！？、：,;:!]+?\.(?:pdf|md)\b|(?<![a-z0-9])[a-z0-9][a-z0-9_.-]*?\.(?:pdf|md)\b/gi,
     (reference) => ' '.repeat(reference.length));
+  // New collection ID prefixes are index references, not machine identities.
+  // Only registered complete IDs are removed; similar unknown models remain visible.
+  clean = clean.replace(/(?<![a-z0-9_-])[a-z0-9]+(?:-[a-z0-9]+)+(?![a-z0-9_-])/gi,
+    (reference) => indexedReferenceIds.has(reference.toUpperCase()) ? ' '.repeat(reference.length) : reference);
   for (const number of indexedManualNumbers) {
     clean = clean.replace(new RegExp(`(?<![a-z0-9])${escapeRegex(number)}(?![a-z0-9.-])`, 'gi'),
       (reference) => ' '.repeat(reference.length));
@@ -79,6 +84,8 @@ let modelFamilies: string[] = ['workmaster', 'lx', 't', 'pl', 'tg'];
 
 /** Rebuilt on reload so source model lists drive recognition as the archive grows. */
 export function configureIndexedModels(chunks: KnowledgeChunk[]): void {
+  indexedReferenceIds = new Set(chunks.flatMap((chunk) => [chunk.entryId, chunk.sourceId])
+    .filter((id): id is string => Boolean(id)));
   // Only registered manual numbers are references; dotted model suffixes remain identities.
   indexedManualNumbers = [...new Set(chunks.flatMap((chunk) =>
     chunk.version?.match(/\bSM-[A-Z0-9]+(?:[.-][A-Z0-9]+)+\b/gi) ?? [],
