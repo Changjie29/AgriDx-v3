@@ -1526,5 +1526,35 @@
     "text_layer_status": "可提取文本；本批引用文字已核，记录所列表格／配置页另目视核对；未全书审校。",
     "download_method": "公开免费POST附件；downloadId=599456，publicationType=Operator's Manual，productName=OMAL232272，marketingCode为空",
     "updated_at": "2026-10-13"
+  },
+  {
+    "source_id": "SRC-JD-TM901519-FT4-2019",
+    "brand": "约翰迪尔",
+    "model": "5045E/5055E/5065E/5075E（FT4）",
+    "models": [
+      "5045E (FT4)",
+      "5055E (FT4)",
+      "5065E (FT4)",
+      "5075E (FT4)"
+    ],
+    "title": "5045E, 5055E, 5065E and 5075E (FT4) Tractors Repair Technical Manual",
+    "path": "知识库/原始农机说明书/约翰迪尔/5045E-5075E_FT4_TM901519/来源记录.md",
+    "url": "https://techpubs.deere.com/api/preview/get/TM901519",
+    "document_type": "整机／维保官方预览",
+    "role": "资料索引；仅目录预览，不提供完整维修正文",
+    "version": "TM901519 18JUN19（英文；官方5页预览）",
+    "version_date": null,
+    "scope_boundary": "预览明确覆盖5045E、5055E、5065E、5075E（FT4）；本地只保存来源记录和5页预览的核对摘要，未取得完整维修正文，不能据本来源生成拆装步骤、参数或故障结论。",
+    "status": "官方预览已取得并阅读；目录主题已核对；完整手册、厂家复核和实车验证未完成。",
+    "collected_at": "2026-10-15",
+    "sha256": "87d3c1f2d92d415330ec63d0c9117d0e3bcb1c45e44462a026b84a57bb8d84dd",
+    "bytes": 2214,
+    "verified_pdf_pages": {
+      "1": "封面、手册编号、版本日期、型号范围及关联手册。",
+      "2": "前言：目标读者、安全提示、Repair与Operation and Tests的结构边界。",
+      "3": "Section 10—91章节和Group目录。",
+      "4": "目录延续、版本/版权信息。",
+      "5": "Section 10 Group 05、10、11、15、20详细目录及页码。"
+    }
   }
 ]
