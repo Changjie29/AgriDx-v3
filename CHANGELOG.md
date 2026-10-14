@@ -12,6 +12,7 @@
 - 更新类型：maintenance；批次：tencent-production-sync-20261014。最新main的CI成功后通过受限SSH入口分目录部署，不取消执行中的部署；服务器再次核对main，正式本机检查失败沿用回退。公网核对后端版本、知识条数、完整提交和首页资源摘要，识别CDN旧文件。
 - 部署相关18项通过，完整verify245项通过、2项Windows专用检查在Linux跳过；版本、前后端类型、Lint和完整构建通过，Bash语法、actionlint及差异检查通过。保留既有Fast Refresh和Three.js包体积提示；没有调用真实外部模型。
 - 当前只完成GitHub自动部署代码与[接入说明](docs/deployment/tencent-production-sync.md)。环境SSH通道不可用、GitHub Secrets管理接口403，尚未安装服务器入口、配置部署Secrets或开启开关，未部署腾讯正式站。开启后需要以实际Actions与公网验收确认更新；原Sites继续暂停，登录密码不保存到仓库。
+- 实现提交为[72239b1](https://github.com/srt2777/AgriDx-v3/commit/72239b1f85162955ea89871d0a0562ffd8e94d6d)，通过[PR #39](https://github.com/srt2777/AgriDx-v3/pull/39)保存；PR跨平台检查及main合入以GitHub实际回执为准。
 
 ## 3.4.7 — 2026-10-14
 
