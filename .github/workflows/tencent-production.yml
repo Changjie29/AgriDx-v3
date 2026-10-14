@@ -1,0 +1,117 @@
+name: Tencent production
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Server deployments are serialized by systemd/flock. Different commits can
+# publish newer requests without waiting for an older public verification.
+concurrency:
+  group: tencent-production-${{ github.event.workflow_run.head_sha || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: >-
+      vars.TENCENT_DEPLOY_ENABLED != 'false' &&
+      github.repository == 'srt2777/AgriDx-v3' &&
+      ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+       (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository &&
+        (github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    steps:
+      - name: Select the current main commit
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          current_sha=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')
+          [[ "$current_sha" =~ ^[0-9a-f]{40}$ ]]
+          if [[ "$CANDIDATE_SHA" != "$current_sha" ]]; then
+            echo '主干已更新，跳过旧提交，等待最新主干检查完成。' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "sha=$current_sha" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+        if: steps.release.outputs.sha != ''
+        with:
+          ref: ${{ steps.release.outputs.sha }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        if: steps.release.outputs.sha != ''
+        with:
+          node-version-file: .node-version
+
+      # Automatic runs already passed both platforms in CI. Manual runs verify
+      # the selected main commit here before publishing a deployment request.
+      - name: Verify a manual run
+        if: steps.release.outputs.sha != '' && github.event_name == 'workflow_dispatch'
+        run: |
+          npm ci --no-audit --no-fund --registry=https://registry.npmjs.org
+          npm run verify
+
+      - name: Recheck main before connecting
+        if: steps.release.outputs.sha != ''
+        id: current
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+        run: |
+          set -euo pipefail
+          current_sha=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')
+          [[ "$current_sha" =~ ^[0-9a-f]{40}$ ]]
+          if [[ "$RELEASE_SHA" == "$current_sha" ]]; then
+            echo 'deploy=true' >> "$GITHUB_OUTPUT"
+          else
+            echo '检查期间主干已更新，本次未连接服务器。' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Publish the verified main deployment request
+        if: steps.current.outputs.deploy == 'true'
+        id: ready
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+        run: node scripts/tencent-deploy/publish-ready.mjs "$RELEASE_SHA"
+
+      - name: Check that the Tencent controller is installed
+        if: steps.ready.outputs.sha != ''
+        id: controller
+        env:
+          TENCENT_PUBLIC_URL: ${{ vars.TENCENT_PUBLIC_URL || 'https://agridx.xyz' }}
+        run: |
+          node --use-env-proxy scripts/tencent-deploy/verify-public.mjs --controller "$TENCENT_PUBLIC_URL"
+          echo '已发布通过CI的main部署请求；实际服务器部署以公网验收或服务器日志为准。' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify the public commit and website files
+        if: steps.controller.outputs.configured == 'true'
+        id: verified
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+          TENCENT_PUBLIC_URL: ${{ vars.TENCENT_PUBLIC_URL || 'https://agridx.xyz' }}
+        run: |
+          node --use-env-proxy scripts/tencent-deploy/verify-public.mjs "$RELEASE_SHA" "$TENCENT_PUBLIC_URL"
+
+      - name: Record a completed deployment
+        if: steps.verified.outputs.verified == 'true'
+        env:
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+        run: echo "正式站提交及网页文件验收通过：$RELEASE_SHA" >> "$GITHUB_STEP_SUMMARY"
