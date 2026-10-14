@@ -20,5 +20,5 @@
 
 - 后续任务统一使用`npm run version:update -- --kind knowledge|fix|maintenance|feature|breaking --batch 唯一批次ID --summary 单行说明`自动协调版本与日志；先使用`--dry-run`预演。同一批次修正重跑不升版，旧批次不能复用，多分支共同交付按最高级别协调一次版本。先同步main，避免覆盖并行版本成果。脚本不自动提交或部署；保存GitHub、审阅合入及开发站发布沿用现有授权。执行步骤见`docs/version-policy.md`。
 
-- 用户2026-10-14确认腾讯正式站可正常访问，并要求GitHub最新版自动同步到正式域名。此最新授权覆盖此前腾讯自动发布暂停，原Sites继续暂停；沿用个人分支/PR审阅后合入main。正式自动部署限于本仓库最新main且CI成功，使用受限SSH密钥、分目录更新、健康检查和失败回退；`TENCENT_DEPLOY_ENABLED=true`且实际完成服务器/Secrets接入后方可连接。不得把准备脚本、开启变量或GitHub保存写成已经上线；服务器实际执行与公网提交/网页资源验收分别记录。接入与当前缺失条件见`docs/deployment/tencent-production-sync.md`；不恢复旧cron拉取、不改DNS或原Sites。
+- 用户2026-10-14确认腾讯正式站可正常访问，并要求GitHub最新版自动同步到正式域名。此最新授权覆盖此前腾讯自动发布暂停，原Sites继续暂停；沿用个人分支/PR审阅后合入main。正式自动部署限于本仓库最新main且CI成功；GitHub发布公开部署请求，新安装的systemd控制器每20秒核对main和请求，分目录更新并健康检查、失败回退。只需显式安装一次服务器控制器，不使用生产登录凭据或GitHub部署Secrets；可选变量`TENCENT_DEPLOY_ENABLED=false`暂停发布请求。不得把准备脚本、开启变量或GitHub保存写成已经上线；服务器实际执行与公网提交/网页资源验收分别记录。接入与当前缺失条件见`docs/deployment/tencent-production-sync.md`；不恢复旧cron拉取、不改DNS或原Sites。
 

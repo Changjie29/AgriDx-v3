@@ -1,12 +1,25 @@
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { appendFileSync, readFileSync } from 'node:fs';
 import { setTimeout as delay } from 'node:timers/promises';
 import { isMain } from '../lib/process.mjs';
 
 const digest = value => createHash('sha256').update(value).digest('hex');
 
+export async function controllerConfigured(baseUrl, fetchImpl = fetch) {
+  const url = new URL('/deployment-automation.json', baseUrl);
+  if (url.protocol !== 'https:' || url.username || url.password) throw new Error('必须使用HTTPS正式站。');
+  const response = await fetchImpl(url, { headers: { 'Cache-Control': 'no-cache' },
+    redirect: 'error', signal: AbortSignal.timeout(15000) });
+  if (response.status === 404) return false;
+  if (!response.ok) throw new Error(`服务器接入状态请求失败：HTTP ${response.status}`);
+  let value;
+  try { value = await response.json(); } catch { return false; }
+  return value?.controller === 'agridx-github-sync' && value?.repository === 'srt2777/AgriDx-v3' && value?.configured === true;
+}
+
 export async function verifyPublicSite({ commit, version, entries, baseUrl,
-  fetchImpl = fetch, attempts = 5, retryMs = 2000 }) {
+  fetchImpl = fetch, attempts = 5, retryMs = 2000, isCurrent = () => true }) {
   const origin = new URL(baseUrl);
   if (origin.protocol !== 'https:' || origin.pathname !== '/' || origin.search || origin.hash ||
       origin.username || origin.password || !/^[0-9a-f]{40}$/.test(commit)) {
@@ -21,6 +34,7 @@ export async function verifyPublicSite({ commit, version, entries, baseUrl,
   }
   let failure;
   for (let attempt = 0; attempt < attempts; attempt++) {
+    if (!await isCurrent()) return { obsolete: true, commit };
     try {
       const [healthData, manifestData] = await Promise.all([
         resource('/api/health'), resource('/deployment.json'),
@@ -60,10 +74,26 @@ if (isMain(import.meta.url)) {
   try {
     const [commit, baseUrl = 'https://agridx.xyz', ...extra] = process.argv.slice(2);
     if (extra.length) throw new Error('用法：node verify-public.mjs <SHA> [HTTPS网站根地址]');
+    if (commit === '--controller') {
+      const configured = await controllerConfigured(baseUrl);
+      if (configured) {
+        appendFileSync(process.env.GITHUB_OUTPUT, 'configured=true\n');
+      } else console.log('[verify-public] 已发布部署请求，腾讯服务器尚未接入自动同步；未宣称部署完成。');
+      process.exit(0);
+    }
     const version = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf8')).version;
     const entries = readFileSync(new URL('../../知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl', import.meta.url), 'utf8')
       .split(/\r?\n/).filter(line => line.trim()).length;
-    console.log(`[verify-public] ${JSON.stringify(await verifyPublicSite({ commit, version, entries, baseUrl }))}`);
+    const isCurrent = () => {
+      if (process.env.GITHUB_ACTIONS !== 'true') return true;
+      const result = spawnSync('gh', ['api', 'repos/srt2777/AgriDx-v3/git/ref/heads/main', '--jq', '.object.sha'],
+        { encoding: 'utf8', shell: false, timeout: 15000 });
+      if (result.status !== 0 || !/^[0-9a-f]{40}$/.test(result.stdout.trim())) throw new Error('无法重新确认最新main。');
+      return result.stdout.trim() === commit;
+    };
+    const result = await verifyPublicSite({ commit, version, entries, baseUrl, isCurrent, attempts: 60, retryMs: 5000 });
+    if (!result.obsolete && process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, 'verified=true\n');
+    console.log(`[verify-public] ${JSON.stringify(result)}`);
   } catch (error) {
     console.error(`[verify-public] ${error.message}`);
     process.exitCode = 1;

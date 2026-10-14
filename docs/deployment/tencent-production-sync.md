@@ -1,103 +1,58 @@
-# 腾讯正式站跟随 GitHub 主干更新
+# GitHub、开发版与腾讯正式版自动同步
 
-2026-10-14（上海）。用户确认正式站已在腾讯云运行，要求 GitHub 最新版自动同步到正式域名，并补充现有登录用户为 `ubuntu`、系统为 Ubuntu Server 24.04 LTS 64bit。本约定覆盖此前腾讯自动发布暂停；原 Sites 仍沿用暂停约定。仓库为 `srt2777/AgriDx-v3`，正式域名为 `https://agridx.xyz`。
+2026-10-14（上海）。用户要求 GitHub、开发版、腾讯正式版实时同步，并要求 PR 自动部署。执行约定为：个人分支通过 PR 检查、审阅并合入 main 后，开发版和正式版自动更新。此最新授权覆盖此前腾讯自动发布暂停；原 Sites 生产站继续暂停。任务成果保存到 `srt2777/AgriDx-v3`。
 
-## 本次核查与实际状态
+## 当前核查结果
 
-- 本次 HTTPS 只读请求：首页 HTTP 200，`/api/health` 返回 3.1.1、412 条归档与 421 个片段；用户已确认自己可以正常打开网站。
-- 开始本任务时最新 main 为 `7a94ebf807b7dc7dd27b3707cdd6de3885eef33b`、3.4.7、2213 条归档。两边尚未同步；源码保存不代表正式站已更新。
-- 已有部署结构见 [腾讯服务器历史记录](2026-10-11-tencent-existing-server.md)：服务器 `43.128.40.157`，`agridx.service`，`/opt/agridx/current`，API 8787。域名当前解析到 CDN 节点，SSH 使用服务器 IP，不使用域名的 CDN IP。
-- 当前 Codex 云环境 TCP 授权列表为空、无 SSH 连接绑定；配置中指示的 TCP 代理 8088 也不可连接。没有尝试绕过代理或发送登录密码。GitHub 的仓库内容操作可用，Actions Secrets 管理接口实际返回 403，无法代替管理员填入部署密钥。
-- 本次准备工作流与接入脚本，没有执行服务器配置、更新 DNS 或部署正式站。接入后以 Actions 和公网验收结果确认上线，不把本说明当作部署回执。登录密码不保存到仓库或本说明。
+- 核查时 GitHub main 和匿名开发网址均为 **3.4.7**，提交 `7a94ebf807b7dc7dd27b3707cdd6de3885eef33b`；开发构建记录实际返回该完整提交。
+- 正式域名 `https://agridx.xyz` 首页 HTTP 200，健康返回 **3.1.1**、412 条归档、421 个片段；用户确认可正常打开。两边尚未同步。
+- 用户补充服务器系统 Ubuntu Server 24.04 LTS 64bit、登录用户 `ubuntu`。现有服务器 IP / 应用部署结构见[历史记录](2026-10-11-tencent-existing-server.md)：`43.128.40.157`、`agridx.service`、`/opt/agridx/current`、API 8787。域名目前经过 CDN，SSH 不使用 CDN 节点 IP。
+- 本次 Codex 云环境没有可用 SSH/TCP 通路，GitHub Secrets 接口返回 403。最终方案由服务器读取公开仓库的部署请求，**不需要 GitHub 保存服务器密码、SSH 私钥或云 API 密钥**。用户登录密码不写入源码、命令或记录。
+- 本次尚未在腾讯服务器执行接入。GitHub 保存、发布请求、安装控制器和实际公网更新分别记录，不把准备流程当成正式站已经升级。
 
-## 自动更新流程
+## 自动同步流程
 
-[`Tencent production`](../../.github/workflows/tencent-production.yml) 等待 `CI` 在 main 上成功结束，仅接收本仓库的 main push / 手动 CI；个人分支与 PR 不发布。手动运行生产工作流必须选择 main，并在连接前完整运行 `npm run verify`。
+1. PR 通过项目检查、审阅并合入 main。现有 `Development preview` 自动验证、构建并发布固定[开发网址](https://agridx-dev-preview.z3464715478.chatgpt.site)，构建记录 `/dev-preview.json` 包含版本和源码完整提交。
+2. main 的跨平台 `CI` 成功后，[`Tencent production`](../../.github/workflows/tencent-production.yml) 为同一提交更新 `tencent-production-ready` 分支指针。只接受本仓库 main 的 push / 手动 CI；PR、个人分支、失败 CI 和过期提交不产生请求。请求指针仅快进，不强推；手动运行正式工作流必须选择 main，连接发布请求前再次执行完整验证。
+3. 腾讯服务器新安装的 systemd timer 每 20 秒检查公开 Git refs。只有请求 SHA 等于当时最新 main，且尚未部署时，才调用[现有分目录更新脚本](../../scripts/tencent-deploy/update-existing.sh)。不恢复旧 `cloud-pull.sh`、旧 cron 或香港初始化脚本。
+4. 现有脚本继续完成独立目录构建、临时私网健康检查、current 原子切换、本机 Nginx/健康验收及失败回退；旧版本、EnvironmentFile、证书、DNS、防火墙和其他服务保留。同一失败提交五分钟内不会反复构建，新 main 可立即尝试。systemd 与 flock 串行执行部署，GitHub 等待任务被取消不会中断服务器部署。
+5. 公开 `deployment.json` 只记录版本、完整提交和首页/主题脚本/入口 JS、CSS 摘要。Actions 等待服务器更新，并从正式 HTTPS 域名核对后端版本、知识条数、提交和资源 SHA-256，识别 CDN 旧文件。main 已前进时，旧验收任务停止等待，交由新任务发布最新请求。
 
-工作流选择、连接前、服务器入口分别核对最新 main 的完整 SHA。过期提交不会覆盖后来的主干；正在执行的部署不因新 push 被取消，后续任务串行执行。仓库变量 `TENCENT_DEPLOY_ENABLED=true` 是接入开关，未配置时不会连接生产服务器。开关只是运维配置，不替代 CI 验证。
+若服务器尚未接入，Actions 只发布请求，明确记录待接入，不宣称网站更新完成。接入后的公网最终验收失败会使 Actions 报错；不擅自回滚本机已经健康的新版本。验收范围不包括全部页面交互或真实外部模型问答。
 
-SSH 私钥仅进入部署步骤的临时 0600 文件，结束或失败后清理；必须匹配管理员从可信腾讯终端取得的主机密钥。使用无密码的部署专用 Ed25519 密钥，服务器端 `restrict,command=...` 将此密钥限制到 `check` 或 `deploy <SHA>`，不允许交互 shell、端口转发或任意 sudo 命令。
+## 仅需一次服务器安装
 
-[`update-existing.sh`](../../scripts/tencent-deploy/update-existing.sh) 沿用现有分目录构建、临时私网服务检查、current 原子切换、正式检查和失败回退，保留旧版本、Nginx、证书、DNS 与 EnvironmentFile。新增 `dist/deployment.json` 只记录公开版本、提交和首页/入口资源摘要，并由本机 Nginx 比对；该本机检查失败也会回退。
-
-最后从正式 HTTPS 域名核对后端版本、知识条数、完整 SHA 和首页/主题脚本/首页引用 JS、CSS 的 SHA-256，避免 CDN 返回旧页面时错误显示成功。公网验收可短暂重试，最终失败会让 Actions 报错；公网/CDN 验收失败不会擅自回滚本机已经健康的新版本。验收范围不包括完整交互或真实外部 LLM 问答。
-
-## 一次性接入
-
-以下由能登录腾讯服务器和管理仓库 Secrets 的管理员执行。先合入本 PR，核对服务器仍为以上部署结构。所有服务器脚本固定下载到**本次已审阅的完整提交 SHA**；后续部署源码按最新 main 选择，部署工具不随个人分支更新。
-
-### 1. 在自己的电脑生成专用密钥
-
-```bash
-ssh-keygen -t ed25519 -N '' -C agridx-github-production -f ~/.ssh/agridx-github
-scp ~/.ssh/agridx-github.pub ubuntu@43.128.40.157:~/agridx-github.pub
-```
-
-私钥 `~/.ssh/agridx-github` 只用于配置 GitHub Secret，不发进聊天、不提交 Git。现有服务器密码仅用于这次个人 SSH 登录，不用于 Actions。
-
-### 2. 在腾讯云可信终端安装受限部署入口
-
-将下面 `INSTALL_SHA` 改为合入后已审阅的40位提交 SHA；不要使用移动分支名。
+先合入并核对本 PR 的实际完整提交 SHA。在腾讯云网页终端用 `ubuntu` 登录，复制执行下列命令，把 `INSTALL_SHA` 替换为本 PR 已审阅的40位提交 SHA：
 
 ```bash
 INSTALL_SHA=填入已审阅的40位提交SHA
 [[ "$INSTALL_SHA" =~ ^[0-9a-f]{40}$ ]] || exit 1
-deploy_workdir=$(mktemp -d)
-for script in update-existing.sh deploy-main.sh ssh-entry.sh; do
-  curl -fsSL "https://raw.githubusercontent.com/srt2777/AgriDx-v3/$INSTALL_SHA/scripts/tencent-deploy/$script" -o "$deploy_workdir/$script" || exit 1
-  bash -n "$deploy_workdir/$script" || exit 1
-done
-sudo install -d -m 0755 -o root -g root /usr/local/lib/agridx-deploy
-sudo install -m 0700 -o root -g root "$deploy_workdir/update-existing.sh" "$deploy_workdir/deploy-main.sh" /usr/local/lib/agridx-deploy/
-sudo install -m 0755 -o root -g root "$deploy_workdir/ssh-entry.sh" /usr/local/lib/agridx-deploy/
-printf '%s\n' 'ubuntu ALL=(root) NOPASSWD: /usr/local/lib/agridx-deploy/deploy-main.sh' > "$deploy_workdir/agridx-github-sudoers"
-sudo visudo -cf "$deploy_workdir/agridx-github-sudoers" || exit 1
-sudo install -m 0440 -o root -g root "$deploy_workdir/agridx-github-sudoers" /etc/sudoers.d/agridx-github-deploy
-sudo /usr/local/lib/agridx-deploy/deploy-main.sh --check || exit 1
+curl -fsSL "https://raw.githubusercontent.com/srt2777/AgriDx-v3/$INSTALL_SHA/scripts/tencent-deploy/install-auto-pull.sh" -o /tmp/agridx-install-sync.sh && sudo bash /tmp/agridx-install-sync.sh --install "$INSTALL_SHA"
 ```
 
-在 `ubuntu` 的 `~/.ssh/authorized_keys` 新增一行（保留所有原有密钥）。`ssh-ed25519 ...` 替换为 `~/agridx-github.pub` 的完整内容：
+安装器从固定 SHA 下载两份工具，先只读检查实际服务器的 Ubuntu/Node/Nginx/current/service 和旧版健康。检查失败不创建控制器；成功才安装 root 所有、不可被应用用户修改的工具、私有状态目录和新 systemd 单元。已有同名未知单元或软链接会拒绝覆盖。
 
-```text
-restrict,command="/usr/local/lib/agridx-deploy/ssh-entry.sh" ssh-ed25519 ... agridx-github-production
-```
+| 安装项目 | 路径 |
+| --- | --- |
+| 更新脚本 / 同步控制器 | `/usr/local/lib/agridx-github-sync/` |
+| 私有控制器状态 | `/var/lib/agridx-github-sync/` |
+| 单次部署服务 | `agridx-github-sync.service` |
+| 20 秒检查 timer | `agridx-github-sync.timer` |
+| 公开接入标志 | `/deployment-automation.json` |
 
-`~/.ssh` 权限为 0700，`authorized_keys` 为 0600，均归 ubuntu 所有。部署脚本和 sudoers 必须归 root 所有且不可被 ubuntu/agridx 写入。没有必要启用 root SSH 登录或修改现有密码登录方式。后续变更部署工具时重新核对、安装这三个 root 文件。
+安装后 timer 等待最新 main 的成功 CI 请求；请求已存在时会自动更新。构建和验证有实际耗时，整体是**检查通过后的分钟级同步**，不是每次提交瞬间发布。工具由固定已审阅 SHA 安装，网站源码随最新成功 main 自动更新；后续维护部署工具时重新运行已审阅安装器。
 
-从**已登录的腾讯终端**取得主机公钥与指纹，不从未经验证的公网扫描盲目信任：
+## 查看、验收与暂停
 
 ```bash
-sudo ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
-sudo awk '{print "43.128.40.157 " $1 " " $2}' /etc/ssh/ssh_host_ed25519_key.pub
+sudo systemctl status agridx-github-sync.timer --no-pager
+sudo journalctl -u agridx-github-sync.service -n 80 --no-pager
+curl -fsS https://agridx.xyz/api/health
+curl -fsS https://agridx.xyz/deployment.json
 ```
 
-### 3. 配置仓库 Secrets 和 Variables
+首次接入后可手动运行 main 的 `Tencent production` 重新等待公网验收：`gh workflow run tencent-production.yml --repo srt2777/AgriDx-v3 --ref main`。当前 GitHub CLI 不需要服务器 Secrets 权限。
 
-在 [GitHub Actions 设置](https://github.com/srt2777/AgriDx-v3/settings/secrets/actions) 配置：
+暂停服务器后续自动部署：`sudo systemctl disable --now agridx-github-sync.timer`。不停止已经在运行的部署，让其完成或通过原脚本回退。暂停 GitHub 发布请求可在 Actions 禁用 `Tencent production`，或将可选仓库变量 `TENCENT_DEPLOY_ENABLED` 设置为 `false`；默认发布请求，但只有显式安装了控制器的服务器才会执行。正式网址可通过可选变量 `TENCENT_PUBLIC_URL` 配置，默认 `https://agridx.xyz`。
 
-| 类型 | 名称 | 值 |
-| --- | --- | --- |
-| Secret | `TENCENT_SSH_PRIVATE_KEY` | 专用 Ed25519 私钥文件的完整内容 |
-| Secret | `TENCENT_SSH_KNOWN_HOSTS` | 上一步可信终端输出的主机公钥行 |
-| Variable | `TENCENT_DEPLOY_ENABLED` | 完成连接配置后设置 `true` |
-| Variable，可选 | `TENCENT_SSH_HOST` | 默认 `43.128.40.157` |
-| Variable，可选 | `TENCENT_SSH_USER` | 默认 `ubuntu` |
-| Variable，可选 | `TENCENT_SSH_PORT` | 默认 `22`；其他端口的 known_hosts 使用 `[host]:port` |
-| Variable，可选 | `TENCENT_PUBLIC_URL` | 默认 `https://agridx.xyz` |
-
-若个人电脑的 GitHub CLI 已有 Secrets 管理权限，也可从文件输入，无需将私钥显示到终端：
-
-```bash
-gh secret set TENCENT_SSH_PRIVATE_KEY --repo srt2777/AgriDx-v3 < ~/.ssh/agridx-github
-gh secret set TENCENT_SSH_KNOWN_HOSTS --repo srt2777/AgriDx-v3 < ./verified-known-hosts
-gh variable set TENCENT_DEPLOY_ENABLED --repo srt2777/AgriDx-v3 --body true
-gh workflow run tencent-production.yml --repo srt2777/AgriDx-v3 --ref main
-```
-
-确保腾讯实例防火墙允许 GitHub 托管 runner 访问 SSH；不能把当前开发环境的 HTTP 网络权限当作 GitHub runner 的 SSH 连通性。若使用组织既有 runner 或网关，按实际网络配置调整，不在脚本中改防火墙。
-
-### 4. 第一次验收与后续停止
-
-首次设置完成后手动运行 main 的 `Tencent production`，查看部署和公网验收步骤；设置开关本身不会补跑已经结束的历史 CI。之后 main 的 CI 成功会自动触发，耗时取决于检查、安装和构建，通常是分钟级更新。
-
-暂停后续自动更新时将 `TENCENT_DEPLOY_ENABLED` 改为 `false`；已运行的部署应完成或通过现有失败回退结束。撤销密钥时删除 authorized_keys 的专用行及对应 Secret，不删除其他登录密钥。
+部署失败先查看上述单元日志与 `agridx.service`，不通过修改 DNS 回退。GitHub CI、公网版本、开发构建记录与页面资源结果以本次实际回执为准。

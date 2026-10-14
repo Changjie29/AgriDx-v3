@@ -321,6 +321,10 @@ as_app "$NODE_BIN" -e '
     .update(fs.readFileSync(path.join(dist, value))).digest("hex") }));
   fs.writeFileSync(path.join(dist, "deployment.json"), JSON.stringify({ commit, version, files }) + "\n", { mode: 0o644 });
 ' "$RELEASE" "$COMMIT" "$EXPECTED_VERSION"
+if [[ -f /var/lib/agridx-github-sync/controller.json ]]; then
+  install -m 0644 -o "$APP_USER" -g "$APP_USER" \
+    /var/lib/agridx-github-sync/controller.json "$RELEASE/dist/deployment-automation.json"
+fi
 runuser -u "$NGINX_USER" -- test -r "$RELEASE/dist/index.html" ||
   fail 'Nginx worker 无法读取新网页；未切换 current。'
 find "$RELEASE/dist" -type f -print0 | runuser -u "$NGINX_USER" -- bash -c '

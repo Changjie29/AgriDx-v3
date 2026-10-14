@@ -324,7 +324,7 @@ AgriDx-v3/
 
 ## GitHub保存与部署约定
 
-2026-10-14用户最新要求：腾讯正式域名`agridx.xyz`跟随`srt2777/AgriDx-v3`主干最新版更新，覆盖此前腾讯自动发布暂停。新增`Tencent production`工作流等待最新main的CI成功，沿用分目录检查及失败回退，并核对公网完整SHA与页面资源摘要。当前尚缺服务器SSH连接和GitHub部署Secrets接入；只有接入并启用`TENCENT_DEPLOY_ENABLED=true`后才会部署，不能把仓库保存或工作流准备写成已经上线。原Sites保持暂停，个人分支和PR不发布，不恢复旧cron；见[接入说明及实际状态](docs/deployment/tencent-production-sync.md)。
+2026-10-14用户最新要求：腾讯正式域名`agridx.xyz`跟随`srt2777/AgriDx-v3`主干最新版更新，覆盖此前腾讯自动发布暂停。新增`Tencent production`工作流等待最新main的CI成功，沿用分目录检查及失败回退，并核对公网完整SHA与页面资源摘要。服务器只需一次新systemd控制器安装，不需要GitHub保存服务器登录凭据；当前尚未完成服务器接入，公开部署请求本身不代表已上线，不能把仓库保存或工作流准备写成已经上线。原Sites保持暂停，个人分支和PR不发布，不恢复旧cron；见[接入说明及实际状态](docs/deployment/tencent-production-sync.md)。
 
 - GitHub：[Changjie29/AgriDx-v3](https://github.com/Changjie29/AgriDx-v3)。v2保留在[原仓库](https://github.com/Changjie29/AgriDx-v2)，本轮不修改v2。
 - 本地工作区：clone v3仓库后在根目录执行`npm ci`即可开发，无需额外配置路径；`.env`和`server/.env`按本机配置，不进入Git。

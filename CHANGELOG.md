@@ -8,11 +8,11 @@
 
 ## 3.4.8 — 2026-10-14
 
-- 增加腾讯正式站主干验证后自动部署与提交验收流程
-- 更新类型：maintenance；批次：tencent-production-sync-20261014。最新main的CI成功后通过受限SSH入口分目录部署，不取消执行中的部署；服务器再次核对main，正式本机检查失败沿用回退。公网核对后端版本、知识条数、完整提交和首页资源摘要，识别CDN旧文件。
-- 部署相关18项通过，完整verify245项通过、2项Windows专用检查在Linux跳过；版本、前后端类型、Lint和完整构建通过，Bash语法、actionlint及差异检查通过。保留既有Fast Refresh和Three.js包体积提示；没有调用真实外部模型。
-- 当前只完成GitHub自动部署代码与[接入说明](docs/deployment/tencent-production-sync.md)。环境SSH通道不可用、GitHub Secrets管理接口403，尚未安装服务器入口、配置部署Secrets或开启开关，未部署腾讯正式站。开启后需要以实际Actions与公网验收确认更新；原Sites继续暂停，登录密码不保存到仓库。
-- 实现提交为[72239b1](https://github.com/srt2777/AgriDx-v3/commit/72239b1f85162955ea89871d0a0562ffd8e94d6d)，通过[PR #39](https://github.com/srt2777/AgriDx-v3/pull/39)保存；PR跨平台检查及main合入以GitHub实际回执为准。
+- 增加GitHub、开发版与腾讯正式版的主干自动同步流程。
+- 更新类型：maintenance；批次：tencent-production-sync-20261014。PR检查、审阅并合入main后，开发站沿用自动构建，正式工作流等待main跨平台CI成功并快进发布部署请求。新systemd控制器每20秒核对请求与最新main，采用既有分目录更新、健康检查和失败回退，不恢复旧cron；同一失败提交五分钟内不反复构建。
+- 公开清单与公网验收核对完整提交、服务版本、知识条数及首页资源摘要，识别CDN旧文件；新main可以及时发布，过期验收停止等待。服务器只需一次安装，不需要GitHub保存服务器登录密码、SSH私钥或云API密钥。接入说明见[同步流程](docs/deployment/tencent-production-sync.md)。
+- 本轮成果通过[PR #39](https://github.com/srt2777/AgriDx-v3/pull/39)保存；最终版本与GitHub检查以实际回执为准。服务器尚未执行安装，正式站核查仍为3.1.1；开发站核查与GitHub main同为3.4.7。准备代码、发布请求和控制器安装不当作已经部署完成，原Sites生产站继续暂停。
+- 2026-10-15最终本地验证：部署与控制器21项通过；完整verify248项通过、2项Windows检查在Linux跳过，版本、类型、Lint和前后端构建通过。actionlint、全部Bash语法、systemd单元校验、文档链接和差异检查通过；保留既有Fast Refresh及Three.js包体积提示，未调用真实外部模型。
 
 ## 3.4.7 — 2026-10-14
 
