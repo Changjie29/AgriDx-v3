@@ -125,7 +125,7 @@ def generate(date, visuals):
 
 [下载两页概要PDF](可视化/现有知识库概要.pdf) · [图表PNG](可视化/知识库概览.png) · [矢量图SVG](可视化/知识库概览.svg) · [机器总览JSON](总览数据.json)
 
-![现有知识库数量与结构](可视化/知识库概览.png)
+{'![现有知识库数量与结构](可视化/知识库概览.png)' if visuals else '本次仅更新Markdown与机器JSON；上述PDF/PNG/SVG未重新生成，可能保留历史规模，当前数量以上文及机器JSON为准。'}
 
 ## 资料性质与存放
 
