@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Manually update the existing Tencent Ubuntu server; never install a fresh stack.
+# Update the existing Tencent Ubuntu server; never install a fresh stack.
 set -Eeuo pipefail
 umask 077
 
@@ -261,6 +261,9 @@ check_nginx_release() {
     cmp -s "$RELEASE/dist/theme-init.js" "$WORK_DIR/nginx-theme.js" || return 1
   fi
   curl --noproxy 127.0.0.1 --fail --silent --show-error --max-time 5 \
+    --header "Host: $NGINX_HOST" http://127.0.0.1/deployment.json >"$WORK_DIR/nginx-deployment.json" || return 1
+  cmp -s "$RELEASE/dist/deployment.json" "$WORK_DIR/nginx-deployment.json" || return 1
+  curl --noproxy 127.0.0.1 --fail --silent --show-error --max-time 5 \
     --header "Host: $NGINX_HOST" http://127.0.0.1/api/health | validate_health "$EXPECTED_VERSION" "$EXPECTED_CHUNKS" "$EXPECTED_ENTRIES"
 }
 
@@ -304,6 +307,20 @@ as_app env npm_config_cache="$NPM_CACHE" NPM_CONFIG_CACHE="$NPM_CACHE" bash -c \
   _ "$RELEASE" "$NODE_BIN" "$NPM_BIN" "$NPM_CACHE"
 [[ -s "$RELEASE/dist/index.html" && -s "$RELEASE/server.ts" &&
    -s "$RELEASE/public/models/tractor-detailed-v1.glb" ]] || fail '构建或静态模型文件不完整。'
+# Public metadata ties both backend and CDN-served frontend to this exact commit.
+# Only public file hashes are included; environment and credentials stay private.
+as_app "$NODE_BIN" -e '
+  const fs = require("node:fs"), path = require("node:path"), crypto = require("node:crypto");
+  const [release, commit, version] = process.argv.slice(1);
+  const dist = path.join(release, "dist");
+  const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  const assets = [...html.matchAll(/(?:src|href)="(\/assets\/[A-Za-z0-9._/-]+\.(?:js|css))"/g)].map(match => match[1]);
+  const paths = [...new Set(["/index.html", "/theme-init.js", ...assets])];
+  if (!assets.some(value => value.endsWith(".js")) || paths.some(value => value.includes(".."))) process.exit(1);
+  const files = paths.map(value => ({ path: value, sha256: crypto.createHash("sha256")
+    .update(fs.readFileSync(path.join(dist, value))).digest("hex") }));
+  fs.writeFileSync(path.join(dist, "deployment.json"), JSON.stringify({ commit, version, files }) + "\n", { mode: 0o644 });
+' "$RELEASE" "$COMMIT" "$EXPECTED_VERSION"
 runuser -u "$NGINX_USER" -- test -r "$RELEASE/dist/index.html" ||
   fail 'Nginx worker 无法读取新网页；未切换 current。'
 find "$RELEASE/dist" -type f -print0 | runuser -u "$NGINX_USER" -- bash -c '
@@ -359,6 +376,6 @@ check_nginx_release || fail 'Nginx 网页、脚本或 API 检查未通过。'
 [[ "$(service_property ActiveState)" == active && "$(readlink -f "$CURRENT")" == "$RELEASE" ]] ||
   fail '正式服务或 current 状态不匹配。'
 SUCCESS=true
-info "手动部署完成：version=$EXPECTED_VERSION commit=$COMMIT"
+info "部署完成：version=$EXPECTED_VERSION commit=$COMMIT"
 info "上一版本保留：$ORIGINAL_RELEASE"
 info 'Nginx、证书、DNS、防火墙、cron 和现有 EnvironmentFile 未修改。'

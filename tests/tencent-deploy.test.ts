@@ -151,7 +151,7 @@ if (name === 'id') {
     else if (failure === 'nginx') console.log('<title>stale page</title>');
     else {
       const resource = url === 'http://127.0.0.1/' ? 'index.html' : url.slice('http://127.0.0.1/'.length);
-      if (!['index.html', 'assets/fixture.js', 'theme-init.js'].includes(resource)) process.exit(97);
+      if (!['index.html', 'assets/fixture.js', 'theme-init.js', 'deployment.json'].includes(resource)) process.exit(97);
       process.stdout.write(fs.readFileSync(path.join(current, 'dist', resource)));
     }
     process.exit(0);
@@ -339,6 +339,11 @@ test('腾讯成功更新使用完整 SHA，保留旧目录/env/Nginx且临时检
   assert.equal(readFileSync(path.join(release, '.env'), 'utf8'), context.dotenvContent);
   assert.equal(readFileSync(path.join(release, 'server', '.env'), 'utf8'), context.dotenvContent);
   assert.equal(statSync(path.join(release, '.env')).mode & 0o777, 0o600);
+  const manifest = JSON.parse(readFileSync(path.join(release, 'dist', 'deployment.json'), 'utf8'));
+  assert.equal(manifest.commit, commit);
+  assert.equal(manifest.version, '3.1.0');
+  assert.deepEqual(manifest.files.map((file: { path: string }) => file.path),
+    ['/index.html', '/theme-init.js', '/assets/fixture.js']);
   const dropin = readFileSync(context.dropin, 'utf8');
   assert.ok(dropin.startsWith(`${marker}\n`));
   assert.match(dropin, /NODE_ENV=production PORT=8787/);
