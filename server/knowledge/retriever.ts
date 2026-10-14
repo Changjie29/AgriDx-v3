@@ -32,6 +32,8 @@ export interface KnowledgeChunk {
   configuration?: 'CAB' | 'ROPS';
   driveConfiguration?: '2WD' | '4WD';
   emissionStage?: '国三' | '国四';
+  /** Unresolved source evidence forbids inferring emissions from a model suffix. */
+  emissionStageUnknown?: boolean;
   sourceUrl?: string;
   originalPath?: string;
   locator?: string;

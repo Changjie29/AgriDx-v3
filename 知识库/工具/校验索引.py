@@ -108,6 +108,9 @@ def main():
                 raise ValueError('来源网址须为完整HTTP(S)链接')
             if source.get('emission_stage') not in [None, '国三', '国四']:
                 raise ValueError('排放阶段无效')
+            if 'emission_stage_unknown' in source and (not isinstance(source['emission_stage_unknown'], bool) or
+                                                       source['emission_stage_unknown'] and source.get('emission_stage') is not None):
+                raise ValueError('未知排放标记须为布尔值，且不能与来源明确阶段同时成立')
             if source.get('configuration') not in [None, 'CAB', 'ROPS']:
                 raise ValueError('来源配置无效')
             if source.get('drive_configuration') not in [None, '2WD', '4WD']:
