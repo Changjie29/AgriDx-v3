@@ -1,0 +1,208 @@
+import type {
+  CatalogBrand, CatalogComponent, CatalogCounts, CatalogEntry, CatalogFilters,
+  CatalogModel, CatalogPart, KnowledgeCatalog,
+} from '../../shared/knowledge-catalog';
+import type { ArchiveSource } from './archive';
+import type { KnowledgeChunk } from './types';
+
+const INFORMATION_TYPES = new Set(['资料索引', '资料核验', '机型资料', '资料缺口', '系统适用边界']);
+
+interface PartDefinition { id: string; name: string; evidence_terms: string[] }
+interface ComponentDefinition { id: string; name: string; parts: PartDefinition[] }
+interface EntryLink { component_id: string; part_ids: string[] }
+interface HierarchyIndex {
+  schema_version: number;
+  components: ComponentDefinition[];
+  entries: { entry_id: string; components: EntryLink[] }[];
+}
+interface SourceMetadata {
+  source_id: string;
+  model: string;
+  document_type: string;
+}
+interface CatalogState {
+  catalog: KnowledgeCatalog;
+  chunks: KnowledgeChunk[];
+  links: Map<string, EntryLink[]>;
+  sources: Map<string, SourceMetadata>;
+}
+
+function counts(chunks: KnowledgeChunk[]): CatalogCounts {
+  return {
+    entryCount: new Set(chunks.map((chunk) => chunk.entryId)).size,
+    faultCount: chunks.filter((chunk) => chunk.entryType === '维护/故障知识').length,
+    sourceCount: new Set(chunks.map((chunk) => chunk.sourceId)).size,
+  };
+}
+
+function modelScope(name: string): CatalogModel['scope'] {
+  if (/待核实|未知/.test(name)) return 'pending';
+  if (/系列|平台|拖拉机/.test(name)) return 'series';
+  return 'exact';
+}
+
+function modelsOf(chunk: KnowledgeChunk, sources: Map<string, SourceMetadata>): string[] {
+  // The archive loader already validates entry-specific configuration subsets.
+  return chunk.models ?? [sources.get(chunk.sourceId!)!.model];
+}
+
+function includesLink(links: EntryLink[], component: string, part?: string): boolean {
+  return links.some((link) => link.component_id === component && (!part || link.part_ids.includes(part)));
+}
+
+function validateHierarchy(index: HierarchyIndex, chunks: KnowledgeChunk[]): Map<string, EntryLink[]> {
+  if (index.schema_version !== 1 || !Array.isArray(index.components) || !Array.isArray(index.entries)) {
+    throw new Error('分层导航索引格式无效');
+  }
+  const components = new Map<string, ComponentDefinition>();
+  for (const component of index.components) {
+    if (!component.id || !component.name || !Array.isArray(component.parts) || components.has(component.id)) {
+      throw new Error('分层导航组件定义无效或重复');
+    }
+    const ids = new Set<string>();
+    for (const part of component.parts) {
+      if (!part.id || !part.name || ids.has(part.id) || !part.evidence_terms?.length ||
+        part.evidence_terms.some((term) => typeof term !== 'string' || !term.trim())) {
+        throw new Error(`分层导航零件定义无效：${component.id}`);
+      }
+      ids.add(part.id);
+    }
+    components.set(component.id, component);
+  }
+  const byId = new Map(chunks.map((chunk) => [chunk.entryId!, chunk]));
+  const links = new Map<string, EntryLink[]>();
+  for (const record of index.entries) {
+    const chunk = byId.get(record.entry_id);
+    if (!chunk || links.has(record.entry_id) || !Array.isArray(record.components) || !record.components.length) {
+      throw new Error(`分层导航条目无效或重复：${record.entry_id}`);
+    }
+    const seen = new Set<string>();
+    for (const link of record.components) {
+      const component = components.get(link.component_id);
+      if (!component || seen.has(link.component_id) || !Array.isArray(link.part_ids) ||
+        new Set(link.part_ids).size !== link.part_ids.length) {
+        throw new Error(`分层导航组件关联无效：${record.entry_id}`);
+      }
+      seen.add(link.component_id);
+      for (const partId of link.part_ids) {
+        const part = component.parts.find((candidate) => candidate.id === partId);
+        // Presence is necessary, not sufficient: these manually maintained links express
+        // a lookup relation only, never a diagnosis or a confirmed damaged part.
+        if (!part || !part.evidence_terms.some((term) => `${chunk.heading}\n${chunk.text}`.includes(term))) {
+          throw new Error(`零件关联须在原知识段中有依据：${record.entry_id}/${partId}`);
+        }
+      }
+    }
+    links.set(record.entry_id, record.components);
+  }
+  for (const id of byId.keys()) {
+    if (!links.has(id)) throw new Error(`新知识条目尚未维护分层导航：${id}`);
+  }
+  return links;
+}
+
+/** Pure catalog construction: consumes the archive already validated by the loader. */
+export function buildKnowledgeCatalog(chunks: KnowledgeChunk[], sourceRecords: ArchiveSource[], hierarchy: unknown): (filters?: CatalogFilters) => KnowledgeCatalog {
+  if (!hierarchy || typeof hierarchy !== 'object') throw new Error('分层导航索引格式无效');
+  const index = hierarchy as HierarchyIndex;
+  const links = validateHierarchy(index, chunks);
+  const sources = new Map<string, SourceMetadata>();
+  for (const source of sourceRecords) {
+    if (typeof source.model !== 'string' || !source.model.trim() || typeof source.document_type !== 'string' || !source.document_type.trim()) {
+      throw new Error(`目录来源型号或资料类型缺失：${source.source_id}`);
+    }
+    sources.set(source.source_id, { source_id: source.source_id, model: source.model, document_type: source.document_type });
+  }
+  const brandNames = [...new Set(chunks.map((chunk) => chunk.brand!))];
+  const brands: CatalogBrand[] = brandNames.sort((a, b) => a.localeCompare(b, 'zh-CN')).map((brand) => {
+    const brandChunks = chunks.filter((chunk) => chunk.brand === brand);
+    const modelNames = [...new Set(brandChunks.flatMap((chunk) => modelsOf(chunk, sources)))];
+    const models: CatalogModel[] = modelNames.sort((a, b) => a.localeCompare(b, 'zh-CN')).map((model) => {
+      const modelChunks = brandChunks.filter((chunk) => modelsOf(chunk, sources).includes(model));
+      const navigation = modelChunks.every((chunk) => /配套|导航|辅助转向/.test(sources.get(chunk.sourceId!)!.document_type));
+      const components: CatalogComponent[] = index.components
+        .filter((definition) => navigation
+          ? ['navigation', 'documents'].includes(definition.id)
+          : definition.id !== 'navigation')
+        .map((definition) => {
+          const componentChunks = modelChunks.filter((chunk) => includesLink(links.get(chunk.entryId!)!, definition.id));
+          const parts: CatalogPart[] = definition.parts.map((part) => {
+            const partChunks = componentChunks.filter((chunk) => includesLink(links.get(chunk.entryId!)!, definition.id, part.id));
+            return { id: part.id, name: part.name, ...counts(partChunks) };
+          }).filter((part) => part.entryCount > 0);
+          return {
+            id: definition.id, name: definition.name, ...counts(componentChunks), parts,
+            unresolvedPartCount: componentChunks.filter((chunk) =>
+              links.get(chunk.entryId!)!.some((link) => link.component_id === definition.id && !link.part_ids.length)).length,
+          };
+        });
+      return {
+        id: model, name: model, scope: modelScope(model),
+        machineType: navigation ? '配套导航系统' : modelScope(model) === 'pending' ? '待核实' : '拖拉机',
+        ...counts(modelChunks), components,
+      };
+    });
+    return { id: brand, name: brand, ...counts(brandChunks), models };
+  });
+  const catalog: KnowledgeCatalog = {
+    totals: {
+      entries: chunks.length, sources: new Set(chunks.map((chunk) => chunk.sourceId)).size,
+      brands: brands.length, models: brands.reduce((total, brand) => total + brand.models.length, 0),
+      faultEntries: chunks.filter((chunk) => chunk.entryType === '维护/故障知识').length,
+      mappedEntries: links.size,
+    },
+    expansion: { targetLabel: '1w+', countingUnit: 'pending', status: 'planned' },
+    brands,
+    limitations: [
+      '当前仅覆盖已归档的选页条目，尚未实现从零部件到整机的全部性能覆盖。',
+      '型号名称按来源保留；系列、平台与待核实范围不代表完整型号。同册型号、别名及不同配置不视为互换。',
+      '零件关联用于查找证据，故障表中的可能原因不等于确诊；维修、调整与停机策略须遵守对应版本和配置。',
+      '条目数按已有索引去重；同条证据可关联多个组件和零件，分层计数不可相加。维护/故障类别也含维护条目。',
+      '1w+为扩充目标，统计单位待确认；须在取得资料、核对来源和适用范围后接入，未完成项不计入现有知识。',
+    ],
+  };
+  const state = { catalog, chunks, links, sources };
+  return (filters = {}) => selectKnowledgeCatalog(state, filters);
+}
+
+function asEntry(chunk: KnowledgeChunk): CatalogEntry {
+  return {
+    entryId: chunk.entryId!, title: chunk.heading.split('｜').slice(1).join('｜'),
+    entryType: chunk.entryType!, content: chunk.text, sourceId: chunk.sourceId!,
+    sourceUrl: chunk.sourceUrl!, locator: chunk.locator!, version: chunk.version!,
+    scopeBoundary: chunk.scopeBoundary!, status: chunk.status!, knowledgePath: chunk.source,
+    configuration: chunk.configuration, driveConfiguration: chunk.driveConfiguration, emissionStage: chunk.emissionStage,
+  };
+}
+
+/** Exact strings identify archive nodes; an unknown model never falls back to a nearby model. */
+function selectKnowledgeCatalog(current: CatalogState, filters: CatalogFilters): KnowledgeCatalog {
+  if (!filters.model) return current.catalog;
+  const brand = current.catalog.brands.find((item) => item.name === filters.brand);
+  const model = brand?.models.find((item) => item.name === filters.model);
+  if (!brand || !model) throw new RangeError('该品牌和型号没有归档资料，请按目录选择并核对完整型号。');
+  const component = filters.component ? model.components.find((item) => item.id === filters.component) : undefined;
+  if (filters.component && !component) throw new RangeError('组件不属于所选资料目录。');
+  if (filters.part && !component?.parts.some((part) => part.id === filters.part)) {
+    throw new RangeError('零部件没有该型号的关联证据，请重新选择。');
+  }
+  const selectedChunks = current.chunks.filter((chunk) => chunk.brand === brand.name &&
+    modelsOf(chunk, current.sources).includes(model.name) && (!filters.component ||
+      includesLink(current.links.get(chunk.entryId!)!, filters.component, filters.part)));
+  const missing = model.components.filter((item) => !['documents', 'machine'].includes(item.id) && item.faultCount === 0);
+  const gaps = [
+    ...missing.map((item) => `${item.name}：当前没有归档的维护/故障类别条目，待补匹配资料。`),
+    ...(model.scope !== 'exact' ? ['本目录仅有系列、平台或待核实范围，须确认完整型号后才可用作本机维修依据。'] : []),
+    ...(selectedChunks.length && selectedChunks.every((chunk) => INFORMATION_TYPES.has(chunk.entryType!))
+      ? ['当前选择仅有资料范围、核验或背景信息，不提供对应维修事实。'] : []),
+    ...(component?.unresolvedPartCount ? ['部分证据只定位到组件，具体零件尚待核实；未补造件号或兼容性。'] : []),
+    ...(!selectedChunks.length ? ['当前选择没有归档条目；不得据此判断机器正常或生成维修策略。'] : []),
+  ];
+  return {
+    ...current.catalog,
+    selected: {
+      brand: brand.name, model: model.name, component: filters.component, part: filters.part,
+      entries: selectedChunks.map(asEntry), gaps,
+    },
+  };
+}

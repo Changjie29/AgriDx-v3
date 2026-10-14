@@ -8,118 +8,19 @@
  * - 知识库很小，全量塞 prompt 也可；这里做"按需选片"，为未来扩充留接口。
  * - 未来接入 PDF/Word 时，只需在 loadAll() 里加新解析器，返回 {path, heading, text}。
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import { loadArchive } from './archive';
+import type { KnowledgeChunk } from './types';
+export type { KnowledgeChunk } from './types';
+import { loadKnowledgeSnapshot, peekKnowledgeSnapshot } from './snapshot';
 import { archiveApplicability, queryWithoutIdentity, resolveScope, type RetrievalContext } from './scope';
 
-export interface KnowledgeChunk {
-  /** 通用文档相对 server/knowledge；归档文档相对仓库根目录 */
-  source: string;
-  /** 该块所属章节标题（## 级） */
-  heading: string;
-  /** 块正文 */
-  text: string;
-  entryId?: string;
-  sourceId?: string;
-  /** Bound by the archive loader after checking the entry, source and section. */
-  indexedReference?: Readonly<{ entryId: string; sourceId: string }>;
-  brand?: string;
-  model?: string;
-  models?: string[];
-  /** Entry-specific subsets require an exact identity rather than a brand-only match. */
-  requiresExactModel?: boolean;
-  configuration?: 'CAB' | 'ROPS';
-  driveConfiguration?: '2WD' | '4WD';
-  emissionStage?: '国三' | '国四';
-  sourceUrl?: string;
-  originalPath?: string;
-  locator?: string;
-  version?: string;
-  scopeBoundary?: string;
-  status?: string;
-  entryType?: string;
-  applicability?: 'matched' | 'pending';
-}
-
-interface ScoredChunk extends KnowledgeChunk {
-  score: number;
-}
-
-const KB_ROOT = path.resolve(process.cwd(), 'server/knowledge');
+interface ScoredChunk extends KnowledgeChunk { score: number }
 const MAX_CHUNKS_IN_PROMPT = 6;
 const MAX_CHARS_PER_CHUNK = 1200;
 
-// ---- 启动时索引 ----
-let chunks: KnowledgeChunk[] = [];
-
-function walkMdFiles(dir: string, base: string): string[] {
-  const out: string[] = [];
-  let entries: fs.Dirent[];
-  try {
-    entries = fs.readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return out;
-  }
-  for (const e of entries) {
-    const full = path.join(dir, e.name);
-    const rel = path.join(base, e.name);
-    if (e.isDirectory()) {
-      out.push(...walkMdFiles(full, rel));
-    } else if (e.isFile() && e.name.endsWith('.md')) {
-      out.push(rel);
-    }
-  }
-  return out;
-}
-
-function splitByHeading(relPath: string, content: string): KnowledgeChunk[] {
-  const out: KnowledgeChunk[] = [];
-  // 按 ## 切；文件首个 # 标题作为文件头，保留为 meta
-  const lines = content.split(/\r?\n/);
-  let currentHeading = '(概述)';
-  let buf: string[] = [];
-  const flush = () => {
-    const text = buf.join('\n').trim();
-    if (text.length > 0) {
-      out.push({ source: relPath, heading: currentHeading, text });
-    }
-    buf = [];
-  };
-  for (const line of lines) {
-    if (/^##\s+/.test(line)) {
-      flush();
-      currentHeading = line.replace(/^##\s+/, '').trim();
-    } else {
-      buf.push(line);
-    }
-  }
-  flush();
-  return out;
-}
-
+/** Compatibility entry: every consumer shares the same validated generation. */
 export function loadKnowledgeBase(): { fileCount: number; chunkCount: number } {
-  chunks = [];
-  let fileCount = 0;
-  try {
-    const files = walkMdFiles(KB_ROOT, '');
-    for (const rel of files) {
-      // 跳过说明性 README（00_说明 下的 README 不参与检索）
-      if (rel.replace(/\\/g, '/').startsWith('00_说明/')) continue;
-      const abs = path.join(KB_ROOT, rel);
-      const content = fs.readFileSync(abs, 'utf-8');
-      chunks.push(...splitByHeading(rel.replace(/\\/g, '/'), content));
-      fileCount++;
-    }
-  } catch (e) {
-    console.warn('[kb] load failed:', (e as Error).message);
-  }
-  // Invalid archive references must fail startup rather than silently hide missing entries.
-  const archive = loadArchive();
-  chunks.push(...archive.chunks);
-  fileCount += archive.fileCount;
-  console.log(`[kb] loaded ${fileCount} files, ${chunks.length} chunks (${archive.chunks.length} archived entries)`);
-  return { fileCount, chunkCount: chunks.length };
+  const snapshot = loadKnowledgeSnapshot();
+  return { fileCount: snapshot.fileCount, chunkCount: snapshot.chunks.length };
 }
 
 // ---- 关键词打分 ----
@@ -205,6 +106,7 @@ function scoreChunk(chunk: KnowledgeChunk, queryTokens: Map<string, number>, gro
  * 无命中时返回空数组，调用方决定 fallback。
  */
 export function retrieve(query: string, k = MAX_CHUNKS_IN_PROMPT, context: RetrievalContext = {}): KnowledgeChunk[] {
+  const chunks = peekKnowledgeSnapshot()?.chunks ?? [];
   if (chunks.length === 0) return [];
   const { tokens: qTokens, groups } = symptomTokens(query);
   if (qTokens.size === 0) return [];
@@ -228,7 +130,8 @@ export function retrieve(query: string, k = MAX_CHUNKS_IN_PROMPT, context: Retri
 
 /** 当前知识条目数（供 /api/health 或前端展示） */
 export function stats() {
-  return { chunks: chunks.length, archivedEntries: chunks.filter((chunk) => chunk.entryId).length };
+  const snapshot = peekKnowledgeSnapshot();
+  return { chunks: snapshot?.chunks.length ?? 0, archivedEntries: snapshot?.archivedEntries ?? 0 };
 }
 
 /** Source facts remain outside body truncation so applicability limits cannot be lost. */
@@ -256,3 +159,4 @@ export function formatForPrompt(found: KnowledgeChunk[]): string {
     })
     .join('\n\n---\n\n');
 }
+

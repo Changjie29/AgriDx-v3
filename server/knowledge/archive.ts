@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { KnowledgeChunk } from './retriever';
+import type { KnowledgeChunk } from './types';
 import { configureIndexedModels } from './scope';
 import { isArchiveId } from './evidence';
 
@@ -26,7 +26,9 @@ interface ArchiveEntry {
   emission_stage?: '国三' | '国四';
 }
 
-interface ArchiveSource {
+export interface ArchiveSource {
+  model?: string;
+  document_type?: string;
   source_id: string;
   path: string;
   url: string;
@@ -46,7 +48,7 @@ function requireStrings(value: unknown, fields: string[], label: string): void {
 }
 
 /** Only indexed entry sections are loaded; raw manuals, READMEs and pending lists are excluded. */
-export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChunk[]; fileCount: number } {
+export function loadArchive(archiveRoot = ARCHIVE_ROOT, options: { configureModels?: boolean } = {}): { chunks: KnowledgeChunk[]; fileCount: number; sources: ArchiveSource[] } {
   const INDEX_ROOT = path.join(archiveRoot, '农用拖拉机知识库');
   const sources: unknown = JSON.parse(fs.readFileSync(path.join(INDEX_ROOT, 'sources.json'), 'utf8'));
   if (!Array.isArray(sources)) throw new Error('sources.json 必须是数组');
@@ -149,6 +151,7 @@ export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChun
       entryType: entry.entry_type,
     });
   }
-  configureIndexedModels(chunks);
-  return { chunks, fileCount: documents.size };
+  if (options.configureModels !== false) configureIndexedModels(chunks);
+  return { chunks, fileCount: documents.size, sources: [...sourceMap.values()] };
 }
+
