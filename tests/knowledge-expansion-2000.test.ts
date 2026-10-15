@@ -29,6 +29,9 @@ interface Manifest {
   sources_reviewed: { source_id: string; added_entries: number; entry_ids: string[] }[];
 }
 const digest = (value: string | Uint8Array) => createHash('sha256').update(value).digest('hex');
+// Git stores LF text, while Windows checkout may materialize CRLF. Hash the
+// repository representation so the baseline proof is independent of checkout.
+const repositoryBytes = (file: string) => Buffer.from(fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n'), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(`${index}/采集记录/20261015_新增2000条正文知识.json`, 'utf8')) as Manifest;
 const entries = fs.readFileSync(`${index}/entries.jsonl`, 'utf8').trim().split(/\r?\n/).map((s) => JSON.parse(s) as Entry);
 const sources = new Map((JSON.parse(fs.readFileSync(`${index}/sources.json`, 'utf8')) as Source[]).map((s) => [s.source_id, s]));
@@ -36,16 +39,16 @@ const batchIds = new Set(manifest.entries.map((p) => p.entry_id));
 const batch = entries.filter((e) => batchIds.has(e.entry_id));
 const chunks = new Map(loadArchive().chunks.map((chunk) => [chunk.entryId!, chunk]));
 
-test('the 2000-entry expansion preserves the baseline index bytes and all existing fact documents', () => {
+test('the 2000-entry expansion preserves the baseline repository bytes and all existing fact documents', () => {
   assert.equal(manifest.added_entries, 2000);
   assert.equal(batch.length, 2000);
   assert.equal(batchIds.size, 2000);
   assert.equal(manifest.baseline_entries, 2213);
   assert.equal(manifest.total_entries, 4213);
-  const bytes = fs.readFileSync(`${index}/entries.jsonl`);
+  const bytes = repositoryBytes(`${index}/entries.jsonl`);
   assert.equal(digest(bytes.subarray(0, manifest.baseline_index_bytes)), manifest.baseline_index_sha256);
   for (const [file, sha] of Object.entries(manifest.baseline_documents_sha256)) {
-    assert.equal(digest(fs.readFileSync(file)), sha, `${file}: existing facts must remain unchanged`);
+    assert.equal(digest(repositoryBytes(file)), sha, `${file}: existing facts must remain unchanged`);
   }
   assert.equal(manifest.sources_reviewed.reduce((sum, s) => sum + s.added_entries, 0), 2000);
   assert.deepEqual(new Set(manifest.sources_reviewed.flatMap((s) => s.entry_ids)), batchIds);

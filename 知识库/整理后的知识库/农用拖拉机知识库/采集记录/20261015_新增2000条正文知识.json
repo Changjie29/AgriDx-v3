@@ -5540,7 +5540,7 @@
       "pdf_page": 24,
       "printed_page": "16",
       "component_id": "machine",
-      "fact_sha256": "f3034d1a1efdfe4fbd80c42a1aae08db3548943518d9a3a316c1b2a21f6af0d7",
+      "fact_sha256": "8a5647ade0ac19f4da8a51a88fc4f2cebdbc55f229586615b555c5724caecc40",
       "review_job": "SRC-WD-WF1404-1604-2021__019-024",
       "pdf_fragment_sha256": "0751c0522a67c140c99bc303b233252fca9deb787901e70ef49d92319ee56365",
       "review_prompt_sha256": "502752dc9c3503945827392e36d6f176e5ed3d4f2652bf950813ba6191b7d8c2"
@@ -6800,7 +6800,7 @@
       "pdf_page": 11,
       "printed_page": "3",
       "component_id": "cooling",
-      "fact_sha256": "5b1156b2e3fe459461cced559e33269f5db7a75d58aa41b330da17f01111807b",
+      "fact_sha256": "49dbca8a2a6eed69dcbbd15083ec7596c4972d8af1b0b673a0e5a0f8761228f0",
       "review_job": "SRC-WD-WF1404-1804-2022__007-012",
       "pdf_fragment_sha256": "1261e6bf63c7bfd70d479efc4df357079f027ee3ba52e8f68a46a0b91b351ca0",
       "review_prompt_sha256": "0fd41f7f7f35f24263cb68ae408d2f7606b23290488cae4636b6623dceb8c4e2"
@@ -6932,7 +6932,7 @@
       "pdf_page": 29,
       "printed_page": "21",
       "component_id": "machine",
-      "fact_sha256": "8b769e924d31778f3b2146d97be2263ebaf8a4585ac6cf4fce3366a019d21d8a",
+      "fact_sha256": "46e1655e30b82e00438411406ea1f4a3acd363a569f6977633a271aab613950d",
       "review_job": "SRC-WD-WF1404-1804-2022__025-030",
       "pdf_fragment_sha256": "1622af922a6893351f57a317177b398c4536a89d16bfda697ac875e9820c25fc",
       "review_prompt_sha256": "229e8c1befd74121970ac2e85a841adaf136226a3cc077b3ce92b236e9a7cee5"
@@ -10616,7 +10616,7 @@
       "pdf_page": 5,
       "printed_page": "-5-",
       "component_id": "electrical",
-      "fact_sha256": "607e82306fb9ab092751d1d53a88a66e38d131167a3eeaf936c60984f0bf0590",
+      "fact_sha256": "0a150651530ca3d53cd002b0742754b1a7595cce29452bd86d05549e0585def8",
       "review_job": "SRC-LV-TB-TRAINING__001-006",
       "pdf_fragment_sha256": "2cf86141996a6602f5b948b6c73eb277c7d7f6837d378c2d34d77e3c18ed7e93",
       "review_prompt_sha256": "7b30933e205bab970457949a9b040731fb9cabbe375799f05653c4bea1d64ba9"
@@ -30566,6 +30566,12 @@
       "from_title": "散热器网孔清理与背负式收割机辅助散热建议",
       "title": "配装背负机具后的散热网孔清理与辅助散热建议",
       "reason": "检索标题消除机具/电动部件/故障代码/排除型号与咨询整机身份的歧义，正文证据继续保留完整术语与条件"
+    },
+    {
+      "entry_id": "KB2000-20261015-WDWF22-008",
+      "from_title": "打开散热器盖安全泄压规程",
+      "title": "打开散热器盖前的熄火冷却要求",
+      "reason": "只保留原文可确认的熄火冷却要求；疑点不生成操作步骤"
     }
   ],
   "validation": {
@@ -30823,5 +30829,17 @@
       "production_build": true
     },
     "development_bundle_new_entries": 2000
+  },
+  "pr_review": {
+    "pull_request": 42,
+    "base_main": "5311109",
+    "findings": [
+      "Windows CI的基线哈希测试受CRLF检出换行影响，按Git仓库LF文本校验；原2213行索引和40份正文的Git原字节再次比较一致",
+      "合并PR #41主干工具、README与3.4.9日志和两个批次，未覆盖无关成果或重复升版",
+      "对照雷沃TB原件物理5页/印刷-5-，将蓄电池摘要的待冻、火杂误字更正为冻结、火柴；正文哈希同步",
+      "沃得2022原页“满拧以泄压”措辞含糊：保留可确认的熄火冷却要求，不生成泄压步骤并标记原文疑点",
+      "沃得两册磨合后维护原页将加脂对象写为“油泵”：从操作概述移除该项并保留待厂家核实疑点，其他有据保养项目和条目数量不变"
+    ],
+    "review_scope": "原文抽查及自动完整性/配置/检索验证；未全书人工审校、厂家或实车验证"
   }
 }
