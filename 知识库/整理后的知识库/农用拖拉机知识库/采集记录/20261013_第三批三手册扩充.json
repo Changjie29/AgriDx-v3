@@ -1,25 +1,25 @@
 {
   "schema_version": 1,
   "date_shanghai": "2026-10-15",
-  "baseline_commit": "53111092934c3d43a585e457105208e0683b02b6",
+  "baseline_commit": "ddd9bbcd52c4f589dbf364132d091866c981ba59",
   "version": "3.4.10",
   "user_authorized_version_ceiling": "3.8.0",
   "counts": {
-    "baseline": 2213,
-    "added": 158,
-    "total": 2371,
-    "retrieval_chunks": 2380,
+    "baseline": 4213,
+    "added": 137,
+    "total": 4350,
+    "retrieval_chunks": 4359,
     "sources": 26,
     "by_source": {
-      "SRC-WT-TRACTOR-MANUAL": 55,
+      "SRC-WT-TRACTOR-MANUAL": 47,
       "SRC-YTO-LX-MANUAL": 45,
-      "SRC-JD-6B-L1-OMSU54855": 58
+      "SRC-JD-6B-L1-OMSU54855": 45
     },
     "by_type": {
       "维护/故障知识": 44,
-      "操作/维护知识": 91,
-      "资料核验": 1,
-      "安全操作": 22
+      "操作/维护知识": 70,
+      "资料核验": 2,
+      "安全操作": 21
     }
   },
   "deduplication": {
@@ -41,65 +41,93 @@
       "KB-YTO-LX-20261013-C3-057",
       "KB-YTO-LX-20261013-C3-058"
     ],
-    "existing_main_entries_preserved": 2213
+    "existing_main_entries_preserved": 4213,
+    "removed_after_pr42": {
+      "weita": [
+        "KB-WT-TT-20261013-C3-045",
+        "KB-WT-TT-20261013-C3-046",
+        "KB-WT-TT-20261013-C3-047",
+        "KB-WT-TT-20261013-C3-049",
+        "KB-WT-TT-20261013-C3-051",
+        "KB-WT-TT-20261013-C3-052",
+        "KB-WT-TT-20261013-C3-054",
+        "KB-WT-TT-20261013-C3-055"
+      ],
+      "jd6b": [
+        "KB-JD-6B-20261013-C3-007",
+        "KB-JD-6B-20261013-C3-008",
+        "KB-JD-6B-20261013-C3-009",
+        "KB-JD-6B-20261013-C3-010",
+        "KB-JD-6B-20261013-C3-015",
+        "KB-JD-6B-20261013-C3-016",
+        "KB-JD-6B-20261013-C3-017",
+        "KB-JD-6B-20261013-C3-030",
+        "KB-JD-6B-20261013-C3-031",
+        "KB-JD-6B-20261013-C3-032",
+        "KB-JD-6B-20261013-C3-034",
+        "KB-JD-6B-20261013-C3-035",
+        "KB-JD-6B-20261013-C3-036"
+      ]
+    }
   },
   "validation": {
     "index": {
       "sources": 26,
-      "entries": 2371,
-      "knowledge_documents": 43,
+      "entries": 4350,
+      "knowledge_documents": 61,
       "retained_pdf_files": 15,
       "link_only_pdf_sources": 7,
       "entry_types": {
-        "安全操作": 75,
-        "操作/维护知识": 900,
-        "维护/故障知识": 1357,
+        "安全操作": 666,
+        "操作/维护知识": 1928,
+        "维护/故障知识": 1586,
         "机型资料": 5,
         "资料缺口": 3,
         "资料索引": 13,
         "系统适用边界": 2,
-        "资料核验": 10,
-        "系统安装/调试": 6
+        "资料核验": 11,
+        "系统安装/调试": 136
       },
       "errors": 0,
       "warnings": 0,
-      "info": 1377,
-      "findings": 1377,
-      "affected_entries": 1357,
+      "info": 3356,
+      "findings": 3356,
+      "affected_entries": 3336,
       "by_rule": {
-        "status.unspecified": 1357,
+        "status.unspecified": 3336,
         "source.external": 7,
         "source.level": 13
       },
       "by_category": {
-        "verification": 1357,
+        "verification": 3336,
         "source": 20
       }
     },
     "project_tests": {
-      "tests": 252,
-      "pass": 250,
+      "tests": 256,
+      "pass": 254,
       "fail": 0,
       "skipped": 2
     },
+    "verify_passed": true,
     "http_summary": {
-      "checks": 3719,
-      "passed": 3719,
+      "checks": 3205,
+      "passed": 3205,
       "failed": 0,
-      "new_entries": 158
+      "new_entries": 137
     },
     "runtime_health": {
       "ok": true,
       "version": "3.4.10",
-      "timestamp": "2026-10-15T14:22:45.649Z",
+      "timestamp": "2026-10-15T14:39:35.381Z",
       "coordination": {
         "defaultMode": "knowledge_only",
         "configValid": true,
         "allowExternalAi": false
       },
       "knowledge": {
-        "chunks": 2380,
-        "archivedEntries": 2371
+        "chunks": 4359,
+        "archivedEntries": 4350
       },
       "llm": {
         "preference": "auto",
@@ -131,8 +159,8 @@
           "entry_ids": [
             "KB-JD-6B-20261013-C3-057",
             "KB-JD-6B-20261013-C3-004",
-            "KB-JD-6B-20261013-C3-008",
             "KB-JD-6B-20261013-C3-040",
+            "KB2000-20261015-JD6B-140",
             "KB-JD-6B-20261013-C3-039",
             "KB-JD-6B-20261013-C3-058"
           ],
@@ -156,10 +184,10 @@
           "entry_ids": [
             "KB-WT-TT-20261013-C3-001",
             "KB-WT-TT-20261013-C3-004",
-            "KB-WT-TT-20261013-C3-045",
+            "KB2000-20261015-WTTT-052",
             "KB-WT-TT-20261013-C3-003",
-            "KB-WT-TT-20261013-C3-002",
-            "KB-WT-TT-20261013-C3-028"
+            "KB2000-20261015-WTTT-073",
+            "KB-WT-TT-20261013-C3-002"
           ],
           "provider": "knowledge-base"
         }
@@ -372,17 +400,9 @@
     "KB-WT-TT-20261013-C3-042",
     "KB-WT-TT-20261013-C3-043",
     "KB-WT-TT-20261013-C3-044",
-    "KB-WT-TT-20261013-C3-045",
-    "KB-WT-TT-20261013-C3-046",
-    "KB-WT-TT-20261013-C3-047",
     "KB-WT-TT-20261013-C3-048",
-    "KB-WT-TT-20261013-C3-049",
     "KB-WT-TT-20261013-C3-050",
-    "KB-WT-TT-20261013-C3-051",
-    "KB-WT-TT-20261013-C3-052",
     "KB-WT-TT-20261013-C3-053",
-    "KB-WT-TT-20261013-C3-054",
-    "KB-WT-TT-20261013-C3-055",
     "KB-YTO-LX-20261013-C3-001",
     "KB-YTO-LX-20261013-C3-002",
     "KB-YTO-LX-20261013-C3-003",
@@ -434,17 +454,10 @@
     "KB-JD-6B-20261013-C3-004",
     "KB-JD-6B-20261013-C3-005",
     "KB-JD-6B-20261013-C3-006",
-    "KB-JD-6B-20261013-C3-007",
-    "KB-JD-6B-20261013-C3-008",
-    "KB-JD-6B-20261013-C3-009",
-    "KB-JD-6B-20261013-C3-010",
     "KB-JD-6B-20261013-C3-011",
     "KB-JD-6B-20261013-C3-012",
     "KB-JD-6B-20261013-C3-013",
     "KB-JD-6B-20261013-C3-014",
-    "KB-JD-6B-20261013-C3-015",
-    "KB-JD-6B-20261013-C3-016",
-    "KB-JD-6B-20261013-C3-017",
     "KB-JD-6B-20261013-C3-018",
     "KB-JD-6B-20261013-C3-019",
     "KB-JD-6B-20261013-C3-020",
@@ -457,13 +470,7 @@
     "KB-JD-6B-20261013-C3-027",
     "KB-JD-6B-20261013-C3-028",
     "KB-JD-6B-20261013-C3-029",
-    "KB-JD-6B-20261013-C3-030",
-    "KB-JD-6B-20261013-C3-031",
-    "KB-JD-6B-20261013-C3-032",
     "KB-JD-6B-20261013-C3-033",
-    "KB-JD-6B-20261013-C3-034",
-    "KB-JD-6B-20261013-C3-035",
-    "KB-JD-6B-20261013-C3-036",
     "KB-JD-6B-20261013-C3-037",
     "KB-JD-6B-20261013-C3-038",
     "KB-JD-6B-20261013-C3-039",
