@@ -35,6 +35,13 @@
       "base": "3.4.8",
       "version": "3.4.9",
       "date": "2026-10-15"
+    },
+    {
+      "id": "knowledge-plus-2000-20261015",
+      "kind": "knowledge",
+      "base": "3.4.8",
+      "version": "3.4.9",
+      "date": "2026-10-15"
     }
   ]
 }
