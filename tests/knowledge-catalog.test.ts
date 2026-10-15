@@ -79,7 +79,8 @@ test('catalogue preserves exact CAB subsets and never exposes their entries to S
   assert.ok(cab.entries.some((entry) => entry.entryId === 'KB-LX2620-014' && entry.configuration === 'CAB'));
   const su = getKnowledgeCatalog({ brand: '久保田', model: 'LX2620SUHSD', component: 'cab' }).selected!;
   assert.ok(su.entries.length > 0, 'SU has its own archived ROPS evidence');
-  assert.ok(su.entries.every((entry) => entry.configuration === 'ROPS'));
+  assert.ok(su.entries.some((entry) => entry.configuration === 'ROPS'), 'SU retains its ROPS-specific evidence');
+  assert.ok(su.entries.every((entry) => entry.configuration !== 'CAB'), 'shared seat and seat-belt safety may cover both configurations; CAB-specific facts remain excluded');
   assert.ok(su.entries.every((entry) => !['KB-LX2620-014', 'KB-LX2620-015'].includes(entry.entryId)));
   assert.throws(() => getKnowledgeCatalog({ brand: '久保田', model: 'LX2620HSDCX' }), RangeError);
   assert.throws(() => getKnowledgeCatalog({ brand: '东方红', model: 'LF1504(G4)' }), RangeError);
