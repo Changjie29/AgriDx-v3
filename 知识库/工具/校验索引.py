@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only archive checks; optional report and temporary external PDF proofs."""
+"""Single read-only archive validator: integrity checks plus quality reports."""
 import argparse
 import collections
 import datetime
@@ -10,14 +10,23 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from urllib.parse import urlparse
 
-ENTRY_TYPES = {
-    '维护/故障知识', '操作/维护知识', '安全操作', '系统安装/调试',
-    '系统适用边界', '资料索引', '资料核验', '机型资料', '资料缺口',
-}
+# The legacy command without -B must also leave the knowledge tree untouched.
+sys.dont_write_bytecode = True
+
+from knowledge_quality import (IncrementalCache, RULES_VERSION, SCHEMA_VERSION, STATES,
+                               atomic_write, body_checks, finding, fingerprint,
+                               markdown_report, reference_verification, safe_output)
+
+ENTRY_TYPES = {'维护/故障知识', '操作/维护知识', '安全操作', '系统安装/调试',
+               '系统适用边界', '资料索引', '资料核验', '机型资料', '资料缺口'}
 REPO = Path(__file__).resolve().parents[2]
-INDEX = REPO / '知识库/整理后的知识库/农用拖拉机知识库'
+INDEX_PATH = Path('知识库/整理后的知识库/农用拖拉机知识库')
+IDENTIFIER = re.compile(r'[A-Z0-9]+(?:-[A-Z0-9]+)*')
+SOURCE_FIELDS = ['source_id', 'brand', 'model', 'path', 'url', 'version', 'scope_boundary', 'sha256']
+ENTRY_FIELDS = ['entry_id', 'source_id', 'brand', 'model', 'title', 'knowledge_path', 'locator', 'status', 'entry_type']
 
 
 def digest(path):
@@ -59,186 +68,405 @@ def cited_pages(text):
     return sorted(pages)
 
 
+class CheckFailure(ValueError):
+    def __init__(self, rule, message, field=''):
+        super().__init__(message)
+        self.rule, self.field = rule, field
+
+
+def require(condition, rule, message, field=''):
+    if not condition:
+        raise CheckFailure(rule, message, field)
+
+
+def check_conditions(record):
+    for field, allowed in [('emission_stage', ['国三', '国四']),
+                           ('configuration', ['CAB', 'ROPS']),
+                           ('drive_configuration', ['2WD', '4WD'])]:
+        require(field not in record or record[field] in allowed,
+                'scope.condition', f'{field}条件无效', field)
+
+
+def check_models(models):
+    return (isinstance(models, list) and bool(models) and
+            all(isinstance(model, str) and model.strip() for model in models) and
+            len(set(models)) == len(models))
+
+
+class ArchiveAudit:
+    def __init__(self, repo, proofs, cache_path, full):
+        self.repo = Path(repo).resolve()
+        self.index = self.repo / INDEX_PATH
+        self.proofs = proofs
+        self.files, self.file_stats, self.documents = {}, {}, {}
+        self.findings = []
+        self.hash_bytes = 0
+        engine = [RULES_VERSION, sys.version, digest(Path(__file__)),
+                  digest(Path(__file__).with_name('knowledge_quality.py')),
+                  shutil.which('pdfinfo')]
+        backend = shutil.which('pdfinfo')
+        if backend:
+            engine.append(self.stat(Path(backend)))
+        else:
+            from importlib.metadata import PackageNotFoundError, version
+            try:
+                engine.append(version('PyMuPDF'))
+            except PackageNotFoundError:
+                engine.append(None)
+        self.cache = IncrementalCache(cache_path, fingerprint(engine), full)
+
+    @staticmethod
+    def stat(path):
+        value = path.stat()
+        return [value.st_size, value.st_mtime_ns, value.st_ctime_ns, value.st_ino]
+
+    def track(self, path):
+        path = path.resolve()
+        if path not in self.files:
+            before = self.stat(path)
+            self.files[path] = digest(path)
+            self.hash_bytes += before[0]
+            self.file_stats[path] = before
+            require(before == self.stat(path), 'snapshot.changed', '文件在哈希期间变化')
+        return self.files[path]
+
+    def relative(self, path):
+        return path.relative_to(self.repo).as_posix() if path.is_relative_to(self.repo) else str(path)
+
+    def resolved(self, relative, area):
+        rule = 'source.file' if area == '知识库/原始农机说明书' else 'entry.path'
+        require(isinstance(relative, str) and not Path(relative).is_absolute(),
+                rule, '索引路径须为仓库相对路径')
+        path = (self.repo / relative).resolve()
+        require(path.is_relative_to((self.repo / area).resolve()) and path.is_file(),
+                rule, f'路径不存在或超出资料目录：{relative}')
+        return path
+
+    def dependency(self, relative, area):
+        try:
+            return self.track(self.resolved(relative, area))
+        except (ValueError, OSError) as error:
+            return {'unavailable': str(error)}
+
+    def emit(self, rule, message, record=None, path='', line=None, field='', observed=None):
+        record = record if isinstance(record, dict) else {}
+        # sources.json is an array, so its record ordinal is a JSON pointer,
+        # never a fabricated physical line number.
+        if path.endswith('/sources.json') and line is not None:
+            field = f'/{line - 1}' + (f'/{field}' if field else '')
+            line = None
+        self.findings.append(finding(rule, message,
+                             entry_id=record.get('entry_id') if isinstance(record.get('entry_id'), str) else None,
+                             source_id=record.get('source_id') if isinstance(record.get('source_id'), str) else None,
+                             path=path, line=line, field=field,
+                             locator=record.get('locator', '') if isinstance(record.get('locator', ''), str) else '', observed=observed))
+
+    def record_fields(self, record, required, path, line):
+        if not isinstance(record, dict):
+            self.emit('record.required', '索引记录必须是对象', path=path, line=line)
+            return False
+        valid = True
+        for field in required:
+            value = record.get(field)
+            if not isinstance(value, str) or not value.strip():
+                self.emit('record.required', f'缺少非空字符串：{field}', record, path, line, field)
+                valid = False
+        return valid
+
+    def supplementary_fields(self, record, path, line):
+        for field in set(SOURCE_FIELDS + ENTRY_FIELDS + ['scope_boundary', 'use', 'status', 'source_level', 'collection_id']):
+            if field not in record:
+                continue
+            value = record[field]
+            if not isinstance(value, str) or not value.strip():
+                if field in ['scope_boundary', 'use', 'status', 'source_level', 'collection_id']:
+                    self.emit('record.optional', f'已填写字段须为非空字符串：{field}', record, path, line, field)
+                continue
+            if value != value.strip():
+                self.emit('record.whitespace', f'字段含首尾空白：{field}', record, path, line, field)
+            if re.fullmatch(r'TODO|TBD|N/A|[-—]+', value, re.I):
+                self.emit('record.placeholder', f'字段仍为占位符：{field}', record, path, line, field)
+        if 'case_key' in record and (not isinstance(record['case_key'], str) or
+                                     not re.fullmatch(r'[a-f0-9]{64}', record['case_key'])):
+            self.emit('record.optional', 'case_key须为64位小写十六进制摘要', record, path, line, 'case_key')
+
+    def source_checks(self, source, position):
+        start = len(self.findings)
+        location = (INDEX_PATH / 'sources.json').as_posix()
+        result = {'checked': None, 'page_count': None}
+        if not self.record_fields(source, SOURCE_FIELDS, location, position):
+            return {**result, 'findings': self.findings[start:]}
+        self.supplementary_fields(source, location, position)
+        try:
+            require(bool(IDENTIFIER.fullmatch(source['source_id'])), 'source.id', '来源编号格式无效', 'source_id')
+            url = urlparse(source['url'])
+            require(url.scheme in ['http', 'https'] and bool(url.netloc), 'source.url', '来源网址须为完整HTTP(S)链接', 'url')
+            check_conditions(source)
+            if 'models' in source:
+                require(check_models(source['models']), 'scope.models', '精确型号列表无效或重复', 'models')
+            path = self.resolved(source['path'], '知识库/原始农机说明书')
+            require(bool(re.fullmatch(r'[a-f0-9]{64}', source['sha256'])) and self.track(path) == source['sha256'],
+                    'source.file', '本地文件SHA256不符', 'sha256')
+            require(type(source.get('bytes')) is int and path.stat().st_size == source['bytes'],
+                    'source.file', '本地文件字节数不符', 'bytes')
+            checked = {'source_id': source['source_id'], 'path': source['path'], 'sha256_matches': True,
+                       'bytes_matches': True, 'actual_bytes': path.stat().st_size}
+            require('storage_type' not in source or source['storage_type'] == 'link_and_source_record',
+                    'source.file', '未知的原件存储模式', 'storage_type')
+            if source.get('storage_type') == 'link_and_source_record':
+                require(path.suffix == '.md', 'source.file', '来源记录模式须指向Markdown记录', 'path')
+                for field in ['manual_bytes', 'manual_pdf_pages']:
+                    require(type(source.get(field)) is int and source[field] > 0, 'source.file', f'{field}缺少原件完整性记录', field)
+                require(isinstance(source.get('manual_sha256'), str) and bool(re.fullmatch(r'[a-f0-9]{64}', source['manual_sha256'])),
+                        'source.file', '缺少PDF原件哈希', 'manual_sha256')
+                result['page_count'] = source['manual_pdf_pages']
+                checked.update(referenced_pdf_pages=source['manual_pdf_pages'], manual_sha256=source['manual_sha256'])
+                proof = self.proofs.get(source['source_id'])
+                if proof:
+                    require(self.track(proof) == source['manual_sha256'] and proof.stat().st_size == source['manual_bytes'],
+                            'source.file', '临时PDF原件哈希或字节数不符', 'manual_sha256')
+                    require(page_count(proof) == source['manual_pdf_pages'], 'source.file', '临时PDF原件页数不符', 'manual_pdf_pages')
+                checked['external_pdf_verified'] = bool(proof)
+                if not proof:
+                    self.emit('source.external', '本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数',
+                              source, location, position, 'manual_sha256')
+            elif path.suffix.lower() == '.pdf':
+                actual = page_count(path)
+                require(source.get('pdf_pages') == actual, 'source.file', 'PDF页数不符', 'pdf_pages')
+                result['page_count'] = actual
+                checked['pdf_pages'] = actual
+            pages = source.get('verified_pdf_pages', {})
+            require(isinstance(pages, dict) and all(isinstance(value, str) and value.strip() for value in pages.values()),
+                    'source.pages', '已核对证据页须为页号到说明的对象', 'verified_pdf_pages')
+            if result['page_count']:
+                for key in pages:
+                    numbers = cited_pages(f'PDF第{key}页')
+                    require(numbers and all(1 <= number <= result['page_count'] for number in numbers),
+                            'source.pages', f'已核对页越界：{key}', 'verified_pdf_pages')
+            result['checked'] = checked
+            if not source.get('source_level'):
+                self.emit('source.level', '来源未记录source_level，不能据此判定不可信', source, location, position, 'source_level')
+        except (ValueError, TypeError, OSError, RuntimeError, subprocess.SubprocessError) as error:
+            self.emit(getattr(error, 'rule', 'source.file'), str(error), source, location, position, getattr(error, 'field', ''))
+        return {**result, 'findings': self.findings[start:]}
+
+    def document(self, relative):
+        path = self.resolved(relative, '知识库/整理后的知识库')
+        require(path.suffix == '.md' and path.name not in ['README.md', '待补资料.md'] and '采集记录' not in path.parts,
+                'entry.path', '条目须指向正式知识卡', 'knowledge_path')
+        if path not in self.documents:
+            self.track(path)
+            text = path.read_text('utf8')
+            sections = {}
+            for match in re.finditer(r'^##\s+([^\r\n]+)\r?\n([\s\S]*?)(?=^##\s+|\Z)', text, re.M):
+                key = match[1].split('｜')[0].strip()
+                require(key not in sections, 'entry.section', f'Markdown标题键重复：{key}', 'heading')
+                body_start = match.start(2) + len(match[2]) - len(match[2].lstrip())
+                sections[key] = {'heading': match[1].strip(), 'body': match[2].strip(),
+                                 'line': text.count('\n', 0, body_start)}
+            self.documents[path] = sections
+        return self.documents[path]
+
+    def entry_checks(self, entry, position, source, source_result, document):
+        start = len(self.findings)
+        location = (INDEX_PATH / 'entries.jsonl').as_posix()
+        result = {'verification': reference_verification(entry.get('status')), 'body_format': None}
+        if not self.record_fields(entry, ENTRY_FIELDS, location, position):
+            return {**result, 'findings': self.findings[start:]}
+        self.supplementary_fields(entry, location, position)
+        if result['verification'] == 'unspecified':
+            self.emit('status.unspecified', '原状态未被现有严格核验解析器识别，不等于未人工核对', entry, location, position, 'status', entry['status'])
+        try:
+            require(bool(IDENTIFIER.fullmatch(entry['entry_id'])), 'entry.id', '条目编号格式无效', 'entry_id')
+            require(bool(IDENTIFIER.fullmatch(entry['source_id'])), 'source.id', '条目来源编号格式无效', 'source_id')
+            require('summary' not in entry, 'entry.summary', '事实正文仅在Markdown知识卡维护，条目索引不得保留summary副本', 'summary')
+            require(entry['entry_type'] in ENTRY_TYPES, 'entry.type', '条目类别无效', 'entry_type')
+            require(source and entry['brand'] == source.get('brand'), 'entry.source', '来源不存在或品牌不一致', 'source_id')
+            if 'models' in entry:
+                models = entry['models']
+                require(check_models(models) and isinstance(source.get('models'), list) and all(model in source['models'] for model in models),
+                        'scope.models', '条目精确型号须为来源型号列表的非空、无重复子集', 'models')
+            check_conditions(entry)
+            for field in ['configuration', 'drive_configuration', 'emission_stage']:
+                require(not entry.get(field) or not source.get(field) or entry[field] == source[field],
+                        'scope.condition', f'条目与来源的{field}条件冲突', field)
+            document = document()
+            section = document.get(entry['entry_id'], {})
+            body = section.get('body', '')
+            require(section.get('heading') == f"{entry['entry_id']}｜{entry['title']}" and bool(body),
+                    'entry.section', 'Markdown编号/标题/正文缺失或不一致', 'heading')
+            require(bool(re.search(r'(?<![A-Za-z0-9_-])' + re.escape(entry['source_id']) + r'(?![A-Za-z0-9_-])', body)),
+                    'entry.evidence', '正文没有确切来源编号', 'source_id')
+            count = source_result.get('page_count') if source_result else None
+            if count:
+                pages = cited_pages(entry['locator'])
+                require(pages and all(1 <= page <= count for page in pages), 'entry.evidence', 'PDF证据页缺失或越界', 'locator')
+            additions, style = body_checks(entry, body, entry['knowledge_path'], section['line'])
+            self.findings.extend(additions)
+            result['body_format'] = style
+        except (ValueError, TypeError, OSError) as error:
+            self.emit(getattr(error, 'rule', 'entry.path'), str(error), entry, location, position, getattr(error, 'field', ''))
+        return {**result, 'findings': self.findings[start:]}
+
+    def read_indices(self):
+        sources, entries = [], []
+        path = self.index / 'sources.json'
+        try:
+            self.track(path)
+            sources = json.loads(path.read_text('utf8'))
+            require(isinstance(sources, list), 'index.json', 'sources.json必须是数组')
+        except (ValueError, OSError) as error:
+            self.emit('index.json', str(error), path=self.relative(path))
+            sources = []
+        path = self.index / 'entries.jsonl'
+        try:
+            self.track(path)
+            for line, text in enumerate(path.read_text('utf8').splitlines(), 1):
+                if text.strip():
+                    try:
+                        entries.append((line, json.loads(text)))
+                    except ValueError as error:
+                        self.emit('index.json', str(error), path=self.relative(path), line=line)
+        except (ValueError, OSError) as error:
+            self.emit('index.json', str(error), path=self.relative(path))
+        return sources, entries
+
+    def run(self):
+        started = time.perf_counter()
+        sources, entries = self.read_indices()
+        source_map, source_results, checked, seen_sources, seen_entries = {}, {}, [], set(), set()
+        kinds, states, formats = collections.Counter(), collections.Counter(), collections.Counter()
+        document_paths = set()
+        for position, source in enumerate(sources, 1):
+            identity = source.get('source_id') if isinstance(source, dict) else None
+            identity = identity if isinstance(identity, str) else None
+            if identity in seen_sources:
+                self.emit('source.id', '来源编号重复', source, (INDEX_PATH / 'sources.json').as_posix(), position, 'source_id')
+            if identity:
+                seen_sources.add(identity)
+                source_map.setdefault(identity, source)
+            dependency = self.dependency(source.get('path'), '知识库/原始农机说明书') if isinstance(source, dict) else None
+            proof = self.proofs.get(identity)
+            try:
+                proof_dependency = self.track(proof) if proof else None
+            except OSError as error:
+                proof_dependency = str(error)
+            start = len(self.findings)
+            result = self.cache.run('sources', f'source:{position}', [source, dependency, proof_dependency],
+                                    lambda: self.source_checks(source, position))
+            self.findings[start:] = result['findings']
+            if identity and identity not in source_results:
+                source_results[identity] = result
+            if result['checked']:
+                checked.append(result['checked'])
+        for identity in self.proofs:
+            if identity not in source_map or source_map[identity].get('storage_type') != 'link_and_source_record':
+                self.emit('source.file', '临时PDF没有对应的链接来源', {'source_id': identity}, field='external_pdf')
+        for position, entry in entries:
+            if not isinstance(entry, dict):
+                self.record_fields(entry, ENTRY_FIELDS, (INDEX_PATH / 'entries.jsonl').as_posix(), position)
+                continue
+            identity = entry.get('entry_id')
+            identity = identity if isinstance(identity, str) else None
+            if identity in seen_entries:
+                self.emit('entry.id', '条目编号重复', entry, (INDEX_PATH / 'entries.jsonl').as_posix(), position, 'entry_id')
+            if identity:
+                seen_entries.add(identity)
+            source_id = entry.get('source_id')
+            source = source_map.get(source_id) if isinstance(source_id, str) else None
+            source_result = source_results.get(source_id) if isinstance(source_id, str) else None
+            dependency = self.dependency(entry.get('knowledge_path'), '知识库/整理后的知识库')
+            start = len(self.findings)
+            result = self.cache.run('entries', f'entry:{position}', [entry, dependency, source, source_result],
+                                    lambda: self.entry_checks(entry, position, source, source_result,
+                                                             lambda: self.document(entry.get('knowledge_path'))))
+            self.findings[start:] = result['findings']
+            states[result['verification']] += 1
+            if isinstance(entry.get('entry_type'), str):
+                kinds[entry['entry_type']] += 1
+            if result['body_format']:
+                formats[result['body_format']] += 1
+                document_paths.add(entry['knowledge_path'])
+        for path, before in self.file_stats.items():
+            try:
+                unchanged = before == self.stat(path)
+            except OSError:
+                unchanged = False
+            if not unchanged:
+                self.emit('snapshot.changed', '文件在扫描期间变化', path=self.relative(path))
+        findings = sorted(self.findings, key=lambda x: (x['evidence']['path'], x['evidence']['line'] or 0, x['rule_id'], x['finding_id']))
+        severity = collections.Counter(x['severity'] for x in findings)
+        errors = [f"{x['entry_id'] or x['source_id'] or x['evidence']['path']}：{x['message']}" for x in findings if x['severity'] == 'error']
+        notes = [f"{x['source_id']}：{x['message']}" for x in findings if x['rule_id'] == 'source.external']
+        if self.cache.note:
+            notes.append(self.cache.note)
+        inputs = {self.relative(path): value for path, value in self.files.items()}
+        if self.cache.path in self.files:
+            raise ValueError('缓存不得覆盖被检查的输入文件')
+        if not any(x['rule_id'] == 'snapshot.changed' for x in findings):
+            self.cache.save()
+        return {
+            'schema_version': SCHEMA_VERSION, 'rules_version': RULES_VERSION,
+            'generated_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'scope': '文件/来源/编号/标题/适用条件/正文格式规则校验；不等于全文事实审校、厂家确认或实车验证',
+            'snapshot': {'sha256': fingerprint(inputs), 'files': inputs},
+            'summary': {'sources': len(sources), 'entries': len(entries), 'knowledge_documents': len(document_paths),
+                        'retained_pdf_files': sum('pdf_pages' in x for x in checked),
+                        'link_only_pdf_sources': sum('referenced_pdf_pages' in x for x in checked),
+                        'entry_types': dict(kinds), 'errors': severity['error'], 'warnings': severity['warning'],
+                        'info': severity['info'], 'findings': len(findings),
+                        'affected_entries': len({x['entry_id'] for x in findings if x['entry_id']}),
+                        'by_rule': dict(collections.Counter(x['rule_id'] for x in findings)),
+                        'by_category': dict(collections.Counter(x['category'] for x in findings))},
+            'verification_counts': {state: states[state] for state in STATES},
+            'body_formats': dict(formats), 'sources': checked, 'errors': errors, 'notes': notes, 'findings': findings,
+            'incremental': {'enabled': bool(self.cache.path), **{key: self.cache.stats[key] for key in
+                            ['sources_checked', 'sources_reused', 'entries_checked', 'entries_reused']},
+                            'global_checks': '索引解析、编号唯一性、内容哈希与输入稳定性每次重检'},
+            'performance': {'elapsed_ms': round((time.perf_counter() - started) * 1000, 3),
+                            'hashed_files': len(inputs), 'hashed_bytes': self.hash_bytes,
+                            'parsed_documents': len(self.documents)},
+        }
+
+
+def validate(repo=REPO, proofs=None, cache_path=None, full=False):
+    cache_path = safe_output(cache_path, repo) if cache_path else None
+    proofs = {key: Path(value).resolve() for key, value in (proofs or {}).items()}
+    if cache_path in proofs.values():
+        raise ValueError('缓存路径不得覆盖临时原件')
+    return ArchiveAudit(repo, proofs, cache_path, full).run()
+
+
 def main():
-    parser = argparse.ArgumentParser(description='检查来源、条目、标题和证据范围；不修改索引或下载文件')
-    parser.add_argument('--report', type=Path, help='可选JSON报告路径')
+    parser = argparse.ArgumentParser(description='只读索引与知识质量规则校验；不修改知识、不下载文件')
+    parser.add_argument('--report', type=Path, help='结构化JSON报告；保留原有summary/sources/errors/notes字段')
+    parser.add_argument('--markdown', type=Path, help='同一次检查的人类可读Markdown报告')
+    parser.add_argument('--cache', type=Path, help='可选增量缓存；不指定则不保存缓存')
+    parser.add_argument('--full', action='store_true', help='忽略旧缓存，完整重检并更新显式指定的缓存')
     parser.add_argument('--external-pdf', action='append', default=[], metavar='SOURCE_ID=PATH',
                         help='核对仅存链接资料的临时PDF，可重复传入')
     args = parser.parse_args()
-    errors, notes, checked = [], [], []
-
-    def require_strings(value, fields, label):
-        if not isinstance(value, dict):
-            raise ValueError(f'{label}必须是对象')
-        for field in fields:
-            if not isinstance(value.get(field), str) or not value[field].strip():
-                raise ValueError(f'{label}.{field}缺少非空字符串')
-
-    def resolved(relative, area):
-        if Path(relative).is_absolute():
-            raise ValueError('索引路径须为仓库相对路径')
-        path = (REPO / relative).resolve()
-        if not path.is_relative_to(area.resolve()) or not path.is_file():
-            raise ValueError(f'路径不存在或超出资料目录：{relative}')
-        return path
-
     proofs = {}
     for value in args.external_pdf:
         identity, separator, path = value.partition('=')
         if not separator or not identity or not path or identity in proofs:
             parser.error('--external-pdf须为唯一SOURCE_ID=PATH')
         proofs[identity] = Path(path).resolve()
-    sources = json.loads((INDEX / 'sources.json').read_text('utf8'))
-    if not isinstance(sources, list):
-        raise ValueError('sources.json必须是数组')
-    entries = [json.loads(line) for line in (INDEX / 'entries.jsonl').read_text('utf8').splitlines() if line.strip()]
-    source_map, page_counts = {}, {}
-    retained_pdfs, external_pdfs = 0, 0
-    for source in sources:
-        label = source.get('source_id', '未知来源') if isinstance(source, dict) else '未知来源'
-        try:
-            require_strings(source, ['source_id', 'brand', 'model', 'path', 'url', 'version', 'scope_boundary', 'sha256'], label)
-            if label in source_map:
-                raise ValueError('来源编号重复')
-            source_map[label] = source
-            if not re.fullmatch(r'[A-Z0-9][A-Z0-9-]*', label):
-                raise ValueError('来源编号格式无效')
-            url = urlparse(source['url'])
-            if url.scheme not in ['http', 'https'] or not url.netloc:
-                raise ValueError('来源网址须为完整HTTP(S)链接')
-            if source.get('emission_stage') not in [None, '国三', '国四']:
-                raise ValueError('排放阶段无效')
-            if source.get('configuration') not in [None, 'CAB', 'ROPS']:
-                raise ValueError('来源配置无效')
-            if source.get('drive_configuration') not in [None, '2WD', '4WD']:
-                raise ValueError('来源驱动配置无效')
-            if 'models' in source and (not isinstance(source['models'], list) or not source['models'] or
-                                      any(not isinstance(model, str) or not model.strip() for model in source['models'])):
-                raise ValueError('精确型号列表无效')
-            path = resolved(source['path'], REPO / '知识库/原始农机说明书')
-            if not re.fullmatch(r'[a-f0-9]{64}', source['sha256']) or digest(path) != source['sha256']:
-                raise ValueError('本地文件SHA256不符')
-            if type(source.get('bytes')) is not int or path.stat().st_size != source['bytes']:
-                raise ValueError('本地文件字节数不符')
-            result = {'source_id': label, 'path': source['path'], 'sha256_matches': True,
-                      'bytes_matches': True, 'actual_bytes': path.stat().st_size}
-            if source.get('storage_type') == 'link_and_source_record':
-                external_pdfs += 1
-                if path.suffix != '.md':
-                    raise ValueError('来源记录模式须指向Markdown记录')
-                for field in ['manual_bytes', 'manual_pdf_pages']:
-                    if type(source.get(field)) is not int or source[field] <= 0:
-                        raise ValueError(f'{field}缺少原件完整性记录')
-                if not re.fullmatch(r'[a-f0-9]{64}', source.get('manual_sha256', '')):
-                    raise ValueError('缺少PDF原件哈希')
-                page_counts[label] = source['manual_pdf_pages']
-                result['referenced_pdf_pages'] = source['manual_pdf_pages']
-                result['manual_sha256'] = source['manual_sha256']
-                if label in proofs:
-                    proof = proofs[label]
-                    if digest(proof) != source['manual_sha256'] or proof.stat().st_size != source['manual_bytes']:
-                        raise ValueError('临时PDF原件哈希或字节数不符')
-                    if page_count(proof) != source['manual_pdf_pages']:
-                        raise ValueError('临时PDF原件页数不符')
-                    result['external_pdf_verified'] = True
-                else:
-                    result['external_pdf_verified'] = False
-                    notes.append(f'{label}：本次只核对本地来源记录，未重新取得外链PDF；采用取得时登记的原件哈希/页数')
-            elif path.suffix.lower() == '.pdf':
-                retained_pdfs += 1
-                actual = page_count(path)
-                if source.get('pdf_pages') != actual:
-                    raise ValueError('PDF页数不符')
-                page_counts[label] = actual
-                result['pdf_pages'] = actual
-            pages = source.get('verified_pdf_pages', {})
-            if not isinstance(pages, dict) or any(not isinstance(value, str) or not value.strip() for value in pages.values()):
-                raise ValueError('已核对证据页须为页号到说明的对象')
-            if label in page_counts:
-                for key in pages:
-                    numbers = cited_pages(f'PDF第{key}页')
-                    if not numbers or any(number < 1 or number > page_counts[label] for number in numbers):
-                        raise ValueError(f'已核对页越界：{key}')
-            checked.append(result)
-        except (ValueError, OSError, RuntimeError, subprocess.SubprocessError) as error:
-            errors.append(f'{label}：{error}')
-    for identity in proofs:
-        if identity not in source_map or source_map[identity].get('storage_type') != 'link_and_source_record':
-            errors.append(f'临时PDF没有对应的链接来源：{identity}')
-
-    ids, documents, kinds = set(), {}, collections.Counter()
-    for entry in entries:
-        label = entry.get('entry_id', '未知条目') if isinstance(entry, dict) else '未知条目'
-        try:
-            require_strings(entry, ['entry_id', 'source_id', 'brand', 'model', 'title', 'knowledge_path', 'locator', 'status', 'entry_type'], label)
-            if 'summary' in entry:
-                raise ValueError('事实正文仅在Markdown知识卡维护，条目索引不得保留summary副本')
-            if label in ids or not re.fullmatch(r'[A-Z0-9][A-Z0-9-]*', label):
-                raise ValueError('条目编号重复或格式无效')
-            ids.add(label)
-            if entry['entry_type'] not in ENTRY_TYPES:
-                raise ValueError('条目类别无效')
-            kinds[entry['entry_type']] += 1
-            source = source_map.get(entry['source_id'])
-            if not source or entry['brand'] != source['brand']:
-                raise ValueError('来源不存在或品牌不一致')
-            if 'models' in entry:
-                models = entry['models']
-                if (not isinstance(models, list) or not models or
-                        any(not isinstance(model, str) or not model.strip() or
-                            model not in source.get('models', []) for model in models) or
-                        len(set(models)) != len(models)):
-                    raise ValueError('条目精确型号须为来源型号列表的非空、无重复子集')
-            if entry.get('emission_stage') not in [None, '国三', '国四']:
-                raise ValueError('条目排放条件无效')
-            if entry.get('configuration') not in [None, 'CAB', 'ROPS']:
-                raise ValueError('条目配置无效')
-            if entry.get('configuration') and source.get('configuration') and entry['configuration'] != source['configuration']:
-                raise ValueError('条目与来源配置冲突')
-            if entry.get('drive_configuration') not in [None, '2WD', '4WD']:
-                raise ValueError('条目驱动配置无效')
-            if entry.get('drive_configuration') and source.get('drive_configuration') and entry['drive_configuration'] != source['drive_configuration']:
-                raise ValueError('条目与来源驱动配置冲突')
-            if entry.get('emission_stage') and source.get('emission_stage') and entry['emission_stage'] != source['emission_stage']:
-                raise ValueError('条目与来源的排放阶段冲突')
-            path = resolved(entry['knowledge_path'], REPO / '知识库/整理后的知识库')
-            if path.suffix != '.md' or path.name in ['README.md', '待补资料.md'] or '采集记录' in path.parts:
-                raise ValueError('条目须指向正式知识卡')
-            if path not in documents:
-                sections = {}
-                for match in re.finditer(r'^##\s+([^\r\n]+)\r?\n([\s\S]*?)(?=^##\s+|\Z)', path.read_text('utf8'), re.M):
-                    key = match[1].split('｜')[0].strip()
-                    if key in sections:
-                        raise ValueError(f'Markdown标题键重复：{key}')
-                    sections[key] = (match[1].strip(), match[2].strip())
-                documents[path] = sections
-            heading, body = documents[path].get(label, ('', ''))
-            if heading != f"{label}｜{entry['title']}" or not body:
-                raise ValueError('Markdown编号/标题/正文缺失或不一致')
-            if entry['source_id'] not in body:
-                raise ValueError('正文没有来源编号')
-            if entry['source_id'] in page_counts:
-                pages = cited_pages(entry['locator'])
-                if not pages or any(page < 1 or page > page_counts[entry['source_id']] for page in pages):
-                    raise ValueError('PDF证据页缺失或越界')
-        except (ValueError, OSError) as error:
-            errors.append(f'{label}：{error}')
-
-    report = {
-        'generated_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        'scope': '文件/来源/编号/标题/证据范围校验；不等于全文事实审校、厂家确认或实车验证',
-        'summary': {'sources': len(sources), 'entries': len(entries), 'knowledge_documents': len(documents),
-                    'retained_pdf_files': retained_pdfs, 'link_only_pdf_sources': external_pdfs,
-                    'entry_types': dict(kinds), 'errors': len(errors)},
-        'sources': checked, 'errors': errors, 'notes': notes,
-    }
+    outputs = [safe_output(path, REPO) for path in [args.report, args.markdown, args.cache] if path]
+    if len(set(outputs)) != len(outputs) or any(path in proofs.values() for path in outputs):
+        parser.error('报告、缓存和临时原件路径不得互相覆盖')
+    report = validate(proofs=proofs, cache_path=args.cache, full=args.full)
+    protected = {(REPO / name).resolve() for name in report['snapshot']['files']}
+    if any(path in protected for path in outputs):
+        parser.error('报告或缓存不得覆盖被检查的输入文件')
     if args.report:
-        args.report.parent.mkdir(parents=True, exist_ok=True)
-        args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', 'utf8')
+        atomic_write(safe_output(args.report, REPO), json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+    if args.markdown:
+        atomic_write(safe_output(args.markdown, REPO), markdown_report(report))
     print(json.dumps(report['summary'], ensure_ascii=False))
-    for message in errors + notes:
+    for message in report['errors'] + report['notes']:
         print(message)
-    return 1 if errors else 0
+    return 1 if report['summary']['errors'] else 0
 
 
 if __name__ == '__main__':

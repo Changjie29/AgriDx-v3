@@ -1,6 +1,6 @@
 {
   "name": "agri-fault-diagnosis",
-  "version": "3.4.8",
+  "version": "3.4.9",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,7 @@
     "build:server": "node scripts/build.mjs --server",
     "preview": "vite preview",
     "test": "node scripts/run-tests.mjs",
+    "knowledge:quality": "node scripts/knowledge-quality.mjs",
     "typecheck": "node scripts/typecheck.mjs",
     "lint": "eslint . --cache --cache-location node_modules/.eslintcache --report-unused-disable-directives",
     "check:version": "node scripts/check-version.mjs",
