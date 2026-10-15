@@ -1,4 +1,4 @@
-> 真实规则扫描报告节选：显示3条关系，共19,404条；其余关系和记录未展示。全部待人工审核，未执行真实embedding。
+> 真实规则扫描报告节选：显示3条关系，共19,406条；其余关系和记录未展示。全部待人工审核，未执行真实embedding。
 
 # 维修知识语义去重审核报告
 
@@ -14,11 +14,11 @@
     "modified": 0,
     "reused": 2213,
     "removed": 0,
-    "candidates": 19404,
+    "candidates": 19406,
     "by_relation": {
       "complementary": 882,
       "scope_variant": 210,
-      "uncertain": 18312
+      "uncertain": 18314
     }
   },
   "model": {
@@ -40,12 +40,12 @@
     "enabled": true,
     "full": false,
     "features_reused": 2213,
-    "relations_reused": 19404,
+    "relations_reused": 19406,
     "features_encoded": 0,
     "checkpoint_every": 100
   },
   "performance": {
-    "elapsed_ms": 3244.652
+    "elapsed_ms": 4614.235
   },
   "blocked": false,
   "notes": []

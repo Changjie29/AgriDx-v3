@@ -81,6 +81,29 @@ class ReviewRegressions(unittest.TestCase):
                 cli.main()
         self.assertFalse(target.exists())
 
+    def test_lexical_ties_are_independent_of_token_iteration_order(self):
+        import itertools
+        features = {identity: {'tokens': []} for identity in ['a', 'b', 'c', 'd', 'e', *[f'f{i}' for i in range(8)]]}
+        groups = {
+            'b_half': ['a', 'b'],
+            'b_tenth': ['a', 'b', *[f'f{i}' for i in range(8)]],
+            'b_fifth1': ['a', 'b', 'f0', 'f1', 'f2'],
+            'b_fifth2': ['a', 'b', 'f3', 'f4', 'f5'],
+            'c_half1': ['a', 'c'], 'c_half2': ['a', 'c'],
+            **{f'bd{i}': ['b', 'd'] for i in range(3)},
+            **{f'ce{i}': ['c', 'e'] for i in range(3)},
+        }
+        for token, members in groups.items():
+            for identity in members:
+                features[identity]['tokens'].append(token)
+        signatures = set()
+        for order in itertools.permutations(['b_half', 'b_tenth', 'b_fifth1', 'b_fifth2']):
+            features['a']['tokens'] = [*order, 'c_half1', 'c_half2']
+            with patch.object(semantic, 'candidate_tokens', side_effect=lambda feature: feature['tokens']):
+                pairs = semantic.lexical_candidates(features, 1)
+            signatures.add(tuple(sorted(pairs)))
+        self.assertEqual(len(signatures), 1, 'tied candidates must not depend on set/hash order')
+
     def test_unparsed_title_condition_difference_is_not_a_duplicate(self):
         from semantic_relations import extract_features, classify
         source = self.fixture.sources[0]

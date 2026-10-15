@@ -67,7 +67,9 @@ def lexical_candidates(features, top_k):
         for pair in itertools.combinations(sorted(ids), 2):
             pairs[pair].add(kind)
     scores = collections.defaultdict(collections.Counter)
-    for token, ids in postings.items():
+    # Floating-point sums must follow a fixed order, including across Python
+    # hash seeds and index reorderings, before resolving top-k ties by ID.
+    for token, ids in sorted(postings.items()):
         # Common boilerplate is not useful retrieval evidence. No pair is inferred
         # negative from being outside this top-k; reports are review candidates.
         if not 2 <= len(ids) <= 128:
