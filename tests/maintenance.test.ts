@@ -38,12 +38,12 @@ test('项目版本拒绝前导零、非稳定版本与非字符串', () => {
   }
 });
 
-test('项目版本按整数分段比较，允许3.4.9上限并拒绝所有越界版本', () => {
-  for (const version of ['3.3.10', '3.4.0', '3.4.9']) {
+test('项目版本按整数分段比较，允许3.4.10上限并拒绝所有越界版本', () => {
+  for (const version of ['3.3.10', '3.4.0', '3.4.9', '3.4.10']) {
     assert.equal(validateVersionState(metadata(version)), version);
   }
-  for (const version of ['3.4.10', '3.5.0', '4.0.0']) {
-    assert.throws(() => validateVersionState(metadata(version)), /不得超过 3\.4\.9/);
+  for (const version of ['3.4.11', '3.5.0', '4.0.0']) {
+    assert.throws(() => validateVersionState(metadata(version)), /不得超过 3\.4\.10/);
   }
 });
 

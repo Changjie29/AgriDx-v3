@@ -1,0 +1,701 @@
+{
+  "schema_version": 1,
+  "rules_version": "1.0.0",
+  "generated_at_utc": "2026-10-15T13:15:59.566923+00:00",
+  "snapshot": {
+    "sha256": "fd973d1f3db5342b97f0f262569345d2f13735d11cee19a9fc15ef44e88102ad",
+    "files": {
+      "知识库/整理后的知识库/农用拖拉机知识库/sources.json": "f07d293438850a7f3dd65a6b094fb28b0bb072ea0ef1d32382a8ed3694e6dae1",
+      "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl": "25c0fafb391c3685ba3a09d2aa49af751afb1fb6ad569a22f76e15ddd506e99b",
+      "知识库/原始农机说明书/雷沃/TG系列/常见故障及排除方法.html": "99a338d30b783dc161a7b8cb2c1c4501240f0c202f2503ecab0771a94620085c",
+      "知识库/原始农机说明书/雷沃/国三/发动机日常维护与保养.html": "01587338307dd3470c3b14fbade2ef0762db8c81104f609765c783935d3a9875",
+      "知识库/原始农机说明书/东风/系列待核实/拖拉机冬季保养注意事项.html": "3a9b1c448a54dab1a741dc532528482853816beb7a3b7a8c01eef4e2701b54af",
+      "知识库/原始农机说明书/鸿鹄/T70/湖北农业农村厅_20250414.html": "238710aff58d4f824241224f1e8625e492326c5f9ddd351ff072af9316b234ae",
+      "知识库/原始农机说明书/中联/PL系列/中联PL系列拖拉机维保操作手册.pdf": "6fb3dd6abe70b6d535aca2b37d6525094839881a765153fbd4eede2ec7f23806",
+      "知识库/原始农机说明书/纽荷兰/WORKMASTER25/NewHolland_WORKMASTER25_2023_92157408.pdf": "841012144434c04688838b3ee6ff098e53acc1b6e4508dae23d1f466795abbe8",
+      "知识库/原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf": "b3d794d746812f52a352933836f5ed7780efae87f0cab2441d869868660c6904",
+      "知识库/原始农机说明书/雷沃/TX系列/19162429_6519.pdf": "bb74b8799e32f7b3d10486822ffa483f7436bc651d94d1dbd4c3a6eb6575e83d",
+      "知识库/原始农机说明书/雷沃/TD系列/19162322_3238.pdf": "64ea54b81b3a7d6371f22acb218caa98547f576eba0fc5fae3e950c9cea1d446",
+      "知识库/原始农机说明书/雷沃/TB系列/19162218_4956.pdf": "dcbafcf3f3a872f856cad027d8aeee5f0bda1cbb8cd87fd5d119f9ec9ea75648",
+      "知识库/原始农机说明书/雷沃/P5000/19161645_3081.pdf": "5e7b9ae5d2c17247c292714e717d79b9f62adfa9a01409f4670cedd8574ef3a6",
+      "知识库/原始农机说明书/东方红/LX系列/18151903_7577.pdf": "0a004ecb3f603b5148f877f45a69e72a6990b94074a15f4dae472e1c94cc9410",
+      "知识库/原始农机说明书/东方红/LF系列/18143819_4481.pdf": "023ee33ff3af76c3eeda07fd21d79fcf4514ec37a8757b319fda7ccf3ac75dc9",
+      "知识库/原始农机说明书/潍泰/TT系列/潍泰拖拉机使用说明书.pdf": "a3218a10f3c156fa2db1db46153ea7f4aa06bfd9697db2c1e2679edbb4da4eed",
+      "知识库/原始农机说明书/约翰迪尔/6E国四/OMTR115296.pdf": "ab9e0f151440bde087988fa0bc497159923fee14693e9bbd83a93a89bff4c034",
+      "知识库/原始农机说明书/智能化配套系统/千寻/QY210Pro/165468154663987807.pdf": "d7779ba45c7f3092ae3b00bb5ceee2f7ee38befd5bc318d80299b65ca0afadca",
+      "知识库/原始农机说明书/Barbieri HydroTRAC 4HWD Mini Tractor Operator's Manual PDF.pdf": "9796b8544a15dec203cf72cc9ab03ef6da5e8904ac19c944b7ebe38abc1c1aaa",
+      "知识库/原始农机说明书/东方红/LF1504/来源记录.md": "2cdcddfe8e23adcb2e134287c03a03fc9074a93b95f7ffffd0db848329c716ba",
+      "知识库/原始农机说明书/久保田/M6060-M7060-3C13199724/来源记录.md": "4986d22bde986418994bbcbd5e67a3a83b410a9d6f0d72ccc26d312c50a635a6",
+      "知识库/原始农机说明书/久保田/M5-091-M5-111/来源记录_3B79199724.md": "ed567b3baf28151cd4e8b8c58c04ee7b96a001df7ceb672b87736ff6b0fde5d5",
+      "知识库/原始农机说明书/沃得/WF系列/来源记录_WF1404-1604_2021.md": "13c6896da2f853708b0c3408374f2ecca75d6b5d32efb7fd2a2e616695eb6e0e",
+      "知识库/原始农机说明书/沃得/WF系列/来源记录_WF1404-1804_2022.md": "27156c0cffbb8143504dddb8641f38756c87a7dc0f49657bf760dd34c1490caa",
+      "知识库/原始农机说明书/智能化配套系统/华测/NX510/来源记录_NX510.md": "45beaee080cc945146e630ddf561a2f265ddb2b1382f3d9b0051d4c6d0a02403",
+      "知识库/原始农机说明书/约翰迪尔/5E_D0/OMSJ34997.pdf": "ad74862f82b27292ed2e324f7c5e676032112d23085e33c48a9cdb6dc05b6fbb",
+      "知识库/原始农机说明书/约翰迪尔/6B_L1/OMSU54855.pdf": "be07a8d55199e9ba8e295681c6e8e571aac4d5ff97d2842fa15250b6c4190991",
+      "知识库/原始农机说明书/约翰迪尔/6M_OMAL232272/来源记录.md": "14294ed1e80a3d9d941319aa55adcde2e5123514facea2ae28d508525183dd62",
+      "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md": "73e00029d3b402a7beb697706773a5bdd4fd58e0782d7d717e86831bf9f4c523",
+      "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md": "6689818bf4cb15d5e8444872cf1b9f890e9f39b916d1af472f95a6c55f9e50f7",
+      "知识库/整理后的知识库/拖拉机/中联/PL系列.md": "0a22514e8548a2fdf89014684b8420296e3b565243fed4fdfd1e257b44d8b607",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_维保初步知识.md": "be6968b5d964851dc6b8fba51524e773f5c45f245f7a1be88efb3cb4503f60a5",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东风_冬季维护初步知识.md": "c8014bbad4ad676b93b08be1b00a2b5c7ff9c7a2c4b3be2dc29b83432696c87e",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/鸿鹄T70_机型与资料缺口.md": "5a855ac3772cb08da93041783721dd93a67247f42e54a921e98ec0e4baad1a99",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_交机培训手册索引.md": "6721386d06e48a1fb977f0dc4b106a2131dc13ec1092a88cc0c02353558a37bf",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md": "734a87802484bab6b27e8832e8e09acff3e4f001822f54e41be84220dca8527b",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/潍泰_说明书索引.md": "e4acc27617c74046f00a5e80c2806862df905d10d1c6a1e48d06ade651628cd9",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md": "faa37340a90c1f2cbb61f66eb64a23ebd671e1f45f28a501d0a899025ae5f02c",
+      "知识库/整理后的知识库/农用拖拉机知识库/配套智能系统/千寻_QY210Pro.md": "d42fe150470b8ee7e6f7f985d2d17032e82016bb0f665de448b9cb556f7744a0",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/Barbieri_HydroTRAC4HWD.md": "c67137094d1420682040e352eea59d6789c11dbc86510d4274f6dc17455b5258",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504.md": "2e5e8b12ede730a33a7b800aa189f618e5f416188bde2ced40ec1b3284ddc178",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M6060_M7060_3C13199724.md": "c4c85c743d0181afde18f417452c6a265a4ec4587cd103344d77b836247673b6",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_091_M5_111_3B79199724.md": "c556d74736248f8883e0d5cf09984da94e9f6809bc9b46de3ad44c50f7be92fd",
+      "知识库/整理后的知识库/拖拉机/沃得/WF系列.md": "d506fa643cc48ce213473bffe98f423b194836c2b9155d2237a74f159ac096b5",
+      "知识库/整理后的知识库/农用拖拉机知识库/配套智能系统/华测_NX510.md": "44350c2b1d9e5b0d028014c47334b1f06a8dc3815614c777b6761d69554ecc87",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md": "8de5182ab9e2d8ef29fd9884164e3b8daa3a5a45eb554ec017158195392b1f2c",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md": "1f3bf0ae6c9e644981a3d6c0016180b602edb01a21ec0e316bd47713abbf7c7d",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6B_L1_故障与维护扩充.md": "d8846d7acb0eeee79f4b96f464aa3f00962539677b8a106a78f7a2b42ab7a5d1",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E_D0_维护扩充.md": "2ea8c2d0d1e2905717bff85174f4997dbbfbe150556602fdf0d3d90c0fe04772",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E_D0_故障扩充.md": "b85b71e0ae08df91f47bfe88921296c4f7d53473e8f8763ef4c0c11a926a3c16",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四_故障扩充.md": "9472dc5916f0309f008a34773300ad1590f090909cd44062bbb70a05bb6f1aa8",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/中联_PL_故障扩充.md": "b1298b1aca5e1de7cb968fa4758ceea27e5cce27e39e9d7b6fee473b8655caf2",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_20261013扩充.md": "34c6e4b8843ca99fd7ce7fddce6266cc3cc0397ae8c059d4ed7e59071d5f5937",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_20261013扩充.md": "a9103888ac83b692503df19387da8fac87613a2965b0a1d37221378f517d184b",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_LX2620_20261013扩充.md": "f89c7567775b92e7aecafa5c3ebadc192ebcf55348bb01100f6e93823408f5ae",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/纽荷兰_WORKMASTER25_20261013扩充.md": "1b9d61483ca32f78cbe1d6292b3d809d522ac88fce61e8a7430a2f2230ba7ec0",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M6060_M7060_20261013扩充.md": "62d0684626f1d69a13ddb4119243a95bf6c782e673d84ded1f6d1f5e3cdac9d3",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_20261013第二批.md": "d28e76e7a09906b51ec7146e32909fcbcc95a85df98e25631ac7c0dfc12d8950",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四_20261013第二批.md": "688d78ee05361b8b8cfdd054deb2591613320adfd93ac99cd96136bd4c7a2485",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF_20261013第二批.md": "44e48492cc00b43da347793773f1aa39d4884e2e8d518d0541907ed834f9d25e",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD6B_20261014.md": "431a18b5156ede469d18df391dd487c28483ca68921caa11aca5c62881583499",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD5E_20261014.md": "f671e5db2ca6afd5b8b988b347bc5e9d4119dd3cf4a5f909c845a13dae088d7b",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD6E_20261014.md": "83f5421c008b6de10890f6dabc91cc58051e7e4f15e00d797f0ebf0100bc3826",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_ZLPL_20261014.md": "85b59cad5582b04fa741d409833741ccee4c99acc1f7411089be5bfab9c1d587",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_YTOLX_20261014.md": "16fd88ccc957fc29d38548bf8982fe005dd654023a75d21fa03b74813c9c7946",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_YTOLF_20261014.md": "cd018576513b2b1d4af12a87adcf752e78d13176bcb4d193bc5d0cd027d76e16",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_NHWM25_20261014.md": "f19479bed0b021ab195e075e5df7cb1c31e6910b3baeeb542beaf20638c14494",
+      "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_KBLX2620_20261014.md": "15005c8ed8758dc3fed018109f0b1b92b3f65589824c8cf95973333e3060d795"
+    }
+  },
+  "quality": {
+    "schema_version": 1,
+    "rules_version": "1.0.0",
+    "snapshot": {
+      "sha256": "fd973d1f3db5342b97f0f262569345d2f13735d11cee19a9fc15ef44e88102ad",
+      "files": {
+        "知识库/整理后的知识库/农用拖拉机知识库/sources.json": "f07d293438850a7f3dd65a6b094fb28b0bb072ea0ef1d32382a8ed3694e6dae1",
+        "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl": "25c0fafb391c3685ba3a09d2aa49af751afb1fb6ad569a22f76e15ddd506e99b",
+        "知识库/原始农机说明书/雷沃/TG系列/常见故障及排除方法.html": "99a338d30b783dc161a7b8cb2c1c4501240f0c202f2503ecab0771a94620085c",
+        "知识库/原始农机说明书/雷沃/国三/发动机日常维护与保养.html": "01587338307dd3470c3b14fbade2ef0762db8c81104f609765c783935d3a9875",
+        "知识库/原始农机说明书/东风/系列待核实/拖拉机冬季保养注意事项.html": "3a9b1c448a54dab1a741dc532528482853816beb7a3b7a8c01eef4e2701b54af",
+        "知识库/原始农机说明书/鸿鹄/T70/湖北农业农村厅_20250414.html": "238710aff58d4f824241224f1e8625e492326c5f9ddd351ff072af9316b234ae",
+        "知识库/原始农机说明书/中联/PL系列/中联PL系列拖拉机维保操作手册.pdf": "6fb3dd6abe70b6d535aca2b37d6525094839881a765153fbd4eede2ec7f23806",
+        "知识库/原始农机说明书/纽荷兰/WORKMASTER25/NewHolland_WORKMASTER25_2023_92157408.pdf": "841012144434c04688838b3ee6ff098e53acc1b6e4508dae23d1f466795abbe8",
+        "知识库/原始农机说明书/久保田/LX2620-LX2620SU/kubota-lx2620-operator-manual.pdf": "b3d794d746812f52a352933836f5ed7780efae87f0cab2441d869868660c6904",
+        "知识库/原始农机说明书/雷沃/TX系列/19162429_6519.pdf": "bb74b8799e32f7b3d10486822ffa483f7436bc651d94d1dbd4c3a6eb6575e83d",
+        "知识库/原始农机说明书/雷沃/TD系列/19162322_3238.pdf": "64ea54b81b3a7d6371f22acb218caa98547f576eba0fc5fae3e950c9cea1d446",
+        "知识库/原始农机说明书/雷沃/TB系列/19162218_4956.pdf": "dcbafcf3f3a872f856cad027d8aeee5f0bda1cbb8cd87fd5d119f9ec9ea75648",
+        "知识库/原始农机说明书/雷沃/P5000/19161645_3081.pdf": "5e7b9ae5d2c17247c292714e717d79b9f62adfa9a01409f4670cedd8574ef3a6",
+        "知识库/原始农机说明书/东方红/LX系列/18151903_7577.pdf": "0a004ecb3f603b5148f877f45a69e72a6990b94074a15f4dae472e1c94cc9410",
+        "知识库/原始农机说明书/东方红/LF系列/18143819_4481.pdf": "023ee33ff3af76c3eeda07fd21d79fcf4514ec37a8757b319fda7ccf3ac75dc9",
+        "知识库/原始农机说明书/潍泰/TT系列/潍泰拖拉机使用说明书.pdf": "a3218a10f3c156fa2db1db46153ea7f4aa06bfd9697db2c1e2679edbb4da4eed",
+        "知识库/原始农机说明书/约翰迪尔/6E国四/OMTR115296.pdf": "ab9e0f151440bde087988fa0bc497159923fee14693e9bbd83a93a89bff4c034",
+        "知识库/原始农机说明书/智能化配套系统/千寻/QY210Pro/165468154663987807.pdf": "d7779ba45c7f3092ae3b00bb5ceee2f7ee38befd5bc318d80299b65ca0afadca",
+        "知识库/原始农机说明书/Barbieri HydroTRAC 4HWD Mini Tractor Operator's Manual PDF.pdf": "9796b8544a15dec203cf72cc9ab03ef6da5e8904ac19c944b7ebe38abc1c1aaa",
+        "知识库/原始农机说明书/东方红/LF1504/来源记录.md": "2cdcddfe8e23adcb2e134287c03a03fc9074a93b95f7ffffd0db848329c716ba",
+        "知识库/原始农机说明书/久保田/M6060-M7060-3C13199724/来源记录.md": "4986d22bde986418994bbcbd5e67a3a83b410a9d6f0d72ccc26d312c50a635a6",
+        "知识库/原始农机说明书/久保田/M5-091-M5-111/来源记录_3B79199724.md": "ed567b3baf28151cd4e8b8c58c04ee7b96a001df7ceb672b87736ff6b0fde5d5",
+        "知识库/原始农机说明书/沃得/WF系列/来源记录_WF1404-1604_2021.md": "13c6896da2f853708b0c3408374f2ecca75d6b5d32efb7fd2a2e616695eb6e0e",
+        "知识库/原始农机说明书/沃得/WF系列/来源记录_WF1404-1804_2022.md": "27156c0cffbb8143504dddb8641f38756c87a7dc0f49657bf760dd34c1490caa",
+        "知识库/原始农机说明书/智能化配套系统/华测/NX510/来源记录_NX510.md": "45beaee080cc945146e630ddf561a2f265ddb2b1382f3d9b0051d4c6d0a02403",
+        "知识库/原始农机说明书/约翰迪尔/5E_D0/OMSJ34997.pdf": "ad74862f82b27292ed2e324f7c5e676032112d23085e33c48a9cdb6dc05b6fbb",
+        "知识库/原始农机说明书/约翰迪尔/6B_L1/OMSU54855.pdf": "be07a8d55199e9ba8e295681c6e8e571aac4d5ff97d2842fa15250b6c4190991",
+        "知识库/原始农机说明书/约翰迪尔/6M_OMAL232272/来源记录.md": "14294ed1e80a3d9d941319aa55adcde2e5123514facea2ae28d508525183dd62",
+        "知识库/整理后的知识库/拖拉机/久保田/LX2620-LX2620SU.md": "73e00029d3b402a7beb697706773a5bdd4fd58e0782d7d717e86831bf9f4c523",
+        "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md": "6689818bf4cb15d5e8444872cf1b9f890e9f39b916d1af472f95a6c55f9e50f7",
+        "知识库/整理后的知识库/拖拉机/中联/PL系列.md": "0a22514e8548a2fdf89014684b8420296e3b565243fed4fdfd1e257b44d8b607",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_维保初步知识.md": "be6968b5d964851dc6b8fba51524e773f5c45f245f7a1be88efb3cb4503f60a5",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东风_冬季维护初步知识.md": "c8014bbad4ad676b93b08be1b00a2b5c7ff9c7a2c4b3be2dc29b83432696c87e",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/鸿鹄T70_机型与资料缺口.md": "5a855ac3772cb08da93041783721dd93a67247f42e54a921e98ec0e4baad1a99",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/雷沃_交机培训手册索引.md": "6721386d06e48a1fb977f0dc4b106a2131dc13ec1092a88cc0c02353558a37bf",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_说明书索引.md": "734a87802484bab6b27e8832e8e09acff3e4f001822f54e41be84220dca8527b",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/潍泰_说明书索引.md": "e4acc27617c74046f00a5e80c2806862df905d10d1c6a1e48d06ade651628cd9",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四.md": "faa37340a90c1f2cbb61f66eb64a23ebd671e1f45f28a501d0a899025ae5f02c",
+        "知识库/整理后的知识库/农用拖拉机知识库/配套智能系统/千寻_QY210Pro.md": "d42fe150470b8ee7e6f7f985d2d17032e82016bb0f665de448b9cb556f7744a0",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/Barbieri_HydroTRAC4HWD.md": "c67137094d1420682040e352eea59d6789c11dbc86510d4274f6dc17455b5258",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504.md": "2e5e8b12ede730a33a7b800aa189f618e5f416188bde2ced40ec1b3284ddc178",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M6060_M7060_3C13199724.md": "c4c85c743d0181afde18f417452c6a265a4ec4587cd103344d77b836247673b6",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_091_M5_111_3B79199724.md": "c556d74736248f8883e0d5cf09984da94e9f6809bc9b46de3ad44c50f7be92fd",
+        "知识库/整理后的知识库/拖拉机/沃得/WF系列.md": "d506fa643cc48ce213473bffe98f423b194836c2b9155d2237a74f159ac096b5",
+        "知识库/整理后的知识库/农用拖拉机知识库/配套智能系统/华测_NX510.md": "44350c2b1d9e5b0d028014c47334b1f06a8dc3815614c777b6761d69554ecc87",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md": "8de5182ab9e2d8ef29fd9884164e3b8daa3a5a45eb554ec017158195392b1f2c",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_OMAL232272.md": "1f3bf0ae6c9e644981a3d6c0016180b602edb01a21ec0e316bd47713abbf7c7d",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6B_L1_故障与维护扩充.md": "d8846d7acb0eeee79f4b96f464aa3f00962539677b8a106a78f7a2b42ab7a5d1",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E_D0_维护扩充.md": "2ea8c2d0d1e2905717bff85174f4997dbbfbe150556602fdf0d3d90c0fe04772",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E_D0_故障扩充.md": "b85b71e0ae08df91f47bfe88921296c4f7d53473e8f8763ef4c0c11a926a3c16",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四_故障扩充.md": "9472dc5916f0309f008a34773300ad1590f090909cd44062bbb70a05bb6f1aa8",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/中联_PL_故障扩充.md": "b1298b1aca5e1de7cb968fa4758ceea27e5cce27e39e9d7b6fee473b8655caf2",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_20261013扩充.md": "34c6e4b8843ca99fd7ce7fddce6266cc3cc0397ae8c059d4ed7e59071d5f5937",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_20261013扩充.md": "a9103888ac83b692503df19387da8fac87613a2965b0a1d37221378f517d184b",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_LX2620_20261013扩充.md": "f89c7567775b92e7aecafa5c3ebadc192ebcf55348bb01100f6e93823408f5ae",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/纽荷兰_WORKMASTER25_20261013扩充.md": "1b9d61483ca32f78cbe1d6292b3d809d522ac88fce61e8a7430a2f2230ba7ec0",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M6060_M7060_20261013扩充.md": "62d0684626f1d69a13ddb4119243a95bf6c782e673d84ded1f6d1f5e3cdac9d3",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6M_20261013第二批.md": "d28e76e7a09906b51ec7146e32909fcbcc95a85df98e25631ac7c0dfc12d8950",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_6E国四_20261013第二批.md": "688d78ee05361b8b8cfdd054deb2591613320adfd93ac99cd96136bd4c7a2485",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF_20261013第二批.md": "44e48492cc00b43da347793773f1aa39d4884e2e8d518d0541907ed834f9d25e",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD6B_20261014.md": "431a18b5156ede469d18df391dd487c28483ca68921caa11aca5c62881583499",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD5E_20261014.md": "f671e5db2ca6afd5b8b988b347bc5e9d4119dd3cf4a5f909c845a13dae088d7b",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD6E_20261014.md": "83f5421c008b6de10890f6dabc91cc58051e7e4f15e00d797f0ebf0100bc3826",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_ZLPL_20261014.md": "85b59cad5582b04fa741d409833741ccee4c99acc1f7411089be5bfab9c1d587",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_YTOLX_20261014.md": "16fd88ccc957fc29d38548bf8982fe005dd654023a75d21fa03b74813c9c7946",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_YTOLF_20261014.md": "cd018576513b2b1d4af12a87adcf752e78d13176bcb4d193bc5d0cd027d76e16",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_NHWM25_20261014.md": "f19479bed0b021ab195e075e5df7cb1c31e6910b3baeeb542beaf20638c14494",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_KBLX2620_20261014.md": "15005c8ed8758dc3fed018109f0b1b92b3f65589824c8cf95973333e3060d795"
+      }
+    },
+    "summary": {
+      "sources": 26,
+      "entries": 2213,
+      "knowledge_documents": 40,
+      "retained_pdf_files": 15,
+      "link_only_pdf_sources": 7,
+      "entry_types": {
+        "安全操作": 53,
+        "操作/维护知识": 809,
+        "维护/故障知识": 1313,
+        "机型资料": 5,
+        "资料缺口": 3,
+        "资料索引": 13,
+        "系统适用边界": 2,
+        "资料核验": 9,
+        "系统安装/调试": 6
+      },
+      "errors": 0,
+      "warnings": 0,
+      "info": 1219,
+      "findings": 1219,
+      "affected_entries": 1199,
+      "by_rule": {
+        "status.unspecified": 1199,
+        "source.external": 7,
+        "source.level": 13
+      },
+      "by_category": {
+        "verification": 1199,
+        "source": 20
+      }
+    },
+    "verification_counts": {
+      "verified": 1014,
+      "pending": 0,
+      "unverified": 0,
+      "unspecified": 1199
+    }
+  },
+  "model": {
+    "adapter_version": "1.0.0",
+    "chunking": {
+      "version": 1,
+      "strategy": "contiguous-token-chunks",
+      "pooling": "token-weighted-mean-of-unit-vectors",
+      "normalization": "l2",
+      "truncation": false,
+      "prompt": ""
+    },
+    "mode": "rules",
+    "id": "rules-only",
+    "reason": "显式选择规则模式。",
+    "hash": "1c5d40cee9ec7740be0948e6696b1ca465e1c0fa9a52417718df63d68b785261"
+  },
+  "records": {
+    "DF-WINTER-001": {
+      "entry_id": "DF-WINTER-001",
+      "source_id": "SRC-DF-WINTER-20201225",
+      "title": "冬季长期存放的防锈与封护",
+      "scope": {
+        "brand": "东风",
+        "model": "具体系列待核实",
+        "models": [
+          "具体系列待核实"
+        ],
+        "configuration": "",
+        "drive_configuration": "",
+        "emission_stage": "",
+        "source_boundary": "冬季/长期存放指导不是整机说明书充电参数停放制动和放水条件须以本机手册为准",
+        "entry_boundary": "封护措施仅限停放重新启用须解除不把长存处理当作每日作业流程",
+        "use": "",
+        "source_use": "",
+        "title_conditions": [],
+        "conditions": []
+      },
+      "verification": "unspecified",
+      "status_original": "已对照网页正文；未厂家复核/实车验证",
+      "source_version": "2020-12-25",
+      "source_url": "https://www.dfamgc.com/390.html",
+      "source_boundary": "冬季/长期存放指导，不是整机说明书；充电参数、停放制动和放水条件须以本机手册为准。",
+      "scope_original": {
+        "entry": {
+          "brand": "东风",
+          "model": "具体系列待核实",
+          "scope_boundary": "封护措施仅限停放，重新启用须解除；不把长存处理当作每日作业流程。"
+        },
+        "source": {
+          "brand": "东风",
+          "model": "具体系列待核实",
+          "scope_boundary": "冬季/长期存放指导，不是整机说明书；充电参数、停放制动和放水条件须以本机手册为准。"
+        }
+      },
+      "evidence": {
+        "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东风_冬季维护初步知识.md",
+        "line": 7,
+        "locator": "正文第1、4、9项",
+        "index_path": "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl",
+        "index_line": 32
+      }
+    },
+    "DF-WINTER-002": {
+      "entry_id": "DF-WINTER-002",
+      "source_id": "SRC-DF-WINTER-20201225",
+      "title": "冬季油液与电池维护的适用边界",
+      "scope": {
+        "brand": "东风",
+        "model": "具体系列待核实",
+        "models": [
+          "具体系列待核实"
+        ],
+        "configuration": "",
+        "drive_configuration": "",
+        "emission_stage": "",
+        "source_boundary": "冬季/长期存放指导不是整机说明书充电参数停放制动和放水条件须以本机手册为准",
+        "entry_boundary": "不用于推导防冻液系统放水规则电池类型电压和周期仍以精确机型手册为准",
+        "use": "",
+        "source_use": "",
+        "title_conditions": [],
+        "conditions": []
+      },
+      "verification": "unspecified",
+      "status_original": "已对照网页正文；未厂家复核/实车验证",
+      "source_version": "2020-12-25",
+      "source_url": "https://www.dfamgc.com/390.html",
+      "source_boundary": "冬季/长期存放指导，不是整机说明书；充电参数、停放制动和放水条件须以本机手册为准。",
+      "scope_original": {
+        "entry": {
+          "brand": "东风",
+          "model": "具体系列待核实",
+          "scope_boundary": "不用于推导防冻液系统放水规则；电池类型、电压和周期仍以精确机型手册为准。"
+        },
+        "source": {
+          "brand": "东风",
+          "model": "具体系列待核实",
+          "scope_boundary": "冬季/长期存放指导，不是整机说明书；充电参数、停放制动和放水条件须以本机手册为准。"
+        }
+      },
+      "evidence": {
+        "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东风_冬季维护初步知识.md",
+        "line": 16,
+        "locator": "正文第2、6、8项",
+        "index_path": "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl",
+        "index_line": 33
+      }
+    },
+    "KB-JD-5E-D0-003": {
+      "entry_id": "KB-JD-5E-D0-003",
+      "source_id": "SRC-JD-5E-D0-OMSJ34997",
+      "title": "作业防护与火灾预防",
+      "scope": {
+        "brand": "约翰迪尔",
+        "model": "5e-850/5e-854/5e-904/5e-954/5e-1000/5e-1004/5e-1100/5e-1104/5e-1200/5e-1204",
+        "models": [
+          "5e-1000",
+          "5e-1004",
+          "5e-1100",
+          "5e-1104",
+          "5e-1200",
+          "5e-1204",
+          "5e-850",
+          "5e-854",
+          "5e-904",
+          "5e-954"
+        ],
+        "configuration": "",
+        "drive_configuration": "",
+        "emission_stage": "",
+        "source_boundary": "排放阶段原件未标注全书无后处理/dpf/尿素/scr/再生章节pdf元数据2020-04-30不作出版日期依据独立出版/印刷日期待核实不能按国四整机使用实际排放以实车铭牌和环保信息标签为准序列号与cab/rops驱动配置覆盖待核实",
+        "entry_boundary": "通用安全要求清理时机以本机保养表为准",
+        "use": "匹配型号序列号市场与配置后使用不按国四整机使用",
+        "source_use": "",
+        "title_conditions": [],
+        "conditions": [
+          "通用安全要求清理时机与频次以本机保养表为准"
+        ]
+      },
+      "verification": "unspecified",
+      "status_original": "证据页渲染+OCR已核对；未厂家复核/实车验证",
+      "source_version": "OMSJ34997，版本D0（CHINESE）；PDF元数据2020-04-30；独立印刷版次待核实",
+      "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsj34997",
+      "source_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实",
+      "scope_original": {
+        "entry": {
+          "brand": "约翰迪尔",
+          "model": "5E-850/5E-854/5E-904/5E-954/5E-1000/5E-1004/5E-1100/5E-1104/5E-1200/5E-1204",
+          "scope_boundary": "通用安全要求；清理时机以本机保养表为准",
+          "use": "匹配型号、序列号、市场与配置后使用；不按国四整机使用"
+        },
+        "source": {
+          "brand": "约翰迪尔",
+          "model": "5E-850/5E-854/5E-904/5E-954/5E-1000/5E-1004/5E-1100/5E-1104/5E-1200/5E-1204",
+          "models": [
+            "5E-850",
+            "5E-854",
+            "5E-904",
+            "5E-954",
+            "5E-1000",
+            "5E-1004",
+            "5E-1100",
+            "5E-1104",
+            "5E-1200",
+            "5E-1204"
+          ],
+          "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实"
+        }
+      },
+      "evidence": {
+        "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md",
+        "line": 30,
+        "locator": "PDF第14～15页；安全注意事项",
+        "index_path": "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl",
+        "index_line": 192
+      }
+    },
+    "KB-JD-6B-L1-002": {
+      "entry_id": "KB-JD-6B-L1-002",
+      "source_id": "SRC-JD-6B-L1-OMSU54855",
+      "title": "作业防护与火灾预防",
+      "scope": {
+        "brand": "约翰迪尔",
+        "model": "jd954/jd1104/jd1204-a/jd1354-a/jd1404-a",
+        "models": [
+          "jd1104",
+          "jd1204-a",
+          "jd1354-a",
+          "jd1404-a",
+          "jd954"
+        ],
+        "configuration": "",
+        "drive_configuration": "",
+        "emission_stage": "",
+        "source_boundary": "排放阶段原件未标注全书无后处理/dpf/尿素/scr/再生章节pdf元数据2021-12-29不作出版日期依据独立出版/印刷日期待核实不能按国四整机使用实际排放以实车铭牌和环保信息标签为准封面序列号下限以下的车辆适用性待核实",
+        "entry_boundary": "通用安全要求清理时机以本机保养表为准",
+        "use": "匹配型号序列号市场与配置后使用不按国四整机使用",
+        "source_use": "",
+        "title_conditions": [],
+        "conditions": [
+          "通用安全要求清理时机与频次以本机保养表为准"
+        ]
+      },
+      "verification": "unspecified",
+      "status_original": "证据页渲染+OCR已核对；未厂家复核/实车验证",
+      "source_version": "OMSU54855，版本L1（CHINESE）；PDF元数据2021-12-29；独立印刷版次待核实",
+      "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsu54855",
+      "source_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2021-12-29不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；封面序列号下限以下的车辆适用性待核实",
+      "scope_original": {
+        "entry": {
+          "brand": "约翰迪尔",
+          "model": "JD954/JD1104/JD1204-A/JD1354-A/JD1404-A",
+          "scope_boundary": "通用安全要求；清理时机以本机保养表为准",
+          "use": "匹配型号、序列号、市场与配置后使用；不按国四整机使用"
+        },
+        "source": {
+          "brand": "约翰迪尔",
+          "model": "JD954/JD1104/JD1204-A/JD1354-A/JD1404-A",
+          "models": [
+            "JD954",
+            "JD1104",
+            "JD1204-A",
+            "JD1354-A",
+            "JD1404-A"
+          ],
+          "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2021-12-29不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；封面序列号下限以下的车辆适用性待核实"
+        }
+      },
+      "evidence": {
+        "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md",
+        "line": 77,
+        "locator": "PDF第16～17页；安全须知",
+        "index_path": "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl",
+        "index_line": 197
+      }
+    },
+    "TF1000-JD5E-002": {
+      "entry_id": "TF1000-JD5E-002",
+      "source_id": "SRC-JD-5E-D0-OMSJ34997",
+      "title": "发动机爆震：机油不足",
+      "scope": {
+        "brand": "约翰迪尔",
+        "model": "5e-850/5e-854/5e-904/5e-954/5e-1000/5e-1004/5e-1100/5e-1104/5e-1200/5e-1204",
+        "models": [
+          "5e-1000",
+          "5e-1004",
+          "5e-1100",
+          "5e-1104",
+          "5e-1200",
+          "5e-1204",
+          "5e-850",
+          "5e-854",
+          "5e-904",
+          "5e-954"
+        ],
+        "configuration": "",
+        "drive_configuration": "",
+        "emission_stage": "",
+        "source_boundary": "排放阶段原件未标注全书无后处理/dpf/尿素/scr/再生章节pdf元数据2020-04-30不作出版日期依据独立出版/印刷日期待核实不能按国四整机使用实际排放以实车铭牌和环保信息标签为准序列号与cab/rops驱动配置覆盖待核实",
+        "entry_boundary": "排放阶段原件未标注全书无后处理/dpf/尿素/scr/再生章节pdf元数据2020-04-30不作出版日期依据独立出版/印刷日期待核实不能按国四整机使用实际排放以实车铭牌和环保信息标签为准序列号与cab/rops驱动配置覆盖待核实5ed0本页未限定驱动或变速配置仍须匹配本机完整型号pin发动机和变速配置原件排放未标不按国四使用",
+        "use": "",
+        "source_use": "",
+        "title_conditions": [],
+        "conditions": [
+          "5ed0本页未限定驱动或变速配置仍须匹配本机完整型号pin发动机和变速配置原件排放未标不按国四使用"
+        ]
+      },
+      "verification": "verified",
+      "status_original": "原文文本及页面图像已核验；仅本条所引页；未全书审校、厂家复核或实车验证",
+      "source_version": "OMSJ34997，版本D0（CHINESE）；PDF元数据2020-04-30；独立印刷版次待核实",
+      "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsj34997",
+      "source_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实",
+      "scope_original": {
+        "entry": {
+          "brand": "约翰迪尔",
+          "model": "5E-850/5E-854/5E-904/5E-954/5E-1000/5E-1004/5E-1100/5E-1104/5E-1200/5E-1204",
+          "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实；5E D0；本页未限定驱动或变速配置；仍须匹配本机完整型号、PIN、发动机和变速配置；原件排放未标，不按国四使用。"
+        },
+        "source": {
+          "brand": "约翰迪尔",
+          "model": "5E-850/5E-854/5E-904/5E-954/5E-1000/5E-1004/5E-1100/5E-1104/5E-1200/5E-1204",
+          "models": [
+            "5E-850",
+            "5E-854",
+            "5E-904",
+            "5E-954",
+            "5E-1000",
+            "5E-1004",
+            "5E-1100",
+            "5E-1104",
+            "5E-1200",
+            "5E-1204"
+          ],
+          "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实"
+        }
+      },
+      "evidence": {
+        "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD5E_20261014.md",
+        "line": 24,
+        "locator": "故障表/发动机与进排气；PDF物理第137页；印刷300-1",
+        "index_path": "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl",
+        "index_line": 1335
+      }
+    },
+    "TF1000-JD5E-056": {
+      "entry_id": "TF1000-JD5E-056",
+      "source_id": "SRC-JD-5E-D0-OMSJ34997",
+      "title": "发动机爆震：喷油泵正时错误",
+      "scope": {
+        "brand": "约翰迪尔",
+        "model": "5e-850/5e-854/5e-904/5e-954/5e-1000/5e-1004/5e-1100/5e-1104/5e-1200/5e-1204",
+        "models": [
+          "5e-1000",
+          "5e-1004",
+          "5e-1100",
+          "5e-1104",
+          "5e-1200",
+          "5e-1204",
+          "5e-850",
+          "5e-854",
+          "5e-904",
+          "5e-954"
+        ],
+        "configuration": "",
+        "drive_configuration": "",
+        "emission_stage": "",
+        "source_boundary": "排放阶段原件未标注全书无后处理/dpf/尿素/scr/再生章节pdf元数据2020-04-30不作出版日期依据独立出版/印刷日期待核实不能按国四整机使用实际排放以实车铭牌和环保信息标签为准序列号与cab/rops驱动配置覆盖待核实",
+        "entry_boundary": "排放阶段原件未标注全书无后处理/dpf/尿素/scr/再生章节pdf元数据2020-04-30不作出版日期依据独立出版/印刷日期待核实不能按国四整机使用实际排放以实车铭牌和环保信息标签为准序列号与cab/rops驱动配置覆盖待核实5ed0本页未限定驱动或变速配置仍须匹配本机完整型号pin发动机和变速配置原件排放未标不按国四使用",
+        "use": "",
+        "source_use": "",
+        "title_conditions": [],
+        "conditions": [
+          "5ed0本页未限定驱动或变速配置仍须匹配本机完整型号pin发动机和变速配置原件排放未标不按国四使用"
+        ]
+      },
+      "verification": "verified",
+      "status_original": "原文文本及页面图像已核验；仅本条所引页；未全书审校、厂家复核或实车验证",
+      "source_version": "OMSJ34997，版本D0（CHINESE）；PDF元数据2020-04-30；独立印刷版次待核实",
+      "source_url": "https://techinfo-omview.apps-prod-vpn.us.e06.c01.johndeerecloud.com/omview/omsj34997",
+      "source_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实",
+      "scope_original": {
+        "entry": {
+          "brand": "约翰迪尔",
+          "model": "5E-850/5E-854/5E-904/5E-954/5E-1000/5E-1004/5E-1100/5E-1104/5E-1200/5E-1204",
+          "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实；5E D0；本页未限定驱动或变速配置；仍须匹配本机完整型号、PIN、发动机和变速配置；原件排放未标，不按国四使用。"
+        },
+        "source": {
+          "brand": "约翰迪尔",
+          "model": "5E-850/5E-854/5E-904/5E-954/5E-1000/5E-1004/5E-1100/5E-1104/5E-1200/5E-1204",
+          "models": [
+            "5E-850",
+            "5E-854",
+            "5E-904",
+            "5E-954",
+            "5E-1000",
+            "5E-1004",
+            "5E-1100",
+            "5E-1104",
+            "5E-1200",
+            "5E-1204"
+          ],
+          "scope_boundary": "排放阶段原件未标注；全书无后处理/DPF/尿素/SCR/再生章节；PDF元数据2020-04-30不作出版日期依据，独立出版/印刷日期待核实；不能按国四整机使用，实际排放以实车铭牌和环保信息标签为准；序列号与CAB/ROPS、驱动配置覆盖待核实"
+        }
+      },
+      "evidence": {
+        "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD5E_20261014.md",
+        "line": 510,
+        "locator": "故障表/发动机与进排气；PDF物理第137页；印刷300-1",
+        "index_path": "知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl",
+        "index_line": 1389
+      }
+    }
+  },
+  "relations": [
+    {
+      "relation": "complementary",
+      "reasons": [
+        "故障现象一致，但候选原因及维修措施不同；同一故障现象不等于同一故障原因。"
+      ],
+      "recommended_action": "保留双方知识，人工核对不同原因或措施是否为并列排查候选。",
+      "review_state": "pending",
+      "relation_id": "KR-7ab9d8db91ec7a487cf5",
+      "left_entry_id": "TF1000-JD5E-002",
+      "right_entry_id": "TF1000-JD5E-056",
+      "left": {
+        "entry_id": "TF1000-JD5E-002",
+        "source_id": "SRC-JD-5E-D0-OMSJ34997"
+      },
+      "right": {
+        "entry_id": "TF1000-JD5E-056",
+        "source_id": "SRC-JD-5E-D0-OMSJ34997"
+      },
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "symptom"
+      ],
+      "evidence": {
+        "left": {
+          "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD5E_20261014.md",
+          "line": 24
+        },
+        "right": {
+          "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/故障处理1000_JD5E_20261014.md",
+          "line": 510
+        }
+      }
+    },
+    {
+      "relation": "scope_variant",
+      "reasons": [
+        "适用范围不同或一侧未知：model、models、source_boundary。"
+      ],
+      "recommended_action": "按各自车型、配置、排放和工况分别保留；人工核对适用范围。",
+      "review_state": "pending",
+      "relation_id": "KR-3344a88ac47763b82812",
+      "left_entry_id": "KB-JD-5E-D0-003",
+      "right_entry_id": "KB-JD-6B-L1-002",
+      "left": {
+        "entry_id": "KB-JD-5E-D0-003",
+        "source_id": "SRC-JD-5E-D0-OMSJ34997"
+      },
+      "right": {
+        "entry_id": "KB-JD-6B-L1-002",
+        "source_id": "SRC-JD-6B-L1-OMSU54855"
+      },
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "normalized_hash"
+      ],
+      "evidence": {
+        "left": {
+          "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md",
+          "line": 30
+        },
+        "right": {
+          "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/约翰迪尔_5E与6B.md",
+          "line": 77
+        }
+      }
+    },
+    {
+      "relation": "uncertain",
+      "reasons": [
+        "数值或单位不同，不能由文本或语义相似度抵消。"
+      ],
+      "recommended_action": "保留双方原文，人工核对数值、否定、安全限制及缺失证据后再判断。",
+      "review_state": "pending",
+      "relation_id": "KR-516a8f3631ed5314044d",
+      "left_entry_id": "DF-WINTER-001",
+      "right_entry_id": "DF-WINTER-002",
+      "left": {
+        "entry_id": "DF-WINTER-001",
+        "source_id": "SRC-DF-WINTER-20201225"
+      },
+      "right": {
+        "entry_id": "DF-WINTER-002",
+        "source_id": "SRC-DF-WINTER-20201225"
+      },
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "evidence": {
+        "left": {
+          "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东风_冬季维护初步知识.md",
+          "line": 7
+        },
+        "right": {
+          "path": "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东风_冬季维护初步知识.md",
+          "line": 16
+        }
+      }
+    }
+  ],
+  "duplicate_groups": [],
+  "review_state": "pending",
+  "blocked": false,
+  "summary": {
+    "entries": 2213,
+    "new": 0,
+    "modified": 0,
+    "reused": 2213,
+    "removed": 0,
+    "candidates": 19404,
+    "by_relation": {
+      "complementary": 882,
+      "scope_variant": 210,
+      "uncertain": 18312
+    }
+  },
+  "incremental": {
+    "enabled": true,
+    "full": false,
+    "features_reused": 2213,
+    "relations_reused": 19404,
+    "features_encoded": 0,
+    "checkpoint_every": 100
+  },
+  "notes": [],
+  "performance": {
+    "elapsed_ms": 3244.652
+  },
+  "example": {
+    "description": "真实2213条全库规则模式报告节选，不代表重复率或事实准确率",
+    "total_relations": 19404,
+    "shown_relations": 3,
+    "omitted_relations": 19401
+  }
+}

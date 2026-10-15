@@ -1,0 +1,538 @@
+{
+  "schema_version": 1,
+  "evaluation_kind": "provisional_synthetic_regression",
+  "label_provenance": {
+    "label_source": "assistant_authored_synthetic",
+    "review_state": "pending_domain_review",
+    "description": "本次助手依据关系定义逐对编写的合成期望样本；尚未经人类维护者或农机维修领域专家独立标注/复核。不是人工金标准，不用于声称真实准确率。",
+    "scope": "仅测试文本关系与保守审核保护，不构成可用于实际维修的指导。"
+  },
+  "label_verification": "dataset_self_declared_not_independently_verified",
+  "limitations": [
+    "标签由评估集声明，脚本不使用模型判断生成expected，不验证标签来源真实性。",
+    "合成样本指标不是真实语料、领域专家标注或维修正确率；模型效果需独立人工标注集评估。",
+    "默认每对独立扫描，衡量声明样本对的候选和分类，不能代表全库top-k竞争或生产规模召回。",
+    "tracemalloc仅统计Python分配；进程峰值RSS如可用含本进程生命周期及原生依赖内存。"
+  ],
+  "dataset": {
+    "path": "tests/fixtures/semantic-pairs.json",
+    "sha256": "6240cdf0d32ddca4ab8727b9f8b909c615c94564c309a0d817544d5bbb02432a",
+    "pairs": 20
+  },
+  "model": {
+    "adapter_version": "1.0.0",
+    "chunking": {
+      "version": 1,
+      "strategy": "contiguous-token-chunks",
+      "pooling": "token-weighted-mean-of-unit-vectors",
+      "normalization": "l2",
+      "truncation": false,
+      "prompt": ""
+    },
+    "mode": "rules",
+    "id": "rules-only",
+    "reason": "显式选择规则模式。",
+    "hash": "1c5d40cee9ec7740be0948e6696b1ca465e1c0fa9a52417718df63d68b785261"
+  },
+  "pairs": [
+    {
+      "id": "exact-cross-source",
+      "category": "cross_source",
+      "expected_relation": "exact_duplicate",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "exact_duplicate",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "normalized_hash",
+        "symptom"
+      ],
+      "reasons": [
+        "剔除来源/核验元数据后的规范化正文及关键适用条件一致。"
+      ],
+      "elapsed_ms": 60.973
+    },
+    {
+      "id": "exact-punctuation",
+      "category": "normalization",
+      "expected_relation": "exact_duplicate",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "exact_duplicate",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "normalized_hash",
+        "symptom"
+      ],
+      "reasons": [
+        "剔除来源/核验元数据后的规范化正文及关键适用条件一致。"
+      ],
+      "elapsed_ms": 13.192
+    },
+    {
+      "id": "synonym-battery",
+      "category": "synonyms",
+      "expected_relation": "semantic_duplicate",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "semantic_duplicate",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "故障、候选原因和措施在有限显式同义映射后一致，且适用条件与额外限制一致。"
+      ],
+      "elapsed_ms": 13.267
+    },
+    {
+      "id": "synonym-filter",
+      "category": "synonyms",
+      "expected_relation": "semantic_duplicate",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "semantic_duplicate",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "symptom"
+      ],
+      "reasons": [
+        "故障、候选原因和措施在有限显式同义映射后一致，且适用条件与额外限制一致。"
+      ],
+      "elapsed_ms": 13.205
+    },
+    {
+      "id": "symptom-different-cause",
+      "category": "same_symptom_different_cause",
+      "expected_relation": "complementary",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "complementary",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "symptom"
+      ],
+      "reasons": [
+        "故障现象一致，但候选原因及维修措施不同；同一故障现象不等于同一故障原因。"
+      ],
+      "elapsed_ms": 14.567
+    },
+    {
+      "id": "same-cause-different-action",
+      "category": "same_cause_different_action",
+      "expected_relation": "complementary",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "complementary",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "symptom"
+      ],
+      "reasons": [
+        "故障现象一致，但维修措施不同；同一故障现象不等于同一故障原因。"
+      ],
+      "elapsed_ms": 13.442
+    },
+    {
+      "id": "partial-action-detail",
+      "category": "containment",
+      "expected_relation": "partial_overlap",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "partial_overlap",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "symptom"
+      ],
+      "reasons": [
+        "故障、原因和措施存在同向文本包含，较长记录含额外内容；不是完整重复。"
+      ],
+      "elapsed_ms": 12.038
+    },
+    {
+      "id": "scope-model",
+      "category": "model",
+      "expected_relation": "scope_variant",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "scope_variant",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "normalized_hash",
+        "symptom"
+      ],
+      "reasons": [
+        "适用范围不同或一侧未知：model、models、source_boundary。"
+      ],
+      "elapsed_ms": 11.993
+    },
+    {
+      "id": "scope-emission",
+      "category": "emission",
+      "expected_relation": "scope_variant",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "scope_variant",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "normalized_hash",
+        "symptom"
+      ],
+      "reasons": [
+        "适用范围不同或一侧未知：emission_stage。"
+      ],
+      "elapsed_ms": 12.789
+    },
+    {
+      "id": "scope-cab",
+      "category": "configuration",
+      "expected_relation": "scope_variant",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "scope_variant",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "normalized_hash"
+      ],
+      "reasons": [
+        "适用范围不同或一侧未知：configuration。"
+      ],
+      "elapsed_ms": 11.997
+    },
+    {
+      "id": "scope-condition",
+      "category": "operating_condition",
+      "expected_relation": "scope_variant",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "scope_variant",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "symptom"
+      ],
+      "reasons": [
+        "适用范围不同或一侧未知：conditions。"
+      ],
+      "elapsed_ms": 12.454
+    },
+    {
+      "id": "numeric-pressure",
+      "category": "numeric",
+      "expected_relation": "uncertain",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "数值或单位不同，不能由文本或语义相似度抵消。"
+      ],
+      "elapsed_ms": 12.304
+    },
+    {
+      "id": "numeric-unit",
+      "category": "units",
+      "expected_relation": "uncertain",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "数值或单位不同，不能由文本或语义相似度抵消。"
+      ],
+      "elapsed_ms": 14.98
+    },
+    {
+      "id": "unit-conversion-unreviewed",
+      "category": "units",
+      "expected_relation": "uncertain",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "数值或单位不同，不能由文本或语义相似度抵消。"
+      ],
+      "elapsed_ms": 12.477
+    },
+    {
+      "id": "negation",
+      "category": "negation",
+      "expected_relation": "uncertain",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "否定词不同，不能由文本或语义相似度抵消。"
+      ],
+      "elapsed_ms": 11.649
+    },
+    {
+      "id": "safety-prohibition",
+      "category": "safety",
+      "expected_relation": "uncertain",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "否定词不同，不能由文本或语义相似度抵消。",
+        "安全禁令或必要条件不同，不能由文本或语义相似度抵消。"
+      ],
+      "elapsed_ms": 12.585
+    },
+    {
+      "id": "missing-cause",
+      "category": "missing_evidence",
+      "expected_relation": "uncertain",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "故障、原因或措施字段缺失；同症状或相同case_key不足以认定重复。"
+      ],
+      "elapsed_ms": 12.292
+    },
+    {
+      "id": "legacy-prose",
+      "category": "legacy_format",
+      "expected_relation": "uncertain",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "否定词不同，不能由文本或语义相似度抵消。"
+      ],
+      "elapsed_ms": 12.552
+    },
+    {
+      "id": "different-source-boundary",
+      "category": "source_scope",
+      "expected_relation": "scope_variant",
+      "candidate_expected": true,
+      "candidate_retrieved": true,
+      "predicted_relation": "scope_variant",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k",
+        "normalized_hash",
+        "symptom"
+      ],
+      "reasons": [
+        "适用范围不同或一侧未知：source_boundary。"
+      ],
+      "elapsed_ms": 12.289
+    },
+    {
+      "id": "unrelated-negative",
+      "category": "unrelated",
+      "expected_relation": "uncertain",
+      "candidate_expected": false,
+      "candidate_retrieved": true,
+      "predicted_relation": "uncertain",
+      "matches_declared_relation": true,
+      "semantic_similarity": null,
+      "candidate_generators": [
+        "lexical_top_k"
+      ],
+      "reasons": [
+        "否定词不同，不能由文本或语义相似度抵消。"
+      ],
+      "elapsed_ms": 11.467
+    }
+  ],
+  "metrics_against_declared_labels": {
+    "candidate_recall": {
+      "retrieved": 19,
+      "expected": 19,
+      "value": 1.0
+    },
+    "candidate_false_positive_rate": {
+      "retrieved_negative": 1,
+      "negative_pairs": 1,
+      "value": 1.0
+    },
+    "classification": {
+      "per_class": {
+        "exact_duplicate": {
+          "expected": 2,
+          "predicted": 2,
+          "true_positive": 2,
+          "precision_against_declared_labels": 1.0,
+          "recall_against_declared_labels": 1.0
+        },
+        "semantic_duplicate": {
+          "expected": 2,
+          "predicted": 2,
+          "true_positive": 2,
+          "precision_against_declared_labels": 1.0,
+          "recall_against_declared_labels": 1.0
+        },
+        "partial_overlap": {
+          "expected": 1,
+          "predicted": 1,
+          "true_positive": 1,
+          "precision_against_declared_labels": 1.0,
+          "recall_against_declared_labels": 1.0
+        },
+        "complementary": {
+          "expected": 2,
+          "predicted": 2,
+          "true_positive": 2,
+          "precision_against_declared_labels": 1.0,
+          "recall_against_declared_labels": 1.0
+        },
+        "scope_variant": {
+          "expected": 5,
+          "predicted": 5,
+          "true_positive": 5,
+          "precision_against_declared_labels": 1.0,
+          "recall_against_declared_labels": 1.0
+        },
+        "uncertain": {
+          "expected": 8,
+          "predicted": 8,
+          "true_positive": 8,
+          "precision_against_declared_labels": 1.0,
+          "recall_against_declared_labels": 1.0
+        }
+      },
+      "confusion": {
+        "exact_duplicate": {
+          "exact_duplicate": 2,
+          "semantic_duplicate": 0,
+          "partial_overlap": 0,
+          "complementary": 0,
+          "scope_variant": 0,
+          "uncertain": 0,
+          "not_retrieved": 0
+        },
+        "semantic_duplicate": {
+          "exact_duplicate": 0,
+          "semantic_duplicate": 2,
+          "partial_overlap": 0,
+          "complementary": 0,
+          "scope_variant": 0,
+          "uncertain": 0,
+          "not_retrieved": 0
+        },
+        "partial_overlap": {
+          "exact_duplicate": 0,
+          "semantic_duplicate": 0,
+          "partial_overlap": 1,
+          "complementary": 0,
+          "scope_variant": 0,
+          "uncertain": 0,
+          "not_retrieved": 0
+        },
+        "complementary": {
+          "exact_duplicate": 0,
+          "semantic_duplicate": 0,
+          "partial_overlap": 0,
+          "complementary": 2,
+          "scope_variant": 0,
+          "uncertain": 0,
+          "not_retrieved": 0
+        },
+        "scope_variant": {
+          "exact_duplicate": 0,
+          "semantic_duplicate": 0,
+          "partial_overlap": 0,
+          "complementary": 0,
+          "scope_variant": 5,
+          "uncertain": 0,
+          "not_retrieved": 0
+        },
+        "uncertain": {
+          "exact_duplicate": 0,
+          "semantic_duplicate": 0,
+          "partial_overlap": 0,
+          "complementary": 0,
+          "scope_variant": 0,
+          "uncertain": 8,
+          "not_retrieved": 0
+        }
+      },
+      "not_retrieved": 0,
+      "declared_relation_match_rate": 1.0,
+      "denominator": 20
+    },
+    "duplicate_false_positive_rate": {
+      "false_positive": 0,
+      "nonduplicate_pairs": 16,
+      "value": 0.0
+    }
+  },
+  "metric_definitions": {
+    "basis": "against_declared_labels",
+    "candidate_recall_denominator": "全部candidate_expected=true的样本，包括未召回样本；不按候选结果缩小分母。",
+    "classification": "全部pairs进入confusion；未召回单列not_retrieved，仍进入逐类recall分母。没有预测的类别precision为null。",
+    "duplicate_relations": [
+      "exact_duplicate",
+      "semantic_duplicate"
+    ],
+    "duplicate_false_positive_denominator": "全部expected_relation不是exact_duplicate或semantic_duplicate的样本。",
+    "partial_overlap": "保留部分重叠供审核，不计为已确定重复。",
+    "unrelated_control": "candidate_expected=false的负对照仍列入分类矩阵，未召回会列not_retrieved。"
+  },
+  "performance": {
+    "total_elapsed_ms": 345.572,
+    "model_load_elapsed_ms": 0.19,
+    "scan_elapsed_ms": 302.514,
+    "python_tracemalloc_peak_bytes": 1199053,
+    "process_peak_rss_bytes": 23728128,
+    "process_peak_rss_available": true
+  }
+}
