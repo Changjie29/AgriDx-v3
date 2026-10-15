@@ -9,7 +9,9 @@ import { validateVersionState } from '../scripts/check-version.mjs';
 test('知识扩充和修复均升补丁，功能和不兼容变化受当前上限保护', () => {
   for (const kind of ['knowledge', 'fix', 'maintenance']) assert.equal(nextVersion('3.4.4', kind), '3.4.5');
   assert.equal(nextVersion('3.3.9', 'feature'), '3.4.0');
-  for (const [version, kind] of [['3.4.9', 'knowledge'], ['3.4.4', 'feature'], ['3.4.4', 'breaking']]) assert.throws(() => nextVersion(version, kind), /上限/);
+  assert.equal(nextVersion('3.4.9', 'knowledge'), '3.4.10');
+  assert.equal(nextVersion('3.7.9', 'feature'), '3.8.0');
+  for (const [version, kind] of [['3.8.0', 'knowledge'], ['3.8.0', 'feature'], ['3.4.4', 'breaking']]) assert.throws(() => nextVersion(version, kind), /上限/);
   assert.throws(() => nextVersion('3.4.4', 'unknown'), /类型/);
 });
 
