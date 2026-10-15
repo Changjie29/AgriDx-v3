@@ -15,17 +15,21 @@ interface Entry {
 interface Source {
   source_id: string; models?: string[]; model: string; brand: string; version: string;
   scope_boundary: string; pdf_pages?: number; manual_pdf_pages?: number;
-  verified_pdf_pages: Record<string, string>;
+  verified_pdf_pages: Record<string, string>; sha256?: string; document_type?: string; role?: string;
 }
 interface Proof {
   entry_id: string; source_id: string; pdf_page: number; printed_page: string;
   component_id: string; fact_sha256: string; pdf_fragment_sha256: string;
   review_prompt_sha256: string;
+  review_method?: string; body_sha256?: string; source_pdf_sha256?: string; page_image_sha256?: string;
+  reviewed_physical_pages?: number[]; component_ids?: string[]; locator?: string;
 }
 interface Manifest {
   collection_id: string; baseline_entries: number; added_entries: number; total_entries: number;
   baseline_index_bytes: number; baseline_index_sha256: string;
   baseline_documents_sha256: Record<string, string>; entries: Proof[];
+  additional_non_batch_entries?: number;
+  scope_reconciliation: { retained_original_entries: number; reused_existing_tractor_entries: number; genuinely_new_entries: number; excluded_navigation_count: number; reused_entry_ids: string[]; new_entry_ids: string[] };
   sources_reviewed: { source_id: string; added_entries: number; entry_ids: string[] }[];
 }
 const digest = (value: string | Uint8Array) => createHash('sha256').update(value).digest('hex');
@@ -44,7 +48,7 @@ test('the 2000-entry expansion preserves the baseline repository bytes and all e
   assert.equal(batch.length, 2000);
   assert.equal(batchIds.size, 2000);
   assert.equal(manifest.baseline_entries, 2213);
-  assert.equal(manifest.total_entries, 4213);
+  assert.equal(manifest.total_entries, manifest.baseline_entries + manifest.added_entries + (manifest.additional_non_batch_entries ?? 0));
   const bytes = repositoryBytes(`${index}/entries.jsonl`);
   assert.equal(digest(bytes.subarray(0, manifest.baseline_index_bytes)), manifest.baseline_index_sha256);
   for (const [file, sha] of Object.entries(manifest.baseline_documents_sha256)) {
@@ -61,24 +65,39 @@ test('each new fact retains an explicit source, original page, scope and truthfu
     const source = sources.get(entry.source_id)!;
     const chunk = chunks.get(entry.entry_id)!;
     assert.equal(chunk.heading, `${entry.entry_id}｜${entry.title}`);
-    const fact = chunk.text.match(/^- 事实概述：(.+)$/m)?.[1];
+    const manual = proof.review_method === 'manual_selected_pages';
+    const fact = manual
+      ? chunk.text.split('\n').filter(line => !/^(?:- )?(?:适用条件|适用限制|整理边界|证据|状态|核验状态)：/.test(line)).join('\n').trim()
+      : chunk.text.match(/^- 事实概述：(.+)$/m)?.[1];
     assert.ok(fact, entry.entry_id);
-    assert.equal(digest(fact), proof.fact_sha256, entry.entry_id);
+    if (manual) {
+      assert.equal(digest(chunk.text), proof.body_sha256, entry.entry_id);
+      assert.equal(proof.source_pdf_sha256, source.sha256, entry.entry_id);
+      assert.match(proof.page_image_sha256 ?? '', /^[a-f0-9]{64}$/);
+      assert.ok(proof.reviewed_physical_pages?.includes(proof.pdf_page), entry.entry_id);
+      for (const page of proof.reviewed_physical_pages ?? []) assert.ok(source.verified_pdf_pages[String(page)]?.trim(), `${entry.entry_id}/${page}`);
+      assert.equal(entry.locator, proof.locator);
+      assert.match(entry.status, /目视/);
+      assert.match(entry.status, /未全书/);
+      assert.ok(entry.locator.includes(`第${proof.pdf_page}`), entry.entry_id);
+    } else {
+      assert.equal(digest(fact), proof.fact_sha256, entry.entry_id);
+      assert.match(proof.pdf_fragment_sha256, /^[a-f0-9]{64}$/);
+      assert.match(proof.review_prompt_sha256, /^[a-f0-9]{64}$/);
+      assert.ok(source.verified_pdf_pages[String(proof.pdf_page)]?.includes('2026-10-15'), entry.entry_id);
+      assert.ok(entry.locator.includes(`PDF物理第${proof.pdf_page}页`), entry.entry_id);
+      assert.match(entry.status, /二次自动图像复核/);
+      assert.match(entry.status, /未全书人工审校、厂家复核或实车验证/);
+    }
     const unique = `${entry.source_id}:${fact.replace(/[^\p{L}\p{N}]/gu, '').toLowerCase()}`;
     assert.ok(!facts.has(unique), `${entry.entry_id}: same-source duplicate fact`);
     facts.add(unique);
     assert.ok(proof.pdf_page > 0 && proof.pdf_page <= (source.pdf_pages ?? source.manual_pdf_pages)!, entry.entry_id);
-    assert.ok(source.verified_pdf_pages[String(proof.pdf_page)]?.includes('2026-10-15'), entry.entry_id);
-    assert.ok(entry.locator.includes(`PDF物理第${proof.pdf_page}页`), entry.entry_id);
     assert.ok(entry.locator.includes(proof.printed_page), entry.entry_id);
     assert.ok(chunk.scopeBoundary?.includes(source.scope_boundary), entry.entry_id);
     assert.equal(chunk.version, source.version);
-    assert.match(entry.status, /二次自动图像复核/);
-    assert.match(entry.status, /未全书人工审校、厂家复核或实车验证/);
     assert.ok(!['资料索引', '资料缺口', '资料核验', '机型资料', '系统适用边界'].includes(entry.entry_type));
-    assert.match(proof.pdf_fragment_sha256, /^[a-f0-9]{64}$/);
-    assert.match(proof.review_prompt_sha256, /^[a-f0-9]{64}$/);
-    assert.ok(formatForPrompt([chunk]).includes(fact), entry.entry_id);
+    assert.ok(formatForPrompt([chunk]).includes(manual ? chunk.text : fact), entry.entry_id);
   }
 });
 
@@ -99,7 +118,9 @@ test('every added fact is reachable in its existing model and component without 
       cached.set(key, new Set(view.selected!.entries.map((e) => e.entryId)));
     }
     assert.ok(cached.get(key)!.has(entry.entry_id), entry.entry_id);
-    assert.deepEqual(links.get(entry.entry_id), [{ component_id: proof.component_id, part_ids: [] }]);
+    if (proof.review_method === 'manual_selected_pages') {
+      assert.deepEqual(links.get(entry.entry_id)?.map(link => link.component_id), proof.component_ids);
+    } else assert.deepEqual(links.get(entry.entry_id), [{ component_id: proof.component_id, part_ids: [] }]);
   }
 });
 
@@ -131,4 +152,22 @@ test('browser snapshots carry the same 2000 fact bodies as server retrieval and 
   for (const query of ['东方红 LF1504 国四 起动', '沃得 WF1404-3 国四 保养', '久保田 LX2620HSDCX 保养']) {
     assert.equal(retrieve(query, 100).length, 0, query);
   }
+});
+
+
+test('the reconciled collection has exactly 2000 tractor facts and excludes independent navigation systems', () => {
+  assert.equal(manifest.scope_reconciliation.retained_original_entries, 1858);
+  assert.equal(manifest.scope_reconciliation.reused_existing_tractor_entries, 135);
+  assert.equal(manifest.scope_reconciliation.genuinely_new_entries, 7);
+  assert.equal(manifest.scope_reconciliation.excluded_navigation_count, 142);
+  assert.equal(batch.filter(entry => entry.entry_id.includes('-20261013-C3-')).length, 135);
+  assert.equal(new Set(manifest.scope_reconciliation.reused_entry_ids).size, 135);
+  assert.equal(new Set(manifest.scope_reconciliation.new_entry_ids).size, 7);
+  assert.equal(manifest.entries.filter(proof => proof.review_method === 'manual_selected_pages').length, 142);
+  for (const entry of batch) {
+    const source = sources.get(entry.source_id)!;
+    assert.ok(!/配套|导航|辅助转向/.test(`${source.document_type ?? ''} ${source.role ?? ''}`), entry.entry_id);
+    assert.ok(!['SRC-CHC-NX510-FEB2024', 'SRC-QX-QY210PRO-V01'].includes(entry.source_id), entry.entry_id);
+  }
+  assert.ok(!entries.some(entry => entry.entry_id.startsWith('KB2000-') && ['SRC-CHC-NX510-FEB2024', 'SRC-QX-QY210PRO-V01'].includes(entry.source_id)));
 });
