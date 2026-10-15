@@ -16,3 +16,7 @@ server/data/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
+
+# Offline validator bytecode and optional local quality artifacts
+__pycache__/
+work/knowledge-quality/
