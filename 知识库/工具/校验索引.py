@@ -470,6 +470,10 @@ def main():
 
 
 if __name__ == '__main__':
+    # Windows pipes can default to a legacy code page even when files are UTF-8.
+    # Keep the CLI contract UTF-8 without changing streams when imported as a library.
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding='utf-8')
     try:
         sys.exit(main())
     except (ValueError, OSError) as error:

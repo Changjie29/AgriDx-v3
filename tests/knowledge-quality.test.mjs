@@ -20,10 +20,13 @@ test('quality classifications match the unchanged runtime parser for every exist
     .trim().split(/\r?\n/).map(JSON.parse);
   const statuses = [...new Set(entries.map(x => x.status)), '', '未核验；已核验', '已核验；待核实',
     '计划已核验', '已核验？', '已核验；未厂家复核/实车验证', '部分核验', '证据页已核验'];
-  const result = spawnSync(python, ['-B', '-c',
-    'import sys,json; sys.path.insert(0,"知识库/工具"); from knowledge_quality import reference_verification; print(json.dumps([reference_verification(s) for s in json.load(sys.stdin)]))'], {
-    cwd: root, encoding: 'utf8', input: JSON.stringify(statuses), timeout: 10_000, shell: false,
-  });
-  assert.equal(result.status, 0, result.error?.message || result.stderr);
-  assert.deepEqual(JSON.parse(result.stdout), statuses.map(referenceVerification));
+  for (const legacyPipe of [false, true]) {
+    const result = spawnSync(python, ['-B', '-c',
+      'import sys,json; sys.stdin.reconfigure(encoding="utf-8"); sys.path.insert(0,"知识库/工具"); from knowledge_quality import reference_verification; print(json.dumps([reference_verification(s) for s in json.load(sys.stdin)]))'], {
+      cwd: root, encoding: 'utf8', input: JSON.stringify(statuses), timeout: 10_000, shell: false,
+      env: legacyPipe ? { ...process.env, PYTHONUTF8: '0', PYTHONIOENCODING: 'cp1252' } : process.env,
+    });
+    assert.equal(result.status, 0, result.error?.message || result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout), statuses.map(referenceVerification));
+  }
 });

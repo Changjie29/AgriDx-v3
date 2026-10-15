@@ -22,6 +22,8 @@ npm run knowledge:quality -- --full --cache server/data/knowledge-quality/cache.
 python3 -B 知识库/工具/校验索引.py --external-pdf SRC-实际来源编号=/tmp/已取得原件.pdf
 ```
 
+CLI的标准输出和错误输出明确使用UTF-8，包括Windows重定向到管道的场景；导入校验模块不会重配宿主进程的流。跨语言状态测试也明确以UTF-8读取Node发送的JSON，不依赖系统代码页。
+
 `scripts/knowledge-quality.mjs`通过`spawn`异步启动独立Python进程，转发退出码与终止信号。Express启动和`/api/chat`都不引用此脚本。终端默认等待结果；需要后台执行时可由作业调度器运行，或在Unix shell执行：
 
 ```bash
@@ -30,6 +32,8 @@ npm run knowledge:quality -- --report server/data/knowledge-quality/report.json 
 ```
 
 本阶段不提供网页任务API或持久任务队列；进程中断后重新执行，缓存仅在完整扫描且输入稳定时原子发布。报告也采用临时文件加原子替换。报告和缓存不得互相覆盖或覆盖原件；仓库内仅允许输出到忽略的`server/data/knowledge-quality/`或`work/knowledge-quality/`。JSON与Markdown使用相同扫描结果，但两个文件不是跨文件事务；消费时应比较快照哈希。
+
+显式指定输出具有替换目标文件的语义；仓库外路径仍由调用者选择，包括符号链接解析后的外部目标。运行前应选择专用报告目录，不指向其他已有文件。本轮复审保持此输出契约，不扩大路径权限。
 
 ## 单一校验器与兼容规则
 
@@ -92,7 +96,7 @@ Linux，Python3.12.14，执行环境上限2vCPU/8GiB。相同进程各运行3次
 
 ## 测试与下一阶段接口
 
-`npm test`自动运行29项Python合成档案测试，并比较Python/TypeScript状态分类。覆盖坏数据、四种格式、来源/配置冲突、真实行号、只读输出（包括旧命令不加-B）、文件/来源变更失效、同大小mtime变化、删除/新增重复、坏缓存、PDF证明及扫描中输入变化。完整项目验证记录见CHANGELOG；现有Fast Refresh与大包提示未因此修改。
+`npm test`自动运行30项Python合成档案测试，并比较Python/TypeScript状态分类。覆盖坏数据、四种格式、来源/配置冲突、真实行号、只读输出（包括旧命令不加-B）、文件/来源变更失效、同大小mtime变化、删除/新增重复、坏缓存、PDF证明及扫描中输入变化。编码回归显式设置`PYTHONUTF8=0`与`PYTHONIOENCODING=cp1252`，验证中文CLI、帮助/错误输出及跨语言状态保持正确，不以跳过Windows测试掩盖问题。完整项目验证记录见CHANGELOG；现有Fast Refresh与大包提示未因此修改。
 
 下一阶段建议消费同一个校验结果及快照，不另建解析器。接口草案：
 

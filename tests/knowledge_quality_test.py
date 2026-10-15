@@ -73,9 +73,23 @@ class QualityTests(unittest.TestCase):
         for name in ['校验索引.py', 'knowledge_quality.py']:
             (tools / name).write_bytes((TOOLS / name).read_bytes())
         before = {str(p): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
-        result = subprocess.run([sys.executable, str(tools / '校验索引.py')], capture_output=True, timeout=15)
+        result = subprocess.run([sys.executable, str(tools / '校验索引.py')], capture_output=True, timeout=15,
+                                env={**os.environ, 'PYTHONUTF8': '0', 'PYTHONIOENCODING': 'cp1252'})
         self.assertEqual(result.returncode, 0, result.stderr.decode('utf8'))
+        self.assertEqual(json.loads(result.stdout.decode('utf8'))['entries'], 2)
         self.assertEqual(before, {str(p): p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
+
+    def test_cli_help_and_error_are_utf8_under_legacy_pipe_encoding(self):
+        environment = {**os.environ, 'PYTHONUTF8': '0', 'PYTHONIOENCODING': 'cp1252'}
+        command = [sys.executable, str(TOOLS / '校验索引.py')]
+        help_result = subprocess.run(command + ['--help'], env=environment, capture_output=True, timeout=15)
+        self.assertEqual(help_result.returncode, 0)
+        self.assertIn('只读索引', help_result.stdout.decode('utf8'))
+        error_result = subprocess.run(command + ['--report', str(TOOLS / 'knowledge_quality.py')],
+                                      env=environment, capture_output=True, timeout=15)
+        self.assertEqual(error_result.returncode, 1)
+        self.assertIn('校验失败', error_result.stderr.decode('utf8'))
+        self.assertIn('报告/缓存', error_result.stderr.decode('utf8'))
 
     def test_all_missing_required_fields_reported_without_crash(self):
         self.entries[0].update(status=None, locator='', title=4)
