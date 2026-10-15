@@ -71,7 +71,7 @@ test('each new fact retains an explicit source, original page, scope and truthfu
       : chunk.text.match(/^- 事实概述：(.+)$/m)?.[1];
     assert.ok(fact, entry.entry_id);
     if (manual) {
-      assert.equal(digest(chunk.text), proof.body_sha256, entry.entry_id);
+      assert.equal(digest(chunk.text.replace(/\r\n/g, '\n')), proof.body_sha256, entry.entry_id);
       assert.equal(proof.source_pdf_sha256, source.sha256, entry.entry_id);
       assert.match(proof.page_image_sha256 ?? '', /^[a-f0-9]{64}$/);
       assert.ok(proof.reviewed_physical_pages?.includes(proof.pdf_page), entry.entry_id);
