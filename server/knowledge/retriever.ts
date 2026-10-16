@@ -8,53 +8,11 @@
  * - 知识库很小，全量塞 prompt 也可；这里做"按需选片"，为未来扩充留接口。
  * - 未来接入 PDF/Word 时，只需在 loadAll() 里加新解析器，返回 {path, heading, text}。
  */
-import fs from 'node:fs';
-import path from 'node:path';
 import crypto from 'node:crypto';
-import { loadArchive } from './archive';
+import type { KnowledgeChunk, DiagnosticMetadata } from './types';
+export type { KnowledgeChunk, DiagnosticMetadata } from './types';
+import { loadKnowledgeSnapshot, peekKnowledgeSnapshot, type KnowledgeSnapshot } from './snapshot';
 import { archiveApplicability, queryWithoutIdentity, resolveScope, type RetrievalContext } from './scope';
-
-export interface KnowledgeChunk {
-  /** 通用文档相对 server/knowledge；归档文档相对仓库根目录 */
-  source: string;
-  /** 该块所属章节标题（## 级） */
-  heading: string;
-  /** 块正文 */
-  text: string;
-  entryId?: string;
-  sourceId?: string;
-  /** Bound by the archive loader after checking the entry, source and section. */
-  indexedReference?: Readonly<{ entryId: string; sourceId: string }>;
-  brand?: string;
-  model?: string;
-  /** Only populated when declared by the source; never inferred from the model name. */
-  engineModel?: string;
-  faultCodes?: string[];
-  models?: string[];
-  /** Entry-specific subsets require an exact identity rather than a brand-only match. */
-  requiresExactModel?: boolean;
-  configuration?: 'CAB' | 'ROPS';
-  driveConfiguration?: '2WD' | '4WD';
-  emissionStage?: '国三' | '国四';
-  /** Unresolved source evidence forbids inferring emissions from a model suffix. */
-  emissionStageUnknown?: boolean;
-  sourceUrl?: string;
-  originalPath?: string;
-  locator?: string;
-  version?: string;
-  scopeBoundary?: string;
-  status?: string;
-  entryType?: string;
-  applicability?: 'matched' | 'pending';
-  diagnosticMetadata?: DiagnosticMetadata;
-  /** This is a raw lexical match score, not a percentage or diagnostic probability. */
-  relevance?: { score: number; method: 'keyword-weighted-overlap'; calibrated: false };
-}
-
-export interface DiagnosticMetadata {
-  coverage: { symptom: boolean; causes: boolean; checks: boolean; repair: boolean };
-  riskLevel: 'low' | 'high' | 'unknown';
-}
 
 interface IndexedChunk {
   chunk: KnowledgeChunk;
@@ -62,7 +20,6 @@ interface IndexedChunk {
   haystack: string;
 }
 
-const KB_ROOT = path.resolve(process.cwd(), 'server/knowledge');
 const MAX_CHUNKS_IN_PROMPT = 6;
 export const DEFAULT_PROMPT_CONTEXT_MAX_CHARS = 8000;
 const CACHE_TTL_MS = 30_000;
@@ -73,6 +30,7 @@ const NON_DIAGNOSTIC_TYPES = new Set(['机型资料', '资料缺口', '资料索
 let chunks: KnowledgeChunk[] = [];
 let index: IndexedChunk[] = [];
 let generation = 0;
+let preparedSnapshot: KnowledgeSnapshot | undefined;
 let retrievalRequests = 0;
 let cacheHits = 0;
 let scoringPasses = 0;
@@ -156,78 +114,22 @@ function cloneChunk(chunk: KnowledgeChunk): KnowledgeChunk {
   };
 }
 
-function walkMdFiles(dir: string, base: string): string[] {
-  const out: string[] = [];
-  let entries: fs.Dirent[];
-  try {
-    entries = fs.readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return out;
-  }
-  for (const e of entries) {
-    const full = path.join(dir, e.name);
-    const rel = path.join(base, e.name);
-    if (e.isDirectory()) {
-      out.push(...walkMdFiles(full, rel));
-    } else if (e.isFile() && e.name.endsWith('.md')) {
-      out.push(rel);
-    }
-  }
-  return out;
-}
-
-function splitByHeading(relPath: string, content: string): KnowledgeChunk[] {
-  const out: KnowledgeChunk[] = [];
-  // 按 ## 切；文件首个 # 标题作为文件头，保留为 meta
-  const lines = content.split(/\r?\n/);
-  let currentHeading = '(概述)';
-  let buf: string[] = [];
-  const flush = () => {
-    const text = buf.join('\n').trim();
-    if (text.length > 0) {
-      out.push({ source: relPath, heading: currentHeading, text });
-    }
-    buf = [];
-  };
-  for (const line of lines) {
-    if (/^##\s+/.test(line)) {
-      flush();
-      currentHeading = line.replace(/^##\s+/, '').trim();
-    } else {
-      buf.push(line);
-    }
-  }
-  flush();
-  return out;
-}
-
-export function loadKnowledgeBase(): { fileCount: number; chunkCount: number } {
-  chunks = [];
-  index = [];
+/** Prepare scoring metadata once for each successfully published immutable snapshot. */
+function prepareSnapshot(snapshot: KnowledgeSnapshot): void {
+  if (preparedSnapshot === snapshot) return;
+  const nextIndex = snapshot.chunks.map(prepareChunk);
+  index = nextIndex;
+  chunks = nextIndex.map(item => item.chunk);
+  preparedSnapshot = snapshot;
   generation++;
   retrievalCache.clear();
-  let fileCount = 0;
-  try {
-    const files = walkMdFiles(KB_ROOT, '');
-    for (const rel of files) {
-      // 跳过说明性 README（00_说明 下的 README 不参与检索）
-      if (rel.replace(/\\/g, '/').startsWith('00_说明/')) continue;
-      const abs = path.join(KB_ROOT, rel);
-      const content = fs.readFileSync(abs, 'utf-8');
-      chunks.push(...splitByHeading(rel.replace(/\\/g, '/'), content));
-      fileCount++;
-    }
-  } catch (e) {
-    console.warn('[kb] load failed:', (e as Error).message);
-  }
-  // Invalid archive references must fail startup rather than silently hide missing entries.
-  const archive = loadArchive();
-  chunks.push(...archive.chunks);
-  index = chunks.map(prepareChunk);
-  chunks = index.map((item) => item.chunk);
-  fileCount += archive.fileCount;
-  console.log(`[kb] loaded ${fileCount} files, ${chunks.length} chunks (${archive.chunks.length} archived entries)`);
-  return { fileCount, chunkCount: chunks.length };
+}
+
+/** Compatibility entry: retrieval, catalog and health share one validated generation. */
+export function loadKnowledgeBase(): { fileCount: number; chunkCount: number } {
+  const snapshot = loadKnowledgeSnapshot();
+  prepareSnapshot(snapshot);
+  return { fileCount: snapshot.fileCount, chunkCount: snapshot.chunks.length };
 }
 
 // ---- 关键词打分 ----
@@ -309,6 +211,9 @@ function scoreChunk(indexed: IndexedChunk, queryTokens: Map<string, number>, gro
  */
 export function retrieve(query: string, k = MAX_CHUNKS_IN_PROMPT, context: RetrievalContext = {}): KnowledgeChunk[] {
   retrievalRequests++;
+  const snapshot = peekKnowledgeSnapshot();
+  if (!snapshot) return [];
+  prepareSnapshot(snapshot);
   if (chunks.length === 0) return [];
   const limit = Number.isFinite(k) ? Math.max(0, Math.min(chunks.length, Math.floor(k))) : MAX_CHUNKS_IN_PROMPT;
   if (!limit) return [];
