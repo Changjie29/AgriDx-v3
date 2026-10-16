@@ -1,0 +1,2187 @@
+{
+  "schemaVersion": 1,
+  "phase": "after",
+  "capturedAt": "2026-10-13T10:09:01.443Z",
+  "rootCommit": "aa6f3db8be325a58522affdff2e6c4cff1da78b5",
+  "scenarioSha256": "4f0d678d1ddac4f35039bc1827d6d03c36de6666980b20c79dd8a911f91bac57",
+  "measuredSourceSha256": {
+    "server/diagnosis/service.ts": "bfcfbda4b87c38809ab648d138aa768833229d969adf1b9b3df61ae12859f295",
+    "server/diagnosis/router.ts": "d4c32a4c4575821552273fba5d437e882857d407b3ce61c2b2ac6155ccae58f9",
+    "server/diagnosis/config.ts": "de109d274b67b6e13c40b759b282e9d01fe17c8c28dddfe7c5406b235016b3ca",
+    "server/knowledge/retriever.ts": "354b01ab33c0901619544540ccfe85fe0ec9fd2e446c36797c278dc3ae5dffa8",
+    "server/knowledge/scope.ts": "d22d5e2286e66e8728fd12e033e7733efae7145539cf74c17f4afbed8ccf4935",
+    "server/knowledge/coordination.ts": "94a54a91cc666ad472b7c8caca091b0e3262b0c3fda4322de82f8e2f72850dca",
+    "server/knowledge/evidence.ts": "30225fec978e2d19ca523a4a97f6383e212de25dd6ac7b56d3e1375a3ba0a1b5",
+    "server/knowledge/systemPrompt.ts": "0f05f959d28a729c79144464b8538856fb961ad52e1026d513f3b8ff376762c6",
+    "server/knowledge/fallbackDiagnosis.ts": "35a1e91f1c71260bef07416bcf7a7dd7d87c435c41e0e387e7c5c2ddea604882",
+    "server/app.ts": "5cdf3a0e60cc903b95d382b262e70dab7c69933b828f8a92ee0b3064023392e9",
+    "server/routes/chat.ts": "0cede34f51f8550eefd968cffb5469dd6c3aa61995f2fcc6dfef39c590689b25"
+  },
+  "projectVersion": "3.6.0",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "osRelease": "6.18.44",
+    "cpuModel": "AMD EPYC 9V45 96-Core Processor",
+    "logicalCpuCount": 3,
+    "memoryBytes": 10452496384,
+    "loadAverage": [
+      0.46,
+      0.27,
+      0.21
+    ],
+    "cgroupCpuMax": "200000 100000",
+    "cgroupMemoryMax": "8589934592"
+  },
+  "knowledge": {
+    "chunks": 1222,
+    "archivedEntries": 1213
+  },
+  "method": {
+    "iterationsPerScenario": 120,
+    "warmupPerScenario": 20,
+    "concurrency": 1,
+    "retrievalTopK": 5,
+    "serviceRetrievalTopK": 5,
+    "retrievalCache": "Warm cache after scenario warmup; coldRetrieval/coldServiceTotal/coldHttpTotal clear only cached results before every measured same-input request",
+    "logging": "Routing decision logs disabled using the documented config; response tracing remains enabled",
+    "provider": "Immediate in-process stub; zero external API calls",
+    "http": "Actual Express /api/chat over localhost; unique simulated client IPs",
+    "percentiles": "Nearest rank on sorted durations",
+    "scope": "Warm-process local overhead, not production load capacity or real AI/network latency",
+    "stageIsolation": "Retrieval/compatibility-decision measured independently; service/HTTP measured end to end, not their sum",
+    "fixture": "Pure synthetic direct-reference fixture is measured separately from real indexed knowledge"
+  },
+  "scenarios": [
+    {
+      "id": "matched-start-auto",
+      "question": "发动机启动困难或不能启动",
+      "mode": "auto",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.007591999999931431,
+        "p95Ms": 0.02199299999995219,
+        "minMs": 0.00511699999992743,
+        "maxMs": 0.03535299999998642,
+        "meanMs": 0.009148841666664017
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.24749199999996563,
+        "p95Ms": 0.30661200000002964,
+        "minMs": 0.22561899999999468,
+        "maxMs": 0.4578189999999722,
+        "meanMs": 0.2568644833333356
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.5203389999999786,
+        "p95Ms": 1.7485520000000179,
+        "minMs": 1.453708000000006,
+        "maxMs": 4.642467000000011,
+        "meanMs": 1.5758091583333302
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 8.364468999999985,
+        "p95Ms": 8.993964000000005,
+        "minMs": 7.924543999999969,
+        "maxMs": 14.543529999999919,
+        "meanMs": 8.525299858333337
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.22608999999999924,
+        "p95Ms": 0.28504899999995814,
+        "minMs": 0.22007200000007288,
+        "maxMs": 0.499953000000005,
+        "meanMs": 0.2378593833333331
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.010576000000014574,
+          "p95Ms": 0.01623499999999467,
+          "minMs": 0.00749200000007022,
+          "maxMs": 0.028473000000076354,
+          "meanMs": 0.01138304166666823
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.24543900000003305,
+          "p95Ms": 0.30472800000001143,
+          "minMs": 0.22921400000001313,
+          "maxMs": 3.3523360000000366,
+          "meanMs": 0.28553804166667
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0.0026739999999563224,
+          "p95Ms": 0.004577000000040243,
+          "minMs": 0.0017930000000205837,
+          "maxMs": 0.025757999999996173,
+          "meanMs": 0.003139200000000623
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.5177240000000438,
+          "p95Ms": 1.744275000000016,
+          "minMs": 1.451674999999966,
+          "maxMs": 4.639732999999978,
+          "meanMs": 1.5731481583333358
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 1,
+        "aiSuccesses": 1,
+        "aiProvider": "deepseek",
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 5778,
+        "sentKnowledgeIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "timings": {
+          "retrievalMs": 0.011907000000064727,
+          "decisionMs": 0.23872899999992114,
+          "externalAiMs": 0.003496000000041022,
+          "totalMs": 1.540397999999982
+        }
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.0014019999999845822,
+        "p95Ms": 0.0024740000000065265,
+        "minMs": 0.000941000000011627,
+        "maxMs": 0.014622000000031221,
+        "meanMs": 0.0016444083333340132
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "synthesis_requested",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "synthesis_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true,
+        "knowledgeIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "aiRequired": true,
+        "riskLevel": "unknown",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 33.9,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 8,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7.95,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "exact",
+            "referenceVerification": "verified",
+            "verificationBasis": "document-review",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          }
+        ],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "excludedKnowledgeIds": []
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-LX2620-005",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-006",
+        "KB-LX2620-007"
+      ],
+      "responseChars": 16,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 9.96652499999982,
+        "p95Ms": 10.85486200000014,
+        "minMs": 9.541697000000568,
+        "maxMs": 11.863471000000573,
+        "meanMs": 10.069699866666603
+      },
+      "coldServiceSuccessfulMockGenerations": 120,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 2.0119620000004943,
+        "p95Ms": 2.279774999999063,
+        "minMs": 1.916069000002608,
+        "maxMs": 2.8820999999989,
+        "meanMs": 2.047523341666723
+      },
+      "httpSuccessfulMockGenerations": 120,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 10.194415999998455,
+        "p95Ms": 10.800296000001254,
+        "minMs": 9.834374999998545,
+        "maxMs": 11.02486399999907,
+        "meanMs": 10.239266033333479
+      },
+      "coldHttpSuccessfulMockGenerations": 120,
+      "instrumentedColdHttpRetrievals": 120
+    },
+    {
+      "id": "yto-starter-auto",
+      "question": "起动机不转",
+      "mode": "auto",
+      "brand": "东方红",
+      "model": "LF1504",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.004796999999825857,
+        "p95Ms": 0.009404000000131418,
+        "minMs": 0.0032749999998031853,
+        "maxMs": 0.02506800000014664,
+        "meanMs": 0.005669199999990345
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.20013099999982842,
+        "p95Ms": 0.23971099999994294,
+        "minMs": 0.1918789999999717,
+        "maxMs": 0.46426900000005844,
+        "meanMs": 0.20970146666667422
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.4425430000001143,
+        "p95Ms": 1.6311259999999947,
+        "minMs": 1.3744300000000749,
+        "maxMs": 1.7273519999998825,
+        "meanMs": 1.466480966666677
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 8.004995000000235,
+        "p95Ms": 8.565499000000273,
+        "minMs": 7.685283000000254,
+        "maxMs": 8.810938000000078,
+        "meanMs": 8.061932024999997
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.19262000000003354,
+        "p95Ms": 0.23561500000005253,
+        "minMs": 0.1866010000001097,
+        "maxMs": 0.4413250000000062,
+        "meanMs": 0.20305778333332872
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.006890999999995984,
+          "p95Ms": 0.012829000000010637,
+          "minMs": 0.005197999999836611,
+          "maxMs": 0.045589000000063606,
+          "meanMs": 0.008176483333333333
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.20606099999986327,
+          "p95Ms": 0.24687199999993936,
+          "minMs": 0.1965259999999489,
+          "maxMs": 0.4578599999999824,
+          "meanMs": 0.21676402499999767
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0.0024040000000695727,
+          "p95Ms": 0.0034150000001318404,
+          "minMs": 0.0016120000000228174,
+          "maxMs": 0.005558000000064567,
+          "meanMs": 0.0025679666666690083
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.4405199999998786,
+          "p95Ms": 1.6291530000000876,
+          "minMs": 1.372968000000128,
+          "maxMs": 1.7250879999999142,
+          "meanMs": 1.4645740416666646
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 1,
+        "aiSuccesses": 1,
+        "aiProvider": "deepseek",
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 2098,
+        "sentKnowledgeIds": [
+          "KB-YTO-LF1504-007",
+          "KB-YTO-LF1504-003"
+        ],
+        "timings": {
+          "retrievalMs": 0.006069000000024971,
+          "decisionMs": 0.1987899999999172,
+          "externalAiMs": 0.0022030000000086147,
+          "totalMs": 1.3862480000000232
+        }
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.0012719999999717402,
+        "p95Ms": 0.0020230000000083237,
+        "minMs": 0.0008009999999103457,
+        "maxMs": 0.0037649999999302963,
+        "meanMs": 0.001369383333328263
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "synthesis_requested",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "synthesis_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true,
+        "knowledgeIds": [
+          "KB-YTO-LF1504-007",
+          "KB-YTO-LF1504-003"
+        ],
+        "aiRequired": true,
+        "riskLevel": "unknown",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [
+          {
+            "entryId": "KB-YTO-LF1504-007",
+            "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+            "relevance": {
+              "score": 13.95,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "verified",
+            "verificationBasis": "document-review",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-YTO-LF1504-003",
+            "sourceId": "SRC-YTO-LF1504-SMLF150449010",
+            "relevance": {
+              "score": 4.65,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "verified",
+            "verificationBasis": "document-review",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          }
+        ],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [
+          "KB-YTO-LF1504-007",
+          "KB-YTO-LF1504-003"
+        ],
+        "excludedKnowledgeIds": []
+      },
+      "knowledgeIds": [
+        "KB-YTO-LF1504-007",
+        "KB-YTO-LF1504-003"
+      ],
+      "responseChars": 16,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 9.581426000000647,
+        "p95Ms": 9.912465999999768,
+        "minMs": 9.196787000000768,
+        "maxMs": 10.319598000000042,
+        "meanMs": 9.617446541666641
+      },
+      "coldServiceSuccessfulMockGenerations": 120,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 1.7931099999987055,
+        "p95Ms": 2.005313000001479,
+        "minMs": 1.7486769999995886,
+        "maxMs": 2.1146459999981744,
+        "meanMs": 1.814500433333372
+      },
+      "httpSuccessfulMockGenerations": 120,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 9.982790000001842,
+        "p95Ms": 11.51741100000072,
+        "minMs": 9.470218999998906,
+        "maxMs": 12.256122999999207,
+        "meanMs": 10.210939916666756
+      },
+      "coldHttpSuccessfulMockGenerations": 120,
+      "instrumentedColdHttpRetrievals": 120
+    },
+    {
+      "id": "matched-runaway-auto",
+      "question": "发动机自行加速失控",
+      "mode": "auto",
+      "brand": "东方红",
+      "model": "LX1004",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.0038460000000668515,
+        "p95Ms": 0.00836299999991752,
+        "minMs": 0.002955000000383734,
+        "maxMs": 0.04133300000012241,
+        "meanMs": 0.004669291666668111
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.18435700000009092,
+        "p95Ms": 0.27555500000016764,
+        "minMs": 0.18131300000004558,
+        "maxMs": 0.48117499999989377,
+        "meanMs": 0.20210664166667508
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.1953800000001138,
+        "p95Ms": 1.2894219999998313,
+        "minMs": 1.169340999999804,
+        "maxMs": 1.3958910000001197,
+        "meanMs": 1.2084382666666897
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 7.947345000000041,
+        "p95Ms": 8.306856000000153,
+        "minMs": 7.698481000000356,
+        "maxMs": 9.278879999999845,
+        "meanMs": 7.995619908333337
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.18050199999970573,
+        "p95Ms": 0.25923999999986336,
+        "minMs": 0.17741700000033234,
+        "maxMs": 0.48410899999998946,
+        "meanMs": 0.1946666583333543
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.006120000000009895,
+          "p95Ms": 0.016916000000037457,
+          "minMs": 0.0048970000002555025,
+          "maxMs": 0.046811000000161584,
+          "meanMs": 0.00817901666665269
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.1901359999997112,
+          "p95Ms": 0.22929500000009284,
+          "minMs": 0.184146999999939,
+          "maxMs": 0.37413299999980154,
+          "meanMs": 0.19992097499998257
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "minMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.1927559999999175,
+          "p95Ms": 1.2872080000001915,
+          "minMs": 1.1673169999999118,
+          "maxMs": 1.3931469999997717,
+          "meanMs": 1.2061106416666272
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 0,
+        "aiSuccesses": 0,
+        "aiProvider": null,
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 0,
+        "sentKnowledgeIds": [],
+        "timings": {
+          "retrievalMs": 0.005438000000140164,
+          "decisionMs": 0.1913379999996323,
+          "externalAiMs": 0,
+          "totalMs": 1.1811280000001716
+        }
+      },
+      "providerStub": {
+        "samples": 0,
+        "p50Ms": null,
+        "p95Ms": null,
+        "minMs": null,
+        "maxMs": null,
+        "meanMs": null
+      },
+      "successfulMockGenerations": 0,
+      "mockGenerationsPerRequest": 0,
+      "route": "safe",
+      "reason": "high_risk_insufficient_evidence",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "safe",
+        "reason": "high_risk_insufficient_evidence",
+        "evidenceLevel": "none",
+        "llmConfigured": true,
+        "knowledgeIds": [],
+        "aiRequired": false,
+        "riskLevel": "high",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [
+          {
+            "entryId": "KB-YTO-LX-MANUAL-004",
+            "sourceId": "SRC-YTO-LX-MANUAL",
+            "relevance": {
+              "score": 2,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "low"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "exact",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "high",
+            "directEligible": false,
+            "excluded": true
+          }
+        ],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [],
+        "excludedKnowledgeIds": [
+          "KB-YTO-LX-MANUAL-004"
+        ]
+      },
+      "knowledgeIds": [],
+      "responseChars": 201,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 9.272462000000814,
+        "p95Ms": 9.78035699999964,
+        "minMs": 8.955153000000792,
+        "maxMs": 10.406639999999243,
+        "meanMs": 9.318117099999881
+      },
+      "coldServiceSuccessfulMockGenerations": 0,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 1.4877200000009907,
+        "p95Ms": 1.6541500000021188,
+        "minMs": 1.4350400000002992,
+        "maxMs": 2.006841999998869,
+        "meanMs": 1.5091608500001106
+      },
+      "httpSuccessfulMockGenerations": 0,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 9.678252000001521,
+        "p95Ms": 10.20511599999736,
+        "minMs": 9.340013000000909,
+        "maxMs": 10.427709999999934,
+        "meanMs": 9.736823983333519
+      },
+      "coldHttpSuccessfulMockGenerations": 0,
+      "instrumentedColdHttpRetrievals": 120
+    },
+    {
+      "id": "matched-start-local",
+      "question": "发动机启动困难或不能启动",
+      "mode": "knowledge_only",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.004457000000002154,
+        "p95Ms": 0.00767100000030041,
+        "minMs": 0.003123999999843363,
+        "maxMs": 0.02461799999946379,
+        "meanMs": 0.004993266666618487
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.22233500000038475,
+        "p95Ms": 0.2576180000005479,
+        "minMs": 0.21645599999919796,
+        "maxMs": 0.4801929999994172,
+        "meanMs": 0.22998373333330543
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.435631999999714,
+        "p95Ms": 1.6457579999996597,
+        "minMs": 1.379186999999547,
+        "maxMs": 1.8676219999997556,
+        "meanMs": 1.4679332416666815
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 8.105113000000529,
+        "p95Ms": 8.440257000000202,
+        "minMs": 7.777780000000348,
+        "maxMs": 8.85608300000058,
+        "meanMs": 8.135649091666732
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.21657599999980448,
+        "p95Ms": 0.25484399999913876,
+        "minMs": 0.21209900000030757,
+        "maxMs": 0.41592599999967206,
+        "meanMs": 0.2241343583333408
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.0054679999993823,
+          "p95Ms": 0.012217999999847962,
+          "minMs": 0.004046000000016647,
+          "maxMs": 0.04940499999975145,
+          "meanMs": 0.007223916666634978
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.2315180000005057,
+          "p95Ms": 0.2863409999999931,
+          "minMs": 0.21889000000010128,
+          "maxMs": 0.3722109999998793,
+          "meanMs": 0.2404179666666702
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "minMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.4326970000001893,
+          "p95Ms": 1.6414810000005673,
+          "minMs": 1.37676300000021,
+          "maxMs": 1.862833999999566,
+          "meanMs": 1.464754425000035
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 0,
+        "aiSuccesses": 0,
+        "aiProvider": null,
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 0,
+        "sentKnowledgeIds": [],
+        "timings": {
+          "retrievalMs": 0.004606999999850814,
+          "decisionMs": 0.21920000000045547,
+          "externalAiMs": 0,
+          "totalMs": 1.4123660000004747
+        }
+      },
+      "providerStub": {
+        "samples": 0,
+        "p50Ms": null,
+        "p95Ms": null,
+        "minMs": null,
+        "maxMs": null,
+        "meanMs": null
+      },
+      "successfulMockGenerations": 0,
+      "mockGenerationsPerRequest": 0,
+      "route": "local",
+      "reason": "local_requested",
+      "coordination": {
+        "requestedMode": "knowledge_only",
+        "effectiveMode": "knowledge_only",
+        "route": "local",
+        "reason": "local_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true,
+        "knowledgeIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "aiRequired": false,
+        "riskLevel": "unknown",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 33.9,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 8,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7.95,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "exact",
+            "referenceVerification": "verified",
+            "verificationBasis": "document-review",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          }
+        ],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "excludedKnowledgeIds": []
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-LX2620-005",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-006",
+        "KB-LX2620-007"
+      ],
+      "responseChars": 3393,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 9.878343999998833,
+        "p95Ms": 10.296544000000722,
+        "minMs": 9.474195000000691,
+        "maxMs": 10.939593000000968,
+        "meanMs": 9.905558733333283
+      },
+      "coldServiceSuccessfulMockGenerations": 0,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 1.8232649999990826,
+        "p95Ms": 2.1003730000011274,
+        "minMs": 1.7591580000007525,
+        "maxMs": 2.199981999998272,
+        "meanMs": 1.8533882249997986
+      },
+      "httpSuccessfulMockGenerations": 0,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 10.160828000000038,
+        "p95Ms": 10.737646999998105,
+        "minMs": 9.801348000000871,
+        "maxMs": 12.730788000000757,
+        "meanMs": 10.247096833333398
+      },
+      "coldHttpSuccessfulMockGenerations": 0,
+      "instrumentedColdHttpRetrievals": 120
+    },
+    {
+      "id": "matched-start-assisted",
+      "question": "发动机启动困难或不能启动",
+      "mode": "ai_assisted",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.004155999999966298,
+        "p95Ms": 0.01196799999979703,
+        "minMs": 0.0028539999993881793,
+        "maxMs": 0.030415999999604537,
+        "meanMs": 0.005204483333318422
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.22453800000039337,
+        "p95Ms": 0.31583599999976286,
+        "minMs": 0.21612499999991996,
+        "maxMs": 0.4182200000004741,
+        "meanMs": 0.24048240833337786
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.4419709999992847,
+        "p95Ms": 1.643304000000171,
+        "minMs": 1.3916250000002037,
+        "maxMs": 2.1775090000001,
+        "meanMs": 1.4794524000000364
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 8.01792100000057,
+        "p95Ms": 9.178889999999228,
+        "minMs": 7.780665000000226,
+        "maxMs": 10.324414000000615,
+        "meanMs": 8.187446533333294
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.21681600000010803,
+        "p95Ms": 0.27799899999990885,
+        "minMs": 0.2117580000003727,
+        "maxMs": 0.37469400000009045,
+        "meanMs": 0.228348708333336
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.005118000000038592,
+          "p95Ms": 0.01283899999998539,
+          "minMs": 0.004046000000016647,
+          "maxMs": 0.02755200000046898,
+          "meanMs": 0.006735666666683452
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.22937499999989086,
+          "p95Ms": 0.2927300000001196,
+          "minMs": 0.2181590000000142,
+          "maxMs": 0.38997699999981705,
+          "meanMs": 0.2379231083333707
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0.002523999999539228,
+          "p95Ms": 0.004097000000001572,
+          "minMs": 0.001592999999957101,
+          "maxMs": 0.005648999999721127,
+          "meanMs": 0.002706366666620852
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.4397979999994277,
+          "p95Ms": 1.6406999999999243,
+          "minMs": 1.3900630000007368,
+          "maxMs": 2.1743829999995796,
+          "meanMs": 1.477273408333364
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 1,
+        "aiSuccesses": 1,
+        "aiProvider": "deepseek",
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 5778,
+        "sentKnowledgeIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "timings": {
+          "retrievalMs": 0.004286999999749241,
+          "decisionMs": 0.21968099999958213,
+          "externalAiMs": 0.002442999999402673,
+          "totalMs": 1.429482999999891
+        }
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.001291999999921245,
+        "p95Ms": 0.002073000000564207,
+        "minMs": 0.0008010000001377193,
+        "maxMs": 0.0028940000001966837,
+        "meanMs": 0.0013880083333712415
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "ai_requested",
+      "coordination": {
+        "requestedMode": "ai_assisted",
+        "effectiveMode": "ai_assisted",
+        "route": "ai",
+        "reason": "ai_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true,
+        "knowledgeIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "aiRequired": true,
+        "riskLevel": "unknown",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 33.9,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 8,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7.95,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "exact",
+            "referenceVerification": "verified",
+            "verificationBasis": "document-review",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          }
+        ],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006",
+          "KB-LX2620-007"
+        ],
+        "excludedKnowledgeIds": []
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-LX2620-005",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-006",
+        "KB-LX2620-007"
+      ],
+      "responseChars": 16,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 9.577640999999858,
+        "p95Ms": 9.875229999999647,
+        "minMs": 9.373353999999381,
+        "maxMs": 10.190644000000248,
+        "meanMs": 9.602464558333379
+      },
+      "coldServiceSuccessfulMockGenerations": 120,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 1.805077999997593,
+        "p95Ms": 2.0723499999985506,
+        "minMs": 1.7379170000021986,
+        "maxMs": 2.336366999999882,
+        "meanMs": 1.8382682666664247
+      },
+      "httpSuccessfulMockGenerations": 120,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 10.18570600000021,
+        "p95Ms": 10.857608000002074,
+        "minMs": 9.750511000002007,
+        "maxMs": 11.241426000000502,
+        "meanMs": 10.239053075000083
+      },
+      "coldHttpSuccessfulMockGenerations": 120,
+      "instrumentedColdHttpRetrievals": 120
+    },
+    {
+      "id": "unknown-brake-risk",
+      "question": "拖拉机制动失灵，刹不住",
+      "mode": "auto",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.0028040000006512855,
+        "p95Ms": 0.004277000000001863,
+        "minMs": 0.002163000000109605,
+        "maxMs": 0.016464999999698193,
+        "meanMs": 0.0030924499999931262
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.16395700000066427,
+        "p95Ms": 0.18876400000044669,
+        "minMs": 0.16052099999978964,
+        "maxMs": 0.20944500000041444,
+        "meanMs": 0.1676992083333289
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.149040000000241,
+        "p95Ms": 1.2449940000005881,
+        "minMs": 1.1258049999996729,
+        "maxMs": 1.5450369999998657,
+        "meanMs": 1.1650663916666266
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 8.40784800000074,
+        "p95Ms": 9.014271999999437,
+        "minMs": 8.11587899999995,
+        "maxMs": 12.612119000000348,
+        "meanMs": 8.500606116666678
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.16131299999960902,
+        "p95Ms": 0.18291500000032102,
+        "minMs": 0.1596799999997529,
+        "maxMs": 0.20761200000015378,
+        "meanMs": 0.16527917500004605
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.004356999999799882,
+          "p95Ms": 0.007641000000148779,
+          "minMs": 0.003215000000636792,
+          "maxMs": 0.019199000000298838,
+          "meanMs": 0.004971908333322972
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.16638000000057218,
+          "p95Ms": 0.19533400000000256,
+          "minMs": 0.16298600000027363,
+          "maxMs": 0.41488399999980174,
+          "meanMs": 0.17335806666671186
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "minMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.1477080000004207,
+          "p95Ms": 1.2423209999997198,
+          "minMs": 1.1244930000002569,
+          "maxMs": 1.5420019999992292,
+          "meanMs": 1.1634003249999447
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 0,
+        "aiSuccesses": 0,
+        "aiProvider": null,
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 0,
+        "sentKnowledgeIds": [],
+        "timings": {
+          "retrievalMs": 0.00330500000018219,
+          "decisionMs": 0.1932809999998426,
+          "externalAiMs": 0,
+          "totalMs": 1.1599770000002536
+        }
+      },
+      "providerStub": {
+        "samples": 0,
+        "p50Ms": null,
+        "p95Ms": null,
+        "minMs": null,
+        "maxMs": null,
+        "meanMs": null
+      },
+      "successfulMockGenerations": 0,
+      "mockGenerationsPerRequest": 0,
+      "route": "safe",
+      "reason": "high_risk_insufficient_evidence",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "safe",
+        "reason": "high_risk_insufficient_evidence",
+        "evidenceLevel": "none",
+        "llmConfigured": true,
+        "knowledgeIds": [],
+        "aiRequired": false,
+        "riskLevel": "high",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [],
+        "excludedKnowledgeIds": []
+      },
+      "knowledgeIds": [],
+      "responseChars": 201,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 9.58792700000049,
+        "p95Ms": 10.02053800000067,
+        "minMs": 9.340664999999717,
+        "maxMs": 10.250213999999687,
+        "meanMs": 9.63586444166658
+      },
+      "coldServiceSuccessfulMockGenerations": 0,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 1.4235220000009576,
+        "p95Ms": 1.496513000001869,
+        "minMs": 1.3872690000025614,
+        "maxMs": 1.6773549999998068,
+        "meanMs": 1.4348369583333807
+      },
+      "httpSuccessfulMockGenerations": 0,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 9.818951000001107,
+        "p95Ms": 10.431513000003179,
+        "minMs": 9.617437000000791,
+        "maxMs": 10.914089000001695,
+        "meanMs": 9.895396724999955
+      },
+      "coldHttpSuccessfulMockGenerations": 0,
+      "instrumentedColdHttpRetrievals": 120
+    },
+    {
+      "id": "missing-code-identity",
+      "question": "故障码是什么意思",
+      "mode": "auto",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.0028339999998934218,
+        "p95Ms": 0.005087999999886961,
+        "minMs": 0.0020930000000589644,
+        "maxMs": 0.016714999999749125,
+        "meanMs": 0.003241208333315626
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.17086699999981647,
+        "p95Ms": 0.2040370000004259,
+        "minMs": 0.16678099999990081,
+        "maxMs": 0.30701200000021345,
+        "meanMs": 0.17635316666666465
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.1707930000002307,
+        "p95Ms": 1.2447739999997793,
+        "minMs": 1.1409480000002077,
+        "maxMs": 1.4636540000001332,
+        "meanMs": 1.1842234499999449
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 8.327297000001636,
+        "p95Ms": 8.600257999999485,
+        "minMs": 8.15013099999851,
+        "maxMs": 8.837865999999849,
+        "meanMs": 8.354126391666606
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.16798300000027666,
+        "p95Ms": 0.1964560000005804,
+        "minMs": 0.1650790000003326,
+        "maxMs": 0.3814649999994799,
+        "meanMs": 0.17602719166667005
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.0040660000004209,
+          "p95Ms": 0.010706000000027416,
+          "minMs": 0.0028640000000450527,
+          "maxMs": 0.050225000000864384,
+          "meanMs": 0.005339758333404158
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.17221899999913148,
+          "p95Ms": 0.19352100000014616,
+          "minMs": 0.16798299999936717,
+          "maxMs": 0.21101699999962875,
+          "meanMs": 0.17478184166664051
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "minMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.1684390000000349,
+          "p95Ms": 1.2423799999996845,
+          "minMs": 1.139615999999478,
+          "maxMs": 1.4605280000005223,
+          "meanMs": 1.1821771749999546
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 0,
+        "aiSuccesses": 0,
+        "aiProvider": null,
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 0,
+        "sentKnowledgeIds": [],
+        "timings": {
+          "retrievalMs": 0.0032049999999799184,
+          "decisionMs": 0.17127800000071147,
+          "externalAiMs": 0,
+          "totalMs": 1.162109999999302
+        }
+      },
+      "providerStub": {
+        "samples": 0,
+        "p50Ms": null,
+        "p95Ms": null,
+        "minMs": null,
+        "maxMs": null,
+        "meanMs": null
+      },
+      "successfulMockGenerations": 0,
+      "mockGenerationsPerRequest": 0,
+      "route": "clarify",
+      "reason": "identity_required",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "clarify",
+        "reason": "identity_required",
+        "evidenceLevel": "none",
+        "llmConfigured": true,
+        "knowledgeIds": [],
+        "aiRequired": false,
+        "riskLevel": "unknown",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [
+          {
+            "relevance": {
+              "score": 5,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": false,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "relevance": {
+              "score": 5,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": false,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "relevance": {
+              "score": 3,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": false,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "relevance": {
+              "score": 3,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": false,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "relevance": {
+              "score": 3,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": false,
+            "riskLevel": "high",
+            "directEligible": false,
+            "excluded": false
+          }
+        ],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [],
+        "excludedKnowledgeIds": []
+      },
+      "knowledgeIds": [],
+      "responseChars": 49,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 9.710760999998456,
+        "p95Ms": 11.053414000001794,
+        "minMs": 9.390599999998813,
+        "maxMs": 12.011116000001493,
+        "meanMs": 9.87048840000022
+      },
+      "coldServiceSuccessfulMockGenerations": 0,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 1.461040000001958,
+        "p95Ms": 1.5910750000002736,
+        "minMs": 1.414650000002439,
+        "maxMs": 1.867221000000427,
+        "meanMs": 1.4760963500001405
+      },
+      "httpSuccessfulMockGenerations": 0,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 9.979002000000037,
+        "p95Ms": 10.4954089999992,
+        "minMs": 9.629995999999664,
+        "maxMs": 10.758686000001035,
+        "meanMs": 10.017600933333233
+      },
+      "coldHttpSuccessfulMockGenerations": 0,
+      "instrumentedColdHttpRetrievals": 120
+    },
+    {
+      "id": "real-reference-lookup",
+      "question": "查看原文 KB-LX2620-003 发动机启动困难或不能启动",
+      "mode": "auto",
+      "brand": "久保田",
+      "model": "LX2620",
+      "retrieval": {
+        "samples": 120,
+        "p50Ms": 0.004897999999229796,
+        "p95Ms": 0.008493000001180917,
+        "minMs": 0.003704999999172287,
+        "maxMs": 0.0354429999988497,
+        "meanMs": 0.0056674166666653035
+      },
+      "coordinationCompatibility": {
+        "samples": 120,
+        "p50Ms": 0.5695869999999559,
+        "p95Ms": 0.623647999998866,
+        "minMs": 0.5454210000007151,
+        "maxMs": 0.8415170000007492,
+        "meanMs": 0.5764486083333699
+      },
+      "serviceTotal": {
+        "samples": 120,
+        "p50Ms": 1.7976870000002236,
+        "p95Ms": 1.99491400000079,
+        "minMs": 1.748222000000169,
+        "maxMs": 2.1275430000005144,
+        "meanMs": 1.8145867000000484
+      },
+      "coldRetrieval": {
+        "samples": 120,
+        "p50Ms": 8.093915999999808,
+        "p95Ms": 8.547769000000699,
+        "minMs": 7.85441499999979,
+        "maxMs": 8.86659900000086,
+        "meanMs": 8.145839558333394
+      },
+      "pureDecision": {
+        "samples": 120,
+        "p50Ms": 0.5617760000004637,
+        "p95Ms": 0.6011950000010984,
+        "minMs": 0.5397720000000845,
+        "maxMs": 0.7562789999992674,
+        "meanMs": 0.5662918999999723
+      },
+      "instrumentedServiceRetrievals": 120,
+      "serviceRetrievalsPerRequest": 1,
+      "serviceTraceTimings": {
+        "retrievalMs": {
+          "samples": 120,
+          "p50Ms": 0.005938999998761574,
+          "p95Ms": 0.010375999998359475,
+          "minMs": 0.004627000000255066,
+          "maxMs": 0.014482000000498374,
+          "meanMs": 0.006543958333350019
+        },
+        "decisionMs": {
+          "samples": 120,
+          "p50Ms": 0.5706389999995736,
+          "p95Ms": 0.6085460000012972,
+          "minMs": 0.5486660000005941,
+          "maxMs": 0.8529539999999542,
+          "meanMs": 0.5756917583333537
+        },
+        "externalAiMs": {
+          "samples": 120,
+          "p50Ms": 0.0026340000003983732,
+          "p95Ms": 0.003695999999763444,
+          "minMs": 0.0020629999999073334,
+          "maxMs": 0.003965999998399639,
+          "meanMs": 0.002726116666690359
+        },
+        "totalMs": {
+          "samples": 120,
+          "p50Ms": 1.795643999999811,
+          "p95Ms": 1.9925199999997858,
+          "minMs": 1.746198999999251,
+          "maxMs": 2.1246289999999135,
+          "meanMs": 1.81235652499995
+        }
+      },
+      "lastServiceTrace": {
+        "retrievalCount": 1,
+        "aiAttempts": 1,
+        "aiSuccesses": 1,
+        "aiProvider": "deepseek",
+        "scoreMethod": "keyword-weighted-overlap",
+        "contextChars": 5778,
+        "sentKnowledgeIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-LX2620-007",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006"
+        ],
+        "timings": {
+          "retrievalMs": 0.005387999999584281,
+          "decisionMs": 0.5605439999999362,
+          "externalAiMs": 0.0024730000004637986,
+          "totalMs": 1.802534000000378
+        }
+      },
+      "providerStub": {
+        "samples": 120,
+        "p50Ms": 0.001322000000072876,
+        "p95Ms": 0.0018829999989975477,
+        "minMs": 0.0010010000005422626,
+        "maxMs": 0.002122999998391606,
+        "meanMs": 0.0013923333333271633
+      },
+      "successfulMockGenerations": 120,
+      "mockGenerationsPerRequest": 1,
+      "route": "ai",
+      "reason": "synthesis_requested",
+      "coordination": {
+        "requestedMode": "auto",
+        "effectiveMode": "auto",
+        "route": "ai",
+        "reason": "synthesis_requested",
+        "evidenceLevel": "partial",
+        "llmConfigured": true,
+        "knowledgeIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-LX2620-007",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006"
+        ],
+        "aiRequired": true,
+        "riskLevel": "unknown",
+        "requiredCoverage": [
+          "symptom",
+          "causes",
+          "checks",
+          "repair"
+        ],
+        "candidates": [
+          {
+            "entryId": "KB-LX2620-003",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 34.900000000000006,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": true,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-005",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 9,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": true,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-007",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 8,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "high"
+            },
+            "coverage": {
+              "symptom": true,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "low",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-KB-LX-20261013-001",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7.95,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "exact",
+            "referenceVerification": "verified",
+            "verificationBasis": "document-review",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          },
+          {
+            "entryId": "KB-LX2620-006",
+            "sourceId": "SRC-KB-LX2620-6C82063118",
+            "relevance": {
+              "score": 7,
+              "method": "keyword-weighted-overlap",
+              "calibrated": false,
+              "level": "medium"
+            },
+            "coverage": {
+              "symptom": false,
+              "causes": false,
+              "checks": false,
+              "repair": false
+            },
+            "coverageSufficient": false,
+            "modelMatch": "unknown",
+            "referenceVerification": "unspecified",
+            "verificationBasis": "none",
+            "sourceIndexed": true,
+            "riskLevel": "unknown",
+            "directEligible": false,
+            "excluded": false
+          }
+        ],
+        "directEligibleIds": [],
+        "referenceOnlyIds": [
+          "KB-LX2620-003",
+          "KB-LX2620-005",
+          "KB-LX2620-007",
+          "KB-KB-LX-20261013-001",
+          "KB-LX2620-006"
+        ],
+        "excludedKnowledgeIds": []
+      },
+      "knowledgeIds": [
+        "KB-LX2620-003",
+        "KB-LX2620-005",
+        "KB-LX2620-007",
+        "KB-KB-LX-20261013-001",
+        "KB-LX2620-006"
+      ],
+      "responseChars": 16,
+      "coldServiceTotal": {
+        "samples": 120,
+        "p50Ms": 10.146313999997801,
+        "p95Ms": 10.993123000000196,
+        "minMs": 9.770497999998042,
+        "maxMs": 11.319234000002325,
+        "meanMs": 10.224302166666682
+      },
+      "coldServiceSuccessfulMockGenerations": 120,
+      "instrumentedColdServiceRetrievals": 120,
+      "httpTotal": {
+        "samples": 120,
+        "p50Ms": 2.1655599999976403,
+        "p95Ms": 2.3928720000003523,
+        "minMs": 2.1183490000003076,
+        "maxMs": 2.472701999999117,
+        "meanMs": 2.187047116666539
+      },
+      "httpSuccessfulMockGenerations": 120,
+      "instrumentedHttpRetrievals": 120,
+      "coldHttpTotal": {
+        "samples": 120,
+        "p50Ms": 10.374696999999287,
+        "p95Ms": 10.883583000002545,
+        "minMs": 10.099943999997777,
+        "maxMs": 22.16617799999949,
+        "meanMs": 10.54047385833325
+      },
+      "coldHttpSuccessfulMockGenerations": 120,
+      "instrumentedColdHttpRetrievals": 120
+    }
+  ],
+  "directReferenceFixture": {
+    "provenance": "Synthetic test fixture, not real maintenance knowledge",
+    "timing": {
+      "samples": 120,
+      "p50Ms": 0.5025449999993725,
+      "p95Ms": 0.5571970000019064,
+      "minMs": 0.48680200000308105,
+      "maxMs": 0.7833769999997457,
+      "meanMs": 0.5092080999999476
+    },
+    "decision": {
+      "requestedMode": "auto",
+      "effectiveMode": "auto",
+      "route": "local",
+      "reason": "direct_reference",
+      "evidenceLevel": "direct_reference",
+      "llmConfigured": true,
+      "knowledgeIds": [
+        "TEST-001"
+      ],
+      "aiRequired": false,
+      "riskLevel": "unknown",
+      "requiredCoverage": [
+        "symptom",
+        "causes",
+        "checks",
+        "repair"
+      ],
+      "candidates": [
+        {
+          "entryId": "TEST-001",
+          "sourceId": "SOURCE-001",
+          "relevance": {
+            "score": null,
+            "method": "unavailable",
+            "calibrated": false,
+            "level": "unknown"
+          },
+          "coverage": {},
+          "coverageSufficient": false,
+          "modelMatch": "exact",
+          "referenceVerification": "verified",
+          "verificationBasis": "document-review",
+          "sourceIndexed": true,
+          "riskLevel": "unknown",
+          "directEligible": true,
+          "excluded": false
+        }
+      ],
+      "directEligibleIds": [
+        "TEST-001"
+      ],
+      "referenceOnlyIds": [],
+      "excludedKnowledgeIds": []
+    }
+  }
+}

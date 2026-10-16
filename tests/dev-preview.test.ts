@@ -12,7 +12,23 @@ import { createDiagnosticService } from '../server/diagnosis/service';
 import { parseDiagnosticRequest } from '../server/diagnosis/request';
 import { createReadOnlyFileSystem } from '../src/dev-preview/filesystem.mjs';
 import browserPath from '../src/dev-preview/path.mjs';
+import type { ChatResponse } from '../shared/chat';
 const transported = (value: unknown) => JSON.parse(JSON.stringify(value));
+
+/** Durations differ by runtime; every other response field must match the server contract. */
+function responseWithoutTimings(response: ChatResponse) {
+  assert.ok(response.diagnosisTrace, 'preview must retain the diagnosis trace');
+  const { timings, ...trace } = response.diagnosisTrace;
+  assert.deepEqual(Object.keys(timings).sort(), ['decisionMs', 'externalAiMs', 'retrievalMs', 'totalMs']);
+  for (const [name, duration] of Object.entries(timings)) {
+    assert.equal(typeof duration, 'number', `${name} must be numeric`);
+    assert.ok(Number.isFinite(duration) && duration >= 0, `${name} must be finite and non-negative`);
+  }
+  assert.equal(timings.externalAiMs, 0, 'the browser preview must never spend time in an external AI call');
+  assert.equal(trace.aiAttempts, 0);
+  assert.equal(trace.aiSuccesses, 0);
+  return transported({ ...response, diagnosisTrace: trace });
+}
 
 test('开发快照只包含已索引资料，路径不会暴露本机文件或原始说明书', () => {
   const snapshot = createKnowledgeSnapshot();
@@ -68,7 +84,8 @@ test('实际浏览器构建保持完整知识目录、诊断来源与型号隔�
     for (const model of ['5E-1004', '不存在的型号']) {
       const body = { messages: [{ role: 'user', content: '发动机无法启动' }], machineType: '拖拉机', brand: '约翰迪尔', model };
       const actual = await (await previewFetch('/api/chat', { method: 'POST', body: JSON.stringify(body) })).json();
-      assert.deepEqual(actual, transported(await diagnose({ ...parseDiagnosticRequest(body), diagnosisMode: 'knowledge_only' })));
+      const expected = await diagnose({ ...parseDiagnosticRequest(body), diagnosisMode: 'knowledge_only' });
+      assert.deepEqual(responseWithoutTimings(actual), responseWithoutTimings(expected));
       assert.equal(actual.provider, 'knowledge-base');
     }
     assert.equal((await previewFetch('/api/chat', { method: 'POST', body: '{' })).status, 400);

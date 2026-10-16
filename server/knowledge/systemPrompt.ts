@@ -10,7 +10,7 @@
  * - 安全提醒
  */
 import type { ChatMessage } from '../llm/types';
-import { retrieve, formatForPrompt, type KnowledgeChunk } from './retriever';
+import { retrieve, formatForPrompt, selectPromptChunks, type KnowledgeChunk } from './retriever';
 import { resolveScope } from './scope';
 
 const BACKGROUND_TYPES = new Set(['机型资料', '资料缺口', '资料索引', '资料核验', '系统适用边界']);
@@ -26,10 +26,16 @@ export interface BuildSystemPromptOptions {
   currentQuery?: string;
   /** 已否定的机型信息尚未补齐，先确认对象，暂停诊断。 */
   clarificationNeeded?: boolean;
+  /** Already retrieved by the diagnosis service; [] must also suppress another search. */
+  retrieved?: KnowledgeChunk[];
+  /** Budget for complete evidence blocks, including source/safety/applicability metadata. */
+  contextMaxChars?: number;
   /** 可选：用户声明的农机类型/品牌/型号（前端可空） */
   machineType?: string;
   brand?: string;
   model?: string;
+  engineModel?: string;
+  faultCodes?: string[];
 }
 
 export function buildSystemPrompt(opts: BuildSystemPromptOptions): {
@@ -38,19 +44,22 @@ export function buildSystemPrompt(opts: BuildSystemPromptOptions): {
   answerMode: 'knowledge-grounded' | 'general-guidance';
 } {
   const needsIdentityConfirmation = Boolean(opts.clarificationNeeded || resolveScope(opts.query, opts).identityConflict);
-  const retrieved = needsIdentityConfirmation ? [] : retrieve(opts.query, 6, opts);
+  const candidates = needsIdentityConfirmation ? [] : opts.retrieved ?? retrieve(opts.query, 6, opts);
+  const retrieved = selectPromptChunks(candidates, opts.contextMaxChars);
   const answerMode = hasDiagnosticEvidence(retrieved) ? 'knowledge-grounded' : 'general-guidance';
   const knowledgeBlock =
     needsIdentityConfirmation
       ? '（用户否定了此前机型信息，或已填写信息与当前问题不一致。必须先请用户确认本次咨询对象；不得重新引用已否定机型的资料，不得生成诊断结论、操作步骤或维修参数，也不得提供通用原因分析。）'
       : retrieved.length > 0
-      ? formatForPrompt(retrieved)
+      ? formatForPrompt(retrieved, opts.contextMaxChars)
       : '（本次未命中适用的知识库片段。可以提供明确标注的通用原理分析和信息采集建议；没有原厂手册依据，不得编造型号参数或专用操作。）';
 
   const machineContext = [
     opts.machineType ? `农机类型：${opts.machineType}` : '',
     opts.brand ? `品牌：${opts.brand}` : '',
     opts.model ? `型号：${opts.model}` : '',
+    opts.engineModel ? `发动机型号：${opts.engineModel}` : '',
+    opts.faultCodes?.length ? `用户报告故障码：${opts.faultCodes.join('、')}` : '',
   ]
     .filter(Boolean)
     .join('｜');
