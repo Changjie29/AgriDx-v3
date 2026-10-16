@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
-  "snapshot_date_shanghai": "2026-10-15",
+  "snapshot_date_shanghai": "2026-10-16",
   "repository_version": "3.4.11",
   "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
   "input_sha256": {
-    "sources.json": "b1a7968e8b828ab1fec6a0d8ee7a15c7c152ff9405ee6998062cfdaecc089f16",
-    "entries.jsonl": "c9b227728c152ab092b79fce5589847d974db9ec1b5708fdc6bcaacbd818fb86"
+    "sources.json": "25edf25f558697318d3782ceddf35f6ee6c5869d56dca8fb61b5c81fc14b89d0",
+    "entries.jsonl": "e56f627999ab99335ce5b3f9008639bc356b4dd34df8e5388e09d0389763998e"
   },
   "totals": {
     "sources": 26,
-    "archived_entries": 4215,
-    "knowledge_documents": 60,
+    "archived_entries": 4235,
+    "knowledge_documents": 61,
     "brand_labels": 15,
     "generic_chunks": 9,
-    "retrieval_chunks": 4224,
+    "retrieval_chunks": 4244,
     "information_or_scope_entries": 34
   },
   "brands": [
@@ -30,7 +30,7 @@
     {
       "label": "东方红",
       "sources": 3,
-      "entries": 609
+      "entries": 629
     },
     {
       "label": "纽荷兰",
@@ -96,7 +96,7 @@
   "entry_types": {
     "安全操作": 663,
     "操作/维护知识": 1883,
-    "维护/故障知识": 1583,
+    "维护/故障知识": 1603,
     "机型资料": 5,
     "资料缺口": 3,
     "资料索引": 13,
@@ -112,7 +112,7 @@
     "配套导航PDF": 2
   },
   "entries_by_source_purpose": {
-    "整机／维保PDF": 3964,
+    "整机／维保PDF": 3984,
     "维护网页": 9,
     "报道背景": 2,
     "交机培训PDF": 222,
@@ -126,7 +126,7 @@
   "entries_by_storage": {
     "仓库PDF原件": 2856,
     "仓库网页快照": 11,
-    "PDF链接＋来源记录": 1348
+    "PDF链接＋来源记录": 1368
   },
   "verification_status_raw": {
     "沿用既有原文核对条目": 24,
@@ -165,7 +165,8 @@
     "已目视核对本条扫描正文/故障表或维护图及实际页脚；PyMuPDF文本仅水印；仅选页，未全书、厂家或实车验证。": 47,
     "原始PDF文字层编码异常；所列证据页已渲染并目视核对，原创事实概述；未全书审校、未实车或厂家复核": 45,
     "本条证据页已作PyMuPDF文本提取及图像目视核对；未全书审校、厂家复核或实车验证": 45,
-    "已人工目视核对指定证据页及图示；未全书人工审校、厂家复核或实车验证": 7
+    "已由Codex目视核对指定证据页及图示；未全书人工审校、厂家复核或实车验证": 7,
+    "证据选页图像已核对；未厂家复核、实车验证或全书审校": 20
   },
   "research": {
     "reports": 3,
@@ -2651,7 +2652,7 @@
       "storage_group": "PDF链接＋来源记录",
       "source_path": "知识库/原始农机说明书/东方红/LF1504/来源记录.md",
       "source_url": "https://www.nongjitong.com/product/yto_lf1504_tractor.html",
-      "entry_count": 158,
+      "entry_count": 178,
       "entry_ids": [
         "KB-YTO-LF1504-001",
         "KB-YTO-LF1504-002",
@@ -2810,10 +2811,31 @@
         "KB2000-20261015-YTOLF1504-145",
         "KB2000-20261015-YTOLF1504-146",
         "KB2000-20261015-YTOLF1504-147",
-        "KB2000-20261015-YTOLF1504-148"
+        "KB2000-20261015-YTOLF1504-148",
+        "KB-YTO-LF1504-013",
+        "KB-YTO-LF1504-014",
+        "KB-YTO-LF1504-015",
+        "KB-YTO-LF1504-016",
+        "KB-YTO-LF1504-017",
+        "KB-YTO-LF1504-018",
+        "KB-YTO-LF1504-019",
+        "KB-YTO-LF1504-020",
+        "KB-YTO-LF1504-021",
+        "KB-YTO-LF1504-022",
+        "KB-YTO-LF1504-023",
+        "KB-YTO-LF1504-024",
+        "KB-YTO-LF1504-025",
+        "KB-YTO-LF1504-026",
+        "KB-YTO-LF1504-028",
+        "KB-YTO-LF1504-029",
+        "KB-YTO-LF1504-030",
+        "KB-YTO-LF1504-031",
+        "KB-YTO-LF1504-032",
+        "KB-YTO-LF1504-033"
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504.md",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504_20261015缺口补充.md",
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/增补2000_YTOLF1504_20261015.md"
       ]
     },
