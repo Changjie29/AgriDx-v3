@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
   "snapshot_date_shanghai": "2026-10-16",
-  "repository_version": "3.4.11",
+  "repository_version": "3.4.12",
   "scope": "仅由现有索引派生的统计与导航，不是新增维修事实，不加入检索",
   "input_sha256": {
-    "sources.json": "25edf25f558697318d3782ceddf35f6ee6c5869d56dca8fb61b5c81fc14b89d0",
-    "entries.jsonl": "e56f627999ab99335ce5b3f9008639bc356b4dd34df8e5388e09d0389763998e"
+    "sources.json": "a9a3763314a62f539a353c18434c4748f7ef496708f891d1b7daaf0459ffcd52",
+    "entries.jsonl": "962460f883fc16b0b435c4ffdd94aa09b9a3208d11dda34020482c2007bf4633"
   },
   "totals": {
     "sources": 26,
-    "archived_entries": 4235,
-    "knowledge_documents": 61,
+    "archived_entries": 4253,
+    "knowledge_documents": 63,
     "brand_labels": 15,
     "generic_chunks": 9,
-    "retrieval_chunks": 4244,
+    "retrieval_chunks": 4262,
     "information_or_scope_entries": 34
   },
   "brands": [
@@ -25,12 +25,12 @@
     {
       "label": "久保田",
       "sources": 3,
-      "entries": 712
+      "entries": 720
     },
     {
       "label": "东方红",
       "sources": 3,
-      "entries": 629
+      "entries": 639
     },
     {
       "label": "纽荷兰",
@@ -96,7 +96,7 @@
   "entry_types": {
     "安全操作": 663,
     "操作/维护知识": 1883,
-    "维护/故障知识": 1603,
+    "维护/故障知识": 1621,
     "机型资料": 5,
     "资料缺口": 3,
     "资料索引": 13,
@@ -112,7 +112,7 @@
     "配套导航PDF": 2
   },
   "entries_by_source_purpose": {
-    "整机／维保PDF": 3984,
+    "整机／维保PDF": 4002,
     "维护网页": 9,
     "报道背景": 2,
     "交机培训PDF": 222,
@@ -126,7 +126,7 @@
   "entries_by_storage": {
     "仓库PDF原件": 2856,
     "仓库网页快照": 11,
-    "PDF链接＋来源记录": 1368
+    "PDF链接＋来源记录": 1386
   },
   "verification_status_raw": {
     "沿用既有原文核对条目": 24,
@@ -166,7 +166,7 @@
     "原始PDF文字层编码异常；所列证据页已渲染并目视核对，原创事实概述；未全书审校、未实车或厂家复核": 45,
     "本条证据页已作PyMuPDF文本提取及图像目视核对；未全书审校、厂家复核或实车验证": 45,
     "已由Codex目视核对指定证据页及图示；未全书人工审校、厂家复核或实车验证": 7,
-    "证据选页图像已核对；未厂家复核、实车验证或全书审校": 20
+    "证据选页图像已核对；未厂家复核、实车验证或全书审校": 38
   },
   "research": {
     "reports": 3,
@@ -2652,7 +2652,7 @@
       "storage_group": "PDF链接＋来源记录",
       "source_path": "知识库/原始农机说明书/东方红/LF1504/来源记录.md",
       "source_url": "https://www.nongjitong.com/product/yto_lf1504_tractor.html",
-      "entry_count": 178,
+      "entry_count": 188,
       "entry_ids": [
         "KB-YTO-LF1504-001",
         "KB-YTO-LF1504-002",
@@ -2831,11 +2831,22 @@
         "KB-YTO-LF1504-030",
         "KB-YTO-LF1504-031",
         "KB-YTO-LF1504-032",
-        "KB-YTO-LF1504-033"
+        "KB-YTO-LF1504-033",
+        "KB-YTO-LF1504-034",
+        "KB-YTO-LF1504-035",
+        "KB-YTO-LF1504-036",
+        "KB-YTO-LF1504-037",
+        "KB-YTO-LF1504-038",
+        "KB-YTO-LF1504-039",
+        "KB-YTO-LF1504-040",
+        "KB-YTO-LF1504-041",
+        "KB-YTO-LF1504-042",
+        "KB-YTO-LF1504-043"
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504.md",
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504_20261015缺口补充.md",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/东方红_LF1504_20261016续补.md",
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/增补2000_YTOLF1504_20261015.md"
       ]
     },
@@ -3084,7 +3095,7 @@
       "storage_group": "PDF链接＋来源记录",
       "source_path": "知识库/原始农机说明书/久保田/M5-091-M5-111/来源记录_3B79199724.md",
       "source_url": "https://www.gartontractor.com/resources/manuals/kubota-m5-091-m5-111-operator-manual",
-      "entry_count": 294,
+      "entry_count": 302,
       "entry_ids": [
         "KB-KB-M5-001",
         "KB-KB-M5-002",
@@ -3379,11 +3390,20 @@
         "KB2000-20261015-KBM5-185",
         "KB2000-20261015-KBM5-186",
         "KB2000-20261015-KBM5-187",
-        "KB2000-20261015-KBM5-188"
+        "KB2000-20261015-KBM5-188",
+        "KB-KB-M5-20261016-101",
+        "KB-KB-M5-20261016-102",
+        "KB-KB-M5-20261016-103",
+        "KB-KB-M5-20261016-104",
+        "KB-KB-M5-20261016-105",
+        "KB-KB-M5-20261016-106",
+        "KB-KB-M5-20261016-107",
+        "KB-KB-M5-20261016-108"
       ],
       "knowledge_paths": [
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_091_M5_111_3B79199724.md",
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_20261013扩充.md",
+        "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/久保田_M5_20261016故障补充.md",
         "知识库/整理后的知识库/农用拖拉机知识库/机型知识卡/增补2000_KBM5_20261015.md"
       ]
     },

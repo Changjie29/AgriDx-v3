@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-16",
+  "pr": 46,
+  "base_commit": "c95eb00c2f6935b340e75d53d198d6c7084c5432",
+  "project_version": "3.4.12",
+  "version_bump": true,
+  "added_entries": 18,
+  "base_entries": 4235,
+  "total_entries": 4253,
+  "main_base_entries": 4215,
+  "total_pending_entries": 38,
+  "source_counts": {
+    "LF1504": 10,
+    "M5": 8
+  },
+  "entry_ids": [
+    "KB-YTO-LF1504-034",
+    "KB-YTO-LF1504-035",
+    "KB-YTO-LF1504-036",
+    "KB-YTO-LF1504-037",
+    "KB-YTO-LF1504-038",
+    "KB-YTO-LF1504-039",
+    "KB-YTO-LF1504-040",
+    "KB-YTO-LF1504-041",
+    "KB-YTO-LF1504-042",
+    "KB-YTO-LF1504-043",
+    "KB-KB-M5-20261016-101",
+    "KB-KB-M5-20261016-102",
+    "KB-KB-M5-20261016-103",
+    "KB-KB-M5-20261016-104",
+    "KB-KB-M5-20261016-105",
+    "KB-KB-M5-20261016-106",
+    "KB-KB-M5-20261016-107",
+    "KB-KB-M5-20261016-108"
+  ],
+  "manuals": {
+    "SRC-YTO-LF1504-SMLF150449010": {
+      "manual_sha256": "39f55e63e7f50b6e3e51df1502221efdda56dede6ad637ed6ed212c52896d2d9",
+      "manual_bytes": 6457084,
+      "manual_pdf_pages": 113,
+      "reviewed_pdf_pages": [
+        103,
+        105,
+        107
+      ],
+      "full_pdf_committed": false
+    },
+    "SRC-KB-M5-3B79199724": {
+      "manual_sha256": "51450ae8c86cf23faecc1c79ede2035e055cfff862ee719da27e3c11d655c1aa",
+      "manual_bytes": 17750981,
+      "manual_pdf_pages": 174,
+      "reviewed_pdf_pages": [
+        167,
+        168,
+        169
+      ],
+      "full_pdf_committed": false
+    }
+  },
+  "version_batch": "lf1504-m5-fault-20261016",
+  "delivery_status": "validated_pending_ci_and_merge",
+  "shared_batch_patch_count": 1
+}

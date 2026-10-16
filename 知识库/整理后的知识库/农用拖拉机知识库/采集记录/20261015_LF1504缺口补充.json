@@ -2,7 +2,7 @@
   "date": "2026-10-15",
   "reconciled_date": "2026-10-16",
   "base_commit": "a114540ea28d4727ac2e096bcdada8a3242f8ec9",
-  "project_version": "3.4.11",
+  "project_version": "3.4.12",
   "source_id": "SRC-YTO-LF1504-SMLF150449010",
   "base_entries": 4215,
   "base_fault_entries": 1583,
@@ -53,6 +53,8 @@
     102
   ],
   "original_pdf_committed": false,
-  "version_bump": false,
-  "delivery_status": "draft_pr_only_not_merged_not_deployed"
+  "version_bump": true,
+  "delivery_status": "validated_pending_ci_and_merge",
+  "version_batch": "lf1504-m5-fault-20261016",
+  "shared_batch_patch_count": 1
 }
