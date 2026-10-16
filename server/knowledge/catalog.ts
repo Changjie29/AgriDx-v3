@@ -6,6 +6,8 @@ import type {
 } from '../../shared/knowledge-catalog';
 import { loadArchive } from './archive';
 import type { KnowledgeChunk } from './retriever';
+import { buildCommonFramework, commonEntryIds, loadCommonDefinition } from './common';
+import type { CommonFrameworkDefinition } from '../../shared/common-knowledge';
 
 const INDEX_ROOT = path.resolve(process.cwd(), '知识库/整理后的知识库/农用拖拉机知识库');
 const INFORMATION_TYPES = new Set(['资料索引', '资料核验', '机型资料', '资料缺口', '系统适用边界']);
@@ -28,6 +30,7 @@ interface CatalogState {
   chunks: KnowledgeChunk[];
   links: Map<string, EntryLink[]>;
   sources: Map<string, SourceMetadata>;
+  commonDefinition: CommonFrameworkDefinition;
 }
 let state: CatalogState | undefined;
 
@@ -110,6 +113,7 @@ export function loadKnowledgeCatalog(): KnowledgeCatalog {
   const { chunks } = loadArchive();
   const index = JSON.parse(fs.readFileSync(path.join(INDEX_ROOT, 'hierarchy.json'), 'utf8')) as HierarchyIndex;
   const links = validateHierarchy(index, chunks);
+  const commonDefinition = loadCommonDefinition(chunks, index.entries, index.components.map(x => x.id));
   const sourceRecords = JSON.parse(fs.readFileSync(path.join(INDEX_ROOT, 'sources.json'), 'utf8')) as SourceMetadata[];
   const sources = new Map(sourceRecords.map((source) => [source.source_id, source]));
   const brandNames = [...new Set(chunks.map((chunk) => chunk.brand!))];
@@ -152,6 +156,7 @@ export function loadKnowledgeCatalog(): KnowledgeCatalog {
     },
     expansion: { targetLabel: '1w+', countingUnit: 'pending', status: 'planned' },
     brands,
+    common: buildCommonFramework(commonDefinition, chunks, 'archive'),
     limitations: [
       '当前仅覆盖已归档的选页条目，尚未实现从零部件到整机的全部性能覆盖。',
       '型号名称按来源保留；系列、平台与待核实范围不代表完整型号。同册型号、别名及不同配置不视为互换。',
@@ -160,7 +165,7 @@ export function loadKnowledgeCatalog(): KnowledgeCatalog {
       '1w+为扩充目标，统计单位待确认；须在取得资料、核对来源和适用范围后接入，未完成项不计入现有知识。',
     ],
   };
-  state = { catalog, chunks, links, sources };
+  state = { catalog, chunks, links, sources, commonDefinition };
   return catalog;
 }
 
@@ -178,7 +183,17 @@ function asEntry(chunk: KnowledgeChunk): CatalogEntry {
 export function getKnowledgeCatalog(filters: CatalogFilters = {}): KnowledgeCatalog {
   if (!state) loadKnowledgeCatalog();
   const current = state!;
-  if (!filters.model) return current.catalog;
+  // An explicit condition requires matching metadata; unknown conditions stay a collection gap.
+  const applicable = (chunk: KnowledgeChunk) =>
+    (!filters.configuration || chunk.configuration === filters.configuration) &&
+    (!filters.driveConfiguration || chunk.driveConfiguration === filters.driveConfiguration) &&
+    (!filters.emissionStage || chunk.emissionStage === filters.emissionStage);
+  const symptomIds = filters.symptom ? commonEntryIds(current.commonDefinition, filters.symptom) : undefined;
+  if (!filters.model) return filters.symptom || filters.brand || filters.configuration || filters.driveConfiguration || filters.emissionStage ? {
+    ...current.catalog,
+    common: buildCommonFramework(current.commonDefinition,
+      current.chunks.filter(x => (!filters.brand || x.brand === filters.brand) && applicable(x)), 'archive', filters.symptom),
+  } : current.catalog;
   const brand = current.catalog.brands.find((item) => item.name === filters.brand);
   const model = brand?.models.find((item) => item.name === filters.model);
   if (!brand || !model) throw new RangeError('该品牌和型号没有归档资料，请按目录选择并核对完整型号。');
@@ -187,9 +202,10 @@ export function getKnowledgeCatalog(filters: CatalogFilters = {}): KnowledgeCata
   if (filters.part && !component?.parts.some((part) => part.id === filters.part)) {
     throw new RangeError('零部件没有该型号的关联证据，请重新选择。');
   }
-  const selectedChunks = current.chunks.filter((chunk) => chunk.brand === brand.name &&
+  const selectedChunks = current.chunks.filter((chunk) => applicable(chunk) && chunk.brand === brand.name &&
     modelsOf(chunk, current.sources).includes(model.name) && (!filters.component ||
       includesLink(current.links.get(chunk.entryId!)!, filters.component, filters.part)));
+  const symptomChunks = selectedChunks.filter(chunk => !symptomIds || symptomIds.has(chunk.entryId!));
   const missing = model.components.filter((item) => !['documents', 'machine'].includes(item.id) && item.faultCount === 0);
   const gaps = [
     ...missing.map((item) => `${item.name}：当前没有归档的维护/故障类别条目，待补匹配资料。`),
@@ -198,12 +214,17 @@ export function getKnowledgeCatalog(filters: CatalogFilters = {}): KnowledgeCata
       ? ['当前选择仅有资料范围、核验或背景信息，不提供对应维修事实。'] : []),
     ...(component?.unresolvedPartCount ? ['部分证据只定位到组件，具体零件尚待核实；未补造件号或兼容性。'] : []),
     ...(!selectedChunks.length ? ['当前选择没有归档条目；不得据此判断机器正常或生成维修策略。'] : []),
+    ...(symptomIds && !symptomChunks.length ? ['该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。'] : []),
+    ...(filters.configuration || filters.driveConfiguration || filters.emissionStage
+      ? ['已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。'] : []),
   ];
   return {
     ...current.catalog,
+    common: buildCommonFramework(current.commonDefinition, selectedChunks, 'model', filters.symptom),
     selected: {
       brand: brand.name, model: model.name, component: filters.component, part: filters.part,
-      entries: selectedChunks.map(asEntry), gaps,
+      entries: symptomChunks.map(asEntry), gaps,
+      configuration: filters.configuration, driveConfiguration: filters.driveConfiguration, emissionStage: filters.emissionStage,
     },
   };
 }

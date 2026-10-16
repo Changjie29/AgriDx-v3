@@ -391,6 +391,16 @@ class ArchiveAudit:
             if result['body_format']:
                 formats[result['body_format']] += 1
                 document_paths.add(entry['knowledge_path'])
+        common_summary = None
+        common_path = self.index / '通用框架.json'
+        if common_path.exists():
+            try:
+                from 校验通用框架 import validate_common_framework
+                self.track(common_path)
+                self.track(self.index / 'hierarchy.json')
+                common_summary = validate_common_framework(self.repo)
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                self.emit('index.json', f'通用框架：{error}', path=self.relative(common_path))
         for path, before in self.file_stats.items():
             try:
                 unchanged = before == self.stat(path)
@@ -424,6 +434,7 @@ class ArchiveAudit:
                         'by_category': dict(collections.Counter(x['category'] for x in findings))},
             'verification_counts': {state: states[state] for state in STATES},
             'body_formats': dict(formats), 'sources': checked, 'errors': errors, 'notes': notes, 'findings': findings,
+            'common_framework': common_summary,
             'incremental': {'enabled': bool(self.cache.path), **{key: self.cache.stats[key] for key in
                             ['sources_checked', 'sources_reused', 'entries_checked', 'entries_reused']},
                             'global_checks': '索引解析、编号唯一性、内容哈希与输入稳定性每次重检'},

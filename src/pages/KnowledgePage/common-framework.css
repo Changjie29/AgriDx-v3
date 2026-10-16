@@ -1,0 +1,34 @@
+.common-framework { margin-bottom: 32px; padding: 26px; border: 1px solid var(--agri-line); border-radius: 20px; background: var(--agri-raised); }
+.common-conditions { margin-top: 18px; }
+.knowledge-page a.catalog-action { color: var(--primary-foreground); }
+.common-heading { display: flex; justify-content: space-between; gap: 20px; }
+.common-heading > svg { flex: none; color: var(--primary); }
+.common-heading h2 { font-size: 23px; font-weight: 550; margin-top: 8px; }
+.common-heading p, .common-inquiry p, .common-matrix-note, .common-systems details > p { font-size: 12px; color: var(--muted-foreground); line-height: 1.8; margin-top: 12px; }
+.common-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; margin-block: 22px; }
+.common-controls label { display: grid; gap: 8px; flex: 1; min-width: 0; max-width: 500px; }
+.common-controls label > span { font-size: 12px; }
+.common-controls select { width: 100%; min-width: 0; padding: 12px; border: 1px solid var(--input); border-radius: 10px; background: var(--agri-paper); color: var(--foreground); font-size: 13px; }
+.common-framework :is(select, summary, .common-table-scroll):focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+.common-inquiry { background: var(--agri-surface); padding: 18px; border-radius: 12px; margin-bottom: 22px; }
+.common-inquiry h3 { font-size: 14px; font-weight: 550; }
+.common-inquiry ul { padding-left: 18px; margin-top: 10px; list-style: disc; font-size: 12px; line-height: 1.9; color: var(--muted-foreground); }
+.common-matrix-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; }
+.common-matrix-heading span { color: var(--muted-foreground); font-size: 11px; }
+.common-systems { display: grid; gap: 10px; margin-top: 18px; }
+.common-systems details { border: 1px solid var(--agri-line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.common-systems summary { cursor: pointer; font-size: 13px; }
+.common-systems summary small { margin-left: 14px; color: var(--muted-foreground); font-size: 11px; }
+.common-table-scroll { overflow-x: auto; margin-top: 14px; }
+.common-table-scroll table { border-collapse: collapse; width: 100%; min-width: 650px; font-size: 11px; }
+.common-table-scroll :is(th, td) { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--agri-line); white-space: nowrap; }
+.common-table-scroll th { font-weight: 500; }
+.common-gap { color: var(--muted-foreground); }
+.common-reference { color: var(--primary); }
+@media (max-width: 640px) {
+  .common-framework { padding: 20px 16px; }
+  .common-heading h2 { font-size: 21px; }
+  .common-heading > svg { display: none; }
+  .common-controls { align-items: stretch; flex-direction: column; }
+  .common-systems details { padding: 14px 10px; }
+}

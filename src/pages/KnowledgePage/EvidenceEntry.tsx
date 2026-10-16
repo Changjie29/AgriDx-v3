@@ -19,7 +19,7 @@ export default function EvidenceEntry({ entry, diagnosisState }: { entry: Catalo
   return <details className="evidence-entry" onToggle={event => setOpen(event.currentTarget.open)}>
     <summary>
       <FileText size={20} strokeWidth={1.4} />
-      <div><h3>{entry.title}</h3><span>{entry.entryType} · {entry.locator || t('定位待核实', 'Locator unconfirmed')} · {entry.status}</span></div>
+      <div><h3>{entry.title}</h3><span>{entry.entryId} · {entry.entryType} · {entry.locator || t('定位待核实', 'Locator unconfirmed')} · {entry.status}</span></div>
       <ChevronRight size={18} className="evidence-toggle" />
     </summary>
     {open && <div className="evidence-entry-body">

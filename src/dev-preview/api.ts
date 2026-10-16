@@ -6,7 +6,7 @@ import { loadKnowledgeBase, stats } from '../../server/knowledge/retriever';
 import { getKnowledgeCatalog, loadKnowledgeCatalog } from '../../server/knowledge/catalog';
 import { createDiagnosticService } from '../../server/diagnosis/service';
 import { DiagnosticInputError, parseDiagnosticRequest } from '../../server/diagnosis/request';
-import type { CatalogFilters } from '../../shared/knowledge-catalog';
+import { CATALOG_FILTER_KEYS, validCatalogCondition, type CatalogFilters } from '../../shared/knowledge-catalog';
 
 let ready = false;
 const diagnose = createDiagnosticService({
@@ -39,12 +39,15 @@ async function dispatchPreviewFetch(input: string, options: RequestInit = {}): P
       });
     } else if (url.pathname === '/api/knowledge/catalog' && method === 'GET') {
       const filters: CatalogFilters = {};
-      for (const key of ['brand', 'model', 'component', 'part'] as const) {
+      for (const key of CATALOG_FILTER_KEYS) {
         const values = url.searchParams.getAll(key);
         if (values.length > 1 || (values.length && (!values[0].trim() || values[0].length > 100))) {
           return json({ error: '目录筛选须为非空文本（各上限100字符）', code: 'bad_request' }, 400);
         }
-        if (values.length) filters[key] = values[0].trim();
+        if (values.length) {
+          if (!validCatalogCondition(key, values[0].trim())) return json({ error: '配置或排放筛选值无效', code: 'bad_request' }, 400);
+          Object.assign(filters, { [key]: values[0].trim() });
+        }
       }
       if ((filters.model && !filters.brand) || (filters.component && !filters.model) || (filters.part && !filters.component)) {
         return json({ error: '请依次选择品牌、完整型号、组件和零部件', code: 'bad_request' }, 400);

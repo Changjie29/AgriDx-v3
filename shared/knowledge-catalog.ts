@@ -1,3 +1,4 @@
+import type { CommonKnowledgeFramework } from './common-knowledge';
 /** Knowledge browsing follows the archived index. Counts never imply full-machine validation. */
 export interface CatalogCounts {
   entryCount: number;
@@ -57,6 +58,9 @@ export interface CatalogSelection {
   part?: string;
   entries: CatalogEntry[];
   gaps: string[];
+  configuration?: 'CAB' | 'ROPS';
+  driveConfiguration?: '2WD' | '4WD';
+  emissionStage?: '国三' | '国四';
 }
 
 export interface KnowledgeCatalog {
@@ -72,6 +76,7 @@ export interface KnowledgeCatalog {
   brands: CatalogBrand[];
   selected?: CatalogSelection;
   limitations: string[];
+  common?: CommonKnowledgeFramework;
 }
 
 export interface CatalogFilters {
@@ -79,4 +84,16 @@ export interface CatalogFilters {
   model?: string;
   component?: string;
   part?: string;
+  symptom?: string;
+  configuration?: 'CAB' | 'ROPS';
+  driveConfiguration?: '2WD' | '4WD';
+  emissionStage?: '国三' | '国四';
+}
+
+export const CATALOG_FILTER_KEYS = ['brand', 'model', 'component', 'part', 'symptom', 'configuration', 'driveConfiguration', 'emissionStage'] as const;
+export function validCatalogCondition(key: typeof CATALOG_FILTER_KEYS[number], value: string): boolean {
+  if (key === 'configuration') return ['CAB', 'ROPS'].includes(value);
+  if (key === 'driveConfiguration') return ['2WD', '4WD'].includes(value);
+  if (key === 'emissionStage') return ['国三', '国四'].includes(value);
+  return true;
 }
