@@ -80,6 +80,10 @@ def require(condition, rule, message, field=''):
 
 
 def check_conditions(record):
+    if 'emission_stage_unknown' in record:
+        require(isinstance(record['emission_stage_unknown'], bool) and
+                not (record['emission_stage_unknown'] and record.get('emission_stage') is not None),
+                'scope.condition', '未知排放标记须为布尔值，且不能与来源明确阶段同时成立', 'emission_stage_unknown')
     for field, allowed in [('emission_stage', ['国三', '国四']),
                            ('configuration', ['CAB', 'ROPS']),
                            ('drive_configuration', ['2WD', '4WD'])]:

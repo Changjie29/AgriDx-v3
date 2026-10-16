@@ -36,6 +36,7 @@ interface ArchiveSource {
   configuration?: 'CAB' | 'ROPS';
   drive_configuration?: '2WD' | '4WD';
   emission_stage?: '国三' | '国四';
+  emission_stage_unknown?: boolean;
 }
 
 function requireStrings(value: unknown, fields: string[], label: string): void {
@@ -61,6 +62,10 @@ export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChun
     }
     if (source.emission_stage !== undefined && !['国三', '国四'].includes(source.emission_stage)) {
       throw new Error(`知识来源排放阶段无效：${source.source_id}`);
+    }
+    if (source.emission_stage_unknown !== undefined && (typeof source.emission_stage_unknown !== 'boolean' ||
+      source.emission_stage_unknown && source.emission_stage !== undefined)) {
+      throw new Error(`知识来源未知排放标记无效或与明确阶段冲突：${source.source_id}`);
     }
     if (source.configuration !== undefined && !['CAB', 'ROPS'].includes(source.configuration)) {
       throw new Error(`知识来源配置无效：${source.source_id}`);
@@ -140,6 +145,7 @@ export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChun
       configuration: entry.configuration ?? source.configuration,
       driveConfiguration: entry.drive_configuration ?? source.drive_configuration,
       emissionStage: entry.emission_stage ?? source.emission_stage,
+      emissionStageUnknown: source.emission_stage_unknown,
       sourceUrl: source.url,
       originalPath: source.path,
       locator: entry.locator,
