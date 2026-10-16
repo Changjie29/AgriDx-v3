@@ -72,6 +72,13 @@
       "date": "2026-10-14"
     },
     {
+      "id": "kb-semantic-20261015",
+      "kind": "maintenance",
+      "base": "3.4.9",
+      "version": "3.4.10",
+      "date": "2026-10-15"
+    },
+    {
       "id": "lf1504-m5-fault-20261016",
       "kind": "knowledge",
       "base": "3.4.11",

@@ -156,6 +156,8 @@ npm run knowledge:quality -- --report server/data/knowledge-quality/report.json 
 
 重复执行会复用未变化记录的规则结果；`--full`强制重检。任务在独立Python进程中运行，不接入诊断请求。状态`unspecified`表示现有严格解析器无法分类，不等于未人工核对。规则、后台运行、真实统计及语义去重接口见[知识质量检查说明](docs/knowledge-quality.md)。
 
+3.4.10增量去重入口：`npm run knowledge:dedup`。默认只读且无模型时保留规则模式；需要持久化时显式指定报告/缓存路径。候选全部待审，不自动合并、删除或改验证状态；不进入诊断请求。模型比较、离线部署、断点恢复和评估限制见[增量语义去重说明](docs/knowledge-semantic.md)。
+
 ## 独立开发预览
 
 独立开发网址：[打开开发预览](https://agridx-dev-preview.z3464715478.chatgpt.site)。用户2026-10-12最新确认：任何链接持有者可匿名访问，使用现有 GitHub 账号管理；跟随 `main` 主干自动验证、构建并更新，通常约需2分钟，个人分支不发布。与腾讯和原 Sites 发布独立。支持首页、模型、资料和本地知识诊断，外部模型不接入开发预览。管理、更新和验证方式见[开发预览说明](docs/deployment/dev-preview.md)。
