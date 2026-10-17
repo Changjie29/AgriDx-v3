@@ -63,18 +63,48 @@ export interface CatalogSelection {
   emissionStage?: '国三' | '国四';
 }
 
+export interface LearningEntry {
+  collection: 'learning';
+  entryId: string;
+  title: string;
+  entryType: '通识学习';
+  content: string;
+  topic: string;
+  status: string;
+  knowledgePath: string;
+  diagnosticEvidence: false;
+}
+
+export type LibraryEntry = LearningEntry | (CatalogEntry & {
+  collection: 'archive';
+  brand: string;
+  models: string[];
+});
+
+export interface KnowledgeLibrary {
+  collection: 'all' | 'archive' | 'learning';
+  query: string;
+  page: number;
+  pageSize: number;
+  total: number;
+  entries: LibraryEntry[];
+}
+
 export interface KnowledgeCatalog {
   totals: {
     entries: number;
+    archivedEntries: number;
+    learningEntries: number;
     sources: number;
     brands: number;
     models: number;
     faultEntries: number;
     mappedEntries: number;
   };
-  expansion: { targetLabel: '1w+'; countingUnit: 'pending'; status: 'planned' };
+  expansion: { targetLabel: '1w+'; countingUnit: 'indexed-entry'; status: 'planned' | 'reached' };
   brands: CatalogBrand[];
   selected?: CatalogSelection;
+  library?: KnowledgeLibrary;
   limitations: string[];
   common?: CommonKnowledgeFramework;
 }
@@ -88,12 +118,17 @@ export interface CatalogFilters {
   configuration?: 'CAB' | 'ROPS';
   driveConfiguration?: '2WD' | '4WD';
   emissionStage?: '国三' | '国四';
+  collection?: KnowledgeLibrary['collection'];
+  q?: string;
+  page?: string;
 }
 
-export const CATALOG_FILTER_KEYS = ['brand', 'model', 'component', 'part', 'symptom', 'configuration', 'driveConfiguration', 'emissionStage'] as const;
+export const CATALOG_FILTER_KEYS = ['brand', 'model', 'component', 'part', 'symptom', 'configuration', 'driveConfiguration', 'emissionStage', 'collection', 'q', 'page'] as const;
 export function validCatalogCondition(key: typeof CATALOG_FILTER_KEYS[number], value: string): boolean {
   if (key === 'configuration') return ['CAB', 'ROPS'].includes(value);
   if (key === 'driveConfiguration') return ['2WD', '4WD'].includes(value);
   if (key === 'emissionStage') return ['国三', '国四'].includes(value);
+  if (key === 'collection') return ['all', 'archive', 'learning'].includes(value);
+  if (key === 'page') return /^[1-9]\d{0,5}$/.test(value);
   return true;
 }

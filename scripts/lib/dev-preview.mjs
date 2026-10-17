@@ -21,6 +21,14 @@ export function createKnowledgeSnapshot(root = rootDir) {
     if (!file.startsWith('知识库/整理后的知识库/') || !file.endsWith('.md')) throw new Error(`Unexpected knowledge document: ${file}`);
     add(file);
   }
+  for (const indexFile of ['docs/tractor-knowledge/index.jsonl', 'docs/tractor-knowledge/expansion-5000/index.jsonl']) {
+    add(indexFile);
+    const learning = snapshot[`/${indexFile}`].split(/\r?\n/).filter(line => line.trim()).map(JSON.parse);
+    for (const file of new Set(learning.map(entry => entry.knowledge_path))) {
+      if (!/^docs\/tractor-knowledge\/(?:expansion-5000\/)?\d{2}\.md$/.test(file)) throw new Error(`Unexpected learning document: ${file}`);
+      add(file);
+    }
+  }
   const walk = (directory) => {
     for (const item of readdirSync(path.join(root, directory), { withFileTypes: true })) {
       const relative = `${directory}/${item.name}`;

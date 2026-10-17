@@ -46,14 +46,32 @@ function isSelection(value: unknown): boolean {
     Array.isArray(value.entries) && value.entries.every(isEntry) && isStrings(value.gaps);
 }
 
+function isLibrary(value: unknown): boolean {
+  if (!isRecord(value) || !['all', 'archive', 'learning'].includes(String(value.collection)) ||
+    typeof value.query !== 'string' || !isCount(value.page) || Number(value.page) < 1 ||
+    value.pageSize !== 20 || !isCount(value.total) || !Array.isArray(value.entries) || value.entries.length > 20) return false;
+  const valid = value.entries.every(entry => {
+    if (!isRecord(entry) || (value.collection !== 'all' && entry.collection !== value.collection)) return false;
+    if (entry.collection === 'archive') return isEntry(entry) && typeof entry.brand === 'string' && isStrings(entry.models);
+    return entry.collection === 'learning' && entry.entryType === '通识学习' && entry.diagnosticEvidence === false &&
+      ['entryId', 'title', 'content', 'topic', 'status', 'knowledgePath'].every(key => typeof entry[key] === 'string');
+  });
+  const total = Number(value.total), page = Number(value.page);
+  return valid && page <= Math.max(1, Math.ceil(total / 20)) &&
+    value.entries.length === Math.min(20, Math.max(0, total - (page - 1) * 20)) &&
+    new Set(value.entries.map(entry => entry.entryId)).size === value.entries.length;
+}
+
 /** Validate every nested collection consumed by the four-level browser before rendering it. */
 export function parseKnowledgeCatalog(value: unknown): KnowledgeCatalog {
   if (!isRecord(value) || !isRecord(value.totals)) throw new Error('Invalid knowledge catalog');
   const totals = value.totals;
-  if (!['entries', 'sources', 'brands', 'models', 'faultEntries', 'mappedEntries'].every(key => isCount(totals[key])) ||
+  if (!['entries', 'archivedEntries', 'learningEntries', 'sources', 'brands', 'models', 'faultEntries', 'mappedEntries'].every(key => isCount(totals[key])) ||
+    totals.entries !== Number(totals.archivedEntries) + Number(totals.learningEntries) ||
     !Array.isArray(value.brands) || !value.brands.every(isBrand) || !isStrings(value.limitations) ||
     !isRecord(value.expansion) || value.expansion.targetLabel !== '1w+' ||
-    value.expansion.countingUnit !== 'pending' || value.expansion.status !== 'planned' ||
+    value.expansion.countingUnit !== 'indexed-entry' || !['planned', 'reached'].includes(String(value.expansion.status)) ||
+    (value.library !== undefined && !isLibrary(value.library)) ||
     (value.selected !== undefined && !isSelection(value.selected)) ||
     (value.common !== undefined && !isCommonFramework(value.common))) {
     throw new Error('Invalid knowledge catalog');

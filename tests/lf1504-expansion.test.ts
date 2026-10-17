@@ -63,7 +63,7 @@ test('目录与检索展示同一正文，新增条目有导航且未知型号�
     assert.equal(entry.locator, chunk.locator);
     assert.equal(entry.version, chunk.version);
   }
-  assert.equal(catalog.totals.entries, stats().archivedEntries);
+  assert.equal(catalog.totals.archivedEntries, stats().archivedEntries);
   assert.equal(catalog.totals.mappedEntries, stats().archivedEntries);
   assert.throws(() => getKnowledgeCatalog({ brand: '东方红', model: 'LF1504-X' }), RangeError);
 });

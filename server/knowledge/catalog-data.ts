@@ -1,6 +1,7 @@
 import type {
   CatalogBrand, CatalogComponent, CatalogCounts, CatalogEntry, CatalogFilters,
   CatalogModel, CatalogPart, KnowledgeCatalog,
+  KnowledgeLibrary, LearningEntry, LibraryEntry,
 } from '../../shared/knowledge-catalog';
 import type { ArchiveSource } from './archive';
 import type { KnowledgeChunk } from './types';
@@ -28,6 +29,7 @@ interface CatalogState {
   links: Map<string, EntryLink[]>;
   sources: Map<string, SourceMetadata>;
   commonDefinition: CommonFrameworkDefinition;
+  library: { entry: LibraryEntry; searchable: string }[];
 }
 
 function counts(chunks: KnowledgeChunk[]): CatalogCounts {
@@ -105,7 +107,7 @@ function validateHierarchy(index: HierarchyIndex, chunks: KnowledgeChunk[]): Map
 }
 
 /** Pure catalog construction: consumes the archive already validated by the loader. */
-export function buildKnowledgeCatalog(chunks: KnowledgeChunk[], sourceRecords: ArchiveSource[], hierarchy: unknown, commonData: unknown): (filters?: CatalogFilters) => KnowledgeCatalog {
+export function buildKnowledgeCatalog(chunks: KnowledgeChunk[], sourceRecords: ArchiveSource[], hierarchy: unknown, commonData: unknown, learning: LearningEntry[] = []): (filters?: CatalogFilters) => KnowledgeCatalog {
   if (!hierarchy || typeof hierarchy !== 'object') throw new Error('分层导航索引格式无效');
   const index = hierarchy as HierarchyIndex;
   const links = validateHierarchy(index, chunks);
@@ -150,24 +152,57 @@ export function buildKnowledgeCatalog(chunks: KnowledgeChunk[], sourceRecords: A
   });
   const catalog: KnowledgeCatalog = {
     totals: {
-      entries: chunks.length, sources: new Set(chunks.map((chunk) => chunk.sourceId)).size,
+      entries: chunks.length + learning.length, archivedEntries: chunks.length, learningEntries: learning.length,
+      sources: new Set(chunks.map((chunk) => chunk.sourceId)).size,
       brands: brands.length, models: brands.reduce((total, brand) => total + brand.models.length, 0),
       faultEntries: chunks.filter((chunk) => chunk.entryType === '维护/故障知识').length,
       mappedEntries: links.size,
     },
-    expansion: { targetLabel: '1w+', countingUnit: 'pending', status: 'planned' },
+    expansion: { targetLabel: '1w+', countingUnit: 'indexed-entry', status: chunks.length + learning.length >= 10000 ? 'reached' : 'planned' },
     brands,
     common: buildCommonFramework(commonDefinition, chunks, 'archive'),
     limitations: [
-      '当前仅覆盖已归档的选页条目，尚未实现从零部件到整机的全部性能覆盖。',
+      '知识总数为归档条目与通识学习条目之和；归档含资料索引、核验及缺口记录，尚未实现从零部件到整机的全部性能覆盖。',
       '型号名称按来源保留；系列、平台与待核实范围不代表完整型号。同册型号、别名及不同配置不视为互换。',
       '零件关联用于查找证据，故障表中的可能原因不等于确诊；维修、调整与停机策略须遵守对应版本和配置。',
       '条目数按已有索引去重；同条证据可关联多个组件和零件，分层计数不可相加。维护/故障类别也含维护条目。',
-      '1w+为扩充目标，统计单位待确认；须在取得资料、核对来源和适用范围后接入，未完成项不计入现有知识。',
+      '通识资料用于学习，保留未逐条原厂或实车核验状态，不作为具体机型的维修诊断证据。',
+      '1w+按可独立定位的索引条目累计；数量达到目标不代表独立故障种类、机型覆盖或实车验证程度。',
     ],
   };
-  const state = { catalog, chunks, links, sources, commonDefinition };
-  return (filters = {}) => selectKnowledgeCatalog(state, filters);
+  const archived: LibraryEntry[] = chunks.map(chunk => ({ ...asEntry(chunk), collection: 'archive',
+    brand: chunk.brand!, models: modelsOf(chunk, sources) }));
+  // Interleave both collections so the common entrance immediately exposes both.
+  const combined: LibraryEntry[] = [];
+  for (let index = 0; index < Math.max(archived.length, learning.length); index++) {
+    if (archived[index]) combined.push(archived[index]);
+    if (learning[index]) combined.push(learning[index]);
+  }
+  const library = combined.map(entry => ({ entry, searchable: normalizeSearch([
+    entry.entryId, entry.title, entry.entryType, entry.content,
+    ...(entry.collection === 'archive' ? [entry.brand, ...entry.models, entry.sourceId] : [entry.topic]),
+  ].join('\n')) }));
+  const state = { catalog, chunks, links, sources, commonDefinition, library };
+  return (filters = {}) => {
+    const selected = selectKnowledgeCatalog(state, filters);
+    return filters.collection || filters.q || filters.page
+      ? { ...selected, library: selectLibrary(state, filters) } : selected;
+  };
+}
+
+function normalizeSearch(value: string): string { return value.normalize('NFKC').toLocaleLowerCase(); }
+
+function selectLibrary(state: CatalogState, filters: CatalogFilters): KnowledgeLibrary {
+  const collection = filters.collection ?? 'all';
+  const query = filters.q?.trim() ?? '';
+  const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
+  const matches = state.library.filter(({ entry, searchable }) =>
+    (collection === 'all' || entry.collection === collection) && terms.every(term => searchable.includes(term)));
+  const pageSize = 20;
+  const requested = Number(filters.page ?? '1');
+  const page = Math.min(Number.isSafeInteger(requested) && requested > 0 ? requested : 1, Math.max(1, Math.ceil(matches.length / pageSize)));
+  return { collection, query, page, pageSize, total: matches.length,
+    entries: matches.slice((page - 1) * pageSize, page * pageSize).map(item => item.entry) };
 }
 
 function asEntry(chunk: KnowledgeChunk): CatalogEntry {

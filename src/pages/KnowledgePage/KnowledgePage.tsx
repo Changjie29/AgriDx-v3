@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Layers, Loader2, Search, TriangleAlert } from 'lucide-react';
 import EvidenceEntry from './EvidenceEntry';
 import CommonFrameworkBrowser from './CommonFrameworkBrowser';
+import KnowledgeLibraryBrowser from './KnowledgeLibraryBrowser';
 import { useLang } from '@/hooks/useLang';
 import { useKnowledgeCatalog } from '@/hooks/useKnowledgeCatalog';
 import type { CatalogEntry } from '@shared/knowledge-catalog';
@@ -15,9 +16,12 @@ export default function KnowledgePage() {
   const lang = useLang();
   const t = (zh: string, en: string) => lang === 'zh' ? zh : en;
   const [params, setParams] = useSearchParams();
+  const machineView = params.get('view') === 'machine' || ['brand', 'model', 'component', 'part', 'symptom', 'configuration', 'driveConfiguration', 'emissionStage'].some(key => params.has(key));
   const filters = ['brand', 'model', 'component', 'part'] as const;
   const query = new URLSearchParams();
   CATALOG_FILTER_KEYS.forEach(key => { const value = params.get(key); if (value) query.set(key, value); });
+  if (!machineView) query.set('collection', params.get('collection') || 'all');
+  else ['collection', 'q', 'page'].forEach(key => query.delete(key));
   const { catalog, loading, failed, retry } = useKnowledgeCatalog(query.toString());
   const brand = catalog?.brands.find(item => item.id === params.get('brand'));
   const model = brand?.models.find(item => item.id === params.get('model'));
@@ -44,20 +48,35 @@ export default function KnowledgePage() {
     <div className="page-container">
       <Link to="/" className="knowledge-back"><ArrowLeft size={15} />{t('返回首页', 'Back to home')}</Link>
       <header className="knowledge-page-heading">
-        <div><div className="section-eyebrow">{t('耕知 · 农机知识', 'GENGZHI · MACHINE KNOWLEDGE')}</div><h1>{t('从整机现象，找到部件依据。', 'Find part-level evidence for machine behavior.')}</h1><p>{t('四级浏览已整理的故障、维护与安全资料。数量代表已索引记录，不代表全部机型与性能已经核验覆盖。', 'Browse archived fault, maintenance and safety documents through four levels. Counts reflect indexed records, not validated coverage of every model or performance dimension.')}</p></div>
+        <div><div className="section-eyebrow">{t('耕知 · 农机知识', 'GENGZHI · MACHINE KNOWLEDGE')}</div><h1>{t('归档与通识，汇入同一个知识目录。', 'Archived evidence and learning in one library.')}</h1><p>{t('统一搜索已有来源的归档资料与拖拉机通识正文，也可按品牌、机型、组件和零部件浏览。数量代表已索引记录，各条资料保留自己的来源、核验状态和适用范围。', 'Search source archives and tractor learning texts together, or browse by brand, model, component and part. Counts reflect indexed records; each entry retains its source, verification status and applicability.')}</p></div>
         <div className="knowledge-heading-icon" aria-hidden="true"><Layers size={38} strokeWidth={1.15} /><span>01 — 04</span></div>
       </header>
 
       <div className="catalog-stats" aria-live="polite">
         {[
-          [catalog?.totals.entries, t('已索引资料', 'Archived entries')],
-          [catalog?.totals.faultEntries, t('维护 / 故障条目', 'Maintenance / fault entries')],
-          [catalog?.totals.brands, t('品牌目录', 'Brand directories')],
+          [catalog?.totals.entries, t('知识条目合计', 'Total knowledge entries')],
+          [catalog?.totals.archivedEntries, t('来源归档', 'Source archive entries')],
+          [catalog?.totals.learningEntries, t('通识学习', 'General learning entries')],
           [catalog?.totals.models, t('型号 / 系列目录', 'Model / series directories')],
         ].map(([value, label]) => <div key={String(label)}><strong>{typeof value === 'number' ? value.toLocaleString() : '—'}</strong><span>{label}</span></div>)}
       </div>
 
-      {!loading && !failed && catalog?.common && <CommonFrameworkBrowser framework={catalog.common} lang={lang}
+      <nav className="library-collections" aria-label={t('知识浏览方式', 'Knowledge browsing mode')}>
+        {[
+          ['all', t('全部知识', 'All knowledge')], ['archive', t('来源归档', 'Source archives')],
+          ['learning', t('通识学习', 'General learning')], ['machine', t('按机型与部件浏览', 'Browse models and parts')],
+        ].map(([id, label]) => <button key={id} aria-pressed={machineView ? id === 'machine' : id === (params.get('collection') || 'all')}
+          onClick={() => setParams(id === 'machine' ? { view: 'machine' } : { collection: id })}>{label}</button>)}
+      </nav>
+
+      {!loading && !failed && !machineView && catalog?.library && <KnowledgeLibraryBrowser library={catalog.library} lang={lang} onChange={values => {
+        const next = new URLSearchParams(params);
+        next.delete('page');
+        for (const [key, value] of Object.entries(values)) { if (value) next.set(key, value); else next.delete(key); }
+        setParams(next);
+      }} />}
+
+      {machineView && !loading && !failed && catalog?.common && <CommonFrameworkBrowser framework={catalog.common} lang={lang}
         diagnosisState={{ ...machineState(), configurationText: ['configuration', 'driveConfiguration', 'emissionStage'].map(key => params.get(key)).filter(Boolean).join(' ') }} onSymptomChange={id => {
           const next = new URLSearchParams(params);
           next.delete('component'); next.delete('part');
@@ -65,9 +84,9 @@ export default function KnowledgePage() {
           setParams(next);
         }} />}
 
-      <section className="catalog-filter-section" aria-labelledby="catalog-select-heading">
+      {machineView && <section className="catalog-filter-section" aria-labelledby="catalog-select-heading">
         <LiquidGlass variant="regular" className="catalog-browser catalog-filter-glass" contentClassName="catalog-filter-content">
-        <div className="catalog-browser-top"><h2 id="catalog-select-heading"><Search size={18} />{t('找到你的农机', 'Find your machine')}</h2><button onClick={() => setParams({})} className="catalog-reset">{t('重置选择', 'Reset selection')}</button></div>
+        <div className="catalog-browser-top"><h2 id="catalog-select-heading"><Search size={18} />{t('找到你的农机', 'Find your machine')}</h2><button onClick={() => setParams({ view: 'machine' })} className="catalog-reset">{t('重置选择', 'Reset selection')}</button></div>
         <div className="catalog-selectors">
           <label><span>01 {t('品牌', 'Brand')}</span><select aria-label={t('知识浏览品牌', 'Knowledge brand')} value={brand?.id || ''} onChange={event => updateFilter('brand', event.target.value)} disabled={loading}><option value="">{t('选择品牌', 'Choose a brand')}</option>{catalog?.brands.map(item => <option key={item.id} value={item.id}>{item.name} · {item.entryCount}{t(' 条', ' entries')}</option>)}</select></label>
           <label><span>02 {t('型号 / 系列', 'Model / series')}</span><select aria-label={t('知识浏览型号', 'Knowledge model')} value={model?.id || ''} onChange={event => updateFilter('model', event.target.value)} disabled={!brand || loading}><option value="">{t('选择目录，核对范围', 'Choose & check scope')}</option>{brand?.models.map(item => <option key={item.id} value={item.id}>{item.name}{item.scope === 'series' ? t('（系列）', ' (series)') : item.scope === 'pending' ? t('（待核实）', ' (unconfirmed)') : ''}</option>)}</select></label>
@@ -88,14 +107,14 @@ export default function KnowledgePage() {
               {(choices as string[][]).map(([value, name]) => <option key={value} value={value}>{name}</option>)}</select></label>)}
         </div>}
         </LiquidGlass>
-      </section>
+      </section>}
 
       {loading && <div className="catalog-state" role="status"><Loader2 className="animate-spin" size={24} /><p>{t('读取适用资料与覆盖范围…', 'Loading documents and coverage…')}</p></div>}
       {failed && <div className="catalog-state" role="alert"><TriangleAlert size={26} /><h2>{t('暂时无法读取知识目录', 'Knowledge catalog is unavailable')}</h2><p>{t('目录未加载，不展示推测的数量或故障策略。请重试。', 'No catalog is loaded, so no estimated counts or strategies are shown. Please retry.')}</p><button onClick={retry} className="catalog-action">{t('重新加载', 'Retry')}</button></div>}
 
-      {!loading && !failed && !model && <section className="catalog-onboarding"><div><BookOpen size={30} strokeWidth={1.3} /><h2>{t('先选品牌，再确认完整机型。', 'Choose a brand, then confirm the machine.')}</h2><p>{t('从故障表现向下查部件，也可以从零部件资料向上理解影响。系列资料、型号未确认资料与具体型号分别显示，来源没有明确的关系会保留缺口。', 'Trace symptoms down to components, or explore part evidence to understand higher-level effects. Series, unconfirmed and specific-model documents stay distinct; unsupported relationships remain gaps.')}</p></div><div className="catalog-brand-pills">{catalog?.brands.map(item => <button onClick={() => updateFilter('brand', item.id)} key={item.id} aria-pressed={brand?.id === item.id}>{item.name}<ChevronRight size={15} /></button>)}</div></section>}
+      {machineView && !loading && !failed && !model && <section className="catalog-onboarding"><div><BookOpen size={30} strokeWidth={1.3} /><h2>{t('先选品牌，再确认完整机型。', 'Choose a brand, then confirm the machine.')}</h2><p>{t('从故障表现向下查部件，也可以从零部件资料向上理解影响。系列资料、型号未确认资料与具体型号分别显示，来源没有明确的关系会保留缺口。', 'Trace symptoms down to components, or explore part evidence to understand higher-level effects. Series, unconfirmed and specific-model documents stay distinct; unsupported relationships remain gaps.')}</p></div><div className="catalog-brand-pills">{catalog?.brands.map(item => <button onClick={() => updateFilter('brand', item.id)} key={item.id} aria-pressed={brand?.id === item.id}>{item.name}<ChevronRight size={15} /></button>)}</div></section>}
 
-      {!loading && !failed && model && <>
+      {machineView && !loading && !failed && model && <>
         <section className="catalog-selection-heading"><div><div className="catalog-breadcrumb">{[brand?.name, model.name, component?.name, part?.name].filter(Boolean).map((name, index) => <span key={`${name}-${index}`}>{index > 0 && <ChevronRight size={13} />}{name}</span>)}</div><h2>{part?.name || component?.name || model.name}<span className={`scope-badge ${model.scope === 'exact' ? 'scope-specific' : ''}`}>{scopeLabel}</span></h2><p>{t('型号与配置必须与现场铭牌核对；机型目录存在，不等于零部件及整机性能已全覆盖。', 'Check the full model and configuration against the machine plate. A directory does not imply complete part or whole-machine coverage.')}</p></div><Link to="/chat" state={machineState()} className="catalog-action">{model.scope === 'exact' ? t('带机型去诊断', 'Diagnose this model') : t('带品牌去诊断', 'Diagnose this brand')}<ArrowRight size={16} /></Link></section>
 
         <div className="component-coverage" aria-label={t('组件资料覆盖', 'Component coverage')}>{model.components.map(item => <button key={item.id} onClick={() => updateFilter('component', component?.id === item.id ? '' : item.id)} aria-pressed={component?.id === item.id} className={`${component?.id === item.id ? 'selected' : ''} ${item.entryCount === 0 ? 'coverage-gap' : ''}`}><span>{item.entryCount ? <Check size={15} /> : <TriangleAlert size={15} />}{item.name}</span><strong>{item.entryCount ? t(`${item.entryCount} 条资料`, `${item.entryCount} entries`) : t('待补资料', 'Missing evidence')}</strong><small>{t(`维护/故障 ${item.faultCount} · 已定位 ${item.parts.length} 类零部件`, `${item.faultCount} maintenance/fault · ${item.parts.length} identified part types`)}</small>{item.unresolvedPartCount > 0 && <small>{t(`${item.unresolvedPartCount} 条尚未明确零部件`, `${item.unresolvedPartCount} entries do not identify a part`)}</small>}</button>)}</div>
@@ -107,7 +126,7 @@ export default function KnowledgePage() {
         </section>
       </>}
 
-      <aside className="catalog-boundaries"><div className="section-eyebrow">{t('覆盖是可检查的过程', 'COVERAGE IS A VERIFIABLE PROCESS')}</div><h2>{t('向全覆盖推进，先把缺口标清。', 'Toward full coverage, make the gaps clear first.')}</h2><p>{t('“1w+、国内外覆盖”是建设目标，统计口径仍待确认。当前展示的是已有来源的索引与分层结果；GPT辅助整理的内容需经来源、机型与配置核验后入库。', '“10,000+ and domestic/international coverage” is a development target; the counting unit still needs confirmation. The browser shows source-backed archived records and hierarchy. AI-assisted drafts require source, model and configuration checks before inclusion.')}</p>{catalog?.limitations.length ? <ul>{catalog.limitations.map(limit => <li key={limit}>{limit}</li>)}</ul> : null}</aside>
+      <aside className="catalog-boundaries"><div className="section-eyebrow">{t('覆盖是可检查的过程', 'COVERAGE IS A VERIFIABLE PROCESS')}</div><h2>{t('向全覆盖推进，先把缺口标清。', 'Toward full coverage, make the gaps clear first.')}</h2><p>{t('总数按两类资料中可独立定位的条目累计，归档与学习资料共同展示。通识数量不换算成维修证据、独立故障种类或已核验机型覆盖。', 'The total adds independently locatable archive and learning entries in one library. Learning counts do not imply repair evidence, distinct fault types or verified model coverage.')}</p>{catalog?.limitations.length ? <ul>{catalog.limitations.map(limit => <li key={limit}>{limit}</li>)}</ul> : null}</aside>
     </div>
   </div>;
 }

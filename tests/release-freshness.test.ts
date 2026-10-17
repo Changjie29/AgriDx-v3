@@ -81,13 +81,13 @@ test('private, unrelated and non-read requests retain their exact path and optio
 test('actual health and catalog routes disallow caching for success and invalid/missing selections', async t => {
   const runtime: ServerRuntime = {
     rootDirectory: process.cwd(), version: '3.5.1',
-    getKnowledgeStats: () => ({ files: 0, chunks: 0, archivedEntries: 4853 }),
+    getKnowledgeStats: () => ({ chunks: 0, archivedEntries: 4853, learningEntries: 6000, totalEntries: 10853 }),
     getLlmStatus: () => ({ preference: 'auto', configValid: true, configured: false,
       primary: null, proxyConfigured: false, providers: [] }),
     getCatalog: filters => {
       if (filters.brand === 'missing') throw new RangeError('No matching archived model');
-      return { totals: { entries: 4853, sources: 0, brands: 0, models: 0, faultEntries: 0, mappedEntries: 4853 },
-        brands: [], limitations: [], expansion: { targetLabel: '1w+', countingUnit: 'pending', status: 'planned' } };
+      return { totals: { entries: 10853, archivedEntries: 4853, learningEntries: 6000, sources: 0, brands: 0, models: 0, faultEntries: 0, mappedEntries: 4853 },
+        brands: [], limitations: [], expansion: { targetLabel: '1w+', countingUnit: 'indexed-entry', status: 'reached' } };
     },
     diagnose: async () => { throw new Error('diagnosis is outside this read-only test'); },
   };
