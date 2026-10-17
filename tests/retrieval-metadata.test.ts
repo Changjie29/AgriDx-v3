@@ -11,6 +11,7 @@ import {
   type KnowledgeChunk,
 } from '../server/knowledge/retriever';
 import { buildSystemPrompt } from '../server/knowledge/systemPrompt';
+import { reloadKnowledgeSnapshot } from '../server/knowledge/snapshot';
 
 const context = { machineType: '拖拉机', brand: '纽荷兰', model: 'WORKMASTER25' };
 const starterQuery = '钥匙在 START，启动电机不转';
@@ -111,6 +112,11 @@ test('static retrieval cache separates scope, clones returned metadata and inval
   assert.equal(retrieve(starterQuery, 5, { ...context, model: 'WORKMASTER25S' }).length, 0);
   assert.equal(retrieve(starterQuery, 1, context).length, 1);
   const previousGeneration = retrievalStats().generation;
+  const previousCacheEntries = retrievalStats().cacheEntries;
+  loadKnowledgeBase();
+  assert.equal(retrievalStats().generation, previousGeneration, 'repeated initialization reuses the active snapshot');
+  assert.equal(retrievalStats().cacheEntries, previousCacheEntries);
+  reloadKnowledgeSnapshot();
   loadKnowledgeBase();
   assert.equal(retrievalStats().generation, previousGeneration + 1);
   assert.equal(retrievalStats().cacheEntries, 0);
