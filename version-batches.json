@@ -126,6 +126,13 @@
       "base": "3.5.3",
       "version": "3.5.4",
       "date": "2026-10-17"
+    },
+    {
+      "id": "tencent-service-path-20261017",
+      "kind": "fix",
+      "base": "3.5.4",
+      "version": "3.5.5",
+      "date": "2026-10-17"
     }
   ]
 }
