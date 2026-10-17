@@ -4,7 +4,7 @@ import { before, test } from 'node:test';
 import {
   formatForPrompt,
   loadKnowledgeBase,
-  retrieve,
+  retrieve as retrieveAll,
   stats,
   type KnowledgeChunk,
 } from '../server/knowledge/retriever';
@@ -16,8 +16,13 @@ const tractor = { machineType: '拖拉机' };
 const workmaster = { ...tractor, brand: '纽荷兰', model: 'WORKMASTER25' };
 const startQuery = '钥匙在 START，启动电机不转';
 
+// Model-specific regressions inspect archive hits; general learning is tested separately.
+function retrieve(query: string, k = 6, context: RetrievalContext = {}): KnowledgeChunk[] {
+  return retrieveAll(query, k, context).filter(chunk => chunk.entryType !== '通识学习');
+}
+
 function archived(chunks: KnowledgeChunk[]) {
-  return chunks.filter((chunk) => chunk.entryId);
+  return chunks.filter((chunk) => chunk.entryId && chunk.entryType !== '通识学习');
 }
 
 function expectEntry(chunks: KnowledgeChunk[], entryId: string): KnowledgeChunk {
@@ -49,7 +54,7 @@ test('indexes each archived entry exactly once and preserves the 9 existing chun
   }[];
   const sourceModels = new Map(sources.map((source) => [source.source_id, source.models]));
   assert.equal(stats().archivedEntries, indexed.length);
-  assert.equal(stats().chunks, indexed.length + 9);
+  assert.equal(stats().chunks, indexed.length + stats().learningEntries + 9);
   const entries = indexed.map(({ entry_id, source_id, title, brand, model, models, entry_type }) => {
     let exactModel = models?.[0] ?? sourceModels.get(source_id)?.[0] ?? model;
     const range = sourceModels.get(source_id);
@@ -470,7 +475,7 @@ test('unidentified tractor questions collect information instead of returning un
   ];
   for (const query of queries) {
     for (const context of [{}, tractor]) {
-      const { message, retrieved } = buildSystemPrompt({ query, ...context });
+      const { message, retrieved } = buildSystemPrompt({ query, ...context, retrieved: retrieve(query, 6, context) });
       assert.ok(retrieved.length > 0, query);
       assert.equal(archived(retrieved).length, 0, query);
       const reply = generateLocalKnowledgeReply(query, retrieved, context);

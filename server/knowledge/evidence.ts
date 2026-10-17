@@ -10,7 +10,7 @@ export function isArchiveId(value: unknown): value is string {
 export function referenceVerification(status?: string): ReferenceVerification {
   if (!status?.trim()) return 'unspecified';
   if (/核验失败|核对失败|验证失败|证据不符|与原文不符|来源错误|资料不实|资料伪造|(?:^|[；;。])\s*(?:failed|(?:verification|review)[ _-]+failed|invalid source|rejected)\b/i.test(status)) return 'failed';
-  if (/未核验|未核对|未经核验|未经验证|未验证|未完成.*核验|核验未完成|核对未完成|未全部核验/.test(status)) return 'unverified';
+  if (/未核验|未核对|未经核验|未经验证|未验证|未完成.*核验|未逐条完成|核验未完成|核对未完成|未全部核验/.test(status)) return 'unverified';
   if (/待核验|待核对|待核实|待确认|部分核验|部分核对|尚未完成/.test(status)) return 'pending';
   // An affirmative, complete clause is required. "计划已核验" and "已核验？"
   // must not be accepted just because they contain the same substring.

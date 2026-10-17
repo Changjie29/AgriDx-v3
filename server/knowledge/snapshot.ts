@@ -3,7 +3,7 @@ import path from 'node:path';
 import { loadArchive } from './archive';
 import { buildKnowledgeCatalog } from './catalog-data';
 import { configureIndexedModels } from './scope';
-import { loadLearningEntries } from './learning';
+import { loadLearningEntries, learningChunks } from './learning';
 import type { KnowledgeChunk } from './types';
 import type { CatalogFilters, KnowledgeCatalog } from '../../shared/knowledge-catalog';
 
@@ -84,11 +84,11 @@ export function reloadKnowledgeSnapshot(): KnowledgeSnapshot {
   const learning = loadLearningEntries();
   freezeData(learning);
   const selectCatalog = buildKnowledgeCatalog(archive.chunks, archive.sources, hierarchy, commonData, learning);
-  chunks.push(...archive.chunks);
+  chunks.push(...archive.chunks, ...learningChunks(learning));
   freezeData(chunks);
   freezeData(selectCatalog());
   const next: KnowledgeSnapshot = Object.freeze({
-    chunks, fileCount: fileCount + archive.fileCount, archivedEntries: archive.chunks.length,
+    chunks, fileCount: fileCount + archive.fileCount + new Set(learning.map(entry => entry.knowledgePath)).size, archivedEntries: archive.chunks.length,
     learningEntries: learning.length,
     getCatalog: (filters: CatalogFilters = {}) => freezeData(selectCatalog(filters)),
   });

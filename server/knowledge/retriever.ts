@@ -13,18 +13,20 @@ import type { KnowledgeChunk, DiagnosticMetadata } from './types';
 export type { KnowledgeChunk, DiagnosticMetadata } from './types';
 import { loadKnowledgeSnapshot, peekKnowledgeSnapshot, type KnowledgeSnapshot } from './snapshot';
 import { archiveApplicability, queryWithoutIdentity, resolveScope, type RetrievalContext } from './scope';
+import { mentionsEntryId } from './evidence';
 
 interface IndexedChunk {
   chunk: KnowledgeChunk;
   heading: string;
   haystack: string;
+  applicabilityKey: string;
 }
 
 const MAX_CHUNKS_IN_PROMPT = 6;
 export const DEFAULT_PROMPT_CONTEXT_MAX_CHARS = 8000;
 const CACHE_TTL_MS = 30_000;
 const CACHE_MAX_ENTRIES = 128;
-const NON_DIAGNOSTIC_TYPES = new Set(['机型资料', '资料缺口', '资料索引', '资料核验', '系统适用边界']);
+const NON_DIAGNOSTIC_TYPES = new Set(['机型资料', '资料缺口', '资料索引', '资料核验', '系统适用边界', '通识学习']);
 
 // ---- 启动时索引 ----
 let chunks: KnowledgeChunk[] = [];
@@ -78,7 +80,7 @@ export function deriveDiagnosticMetadata(chunk: KnowledgeChunk): DiagnosticMetad
   const checks = fieldText(/^(?:诊断步骤|检查方法|检查步骤|排查步骤|故障排查|初步核对|核对方向|原文核对方向|原文方向|初步方向|必须先区分变速配置)$/);
   const repair = fieldText(/^(?:维修建议|维修方法|维修步骤|处理建议|处理方法|对应处理方向|原文处理方向|手册处理方向|维修边界|整理维修边界)$/);
   const heading = headingWithoutId(chunk);
-  const diagnostic = Boolean(chunk.entryId) && !NON_DIAGNOSTIC_TYPES.has(chunk.entryType ?? '');
+  const diagnostic = Boolean(chunk.entryId) && chunk.diagnosticEvidence !== false && !NON_DIAGNOSTIC_TYPES.has(chunk.entryType ?? '');
   const coverage = {
     symptom: diagnostic && (substantiveClauses(symptom).length > 0 || (!symptom && /不能|无法|不转|不着|不足|故障|打滑|异常|过热|过高|跑偏|沉重|泄漏|漏油|失效|失灵|不起|无力|异响|冒.*烟/.test(heading))),
     causes: diagnostic && substantiveClauses(causes).length > 0,
@@ -97,9 +99,11 @@ function prepareChunk(chunk: KnowledgeChunk): IndexedChunk {
   // Precompute lexical text once, keeping citations/identity from inflating symptom scores.
   const body = chunk.entryId ? chunk.text.split('\n')
     .filter((line) => !/^(?:- )?(?:证据|故障证据|来源|来源编号|资料来源|原始|定位|适用|状态|验证状态)[^：:]*[：:]/.test(line))
-    .join('\n').replace(/\b(?:SRC|KB|NH|ZL|LV|DF|HH)-[A-Z0-9-]+\b/g, '') : chunk.text;
+    .join('\n').replace(/\b(?:SRC|KB|KB2000|TF1000|NH|ZL|LV|DF|HH)-[A-Z0-9-]+\b/g, '') : chunk.text;
   return { chunk: { ...chunk, diagnosticMetadata: deriveDiagnosticMetadata(chunk) },
-    heading, haystack: `${heading}\n${body}`.toLowerCase() };
+    heading, haystack: `${heading}\n${body}`.toLowerCase(),
+    applicabilityKey: JSON.stringify([chunk.brand, chunk.model, chunk.models, chunk.requiresExactModel,
+      chunk.configuration, chunk.driveConfiguration, chunk.emissionStage, chunk.emissionStageUnknown]) };
 }
 
 /** Cache stores public static documents only; returned arrays/metadata cannot mutate it. */
@@ -236,26 +240,41 @@ export function retrieve(query: string, k = MAX_CHUNKS_IN_PROMPT, context: Retri
   }
   if (cached) retrievalCache.delete(cacheKey!);
   const { tokens: qTokens, groups } = symptomTokens(query);
-  if (qTokens.size === 0) return [];
   const scope = resolveScope(query, context);
+  const lookupText = query.replace(/\[[^\]]*\]\([^)]+\)|https?:\/\/\S+/gi, ' ');
+  const idPattern = /(?<![a-z0-9_-])(?:TK-\d{4}|(?:KB|KB2000|TF1000|NH|ZL|LV|DF|HH)-[A-Z0-9-]+)(?![a-z0-9_-])/gi;
+  const lookup = /查阅|查找|查看|查询|摘录|解释|解读|学习/.test(lookupText) || !lookupText.replace(idPattern, '').replace(/[\s\p{P}]/gu, '');
+  const requestedIds = new Set(lookup ? lookupText.match(idPattern)?.map(id => id.toUpperCase()) ?? [] : []);
+  if (qTokens.size === 0 && requestedIds.size === 0) return [];
 
   scoringPasses++;
   const scored: KnowledgeChunk[] = [];
+  // Many sections share one source/configuration scope. Resolve each distinct scope once.
+  const applicabilityByScope = new Map<string, KnowledgeChunk['applicability']>();
   for (const indexed of index) {
     const c = indexed.chunk;
+    if (requestedIds.size && (!c.entryId || !requestedIds.has(c.entryId) || !mentionsEntryId(query, c.entryId))) continue;
     // The local file preamble describes editing the sample, not diagnostic evidence.
     if (!c.entryId && c.heading === '(概述)') continue;
-    const applicability = c.entryId ? archiveApplicability(c, scope) : undefined;
-    if (c.entryId ? !applicability : !scope.genericKnowledge) continue;
-    const score = scoreChunk(indexed, qTokens, groups);
+    const learning = c.entryType === '通识学习' && c.diagnosticEvidence === false;
+    if (!learning && c.entryId && !applicabilityByScope.has(indexed.applicabilityKey)) {
+      applicabilityByScope.set(indexed.applicabilityKey, archiveApplicability(c, scope));
+    }
+    const applicability = learning ? undefined : applicabilityByScope.get(indexed.applicabilityKey);
+    if (learning ? !scope.tractorArchive || scope.electric || scope.identityConflict || scope.ambiguous
+      : c.entryId ? !applicability : !scope.genericKnowledge) continue;
+    const score = requestedIds.size ? 100 : scoreChunk(indexed, qTokens, groups);
     if (score > 0) scored.push({ ...c, applicability,
       relevance: { score, method: 'keyword-weighted-overlap', calibrated: false } });
   }
   // Manual-specific hits take precedence; sample parameters must not contradict their instructions.
-  const archived = scored.filter((chunk) => chunk.entryId);
-  const selected = archived.length ? archived : scored;
-  selected.sort((a, b) => b.relevance!.score - a.relevance!.score);
-  const result = selected.slice(0, limit);
+  const byScore = (a: KnowledgeChunk, b: KnowledgeChunk) => b.relevance!.score - a.relevance!.score;
+  const learning = scored.filter(chunk => chunk.entryType === '通识学习').sort(byScore);
+  const archived = scored.filter(chunk => chunk.entryId && chunk.entryType !== '通识学习').sort(byScore);
+  const primary = archived.length ? archived : scored.filter(chunk => !chunk.entryId).sort(byScore);
+  // Keep matched manual references first and reserve context for relevant general principles.
+  const primaryLimit = learning.length && limit > 1 ? limit - 1 : limit;
+  const result = [...primary.slice(0, primaryLimit), ...learning.slice(0, Math.max(0, limit - Math.min(primary.length, primaryLimit)))];
   // Opportunistic expiration bounds memory as well as reuse time.
   for (const [key, entry] of retrievalCache) {
     if (entry.expiresAt <= now) retrievalCache.delete(key);
@@ -288,6 +307,13 @@ export function clearRetrievalCache(): void {
 
 /** Source facts remain outside body truncation so applicability limits cannot be lost. */
 export function describeSource(chunk: KnowledgeChunk): string {
+  if (chunk.entryType === '通识学习') return [
+    `通识条目：${chunk.entryId}｜主题：${chunk.locator}｜标题：${chunk.heading}`,
+    `整理批次：${chunk.version}｜核验状态：${chunk.status}`,
+    `正文定位：${chunk.source}#${chunk.entryId?.toLowerCase()}`,
+    `用途限制：${chunk.scopeBoundary}`,
+    '来源性质：原创／模型辅助整理的通识资料；不是原厂手册证据。',
+  ].join('\n');
   if (!chunk.entryId) return `来源：${chunk.source}｜章节：${chunk.heading}`;
   return [
     `条目：${chunk.entryId}｜来源编号：${chunk.sourceId}｜章节：${chunk.heading}`,

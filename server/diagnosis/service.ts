@@ -3,7 +3,7 @@ import type { DiagnosisCandidateAssessment } from '../../shared/diagnosis';
 import type { SessionDetail, PriorDeviceReport } from '../../shared/memory';
 import { resolveDiagnosticContext } from '../knowledge/conversation';
 import { generateLocalKnowledgeReply, localReplySummary } from '../knowledge/fallbackDiagnosis';
-import { buildSystemPrompt } from '../knowledge/systemPrompt';
+import { buildSystemPrompt, hasDiagnosticEvidence } from '../knowledge/systemPrompt';
 import { decideCoordination, ROUTE_MESSAGES } from '../knowledge/coordination';
 import { hasIndexedReference, referenceVerification } from '../knowledge/evidence';
 import { retrieve, selectPromptChunks, formatForPrompt } from '../knowledge/retriever';
@@ -59,7 +59,7 @@ export function createDiagnosticService(llm: DiagnosticProvider, dependencies: D
     const admissible = retrieved.filter(chunk => referenceVerification(chunk.status) !== 'failed' &&
       (!chunk.entryId || !excluded.has(chunk.entryId)));
     // A reference with uncertain review/applicability may be listed, never presented as instructions.
-    const reliable = admissible.filter(chunk => hasIndexedReference(chunk) &&
+    const reliable = admissible.filter(chunk => hasDiagnosticEvidence([chunk]) && hasIndexedReference(chunk) &&
       referenceVerification(chunk.status) === 'verified' && chunk.applicability === 'matched' &&
       coordination.candidates?.some(candidate => candidate.entryId === chunk.entryId && candidate.modelMatch === 'exact'));
     let displayed = admissible;
@@ -68,6 +68,7 @@ export function createDiagnosticService(llm: DiagnosticProvider, dependencies: D
       timings: { retrievalMs, decisionMs, externalAiMs: 0, totalMs: 0 } };
     const metadata = () => ({ knowledgeChunks: displayed.length, knowledgeSources: displayed.map(chunk => ({
       entryId: chunk.entryId, sourceId: chunk.sourceId, source: chunk.source, heading: chunk.heading,
+      entryType: chunk.entryType, diagnosticEvidence: chunk.diagnosticEvidence,
       locator: chunk.locator, version: chunk.version, applicability: chunk.applicability, status: chunk.status,
       referenceVerification: referenceVerification(chunk.status), sourceIndexed: hasIndexedReference(chunk),
     })) });
@@ -98,13 +99,14 @@ export function createDiagnosticService(llm: DiagnosticProvider, dependencies: D
       const needsClarification = route.route === 'clarify';
       const safe = route.route === 'safe';
       const directIds = new Set(route.directEligibleIds ?? []);
-      const localEvidence = route.reason === 'direct_reference' ? reliable.filter(chunk => directIds.has(chunk.entryId!)) : reliable;
+      const learning = admissible.filter(chunk => chunk.entryType === '通识学习' && chunk.diagnosticEvidence === false);
+      const localEvidence = route.reason === 'direct_reference' ? reliable.filter(chunk => directIds.has(chunk.entryId!)) : [...reliable, ...learning];
       if (route.reason === 'direct_reference') displayed = localEvidence;
       const memoryNote = memory?.session.progress && !needsClarification && !safe
         ? `**【已记录的检查进度 · 用户报告，待核实】**\n${memory.session.progress}\n\n以下为资料排查清单，请优先处理未完成项目；已完成项目仅在结果变化或需要复核时再检查。\n\n` : '';
       const priorNote = memory?.priorReports.length && !needsClarification && !safe
         ? `**【同一设备的历史检查报告 · 待核实】**\n${memory.priorReports.map(r => `${r.updatedAt.slice(0, 10)}：${r.progress}`).join('\n')}\n\n以上是历史用户报告，不代表本次已检查或当前仍正常。\n\n` : '';
-      const referenceNotice = admissible.filter(chunk => !reliable.includes(chunk) && chunk.entryId).map(chunk =>
+      const referenceNotice = admissible.filter(chunk => !reliable.includes(chunk) && !learning.includes(chunk) && chunk.entryId).map(chunk =>
         `- ${chunk.entryId}／${chunk.sourceId}；${chunk.version}；${chunk.locator?.match(/(?:PDF|印刷)[^；;。\n]*?页(?:[^；;。\n]*页)?/g)?.join('；') || '原文位置见来源记录'}；核验状态：${chunk.status}。\n  适用限制：${chunk.scopeBoundary || '具体适用条件尚未明确'}。`).join('\n');
       const references = referenceNotice && route.reason !== 'direct_reference' ? `\n\n**【参考资料 · 适用或核验仍待确认】**\n${referenceNotice}\n上述资料只作来源参考，本次不展示其具体操作步骤或参数。` : '';
       const content = needsClarification ? clarification : safe

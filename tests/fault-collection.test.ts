@@ -194,7 +194,8 @@ test('registered collection references never become machine identities or hide a
     assert.deepEqual(scope.models, ['jd954']);
     const found = retrieve(query, 100, context);
     assert.ok(found.some((chunk) => chunk.entryId === 'TF1000-JD6B-002'), id);
-    assert.ok(found.every((chunk) => chunk.sourceId === 'SRC-JD-6B-L1-OMSU54855'), id);
+    assert.ok(found.every((chunk) => chunk.sourceId === 'SRC-JD-6B-L1-OMSU54855' ||
+      chunk.entryType === '通识学习' && chunk.diagnosticEvidence === false && !chunk.sourceId), id);
   }
   for (const model of ['JD1104', '6E-1204(G4)', 'LX2620', 'JD9999']) {
     const query = `参考资料TF1000-JD6B-002；实际型号${model}，起动机不转`;
