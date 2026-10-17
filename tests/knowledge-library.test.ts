@@ -8,7 +8,7 @@ import { LEARNING_INDEXES } from '../server/knowledge/learning';
 import { retrieve, stats } from '../server/knowledge/retriever';
 import { parseKnowledgeCatalog } from '../src/features/knowledge/catalog-api';
 
-test('统一目录逐页覆盖10853个原编号，6000条学习正文及4853条归档均可定位且不重复', () => {
+function verifyLibraryRecords() {
   const archiveIndex = '知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl';
   const rows = [archiveIndex, ...LEARNING_INDEXES].flatMap(file => fs.readFileSync(file, 'utf8').trim().split(/\r?\n/).map(line => JSON.parse(line)));
   const expected = new Map(rows.map(row => [row.entry_id, row]));
@@ -34,12 +34,28 @@ test('统一目录逐页覆盖10853个原编号，6000条学习正文及4853条�
       assert.equal(entry.title, index.title);
       assert.equal(entry.knowledgePath, index.knowledge_path);
       if (!documents.has(entry.knowledgePath)) documents.set(entry.knowledgePath, fs.readFileSync(entry.knowledgePath, 'utf8').replace(/\r\n/g, '\n'));
-      assert.ok(documents.get(entry.knowledgePath)!.includes(entry.content), `sole Markdown body: ${entry.entryId}`);
+      assert.ok(documents.get(entry.knowledgePath)!.includes(entry.content.replace(/\r\n/g, '\n')), `sole Markdown body: ${entry.entryId}`);
       if (entry.collection === 'learning') assert.equal(entry.diagnosticEvidence, false);
     }
   }
   assert.deepEqual(ids, new Set(expected.keys()));
   assert.deepEqual(collections, { archive: 4853, learning: 6000 });
+}
+
+test('统一目录在原始换行及强制CRLF加载下逐页覆盖10853个原编号、唯一正文和类别', t => {
+  verifyLibraryRecords();
+  const read = fs.readFileSync;
+  const mock = t.mock.method(fs, 'readFileSync', (...args: Parameters<typeof fs.readFileSync>) => {
+    const data = read(...args);
+    return typeof data === 'string' ? data.replace(/\r?\n/g, '\r\n') : data;
+  });
+  try {
+    reloadKnowledgeSnapshot();
+    verifyLibraryRecords();
+  } finally {
+    mock.mock.restore();
+    reloadKnowledgeSnapshot();
+  }
 });
 
 test('共同正文搜索保留类别隔离、中文关键词、大小写不敏感的编号及空结果分页', () => {
