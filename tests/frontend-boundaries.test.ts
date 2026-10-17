@@ -138,8 +138,12 @@ test('取消在请求前或读取响应期间发生，都不接受迟到的答�
 test('通用客户端保留HTTP状态并传递原AbortSignal', async () => {
   const controller = new AbortController();
   const fakeFetch: FetchImplementation = async (path, options) => {
-    assert.equal(path, '/api/knowledge/catalog?brand=test');
+    const url = new URL(String(path), 'https://agridx.test');
+    assert.equal(url.pathname, '/api/knowledge/catalog');
+    assert.equal(url.searchParams.get('brand'), 'test');
+    assert.match(url.searchParams.get('__agridx_check') ?? '', /^\d+$/);
     assert.equal(options?.signal, controller.signal);
+    assert.equal(options?.cache, 'no-store');
     return new Response('{}', { status: 403 });
   };
   await assert.rejects(requestJson('/api/knowledge/catalog?brand=test', { signal: controller.signal }, fakeFetch),
