@@ -30,6 +30,7 @@ export default function KnowledgePage() {
   const selected = catalog?.selected;
   const updateFilter = (key: typeof filters[number], value: string) => {
     const next = new URLSearchParams(params);
+    next.set('view', 'machine');
     const index = filters.indexOf(key);
     filters.slice(index).forEach(item => next.delete(item));
     if (key === 'brand' || key === 'model') ['configuration', 'driveConfiguration', 'emissionStage'].forEach(item => next.delete(item));
@@ -79,6 +80,7 @@ export default function KnowledgePage() {
       {machineView && !loading && !failed && catalog?.common && <CommonFrameworkBrowser framework={catalog.common} lang={lang}
         diagnosisState={{ ...machineState(), configurationText: ['configuration', 'driveConfiguration', 'emissionStage'].map(key => params.get(key)).filter(Boolean).join(' ') }} onSymptomChange={id => {
           const next = new URLSearchParams(params);
+          next.set('view', 'machine');
           next.delete('component'); next.delete('part');
           if (id) next.set('symptom', id); else next.delete('symptom');
           setParams(next);
