@@ -74,13 +74,13 @@ test('共同正文搜索保留类别隔离、中文关键词、大小写不敏�
   assert.equal(last.entries.at(-1)!.entryId, 'TK-6000');
 });
 
-test('累计统计与浏览正文不改变维修证据集合和具体机型检索', () => {
+test('累计统计包含通识检索，保留维修证据集合与具体机型优先级', () => {
   const snapshot = loadKnowledgeSnapshot();
-  assert.deepEqual(stats(), { chunks: 4862, archivedEntries: 4853, learningEntries: 6000, totalEntries: 10853 });
-  assert.ok(snapshot.chunks.every(chunk => !chunk.entryId?.startsWith('TK-')));
+  assert.deepEqual(stats(), { chunks: 10862, archivedEntries: 4853, learningEntries: 6000, totalEntries: 10853 });
+  assert.equal(snapshot.chunks.filter(chunk => chunk.entryType === '通识学习').length, 6000);
   const reply = retrieve('东方红 LF804S 启动机不转');
   assert.ok(reply.some(chunk => chunk.entryId === 'KB-YTO-LF-MANUAL-007'));
-  assert.ok(reply.every(chunk => !chunk.entryId?.startsWith('TK-')));
+  assert.ok(reply.filter(chunk => chunk.entryId?.startsWith('TK-')).every(chunk => chunk.diagnosticEvidence === false));
   const entry = getKnowledgeCatalog({ collection: 'learning', q: 'TK-0001' }).library!.entries[0];
   assert.throws(() => { entry.content = 'corrupted'; }, TypeError);
 });

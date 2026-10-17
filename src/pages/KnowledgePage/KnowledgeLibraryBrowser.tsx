@@ -16,7 +16,7 @@ function LibraryCard({ entry, lang }: { entry: LibraryEntry; lang: string }) {
         <div><dt>{t('核验状态', 'Verification status')}</dt><dd>{entry.status}</dd></div>
         {entry.collection === 'learning' ? <>
           <div><dt>{t('学习主题', 'Learning topic')}</dt><dd>{entry.topic}</dd></div>
-          <div><dt>{t('使用范围', 'Use')}</dt><dd>{t('通识学习；未逐条原厂或实车核验，不作为具体机型的维修诊断证据。', 'General learning; not individually verified against OEM manuals or vehicles, and not diagnostic evidence for a specific model.')}</dd></div>
+          <div><dt>{t('使用范围', 'Use')}</dt><dd>{t('参与问答的原理解释与待验证分析；未逐条原厂或实车核验，不作为本机维修操作或参数依据。', 'Used in answers for general principles and tentative analysis; not individually OEM or vehicle verified, or evidence for model-specific repairs or parameters.')}</dd></div>
         </> : <>
           <div><dt>{t('资料来源 / 定位', 'Source / locator')}</dt><dd>{entry.sourceUrl ? <a href={entry.sourceUrl} target="_blank" rel="noreferrer">{entry.sourceId}</a> : entry.sourceId} · {entry.locator} · {entry.version}</dd></div>
           <div><dt>{t('适用范围', 'Applicability')}</dt><dd>{entry.scopeBoundary}</dd></div>

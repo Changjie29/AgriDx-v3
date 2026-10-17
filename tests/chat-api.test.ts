@@ -24,7 +24,7 @@ interface ChatResponse {
   fallbackReason?: string;
   answerMode?: string;
   knowledgeChunks?: number;
-  knowledgeSources?: { entryId?: string; sourceId?: string; locator?: string }[];
+  knowledgeSources?: { entryId?: string; sourceId?: string; locator?: string; entryType?: string; diagnosticEvidence?: false }[];
   choices?: { message: { role: string; content: string } }[];
 }
 
@@ -191,8 +191,8 @@ test('questions without applicable evidence still call the LLM with general-guid
   assert.equal(response.status, 200);
   assert.equal(response.body.provider, 'gemini');
   assert.equal(response.body.answerMode, 'general-guidance');
-  assert.equal(response.body.knowledgeChunks, 0);
-  assert.deepEqual(response.body.knowledgeSources, []);
+  assert.ok(response.body.knowledgeChunks! > 0);
+  assert.ok(response.body.knowledgeSources?.every(source => source.entryType === '通识学习' && source.diagnosticEvidence === false && !source.sourceId));
   assert.equal(response.body.fellBack, false);
   assert.match(response.body.choices?.[0]?.message.content ?? '', /通用分析/);
   assert.equal(fetch.mock.callCount(), 1);
@@ -325,7 +325,8 @@ test('brand and model supplements retrieve the original fault across multiple co
   assert.equal(response.status, 200);
   assert.equal(response.body.answerMode, 'knowledge-grounded');
   assert.ok(response.body.knowledgeSources?.some((source) => source.entryId === 'NH-WM25-003'));
-  assert.ok(response.body.knowledgeSources?.every((source) => source.sourceId === 'SRC-NH-WM25-92157408'));
+  assert.ok(response.body.knowledgeSources?.every((source) => source.sourceId === 'SRC-NH-WM25-92157408' ||
+    source.entryType === '通识学习' && source.diagnosticEvidence === false && !source.sourceId));
   assert.ok(sent);
   assert.match(sent.messages[0].content, /当前用户消息：WORKMASTER25/);
   assert.match(sent.messages[0].content, /品牌：纽荷兰/);
@@ -507,9 +508,10 @@ test('API whitespace credentials in every mode avoid upstream calls and preserve
     assert.equal(response.status, 200);
     assert.equal(response.body.coordination?.route, 'local');
     assert.equal(response.body.coordination?.reason, diagnosisMode === 'knowledge_only' ? 'local_requested' : 'llm_not_configured');
-    const sources = response.body.knowledgeSources as { sourceIndexed: boolean; status: string; referenceVerification: string }[];
+    const sources = response.body.knowledgeSources as { sourceIndexed: boolean; status: string; referenceVerification: string; entryType?: string; diagnosticEvidence?: false }[];
     assert.ok(sources.length > 0);
-    assert.ok(sources.every(x => x.sourceIndexed && x.status && x.referenceVerification));
+    assert.ok(sources.every(x => x.status && x.referenceVerification && (x.sourceIndexed ||
+      x.entryType === '通识学习' && x.diagnosticEvidence === false && x.referenceVerification === 'unverified')));
   }
   assert.equal(spy.mock.callCount(), 0);
 });

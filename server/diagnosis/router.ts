@@ -107,7 +107,8 @@ export function decideDiagnosisRoute(input: DiagnosisRouterInput, config: Readon
     const coverage: Partial<Record<DiagnosticCoverageKey, boolean>> = chunk.diagnosticMetadata?.coverage ?? {};
     const coverageSufficient = requiredCoverage.every(key => coverage[key] === true);
     const level = score === null ? 'unknown' : score >= config.highRelevanceThreshold ? 'high' : score >= config.mediumRelevanceThreshold ? 'medium' : 'low';
-    const excluded = invalidScore || verification === 'failed' || modelMatch === 'conflict' || level === 'low' || Boolean(chunk.entryId && (!sourceIndexed || !TECHNICAL.has(chunk.entryType ?? '')));
+    const learningReference = chunk.entryType === '通识学习' && chunk.diagnosticEvidence === false;
+    const excluded = invalidScore || verification === 'failed' || modelMatch === 'conflict' || level === 'low' || Boolean(chunk.entryId && !sourceIndexed && !learningReference);
     const directEligible = !isAssisted && !excluded && sourceIndexed && TECHNICAL.has(chunk.entryType ?? '') && modelMatch === 'exact' && verification === 'verified' &&
       [chunk.locator, chunk.version, chunk.scopeBoundary].every(v => v?.trim()) && (chunk === exact || level === 'high' && coverageSufficient && chunk.diagnosticMetadata?.riskLevel === 'low');
     return { entryId: chunk.entryId, sourceId: chunk.sourceId, relevance: { score, method: score === null ? 'unavailable' : 'keyword-weighted-overlap', calibrated: false, level },

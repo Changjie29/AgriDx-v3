@@ -30,6 +30,8 @@ export interface ChatRequest {
 
 export interface ChatKnowledgeSource {
   entryId?: string;
+  entryType?: string;
+  diagnosticEvidence?: false;
   sourceId?: string;
   source: string;
   heading: string;

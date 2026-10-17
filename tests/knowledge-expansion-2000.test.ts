@@ -150,7 +150,8 @@ test('browser snapshots carry the same 2000 fact bodies as server retrieval and 
   const su = getKnowledgeCatalog({ brand: '久保田', model: 'LX2620SUHSD', component: 'cab' });
   assert.ok(su.selected!.entries.every((entry) => !cabIds.has(entry.entryId)));
   for (const query of ['东方红 LF1504 国四 起动', '沃得 WF1404-3 国四 保养', '久保田 LX2620HSDCX 保养']) {
-    assert.equal(retrieve(query, 100).length, 0, query);
+    const found = retrieve(query, 100);
+    assert.ok(found.every(chunk => chunk.entryType === '通识学习' && chunk.diagnosticEvidence === false && !chunk.indexedReference), query);
   }
 });
 

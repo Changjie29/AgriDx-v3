@@ -109,7 +109,8 @@ test('static retrieval cache separates scope, clones returned metadata and inval
   assert.deepEqual(cached, expected);
   assert.equal(retrievalStats().cacheHits - before.cacheHits, 1);
   assert.equal(retrievalStats().scoringPasses - before.scoringPasses, 1);
-  assert.equal(retrieve(starterQuery, 5, { ...context, model: 'WORKMASTER25S' }).length, 0);
+  const unknownModel = retrieve(starterQuery, 5, { ...context, model: 'WORKMASTER25S' });
+  assert.ok(unknownModel.every(chunk => chunk.entryType === '通识学习' && chunk.diagnosticEvidence === false && !chunk.indexedReference));
   assert.equal(retrieve(starterQuery, 1, context).length, 1);
   const previousGeneration = retrievalStats().generation;
   const previousCacheEntries = retrievalStats().cacheEntries;

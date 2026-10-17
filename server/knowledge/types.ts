@@ -29,6 +29,8 @@ export interface KnowledgeChunk {
   scopeBoundary?: string;
   status?: string;
   entryType?: string;
+  /** General principles may inform analysis, but never prove model-specific repairs. */
+  diagnosticEvidence?: false;
   applicability?: 'matched' | 'pending';
   diagnosticMetadata?: DiagnosticMetadata;
   /** This is a raw lexical match score, not a percentage or diagnostic probability. */

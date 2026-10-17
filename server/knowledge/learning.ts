@@ -1,13 +1,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { LearningEntry } from '../../shared/knowledge-catalog';
+import type { KnowledgeChunk } from './types';
 
 export const LEARNING_INDEXES = [
   'docs/tractor-knowledge/index.jsonl',
   'docs/tractor-knowledge/expansion-5000/index.jsonl',
 ] as const;
 
-/** Read the sole Markdown bodies for browsing; these records never become repair RAG chunks. */
+/** Read the sole Markdown bodies, preserving original provenance and review status. */
 export function loadLearningEntries(root = process.cwd()): LearningEntry[] {
   const boundary = fs.realpathSync(path.resolve(root, 'docs/tractor-knowledge'));
   const documents = new Map<string, Map<string, string>>();
@@ -54,4 +55,15 @@ export function loadLearningEntries(root = process.cwd()): LearningEntry[] {
   const bodyCount = [...documents.values()].reduce((count, sections) => count + sections.size, 0);
   if (bodyCount !== entries.length) throw new Error('通识正文与索引数量不符');
   return entries;
+}
+
+/** Reuse validated records without copying facts into a second index or inventing OEM sources. */
+export function learningChunks(entries: LearningEntry[]): KnowledgeChunk[] {
+  return entries.map(entry => ({
+    source: entry.knowledgePath, heading: `${entry.entryId}｜${entry.title}`,
+    text: entry.content, entryId: entry.entryId, entryType: entry.entryType,
+    diagnosticEvidence: false, status: entry.status,
+    locator: `${entry.topic}／${entry.entryId}`, version: '2026-10-17通识整理批次（非原厂手册）',
+    scopeBoundary: '拖拉机通用原理与待验证分析；未逐条原厂或实车核验。不能确定本机故障、专用参数、操作步骤或型号适配。',
+  }));
 }

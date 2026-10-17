@@ -52,6 +52,9 @@ function expectUnverifiedVehicleStatus(status: string, entryId: string): void {
   assert.doesNotMatch(status, /实车(?:已验证|验证通过)|厂家(?:已验证|验证通过)/, entryId);
 }
 
+const isLearningReference = (chunk: KnowledgeChunk) => chunk.entryType === '通识学习' &&
+  chunk.diagnosticEvidence === false && !chunk.indexedReference && chunk.applicability !== 'matched';
+
 before(() => {
   loadKnowledgeBase();
 });
@@ -107,10 +110,10 @@ test('6E slow cranking retains its electrical and oil candidates only for docume
     assert.match(getField(chunk.text, '可能原因'), /电瓶输出电压太低/);
     assert.match(getField(chunk.text, '可能原因'), /曲轴箱机油粘度过稠/);
     assert.match(formatForPrompt([chunk]), /PDF第184页；印刷300-11/);
-    assert.equal(retrieve(`国三 ${query}`, 100, context).length, 0);
+    assert.ok(retrieve(`国三 ${query}`, 100, context).every(isLearningReference));
   }
   for (const model of ['6E-1204', '6E-1204(G3)', '6E-1204-X(G4)', '6E-1604(G4)']) {
-    assert.equal(retrieve(query, 100, { machineType: '拖拉机', brand: '约翰迪尔', model }).length, 0, model);
+    assert.ok(retrieve(query, 100, { machineType: '拖拉机', brand: '约翰迪尔', model }).every(isLearningReference), model);
   }
 });
 
@@ -125,7 +128,7 @@ test('5E front-drive leakage does not expand to the manual\'s two-wheel-drive mo
     assert.equal(chunk.requiresExactModel, true);
     assert.equal(chunk.driveConfiguration, '4WD');
     assert.match(chunk.locator!, /PDF第145、146页/);
-    assert.equal(retrieve(`国四 ${query}`, 100, { ...tractor, model }).length, 0, model);
+    assert.ok(retrieve(`国四 ${query}`, 100, { ...tractor, model }).every(isLearningReference), model);
     assert.ok(retrieve(`两驱 ${query}`, 100, { ...tractor, model })
       .every((entry) => entry.entryId !== entryId), model);
   }
@@ -133,7 +136,7 @@ test('5E front-drive leakage does not expand to the manual\'s two-wheel-drive mo
     assert.ok(retrieve(query, 100, { ...tractor, model }).every((entry) => entry.entryId !== entryId), model);
   }
   assert.ok(retrieve(query, 100, tractor).every((entry) => entry.entryId !== entryId));
-  assert.equal(retrieve(query, 100, { ...tractor, model: '5E-854-X' }).length, 0);
+  assert.ok(retrieve(query, 100, { ...tractor, model: '5E-854-X' }).every(isLearningReference));
 });
 
 test('PL charging warning remains a series-level lead and cannot establish an undocumented submodel', () => {
@@ -149,8 +152,8 @@ test('PL charging warning remains a series-level lead and cannot establish an un
   assert.match(chunk.scopeBoundary!, /子型号/);
   assert.match(chunk.locator!, /PDF第115页；印刷115/);
   for (const model of ['PL2304', 'PL2304(G4)', 'PL1804']) {
-    assert.equal(retrieve(query, 100, { ...context, model }).length, 0, model);
-    assert.equal(retrieve(`中联 ${model} ${query}`, 100).length, 0, model);
+    assert.ok(retrieve(query, 100, { ...context, model }).every(isLearningReference), model);
+    assert.ok(retrieve(`中联 ${model} ${query}`, 100).every(isLearningReference), model);
   }
-  assert.equal(retrieve(`国四 ${query}`, 100, context).length, 0);
+  assert.ok(retrieve(`国四 ${query}`, 100, context).every(isLearningReference));
 });
