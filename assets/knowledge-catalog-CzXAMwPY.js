@@ -1,0 +1,1 @@
+const o=["brand","model","component","part","symptom","configuration","driveConfiguration","emissionStage"];function t(n,i){return n==="configuration"?["CAB","ROPS"].includes(i):n==="driveConfiguration"?["2WD","4WD"].includes(i):n==="emissionStage"?["国三","国四"].includes(i):!0}export{o as C,t as v};
