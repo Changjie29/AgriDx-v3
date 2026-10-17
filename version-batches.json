@@ -119,6 +119,13 @@
       "base": "3.5.2",
       "version": "3.5.3",
       "date": "2026-10-17"
+    },
+    {
+      "id": "unified-knowledge-10853-20261017",
+      "kind": "knowledge",
+      "base": "3.5.3",
+      "version": "3.5.4",
+      "date": "2026-10-17"
     }
   ]
 }

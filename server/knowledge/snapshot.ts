@@ -3,6 +3,7 @@ import path from 'node:path';
 import { loadArchive } from './archive';
 import { buildKnowledgeCatalog } from './catalog-data';
 import { configureIndexedModels } from './scope';
+import { loadLearningEntries } from './learning';
 import type { KnowledgeChunk } from './types';
 import type { CatalogFilters, KnowledgeCatalog } from '../../shared/knowledge-catalog';
 
@@ -10,6 +11,7 @@ export interface KnowledgeSnapshot {
   readonly chunks: readonly KnowledgeChunk[];
   readonly fileCount: number;
   readonly archivedEntries: number;
+  readonly learningEntries: number;
   readonly getCatalog: (filters?: CatalogFilters) => KnowledgeCatalog;
 }
 
@@ -79,12 +81,15 @@ export function reloadKnowledgeSnapshot(): KnowledgeSnapshot {
   const archive = loadArchive(undefined, { configureModels: false });
   const hierarchy: unknown = JSON.parse(fs.readFileSync(path.join(INDEX_ROOT, 'hierarchy.json'), 'utf8'));
   const commonData: unknown = JSON.parse(fs.readFileSync(path.join(INDEX_ROOT, '通用框架.json'), 'utf8'));
-  const selectCatalog = buildKnowledgeCatalog(archive.chunks, archive.sources, hierarchy, commonData);
+  const learning = loadLearningEntries();
+  freezeData(learning);
+  const selectCatalog = buildKnowledgeCatalog(archive.chunks, archive.sources, hierarchy, commonData, learning);
   chunks.push(...archive.chunks);
   freezeData(chunks);
   freezeData(selectCatalog());
   const next: KnowledgeSnapshot = Object.freeze({
     chunks, fileCount: fileCount + archive.fileCount, archivedEntries: archive.chunks.length,
+    learningEntries: learning.length,
     getCatalog: (filters: CatalogFilters = {}) => freezeData(selectCatalog(filters)),
   });
   // The archive loader's standalone API still configures models by default. Here it

@@ -10,7 +10,7 @@ function fixtureRuntime(): ServerRuntime {
   return {
     rootDirectory: process.cwd(),
     version: 'test-version',
-    getKnowledgeStats: () => ({ files: 0, chunks: 0, archivedEntries: 0 }),
+    getKnowledgeStats: () => ({ chunks: 0, archivedEntries: 0, learningEntries: 0, totalEntries: 0 }),
     getLlmStatus: () => ({ preference: 'auto', configValid: true, configured: false,
       primary: null, proxyConfigured: false, providers: [] }),
     getCatalog: () => { throw new RangeError('找不到该知识条目'); },

@@ -25,7 +25,7 @@ export default function KnowledgeCoverage() {
       </div>
       <div className="knowledge-preview-footer">
         <div className="knowledge-live-count" aria-live="polite"><Database size={18} />
-          {loading ? <><Loader2 size={14} className="animate-spin" />{t('读取实际整理数量', 'Loading archived counts')}</> : failed ? t('数量暂不可用 · 可进入知识浏览重试', 'Counts unavailable · retry in the knowledge browser') : catalog ? t(`已索引 ${catalog.totals.entries} 条资料 · ${catalog.totals.brands} 个品牌目录 · ${catalog.totals.models} 个机型/系列目录`, `${catalog.totals.entries} archived entries · ${catalog.totals.brands} brands · ${catalog.totals.models} model/series directories`) : null}
+          {loading ? <><Loader2 size={14} className="animate-spin" />{t('读取实际整理数量', 'Loading knowledge counts')}</> : failed ? t('数量暂不可用 · 可进入知识浏览重试', 'Counts unavailable · retry in the knowledge browser') : catalog ? t(`知识合计 ${catalog.totals.entries} 条 · 来源归档 ${catalog.totals.archivedEntries} · 通识学习 ${catalog.totals.learningEntries}`, `${catalog.totals.entries} knowledge entries · ${catalog.totals.archivedEntries} archived · ${catalog.totals.learningEntries} learning`) : null}
           <span>{t('分层体系已建立，整机性能全覆盖仍在推进。', 'The hierarchy is established; full-machine coverage is still in progress.')}</span>
         </div>
         <Link to="/knowledge" className="hero-text-link">{t('查看知识与覆盖缺口', 'Explore knowledge & gaps')}<ArrowRight size={17} /></Link>

@@ -27,7 +27,9 @@ test('检索、目录和统计初始化共用一次归档读取，重复入口�
   assert.ok(matches.length > 0);
   assert.equal(loadKnowledgeSnapshot(), snapshot);
   assert.equal(loaded.chunkCount, stats().chunks);
-  assert.equal(stats().archivedEntries, catalog.totals.entries);
+  assert.equal(stats().archivedEntries, catalog.totals.archivedEntries);
+  assert.equal(stats().totalEntries, catalog.totals.entries);
+  assert.equal(stats().learningEntries, catalog.totals.learningEntries);
   assert.equal(catalog.totals.mappedEntries, stats().archivedEntries);
   assert.equal([...reads.values()].reduce((a, b) => a + b, 0), initialReadCount);
   for (const name of ['entries.jsonl', 'sources.json', 'hierarchy.json']) assert.equal(reads.get(path.join(index, name)), 1, name);
@@ -52,7 +54,7 @@ test('共享证据保留正文、引用、型号与配置，调用方不能污�
   assert.ok(su.entries.some(entry => entry.configuration === 'ROPS'));
   assert.ok(su.entries.every(entry => entry.configuration !== 'CAB'));
   assert.throws(() => getKnowledgeCatalog({ brand: '久保田', model: 'LX2620HSDCX' }), RangeError);
-  assert.equal(stats().archivedEntries, catalog.totals.entries);
+  assert.equal(stats().archivedEntries, catalog.totals.archivedEntries);
 });
 
 test('目录校验失败不会切换检索、统计、目录或型号识别，修复后可整体重载', t => {
@@ -88,7 +90,7 @@ test('目录校验失败不会切换检索、统计、目录或型号识别，�
   const next = reloadKnowledgeSnapshot();
   assert.notEqual(next, previous);
   assert.equal(getKnowledgeCatalog(), next.getCatalog());
-  assert.equal(stats().archivedEntries, next.getCatalog().totals.entries);
+  assert.equal(stats().archivedEntries, next.getCatalog().totals.archivedEntries);
   assert.ok(retrieve(question).some(chunk => chunk.sourceId === targetSource && chunk.version === 'SM-SNAPSHOT.98765'),
     'a successful reload invalidates router metadata and retrieval cache together');
   assert.equal(queryWithoutIdentity('SM-SNAPSHOT.98765 启动困难').trim(), '启动困难');

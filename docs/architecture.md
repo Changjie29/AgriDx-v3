@@ -43,7 +43,7 @@ HTTP 路由只做传输边界；诊断用例保留来源编号、定位、手册
 
 ### 共享知识快照
 
-`server/knowledge/snapshot.ts` 是生产知识初始化的统一入口。它一次读取通用 Markdown、归档条目、来源记录和层级索引，完成原有归档与目录校验后，发布只读快照。`retriever.ts` 的检索和统计、`catalog.ts` 的目录均使用该快照；先调用任一加载入口，后续初始化调用都复用已验证数据，不再重复读取归档和来源。`catalog-data.ts` 只负责从已加载数据构造目录，不执行文件读取。
+`server/knowledge/snapshot.ts` 是生产知识初始化的统一入口。它一次读取通用 Markdown、归档条目、通识学习资料、来源记录和层级索引，完成全部校验后发布只读快照。`retriever.ts` 的检索和统计、`catalog.ts` 的目录均使用该快照；先调用任一加载入口，后续初始化调用都复用已验证数据，不再重复读取正文和索引。`catalog-data.ts` 只负责从已加载数据构造目录，不执行文件读取。3.5.4起，6000条学习资料与4853条归档共同在知识页搜索和分页浏览，学习资料仍不进入维修RAG；累计和分类口径见[统一知识目录](knowledge-library.md)。
 
 ```mermaid
 flowchart LR
@@ -53,7 +53,7 @@ flowchart LR
   Snapshot --> Stats[健康接口知识统计]
 ```
 
-`loadKnowledgeBase()`、`loadKnowledgeCatalog()`、`getKnowledgeCatalog()`、`retrieve()` 和 `stats()` 保留原有调用与响应协议。型号、配置、排放范围、来源编号、章节定位和手册版本继续使用原数据与原筛选规则。快照和返回的目录数据被冻结，防止调用者修改缓存证据。
+`loadKnowledgeBase()`、`loadKnowledgeCatalog()`、`getKnowledgeCatalog()`、`retrieve()` 和 `stats()` 保留原有调用入口。目录的 `totals.entries` 现在统计归档与学习合计，并增加两类分项；健康统计保留原归档/检索计数，新增学习数与合计。型号、配置、排放范围、来源编号、章节定位和手册版本继续使用原数据与原筛选规则。快照和返回的目录数据被冻结，防止调用者修改缓存证据。
 
 需要进程内重新读取时，显式调用 `reloadKnowledgeSnapshot()`。只有全部读取和校验成功后，才一起切换检索、目录、统计与型号识别；失败会抛出异常并保留上一份可用快照。首次读取失败则阻止初始化，避免提供部分知识。通用 Markdown 的读取错误也按此规则处理，不再跳过损坏文件。独立 `loadArchive()` 默认仍配置型号以保留兼容性；生产消费者应使用快照，隔离测试可传入 `{ configureModels: false }`。
 

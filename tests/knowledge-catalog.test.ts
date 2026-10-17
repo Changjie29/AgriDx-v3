@@ -40,14 +40,16 @@ function requestCatalog(query: string | URLSearchParams) {
   });
 }
 
-test('catalogue counts only archived entries and exposes the expansion target as planned', () => {
-  assert.equal(catalog.totals.entries, archive.length);
+test('catalogue adds learning and archive counts while preserving archive-only hierarchy and evidence counts', () => {
+  assert.equal(catalog.totals.entries, archive.length + 6000);
+  assert.equal(catalog.totals.archivedEntries, archive.length);
+  assert.equal(catalog.totals.learningEntries, 6000);
   assert.equal(catalog.totals.mappedEntries, archive.length);
   assert.equal(catalog.totals.sources, new Set(archive.map((chunk) => chunk.sourceId)).size);
   assert.equal(catalog.totals.faultEntries, archive.filter((chunk) => chunk.entryType === '维护/故障知识').length);
-  assert.equal(catalog.expansion.status, 'planned');
+  assert.equal(catalog.expansion.status, 'reached');
   assert.equal(catalog.expansion.targetLabel, '1w+');
-  assert.equal(catalog.expansion.countingUnit, 'pending');
+  assert.equal(catalog.expansion.countingUnit, 'indexed-entry');
   assert.equal(catalog.selected, undefined);
   assert.ok(catalog.limitations.some((line) => line.includes('尚未实现')));
   assert.ok(catalog.limitations.some((line) => line.includes('分层计数不可相加')));
@@ -120,7 +122,8 @@ test('every advertised part has matching evidence and counts are independently d
 
 test('read-only catalogue HTTP API rejects malformed hierarchy filters and unknown parts', async () => {
   for (const query of ['model=LF804S', 'component=electrical', 'part=starter', 'brand=a&brand=b', 'brand=',
-    'symptom=starter-slow&symptom=starter-stopped', 'configuration=unknown', 'driveConfiguration=AWD', 'emissionStage=Tier4']) {
+    'symptom=starter-slow&symptom=starter-stopped', 'configuration=unknown', 'driveConfiguration=AWD', 'emissionStage=Tier4',
+    'collection=unknown', 'page=0', 'page=-1', 'page=1.5', 'page=1000000', 'page=1&page=2', 'q=']) {
     const response = await requestCatalog(query);
     assert.equal(response.status, 400, query);
     assert.equal((await response.json() as { code: string }).code, 'bad_request');
@@ -129,6 +132,19 @@ test('read-only catalogue HTTP API rejects malformed hierarchy filters and unkno
   const response = await requestCatalog(query);
   assert.equal(response.status, 404);
   assert.equal((await response.json() as { code: string }).code, 'knowledge_not_found');
+});
+
+test('unified library HTTP serves both original learning batches and archive evidence', async () => {
+  for (const [q, collection] of [['TK-0001', 'learning'], ['TK-6000', 'learning'], ['KB-YTO-LF-MANUAL-007', 'archive']]) {
+    const response = await requestCatalog(new URLSearchParams({ collection: 'all', q }));
+    assert.equal(response.status, 200);
+    const result = await response.json() as KnowledgeCatalog;
+    assert.equal(result.totals.entries, 10853);
+    assert.equal(result.library!.total, 1);
+    assert.equal(result.library!.entries[0].entryId, q);
+    assert.equal(result.library!.entries[0].collection, collection);
+    assert.ok(result.library!.entries[0].content.length > 10);
+  }
 });
 
 test('通用表现HTTP入口不返回维修正文，完整型号查询与未知配置保留原范围', async () => {
