@@ -1,11 +1,13 @@
 import { build } from './build.mjs';
 import { checkVersion } from './check-version.mjs';
+import { checkTractorLearning } from './check-tractor-learning.mjs';
 import { typecheck } from './typecheck.mjs';
 import { runTests } from './run-tests.mjs';
 import { main, runPackageBin } from './lib/process.mjs';
 
 main(() => {
   checkVersion();
+  checkTractorLearning();
   typecheck();
   runTests();
   runPackageBin('eslint', 'eslint', [

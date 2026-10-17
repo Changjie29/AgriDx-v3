@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-17",
+  "method": "local TF-IDF char 2–4 grams; top 5 cosine neighbours for each new entry",
+  "scope": {
+    "new_learning_entries": 5000,
+    "baseline_learning_entries": 1000,
+    "archive_sections_compared": 4853,
+    "archive_sections_not_parsed": []
+  },
+  "threshold": 0.58,
+  "exact_new_duplicate_bodies": [],
+  "candidate_count": 0,
+  "candidates": [],
+  "limitations": [
+    "字符相似候选不是语义去重结论",
+    "低于阈值或不在前5个邻居中的关系可能漏检",
+    "模型审校与选项审阅不构成全量历史语义审校"
+  ]
+}
