@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-17",
+  "kind": "educational_general_knowledge",
+  "entry_count": 1000,
+  "topic_count": 50,
+  "document_count": 10,
+  "id_start": "TK-0001",
+  "id_end": "TK-1000",
+  "checks": {
+    "continuous_ids": true,
+    "all_locators_resolve": true,
+    "entries_per_topic": 20,
+    "entries_per_document": 100,
+    "exact_duplicate_bodies": 0,
+    "historical_semantic_dedup": "not_performed",
+    "oem_manual_entrywise_verification": "not_performed",
+    "vehicle_validation": "not_performed",
+    "runtime_rag_import": false,
+    "wording_similarity_review": {
+      "method": "shared_5_character_candidates_then_SequenceMatcher_ratio_gt_0.82",
+      "candidate_pairs": 1,
+      "review": "TK-0049与TK-0050分别定义上止点和下止点；为不同概念，保留。此为措辞相似检查，不是语义去重。"
+    }
+  },
+  "files": {
+    "01.md": "d2b9e74736ca384d02770d927980e724b9f0187a2421d47f5e7718c7bc640624",
+    "02.md": "9021968caccf125dac418cd1a4d3d69b08b70c010fe37afb98257e40772f7363",
+    "03.md": "e5c33f8f5468a0ab1e606f76e2ec067726677da91ec1da289923d3ca43f26a23",
+    "04.md": "d7cf64ddfced169156a8741b0a67abe83aae5e642c622e4f29d9962a463884fb",
+    "05.md": "a8352b7dceae3e1803a44177f632c4be83930faa49d13a67ae09366730872220",
+    "06.md": "885d7fb61b13eb61900aeaf204739f4f1d5442a41123cd12f7a2260730cd5699",
+    "07.md": "af32224237b5cb4a5f2565736c5d45d282c2d385d1844544642a36e87c5ce796",
+    "08.md": "86d8cf59cf86608a2d23ed52bc877ba240d7d847c01595518dde64c283375ce0",
+    "09.md": "8258f4ec06530588fcbb7b9e5c548326c64482b8a02d036e08ea152cb99610a6",
+    "10.md": "7cc2a907976c580b92d69fc2a825d1aee3e9d99fd0e57cf81b56399b9daaf999",
+    "README.md": "1e2fd8388b2cb0e1a2ec0e5527cace2c720ca4d4e78a1dd47a0eea643507d102",
+    "index.jsonl": "1eac29d4f33681de65628b95b992b248f35c62578fb2f9e45ac5b1fdda8b414f"
+  },
+  "existing_archive_check": {
+    "command": "python3 知识库/工具/校验索引.py",
+    "sources": 27,
+    "entries": 4853,
+    "errors": 0,
+    "warnings": 0,
+    "external_manuals_redownloaded": false
+  },
+  "project_verification": {
+    "command": "npm run verify",
+    "result": "passed",
+    "tests": 340,
+    "passed": 338,
+    "failed": 0,
+    "skipped": 2,
+    "lint_errors": 0,
+    "lint_warnings": 1,
+    "client_build": "passed",
+    "server_build": "passed",
+    "remote_ci": "not_yet_run",
+    "deployment": "not_verified"
+  }
+}
