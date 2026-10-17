@@ -5,6 +5,7 @@ import DeferredScene from '@/components/DeferredScene';
 import SceneLoading from '@/components/SceneLoading';
 import { TRACTOR_COMPONENTS, TRACTOR_MODEL_URL, type TractorComponent } from '@/components/tractor-model-info';
 import { useLang } from '@/hooks/useLang';
+import { useUpdateBlocker } from '@/features/updates/useUpdateBlocker';
 
 const TractorViewer = lazy(() => import('@/components/TractorViewer'));
 
@@ -24,6 +25,8 @@ export default function ModelPage() {
   const [customModel, setCustomModel] = useState<{ url: string; name: string } | null>(null);
   const [error, setError] = useState('');
   const [identity, setIdentity] = useState('');
+  const [readingModels, setReadingModels] = useState(0);
+  useUpdateBlocker('/models', readingModels > 0 || !!customModel || photos.length > 0 || !!identity.trim());
   const urls = useRef(new Set<string>());
   const selectedComponent = TRACTOR_COMPONENTS.find(item => item.id === component) ?? TRACTOR_COMPONENTS[0];
 
@@ -56,6 +59,7 @@ export default function ModelPage() {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
+    setReadingModels(count => count + 1);
     try {
       if (!file.name.toLowerCase().endsWith('.glb') || file.size > 25 * 1024 * 1024 || file.size < 24) throw new Error('format');
       const bytes = await file.arrayBuffer();
@@ -71,7 +75,7 @@ export default function ModelPage() {
       setComponent('all'); setExploded(false); setError('');
     } catch {
       setError(t('请选择完整的 GLB 2.0 文件（最多 25 MB），贴图与资源需内嵌；外部资源文件暂不支持。', 'Use a complete GLB 2.0 file up to 25 MB with embedded resources; external resources are not supported.'));
-    }
+    } finally { setReadingModels(count => count - 1); }
   }
   function exportPlan() {
     const plan = { purpose: 'photo-reference-preparation', generatedModel: false, machineIdentity: identity.trim() || '待确认', views: photos.map(({ angle, name, size }) => ({ angle, fileName: name, bytes: size })), generationService: 'not_connected', nextSteps: ['Run a verified image-to-3D service', 'Review mesh and material in Blender', 'Export embedded GLB and import for preview'] };

@@ -6,6 +6,7 @@ import type { ServerRuntime } from '../runtime';
 export function createStatusRoutes(runtime: ServerRuntime): Router {
   const router = Router();
   router.get('/health', (_req, res) => {
+    res.set('Cache-Control', 'no-store');
     res.json({
       ok: true, version: runtime.version, timestamp: new Date().toISOString(),
       coordination: coordinationConfig(),

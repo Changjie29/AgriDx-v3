@@ -5,6 +5,7 @@ import type { ServerRuntime } from '../runtime';
 export function createCatalogRoutes(getCatalog: ServerRuntime['getCatalog']): Router {
   const router = Router();
   router.get('/knowledge/catalog', (req, res) => {
+    res.set('Cache-Control', 'no-store');
     const filters: CatalogFilters = {};
     for (const field of CATALOG_FILTER_KEYS) {
       const value = req.query[field];

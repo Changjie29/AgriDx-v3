@@ -100,10 +100,17 @@
       "date": "2026-10-16"
     },
     {
-      "id": "tractor-general-1000-20261017",
-      "kind": "knowledge",
+      "id": "auto-load-releases-20261017",
+      "kind": "fix",
       "base": "3.5.0",
       "version": "3.5.1",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "tractor-general-1000-20261017",
+      "kind": "knowledge",
+      "base": "3.5.1",
+      "version": "3.5.2",
       "date": "2026-10-17"
     }
   ]
