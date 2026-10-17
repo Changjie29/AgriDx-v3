@@ -151,6 +151,30 @@ test('安装先检查现有服务器，失败不创建控制器或重启应用�
   assert.equal(JSON.parse(readFileSync(path.join(fixture.current, 'dist', 'deployment-automation.json'), 'utf8')).configured, true);
 });
 
+test('安装后的服务PATH能执行仅在管理目录中的runuser和nginx', { skip: linuxOnly }, t => {
+  const fixture = shellFixture(t);
+  const installed = fixture.run('install-auto-pull.sh', ['--install', commit]);
+  assert.equal(installed.status, 0, installed.stderr);
+  const unit = readFileSync(path.join(fixture.units, 'agridx-github-sync.service'), 'utf8');
+  const servicePath = unit.match(/^Environment=PATH=(.+)$/m)?.[1];
+  assert.ok(servicePath, '应使用实际生成的服务PATH');
+  const directory = mkdtempSync(path.join(os.tmpdir(), 'agridx-admin-path-'));
+  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  const mappings = new Map([['/usr/sbin', path.join(directory, 'usr-sbin')],
+    ['/sbin', path.join(directory, 'sbin')]]);
+  for (const [source, target] of mappings) {
+    mkdirSync(target);
+    const name = source === '/usr/sbin' ? 'runuser' : 'nginx';
+    writeFileSync(path.join(target, name), `#!/bin/sh\nprintf '${name}-resolved\\n'\n`, { mode: 0o755 });
+  }
+  const result = spawnSync('/bin/bash', ['-c', 'runuser --path-probe && nginx --path-probe'], {
+    encoding: 'utf8', env: { ...process.env,
+      PATH: servicePath.split(':').map(value => mappings.get(value) || value).join(':') },
+  });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'runuser-resolved\nnginx-resolved\n');
+});
+
 test('安装拒绝未知systemd配置；timer启动失败撤下接入标志并保留原应用', { skip: linuxOnly }, t => {
   const fixture = shellFixture(t);
   const file = path.join(fixture.units, 'agridx-github-sync.service');

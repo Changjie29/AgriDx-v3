@@ -47,7 +47,7 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 User=root
-Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ExecStart=/bin/bash $TOOL_DIR/sync-main.sh
 TimeoutStartSec=25min
 EOF
