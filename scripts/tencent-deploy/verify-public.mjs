@@ -9,7 +9,8 @@ const digest = value => createHash('sha256').update(value).digest('hex');
 export async function controllerConfigured(baseUrl, fetchImpl = fetch) {
   const url = new URL('/deployment-automation.json', baseUrl);
   if (url.protocol !== 'https:' || url.username || url.password) throw new Error('必须使用HTTPS正式站。');
-  const response = await fetchImpl(url, { headers: { 'Cache-Control': 'no-cache' },
+  url.searchParams.set('__agridx_check', String(Date.now()));
+  const response = await fetchImpl(url, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' },
     redirect: 'error', signal: AbortSignal.timeout(15000) });
   if (response.status === 404) return false;
   if (!response.ok) throw new Error(`服务器接入状态请求失败：HTTP ${response.status}`);
@@ -26,8 +27,10 @@ export async function verifyPublicSite({ commit, version, entries, baseUrl,
     throw new Error('必须使用 HTTPS 网站根地址和40位提交 SHA。');
   }
   async function resource(path) {
-    const response = await fetchImpl(new URL(path, origin), {
-      headers: { 'Cache-Control': 'no-cache' }, redirect: 'error', signal: AbortSignal.timeout(15000),
+    const url = new URL(path, origin);
+    url.searchParams.set('__agridx_check', String(Date.now()));
+    const response = await fetchImpl(url, {
+      cache: 'no-store', headers: { 'Cache-Control': 'no-cache' }, redirect: 'error', signal: AbortSignal.timeout(15000),
     });
     if (!response.ok) throw new Error(`公网资源请求失败：${path} HTTP ${response.status}`);
     return Buffer.from(await response.arrayBuffer());
