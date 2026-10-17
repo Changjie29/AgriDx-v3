@@ -492,3 +492,4 @@
 ## 2.0.0 — 既有版本
 
 仓库此前`package.json`登记为2.0.0，具备网站、聊天服务及本地知识库基础。此前未维护统一版本日志，发布日期和逐次变更未补造；历史以[Git提交记录](https://github.com/Changjie29/AgriDx-v2/commits/main/)为准。
+
