@@ -2519,16 +2519,21 @@
     "version": "TM901519 18JUN19（英文；官方5页预览）",
     "version_date": null,
     "scope_boundary": "预览明确覆盖5045E、5055E、5065E、5075E（FT4）；本地只保存来源记录和5页预览的核对摘要，未取得完整维修正文，不能据本来源生成拆装步骤、参数或故障结论。",
-    "status": "官方预览已取得并阅读；目录主题已核对；完整手册、厂家复核和实车验证未完成。",
+    "status": "官方预览已取得并阅读；目录主题已核对；完整手册、厂家复核和实车验证未完成。；2026-10-16逐页核对5页原图和文字并登记完整性；前言概述不作为原文目录引文",
     "collected_at": "2026-10-15",
-    "sha256": "87d3c1f2d92d415330ec63d0c9117d0e3bcb1c45e44462a026b84a57bb8d84dd",
-    "bytes": 2214,
+    "sha256": "cbaf9a8e75ad399d594482eb2d0b7690abd6f78945bc2a311c499a7eb108b005",
+    "bytes": 2778,
     "verified_pdf_pages": {
       "1": "封面、手册编号、版本日期、型号范围及关联手册。",
       "2": "前言：目标读者、安全提示、Repair与Operation and Tests的结构边界。",
       "3": "Section 10—91章节和Group目录。",
-      "4": "目录延续、版本/版权信息。",
+      "4": "2026-10-16核对：基本空白的目录续页，页脚ii及手册编号；不提供新增目录主题。",
       "5": "Section 10 Group 05、10、11、15、20详细目录及页码。"
-    }
+    },
+    "storage_type": "link_and_source_record",
+    "manual_sha256": "da737ce7649af7cbb1b3dbead9da6c5ea1237cceb3197b1e09eb490bf2cb9aad",
+    "manual_bytes": 111341,
+    "manual_pdf_pages": 5,
+    "source_level": "厂家官方技术出版物5页预览；不是完整维修手册"
   }
 ]

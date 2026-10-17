@@ -1,0 +1,198 @@
+{
+  "baselines": [
+    {
+      "revision": "a114540ea28d4727ac2e096bcdada8a3242f8ec9",
+      "entries": 4215,
+      "fact_files": 60,
+      "index_sha256": "4f4e664f791d2fdaac2d42f6b63e5666fbec89c4daacc7db6926e1d307315888",
+      "index_bytes": 3498242,
+      "index_prefix_preserved": true,
+      "facts_unchanged": true
+    },
+    {
+      "revision": "7b9dc90a4ad96a45f34c23af3bc9d64203c53914",
+      "entries": 4253,
+      "fact_files": 63,
+      "index_sha256": "962460f883fc16b0b435c4ffdd94aa09b9a3208d11dda34020482c2007bf4633",
+      "index_bytes": 3540050,
+      "index_prefix_preserved": true,
+      "facts_unchanged": true
+    }
+  ],
+  "final_entries": 4853,
+  "added_since_original_main": 638,
+  "sources": 27,
+  "chunks": 4862,
+  "documents": 65,
+  "prs": [
+    {
+      "number": 28,
+      "head": "891311a319828f46df703c04d3e732d712d34128",
+      "included_as_ancestor": true
+    },
+    {
+      "number": 34,
+      "head": "dd5777422d82e68145e09c5553c06f775910aa82",
+      "included_as_ancestor": true
+    },
+    {
+      "number": 37,
+      "head": "c4239a974b97169fa8318bb9e7120145176edac1",
+      "included_as_ancestor": true
+    },
+    {
+      "number": 38,
+      "head": "4065d17790a525e83a03a67a057aef2aa713e167",
+      "included_as_ancestor": true
+    },
+    {
+      "number": 40,
+      "head": "4be42717866bb0d46550c42e710b6304c9004541",
+      "included_as_ancestor": true
+    },
+    {
+      "number": 43,
+      "head": "ef7573a0e5d2130ea1052dc512909db92fbd6872",
+      "included_as_ancestor": true
+    },
+    {
+      "number": 46,
+      "head": "69f71715e6cf05424b6ae1e315f28b8a8ccd2094",
+      "included_as_ancestor": true
+    }
+  ],
+  "version": "3.5.0",
+  "validation_date_shanghai": "2026-10-17",
+  "index_validation": {
+    "sources": 27,
+    "entries": 4853,
+    "knowledge_documents": 65,
+    "retained_pdf_files": 15,
+    "link_only_pdf_sources": 8,
+    "entry_types": {
+      "安全操作": 663,
+      "操作/维护知识": 1883,
+      "维护/故障知识": 1721,
+      "机型资料": 5,
+      "资料缺口": 3,
+      "资料索引": 513,
+      "系统适用边界": 2,
+      "资料核验": 11,
+      "系统安装/调试": 52
+    },
+    "errors": 0,
+    "warnings": 0,
+    "info": 2706,
+    "findings": 2706,
+    "affected_entries": 2685,
+    "by_rule": {
+      "status.unspecified": 2685,
+      "source.external": 8,
+      "source.level": 13
+    },
+    "by_category": {
+      "verification": 2685,
+      "source": 21
+    }
+  },
+  "verification_counts": {
+    "verified": 2168,
+    "pending": 0,
+    "unverified": 0,
+    "failed": 0,
+    "unspecified": 2685
+  },
+  "http_checks_passed": 685,
+  "browser_scenarios": [
+    {
+      "viewport": 1440,
+      "theme": "light",
+      "mode": "new",
+      "result": "passed"
+    },
+    {
+      "viewport": 1440,
+      "theme": "light",
+      "mode": "old",
+      "result": "passed"
+    },
+    {
+      "viewport": 1440,
+      "theme": "dark",
+      "mode": "new",
+      "result": "passed"
+    },
+    {
+      "viewport": 1440,
+      "theme": "dark",
+      "mode": "old",
+      "result": "passed"
+    },
+    {
+      "viewport": 390,
+      "theme": "light",
+      "mode": "new",
+      "result": "passed"
+    },
+    {
+      "viewport": 390,
+      "theme": "light",
+      "mode": "old",
+      "result": "passed"
+    },
+    {
+      "viewport": 390,
+      "theme": "dark",
+      "mode": "new",
+      "result": "passed"
+    },
+    {
+      "viewport": 390,
+      "theme": "dark",
+      "mode": "old",
+      "result": "passed"
+    }
+  ],
+  "semantic_rules": {
+    "full": {
+      "entries": 4853,
+      "new": 4853,
+      "modified": 0,
+      "reused": 0,
+      "removed": 0,
+      "candidates": 41119,
+      "by_relation": {
+        "complementary": 909,
+        "scope_variant": 1171,
+        "uncertain": 39039
+      }
+    },
+    "incremental": {
+      "entries": 4853,
+      "new": 0,
+      "modified": 0,
+      "reused": 4853,
+      "removed": 0,
+      "candidates": 41119,
+      "by_relation": {
+        "complementary": 909,
+        "scope_variant": 1171,
+        "uncertain": 39039
+      }
+    },
+    "identical_fields": [
+      "snapshot",
+      "records",
+      "relations",
+      "duplicate_groups",
+      "model"
+    ],
+    "model_mode": "rules",
+    "real_embedding_used": false
+  },
+  "deployment": {
+    "status": "verify_after_merge",
+    "production_controller_last_observed": "not_connected",
+    "production_version_last_observed": "3.1.1"
+  }
+}

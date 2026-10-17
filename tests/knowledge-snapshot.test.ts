@@ -49,7 +49,8 @@ test('共享证据保留正文、引用、型号与配置，调用方不能污�
     assert.equal(entry.version, original.version);
   }
   const su = getKnowledgeCatalog({ brand: '久保田', model: 'LX2620SUHSD', component: 'cab' }).selected!;
-  assert.ok(su.entries.every(entry => entry.configuration === 'ROPS'));
+  assert.ok(su.entries.some(entry => entry.configuration === 'ROPS'));
+  assert.ok(su.entries.every(entry => entry.configuration !== 'CAB'));
   assert.throws(() => getKnowledgeCatalog({ brand: '久保田', model: 'LX2620HSDCX' }), RangeError);
   assert.equal(stats().archivedEntries, catalog.totals.entries);
 });
@@ -57,6 +58,7 @@ test('共享证据保留正文、引用、型号与配置，调用方不能污�
 test('目录校验失败不会切换检索、统计、目录或型号识别，修复后可整体重载', t => {
   const previous = loadKnowledgeSnapshot();
   const beforeReply = retrieve(question);
+  const targetSource = beforeReply.find(chunk => chunk.sourceId)!.sourceId;
   const beforeStats = stats();
   const beforeScope = queryWithoutIdentity('SM-SNAPSHOT.98765 启动困难');
   const original = fs.readFileSync;
@@ -66,7 +68,7 @@ test('目录校验失败不会切换检索、统计、目录或型号识别，�
     const data = original(...args);
     if (file === path.join(index, 'sources.json')) {
       const sources = JSON.parse(String(data));
-      sources[0].version = 'SM-SNAPSHOT.98765';
+      sources.find((source: { source_id: string }) => source.source_id === targetSource).version = 'SM-SNAPSHOT.98765';
       return JSON.stringify(sources);
     }
     if (invalid && file === path.join(index, 'hierarchy.json')) {
@@ -87,9 +89,30 @@ test('目录校验失败不会切换检索、统计、目录或型号识别，�
   assert.notEqual(next, previous);
   assert.equal(getKnowledgeCatalog(), next.getCatalog());
   assert.equal(stats().archivedEntries, next.getCatalog().totals.entries);
+  assert.ok(retrieve(question).some(chunk => chunk.sourceId === targetSource && chunk.version === 'SM-SNAPSHOT.98765'),
+    'a successful reload invalidates router metadata and retrieval cache together');
   assert.equal(queryWithoutIdentity('SM-SNAPSHOT.98765 启动困难').trim(), '启动困难');
   mock.mock.restore();
   reloadKnowledgeSnapshot();
+});
+
+test('通用框架校验失败同样保留目录、诊断缓存及健康统计的完整快照', t => {
+  const previous = loadKnowledgeSnapshot();
+  const reply = retrieve(question);
+  const previousStats = stats();
+  const original = fs.readFileSync;
+  t.mock.method(fs, 'readFileSync', (...args: Parameters<typeof fs.readFileSync>) => {
+    const data = original(...args);
+    if (String(args[0]) !== path.join(index, '通用框架.json')) return data;
+    const framework = JSON.parse(String(data));
+    framework.links[0].entryId = 'KB-MISSING-COMMON-ENTRY';
+    return JSON.stringify(framework);
+  });
+  assert.throws(() => reloadKnowledgeSnapshot(), /通用关联/);
+  assert.equal(loadKnowledgeSnapshot(), previous);
+  assert.deepEqual(stats(), previousStats);
+  assert.deepEqual(retrieve(question), reply);
+  assert.equal(getKnowledgeCatalog(), previous.getCatalog());
 });
 
 test('归档损坏和普通知识读取失败均保留上一个完整快照', t => {

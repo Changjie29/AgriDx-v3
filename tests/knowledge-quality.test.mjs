@@ -19,7 +19,8 @@ test('quality classifications match the unchanged runtime parser for every exist
   const entries = readFileSync(new URL('../知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl', import.meta.url), 'utf8')
     .trim().split(/\r?\n/).map(JSON.parse);
   const statuses = [...new Set(entries.map(x => x.status)), '', '未核验；已核验', '已核验；待核实',
-    '计划已核验', '已核验？', '已核验；未厂家复核/实车验证', '部分核验', '证据页已核验'];
+    '计划已核验', '已核验？', '已核验；未厂家复核/实车验证', '部分核验', '证据页已核验',
+    '核验失败；已核验', '证据不符', 'review_failed', '已核对证据页；未实车验证'];
   for (const legacyPipe of [false, true]) {
     const result = spawnSync(python, ['-B', '-c',
       'import sys,json; sys.stdin.reconfigure(encoding="utf-8"); sys.path.insert(0,"知识库/工具"); from knowledge_quality import reference_verification; print(json.dumps([reference_verification(s) for s in json.load(sys.stdin)]))'], {

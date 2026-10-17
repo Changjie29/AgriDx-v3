@@ -269,7 +269,8 @@ export function retrieve(query: string, k = MAX_CHUNKS_IN_PROMPT, context: Retri
 
 /** 当前知识条目数（供 /api/health 或前端展示） */
 export function stats() {
-  return { chunks: chunks.length, archivedEntries: chunks.filter((chunk) => chunk.entryId).length };
+  const snapshot = peekKnowledgeSnapshot();
+  return { chunks: snapshot?.chunks.length ?? 0, archivedEntries: snapshot?.archivedEntries ?? 0 };
 }
 
 /** Content-free counters support single-retrieval checks and performance measurements. */

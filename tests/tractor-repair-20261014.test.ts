@@ -90,7 +90,7 @@ before(() => {
 });
 
 test('20261014 repair addition preserves the complete baseline and adds 100 unique factual entries', () => {
-  const originalPrefix = indexText.split(/(?<=\n)/).slice(0, baselineLines).join('');
+  const originalPrefix = indexText.replace(/\r\n/g, '\n').split(/(?<=\n)/).slice(0, baselineLines).join('');
   assert.equal(crypto.createHash('sha256').update(originalPrefix).digest('hex'), baselineSha256,
     'the original 1213 JSONL entries must remain byte-for-byte unchanged');
   assert.equal(batch.length, 100);

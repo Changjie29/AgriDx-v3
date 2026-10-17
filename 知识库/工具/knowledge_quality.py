@@ -14,7 +14,7 @@ import tempfile
 
 SCHEMA_VERSION = 1
 RULES_VERSION = '1.0.0'
-STATES = ('verified', 'pending', 'unverified', 'unspecified')
+STATES = ('verified', 'pending', 'unverified', 'failed', 'unspecified')
 
 # id: category, severity, suggested next action. Keep IDs stable across reports.
 RULES = {
@@ -55,16 +55,18 @@ def fingerprint(value):
 
 
 def reference_verification(status):
-    """Mirror evidence.ts conservatively; a cross-language test prevents drift."""
+    """Mirror evidence.ts; the Node/Python corpus regression guards parity."""
     if not isinstance(status, str) or not status.strip():
         return 'unspecified'
-    if re.search(r'未核验|未经核验|未完成.*核验|核验未完成|未全部核验', status):
+    if re.search(r'核验失败|核对失败|验证失败|证据不符|与原文不符|来源错误|资料不实|资料伪造|(?:^|[；;。])\s*(?:failed|(?:verification|review)[ _-]+failed|invalid source|rejected)\b', status, re.I):
+        return 'failed'
+    if re.search(r'未核验|未核对|未经核验|未经验证|未验证|未完成.*核验|核验未完成|核对未完成|未全部核验', status):
         return 'unverified'
-    if re.search(r'待核验|待核实|待确认|部分核验|尚未完成', status):
+    if re.search(r'待核验|待核对|待核实|待确认|部分核验|部分核对|尚未完成', status):
         return 'pending'
-    if re.search(r'(?:^|[；;。])\s*(?:原文(?:文本及页面图像|文本|图像)?|证据页(?:文本及图像)?)?已核验\s*(?:$|[；;。])', status):
-        return 'verified'
-    return 'unspecified'
+    complete = r'(?:^|[；;。])\s*(?:原文(?:文本及页面图像|文本|图像)?|证据页(?:文本及图像)?)?已核验\s*(?:$|[；;。])'
+    cited = r'(?:^|[；;。])\s*(?:已(?:核对|目视核对|目视对照)(?:引用页原文|原文|文本|证据页|所列|扫描证据页)|已对照网页正文|已同时阅读可提取文字和对应PDF图像|原件图像目视核验|新增证据页已核对条目|指定正文已完成文本及图像核对|(?:所列证据页|指定正文页文本及图像|证据选页文本\/原图及实际印刷页|证据页渲染\+OCR|证据页\d+dpi完整渲染目视核对|引用选页)[^；;。？?]*已(?:核验|核对|复核)|\d{4}-\d{2}-\d{2}按对应PDF页文本及图像逐条核对)(?:[^；;。？?]*)(?:$|[；;。])'
+    return 'verified' if re.search(complete, status) or re.search(cited, status) else 'unspecified'
 
 
 def finding(rule, message, *, entry_id=None, source_id=None, path='', line=None,

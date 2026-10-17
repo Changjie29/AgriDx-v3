@@ -212,8 +212,9 @@ class QualityTests(unittest.TestCase):
         self.write()
         before = (self.index / 'entries.jsonl').read_bytes()
         report = self.scan()
-        self.assertEqual(report['verification_counts']['unspecified'], 1)
-        self.assertTrue({'status.unspecified', 'body.status'} <= self.rules(report))
+        self.assertEqual(report['verification_counts']['verified'], 2)
+        self.assertIn('body.status', self.rules(report))
+        self.assertNotIn('status.unspecified', self.rules(report))
         self.assertEqual(before, (self.index / 'entries.jsonl').read_bytes())
 
     def test_source_location_is_json_pointer_not_fake_line(self):
@@ -311,6 +312,39 @@ class QualityTests(unittest.TestCase):
         self.write()
         report = self.scan()
         self.assertEqual(sum(x['rule_id'] == 'record.optional' for x in report['findings']), 2)
+
+    def test_legacy_case_locator_requires_matching_source_and_cause_action_numbers(self):
+        source = self.entries[0]['source_id']
+        for value in [f'{source}/2-4/现象1/原因(2)→排除(2)', 'a' * 64]:
+            self.entries[0]['case_key'] = value
+            self.write()
+            self.assertNotIn('record.optional', self.rules(self.scan()))
+        for value in [f'{source}/2-4/现象1/原因(2)→排除(3)',
+                      'SRC-OTHER/2-4/现象1/原因(2)→排除(2)',
+                      f'{source}/2-4/现象0/原因(2)→排除(2)']:
+            self.entries[0]['case_key'] = value
+            self.write()
+            self.assertIn('record.optional', self.rules(self.scan()))
+
+    def test_unknown_emission_marker_cannot_conflict_with_declared_stage(self):
+        self.sources[0]['emission_stage_unknown'] = True
+        self.sources[0]['emission_stage'] = '国四'
+        self.write()
+        self.assertIn('scope.condition', self.rules(self.scan()))
+        del self.sources[0]['emission_stage']
+        self.write()
+        self.assertNotIn('scope.condition', self.rules(self.scan()))
+        self.sources[0]['emission_stage_unknown'] = 'true'
+        self.write()
+        self.assertIn('scope.condition', self.rules(self.scan()))
+
+    def test_broken_common_framework_is_an_error_in_the_same_snapshot(self):
+        framework = self.index / '通用框架.json'
+        framework.write_text('{broken', encoding='utf8')
+        (self.index / 'hierarchy.json').write_text('{}', encoding='utf8')
+        report = self.scan()
+        self.assertIn('index.json', self.rules(report))
+        self.assertIn(framework.relative_to(self.root).as_posix(), report['snapshot']['files'])
 
     def test_pdf_pages_and_external_proofs_reuse_existing_checker(self):
         source = self.sources[0]

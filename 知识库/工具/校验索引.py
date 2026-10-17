@@ -190,9 +190,15 @@ class ArchiveAudit:
                 self.emit('record.whitespace', f'字段含首尾空白：{field}', record, path, line, field)
             if re.fullmatch(r'TODO|TBD|N/A|[-—]+', value, re.I):
                 self.emit('record.placeholder', f'字段仍为占位符：{field}', record, path, line, field)
-        if 'case_key' in record and (not isinstance(record['case_key'], str) or
-                                     not re.fullmatch(r'[a-f0-9]{64}', record['case_key'])):
-            self.emit('record.optional', 'case_key须为64位小写十六进制摘要', record, path, line, 'case_key')
+        if 'case_key' in record:
+            key = record['case_key']
+            source = record.get('source_id')
+            legacy_pattern = (re.escape(source) + r'/[1-9]\d*-[1-9]\d*/现象[1-9]\d*/原因\(([1-9]\d*)\)→排除\(\1\)'
+                              if isinstance(source, str) else None)
+            valid = isinstance(key, str) and (re.fullmatch(r'[a-f0-9]{64}', key) or
+                    legacy_pattern is not None and re.fullmatch(legacy_pattern, key))
+            if not valid:
+                self.emit('record.optional', 'case_key须为64位摘要或带本来源、表号及对应原因/排除项的定位键', record, path, line, 'case_key')
 
     def source_checks(self, source, position):
         start = len(self.findings)
