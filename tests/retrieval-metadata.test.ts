@@ -127,15 +127,16 @@ test('static retrieval cache separates scope, clones returned metadata and inval
 });
 
 test('cache is bounded and expires rather than retaining diagnostic queries indefinitely', () => {
-  clearRetrievalCache();
-  for (let i = 0; i < retrievalStats().cacheMaxEntries + 5; i++) {
-    retrieve(`${starterQuery} 标记${i}`, 1, context);
-  }
-  assert.equal(retrievalStats().cacheEntries, retrievalStats().cacheMaxEntries);
   const originalNow = Date.now;
-  const future = originalNow() + retrievalStats().cacheTtlMs + 1;
+  let now = originalNow();
   try {
-    Date.now = () => future;
+    Date.now = () => now;
+    clearRetrievalCache();
+    for (let i = 0; i < retrievalStats().cacheMaxEntries + 5; i++) {
+      retrieve(`${starterQuery} 标记${i}`, 1, context);
+    }
+    assert.equal(retrievalStats().cacheEntries, retrievalStats().cacheMaxEntries);
+    now += retrievalStats().cacheTtlMs + 1;
     const previous = retrievalStats();
     retrieve(`${starterQuery} 标记132`, 1, context);
     assert.equal(retrievalStats().cacheHits, previous.cacheHits);
