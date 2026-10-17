@@ -443,7 +443,9 @@ test('腾讯正式启动命令从 current 软链接工作目录启动真实 Type
   const archivedEntries = readFileSync(path.join(projectRoot,
     '知识库/整理后的知识库/农用拖拉机知识库/entries.jsonl'), 'utf8')
     .trim().split(/\r?\n/).length;
-  assert.deepEqual(status.knowledge, { chunks: archivedEntries + 9, archivedEntries });
+  const learningEntries = ['docs/tractor-knowledge/index.jsonl', 'docs/tractor-knowledge/expansion-5000/index.jsonl']
+    .reduce((total, file) => total + readFileSync(path.join(projectRoot, file), 'utf8').trim().split(/\r?\n/).length, 0);
+  assert.deepEqual(status.knowledge, { chunks: archivedEntries + 9, archivedEntries, learningEntries, totalEntries: archivedEntries + learningEntries });
 });
 
 

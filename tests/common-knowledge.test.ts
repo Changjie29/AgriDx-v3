@@ -45,7 +45,7 @@ test('通用入口组织全部目标，不返回跨机型维修正文，不把�
   assert.ok(catalog.common?.questions.some(x => x.includes('负载变化')));
   assert.ok(catalog.common?.cells.filter(x => x.stageId === 'normal' || x.stageId === 'retest').every(x => x.status === 'gap'));
   assert.ok(!JSON.stringify(catalog).includes('候选为'));
-  assert.equal(catalog.totals.entries, archive.length);
+  assert.equal(catalog.totals.archivedEntries, archive.length);
   assert.equal(parseKnowledgeCatalog(JSON.parse(JSON.stringify(catalog))).common?.selectedSymptom, 'engine-power');
 });
 

@@ -6,8 +6,8 @@ import { clearCachedKnowledgeCatalog, getCachedKnowledgeCatalog, requestKnowledg
 function catalogFor(query: string): KnowledgeCatalog {
   const model = new URLSearchParams(query).get('model');
   return {
-    totals: { entries: 0, sources: 0, brands: 1, models: 2, faultEntries: 0, mappedEntries: 0 },
-    expansion: { targetLabel: '1w+', countingUnit: 'pending', status: 'planned' },
+    totals: { entries: 0, archivedEntries: 0, learningEntries: 0, sources: 0, brands: 1, models: 2, faultEntries: 0, mappedEntries: 0 },
+    expansion: { targetLabel: '1w+', countingUnit: 'indexed-entry', status: 'planned' },
     limitations: ['测试目录，非维修资料'],
     brands: [{ id: 'test', name: 'test', entryCount: 0, faultCount: 0, sourceCount: 0,
       models: ['CAB', 'SU'].map(id => ({ id, name: id, scope: 'exact', machineType: '拖拉机',

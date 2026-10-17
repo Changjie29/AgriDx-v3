@@ -1,0 +1,2002 @@
+[
+  {
+    "topic_id": "051",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "有效效率与能量流",
+    "start": 1001,
+    "end": 1020
+  },
+  {
+    "topic_id": "052",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "平均有效压力与负荷",
+    "start": 1021,
+    "end": 1040
+  },
+  {
+    "topic_id": "053",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "循环供油与空气利用",
+    "start": 1041,
+    "end": 1060
+  },
+  {
+    "topic_id": "054",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "喷油相位与热释放",
+    "start": 1061,
+    "end": 1080
+  },
+  {
+    "topic_id": "055",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "燃烧室与空气运动",
+    "start": 1081,
+    "end": 1100
+  },
+  {
+    "topic_id": "056",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "着火延迟与燃油性质",
+    "start": 1101,
+    "end": 1120
+  },
+  {
+    "topic_id": "057",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "部分负荷与瞬态燃烧",
+    "start": 1121,
+    "end": 1140
+  },
+  {
+    "topic_id": "058",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "海拔温度与动力边界",
+    "start": 1141,
+    "end": 1160
+  },
+  {
+    "topic_id": "059",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "排烟颜色的机理差别",
+    "start": 1161,
+    "end": 1180
+  },
+  {
+    "topic_id": "060",
+    "domain_id": "01",
+    "domain": "热力与燃烧",
+    "topic": "台架指标与整机工况",
+    "start": 1181,
+    "end": 1200
+  },
+  {
+    "topic_id": "061",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "活塞热膨胀与间隙",
+    "start": 1201,
+    "end": 1220
+  },
+  {
+    "topic_id": "062",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "活塞环气密与刮油",
+    "start": 1221,
+    "end": 1240
+  },
+  {
+    "topic_id": "063",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "缸套形变与热负荷",
+    "start": 1241,
+    "end": 1260
+  },
+  {
+    "topic_id": "064",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "连杆受力与轴瓦油膜",
+    "start": 1261,
+    "end": 1280
+  },
+  {
+    "topic_id": "065",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "曲轴扭振与平衡",
+    "start": 1281,
+    "end": 1300
+  },
+  {
+    "topic_id": "066",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "曲轴箱通风与窜气",
+    "start": 1301,
+    "end": 1320
+  },
+  {
+    "topic_id": "067",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "气缸垫密封与热循环",
+    "start": 1321,
+    "end": 1340
+  },
+  {
+    "topic_id": "068",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "压缩压力与泄漏途径",
+    "start": 1341,
+    "end": 1360
+  },
+  {
+    "topic_id": "069",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "湿式缸套与冷却边界",
+    "start": 1361,
+    "end": 1380
+  },
+  {
+    "topic_id": "070",
+    "domain_id": "02",
+    "domain": "曲柄连杆与密封",
+    "topic": "多缸一致性与工况比较",
+    "start": 1381,
+    "end": 1400
+  },
+  {
+    "topic_id": "071",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "气门正时与充气过程",
+    "start": 1401,
+    "end": 1420
+  },
+  {
+    "topic_id": "072",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "气门间隙与温度变化",
+    "start": 1421,
+    "end": 1440
+  },
+  {
+    "topic_id": "073",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "凸轮接触与润滑",
+    "start": 1441,
+    "end": 1460
+  },
+  {
+    "topic_id": "074",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "气门座散热与密封",
+    "start": 1461,
+    "end": 1480
+  },
+  {
+    "topic_id": "075",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "空气滤清效率与阻力",
+    "start": 1481,
+    "end": 1500
+  },
+  {
+    "topic_id": "076",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "进气管路泄漏与测量",
+    "start": 1501,
+    "end": 1520
+  },
+  {
+    "topic_id": "077",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "增压器能量与匹配",
+    "start": 1521,
+    "end": 1540
+  },
+  {
+    "topic_id": "078",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "中冷器换热与压损",
+    "start": 1541,
+    "end": 1560
+  },
+  {
+    "topic_id": "079",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "排气背压与充气效率",
+    "start": 1561,
+    "end": 1580
+  },
+  {
+    "topic_id": "080",
+    "domain_id": "03",
+    "domain": "配气与进排气",
+    "topic": "进排气测量中的比较条件",
+    "start": 1581,
+    "end": 1600
+  },
+  {
+    "topic_id": "081",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "燃油储存与污染迁移",
+    "start": 1601,
+    "end": 1620
+  },
+  {
+    "topic_id": "082",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "油箱通气与吸油条件",
+    "start": 1621,
+    "end": 1640
+  },
+  {
+    "topic_id": "083",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "低压供油与气阻",
+    "start": 1641,
+    "end": 1660
+  },
+  {
+    "topic_id": "084",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "输油泵工作与供油平衡",
+    "start": 1661,
+    "end": 1680
+  },
+  {
+    "topic_id": "085",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "过滤精度与水分分离",
+    "start": 1681,
+    "end": 1700
+  },
+  {
+    "topic_id": "086",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "柱塞泵计量与高压建立",
+    "start": 1701,
+    "end": 1720
+  },
+  {
+    "topic_id": "087",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "喷油器雾化与开启特性",
+    "start": 1721,
+    "end": 1740
+  },
+  {
+    "topic_id": "088",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "调速器平衡与稳定性",
+    "start": 1741,
+    "end": 1760
+  },
+  {
+    "topic_id": "089",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "供油提前与转速影响",
+    "start": 1761,
+    "end": 1780
+  },
+  {
+    "topic_id": "090",
+    "domain_id": "04",
+    "domain": "机械燃油供给",
+    "topic": "回油系统与燃油热管理",
+    "start": 1781,
+    "end": 1800
+  },
+  {
+    "topic_id": "091",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "共轨压力与喷油量控制",
+    "start": 1801,
+    "end": 1820
+  },
+  {
+    "topic_id": "092",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "轨压波动与容积效应",
+    "start": 1821,
+    "end": 1840
+  },
+  {
+    "topic_id": "093",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "多次喷射与燃烧阶段",
+    "start": 1841,
+    "end": 1860
+  },
+  {
+    "topic_id": "094",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "喷孔流动与喷雾贯穿",
+    "start": 1861,
+    "end": 1880
+  },
+  {
+    "topic_id": "095",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "喷油器驱动与响应",
+    "start": 1881,
+    "end": 1900
+  },
+  {
+    "topic_id": "096",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "燃油温度与喷射修正",
+    "start": 1901,
+    "end": 1920
+  },
+  {
+    "topic_id": "097",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "轨压传感与闭环偏差",
+    "start": 1921,
+    "end": 1940
+  },
+  {
+    "topic_id": "098",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "高压限压与保护逻辑",
+    "start": 1941,
+    "end": 1960
+  },
+  {
+    "topic_id": "099",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "喷射标定与版本适用性",
+    "start": 1961,
+    "end": 1980
+  },
+  {
+    "topic_id": "100",
+    "domain_id": "05",
+    "domain": "共轨与喷射控制",
+    "topic": "电子供油与机械故障区分",
+    "start": 1981,
+    "end": 2000
+  },
+  {
+    "topic_id": "101",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "流体润滑与边界润滑",
+    "start": 2001,
+    "end": 2020
+  },
+  {
+    "topic_id": "102",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "黏度温度与剪切关系",
+    "start": 2021,
+    "end": 2040
+  },
+  {
+    "topic_id": "103",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "机油泵流量与系统压力",
+    "start": 2041,
+    "end": 2060
+  },
+  {
+    "topic_id": "104",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "滤清旁通与压差",
+    "start": 2061,
+    "end": 2080
+  },
+  {
+    "topic_id": "105",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "轴承油膜与载荷速度",
+    "start": 2081,
+    "end": 2100
+  },
+  {
+    "topic_id": "106",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "活塞冷却与润滑分配",
+    "start": 2101,
+    "end": 2120
+  },
+  {
+    "topic_id": "107",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "窜气烟炱与油品变化",
+    "start": 2121,
+    "end": 2140
+  },
+  {
+    "topic_id": "108",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "燃油稀释与冷凝水",
+    "start": 2141,
+    "end": 2160
+  },
+  {
+    "topic_id": "109",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "油位变化与消耗解释",
+    "start": 2161,
+    "end": 2180
+  },
+  {
+    "topic_id": "110",
+    "domain_id": "06",
+    "domain": "润滑与摩擦",
+    "topic": "油样趋势与取样代表性",
+    "start": 2181,
+    "end": 2200
+  },
+  {
+    "topic_id": "111",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "冷却液循环与流阻",
+    "start": 2201,
+    "end": 2220
+  },
+  {
+    "topic_id": "112",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "节温器与温度分布",
+    "start": 2221,
+    "end": 2240
+  },
+  {
+    "topic_id": "113",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "水泵流量与气蚀边界",
+    "start": 2241,
+    "end": 2260
+  },
+  {
+    "topic_id": "114",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "散热器空气侧换热",
+    "start": 2261,
+    "end": 2280
+  },
+  {
+    "topic_id": "115",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "散热器液侧传热与结垢",
+    "start": 2281,
+    "end": 2300
+  },
+  {
+    "topic_id": "116",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "风扇风罩与流场",
+    "start": 2301,
+    "end": 2320
+  },
+  {
+    "topic_id": "117",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "压力盖与沸腾裕量",
+    "start": 2321,
+    "end": 2340
+  },
+  {
+    "topic_id": "118",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "冷却液混配与材料相容",
+    "start": 2341,
+    "end": 2360
+  },
+  {
+    "topic_id": "119",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "热浸与停机后的温度",
+    "start": 2361,
+    "end": 2380
+  },
+  {
+    "topic_id": "120",
+    "domain_id": "07",
+    "domain": "冷却与热管理",
+    "topic": "温度异常的空间与时间特征",
+    "start": 2381,
+    "end": 2400
+  },
+  {
+    "topic_id": "121",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "氮氧化物与颗粒物生成",
+    "start": 2401,
+    "end": 2420
+  },
+  {
+    "topic_id": "122",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "EGR流量与燃烧影响",
+    "start": 2421,
+    "end": 2440
+  },
+  {
+    "topic_id": "123",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "DOC氧化与温度窗口",
+    "start": 2441,
+    "end": 2460
+  },
+  {
+    "topic_id": "124",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "DPF过滤与灰分累积",
+    "start": 2461,
+    "end": 2480
+  },
+  {
+    "topic_id": "125",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "主动被动再生条件",
+    "start": 2481,
+    "end": 2500
+  },
+  {
+    "topic_id": "126",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "SCR反应与温度边界",
+    "start": 2501,
+    "end": 2520
+  },
+  {
+    "topic_id": "127",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "尿素溶液质量与结晶",
+    "start": 2521,
+    "end": 2540
+  },
+  {
+    "topic_id": "128",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "排温压差与传感解释",
+    "start": 2541,
+    "end": 2560
+  },
+  {
+    "topic_id": "129",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "排放降扭与故障层级",
+    "start": 2561,
+    "end": 2580
+  },
+  {
+    "topic_id": "130",
+    "domain_id": "08",
+    "domain": "排放与后处理",
+    "topic": "排放版本与市场识别",
+    "start": 2581,
+    "end": 2600
+  },
+  {
+    "topic_id": "131",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "铅酸电池荷电与健康",
+    "start": 2601,
+    "end": 2620
+  },
+  {
+    "topic_id": "132",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "低温起动与电化学",
+    "start": 2621,
+    "end": 2640
+  },
+  {
+    "topic_id": "133",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "串并联电池与一致性",
+    "start": 2641,
+    "end": 2660
+  },
+  {
+    "topic_id": "134",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "起动机电磁与机械负荷",
+    "start": 2661,
+    "end": 2680
+  },
+  {
+    "topic_id": "135",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "起动回路压降与电阻",
+    "start": 2681,
+    "end": 2700
+  },
+  {
+    "topic_id": "136",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "继电器触点与线圈条件",
+    "start": 2701,
+    "end": 2720
+  },
+  {
+    "topic_id": "137",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "啮合机构与齿圈关系",
+    "start": 2721,
+    "end": 2740
+  },
+  {
+    "topic_id": "138",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "预热装置与进气条件",
+    "start": 2741,
+    "end": 2760
+  },
+  {
+    "topic_id": "139",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "电池充放电与寄生负载",
+    "start": 2761,
+    "end": 2780
+  },
+  {
+    "topic_id": "140",
+    "domain_id": "09",
+    "domain": "起动与蓄电池",
+    "topic": "起动表现与发动机状态",
+    "start": 2781,
+    "end": 2800
+  },
+  {
+    "topic_id": "141",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "交流发电与整流过程",
+    "start": 2801,
+    "end": 2820
+  },
+  {
+    "topic_id": "142",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "励磁调节与电压控制",
+    "start": 2821,
+    "end": 2840
+  },
+  {
+    "topic_id": "143",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "皮带传动与充电负荷",
+    "start": 2841,
+    "end": 2860
+  },
+  {
+    "topic_id": "144",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "搭铁回路与参考电位",
+    "start": 2861,
+    "end": 2880
+  },
+  {
+    "topic_id": "145",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "线径长度与发热",
+    "start": 2881,
+    "end": 2900
+  },
+  {
+    "topic_id": "146",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "熔断保护与选择性",
+    "start": 2901,
+    "end": 2920
+  },
+  {
+    "topic_id": "147",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "连接器接触与环境",
+    "start": 2921,
+    "end": 2940
+  },
+  {
+    "topic_id": "148",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "防水线束与毛细进水",
+    "start": 2941,
+    "end": 2960
+  },
+  {
+    "topic_id": "149",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "感性负载与瞬态电压",
+    "start": 2961,
+    "end": 2980
+  },
+  {
+    "topic_id": "150",
+    "domain_id": "10",
+    "domain": "充电与线束",
+    "topic": "充电诊断的负荷与时序",
+    "start": 2981,
+    "end": 3000
+  },
+  {
+    "topic_id": "151",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "电阻式传感与激励",
+    "start": 3001,
+    "end": 3020
+  },
+  {
+    "topic_id": "152",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "霍尔感应与脉冲信号",
+    "start": 3021,
+    "end": 3040
+  },
+  {
+    "topic_id": "153",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "压电信号与动态测量",
+    "start": 3041,
+    "end": 3060
+  },
+  {
+    "topic_id": "154",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "压力传感与介质温度",
+    "start": 3061,
+    "end": 3080
+  },
+  {
+    "topic_id": "155",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "位置传感与标定基准",
+    "start": 3081,
+    "end": 3100
+  },
+  {
+    "topic_id": "156",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "温度传感与热惯性",
+    "start": 3101,
+    "end": 3120
+  },
+  {
+    "topic_id": "157",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "氧氮传感与工作条件",
+    "start": 3121,
+    "end": 3140
+  },
+  {
+    "topic_id": "158",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "控制器供电与复位",
+    "start": 3141,
+    "end": 3160
+  },
+  {
+    "topic_id": "159",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "执行器电流与负载",
+    "start": 3161,
+    "end": 3180
+  },
+  {
+    "topic_id": "160",
+    "domain_id": "11",
+    "domain": "传感与控制器",
+    "topic": "冗余合理性与失效保护",
+    "start": 3181,
+    "end": 3200
+  },
+  {
+    "topic_id": "161",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "CAN物理层与差分信号",
+    "start": 3201,
+    "end": 3220
+  },
+  {
+    "topic_id": "162",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "终端匹配与总线拓扑",
+    "start": 3221,
+    "end": 3240
+  },
+  {
+    "topic_id": "163",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "报文标识与周期时序",
+    "start": 3241,
+    "end": 3260
+  },
+  {
+    "topic_id": "164",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "总线负荷与通信错误",
+    "start": 3261,
+    "end": 3280
+  },
+  {
+    "topic_id": "165",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "网关转发与诊断路径",
+    "start": 3281,
+    "end": 3300
+  },
+  {
+    "topic_id": "166",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "故障码状态与冻结帧",
+    "start": 3301,
+    "end": 3320
+  },
+  {
+    "topic_id": "167",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "软件版本与标定一致性",
+    "start": 3321,
+    "end": 3340
+  },
+  {
+    "topic_id": "168",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "数据记录与时间同步",
+    "start": 3341,
+    "end": 3360
+  },
+  {
+    "topic_id": "169",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "定位数据与车载数据区别",
+    "start": 3361,
+    "end": 3380
+  },
+  {
+    "topic_id": "170",
+    "domain_id": "12",
+    "domain": "车载通信与数据",
+    "topic": "远程数据权限与记录质量",
+    "start": 3381,
+    "end": 3400
+  },
+  {
+    "topic_id": "171",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "干式离合摩擦与散热",
+    "start": 3401,
+    "end": 3420
+  },
+  {
+    "topic_id": "172",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "湿式离合油液与冷却",
+    "start": 3421,
+    "end": 3440
+  },
+  {
+    "topic_id": "173",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "压紧机构与传递能力",
+    "start": 3441,
+    "end": 3460
+  },
+  {
+    "topic_id": "174",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "分离机构与行程关系",
+    "start": 3461,
+    "end": 3480
+  },
+  {
+    "topic_id": "175",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "双作用离合功能边界",
+    "start": 3481,
+    "end": 3500
+  },
+  {
+    "topic_id": "176",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "多片离合负荷分配",
+    "start": 3501,
+    "end": 3520
+  },
+  {
+    "topic_id": "177",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "扭转减振与传动冲击",
+    "start": 3521,
+    "end": 3540
+  },
+  {
+    "topic_id": "178",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "接合滑磨与能量积累",
+    "start": 3541,
+    "end": 3560
+  },
+  {
+    "topic_id": "179",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "离合控制与联锁信号",
+    "start": 3561,
+    "end": 3580
+  },
+  {
+    "topic_id": "180",
+    "domain_id": "13",
+    "domain": "离合与动力接合",
+    "topic": "离合表现与整机负载区分",
+    "start": 3581,
+    "end": 3600
+  },
+  {
+    "topic_id": "181",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "齿轮比与动力流",
+    "start": 3601,
+    "end": 3620
+  },
+  {
+    "topic_id": "182",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "同步器摩擦与锁止",
+    "start": 3621,
+    "end": 3640
+  },
+  {
+    "topic_id": "183",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "啮合套定位与退挡",
+    "start": 3641,
+    "end": 3660
+  },
+  {
+    "topic_id": "184",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "轴承预紧与轴系定位",
+    "start": 3661,
+    "end": 3680
+  },
+  {
+    "topic_id": "185",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "拨叉机构与行程",
+    "start": 3681,
+    "end": 3700
+  },
+  {
+    "topic_id": "186",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "动力换挡离合时序",
+    "start": 3701,
+    "end": 3720
+  },
+  {
+    "topic_id": "187",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "液力变矩与效率",
+    "start": 3721,
+    "end": 3740
+  },
+  {
+    "topic_id": "188",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "静液压无级传动",
+    "start": 3741,
+    "end": 3760
+  },
+  {
+    "topic_id": "189",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "功率分流与无级调速",
+    "start": 3761,
+    "end": 3780
+  },
+  {
+    "topic_id": "190",
+    "domain_id": "14",
+    "domain": "变速与换挡",
+    "topic": "传动润滑与热平衡",
+    "start": 3781,
+    "end": 3800
+  },
+  {
+    "topic_id": "191",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "万向传动角与转速波动",
+    "start": 3801,
+    "end": 3820
+  },
+  {
+    "topic_id": "192",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "传动轴平衡与支承",
+    "start": 3821,
+    "end": 3840
+  },
+  {
+    "topic_id": "193",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "主减速器受力与啮合",
+    "start": 3841,
+    "end": 3860
+  },
+  {
+    "topic_id": "194",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "差速器运动与附着",
+    "start": 3861,
+    "end": 3880
+  },
+  {
+    "topic_id": "195",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "差速锁接合与转向",
+    "start": 3881,
+    "end": 3900
+  },
+  {
+    "topic_id": "196",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "行星最终传动与承载",
+    "start": 3901,
+    "end": 3920
+  },
+  {
+    "topic_id": "197",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "前桥摆动与地面适应",
+    "start": 3921,
+    "end": 3940
+  },
+  {
+    "topic_id": "198",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "四驱传动比与滚动匹配",
+    "start": 3941,
+    "end": 3960
+  },
+  {
+    "topic_id": "199",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "桥壳密封与通气",
+    "start": 3961,
+    "end": 3980
+  },
+  {
+    "topic_id": "200",
+    "domain_id": "15",
+    "domain": "驱动桥与最终传动",
+    "topic": "驱动桥噪声与载荷关联",
+    "start": 3981,
+    "end": 4000
+  },
+  {
+    "topic_id": "201",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "PTO转速与功率计算",
+    "start": 4001,
+    "end": 4020
+  },
+  {
+    "topic_id": "202",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "PTO传动路线与离合",
+    "start": 4021,
+    "end": 4040
+  },
+  {
+    "topic_id": "203",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "花键接触与扭矩传递",
+    "start": 4041,
+    "end": 4060
+  },
+  {
+    "topic_id": "204",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "伸缩传动轴长度关系",
+    "start": 4061,
+    "end": 4080
+  },
+  {
+    "topic_id": "205",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "万向节相位与角度",
+    "start": 4081,
+    "end": 4100
+  },
+  {
+    "topic_id": "206",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "超越离合与惯性负载",
+    "start": 4101,
+    "end": 4120
+  },
+  {
+    "topic_id": "207",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "限矩保护与峰值负载",
+    "start": 4121,
+    "end": 4140
+  },
+  {
+    "topic_id": "208",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "PTO防护与停转边界",
+    "start": 4141,
+    "end": 4160
+  },
+  {
+    "topic_id": "209",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "农具飞轮与能量储存",
+    "start": 4161,
+    "end": 4180
+  },
+  {
+    "topic_id": "210",
+    "domain_id": "16",
+    "domain": "动力输出与配套",
+    "topic": "PTO负载波动与发动机响应",
+    "start": 4181,
+    "end": 4200
+  },
+  {
+    "topic_id": "211",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "液压功率与效率分解",
+    "start": 4201,
+    "end": 4220
+  },
+  {
+    "topic_id": "212",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "容积效率与内泄漏",
+    "start": 4221,
+    "end": 4240
+  },
+  {
+    "topic_id": "213",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "齿轮泵排量与困油",
+    "start": 4241,
+    "end": 4260
+  },
+  {
+    "topic_id": "214",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "柱塞泵斜盘与排量",
+    "start": 4261,
+    "end": 4280
+  },
+  {
+    "topic_id": "215",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "负载敏感供油原理",
+    "start": 4281,
+    "end": 4300
+  },
+  {
+    "topic_id": "216",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "吸油条件与气蚀",
+    "start": 4301,
+    "end": 4320
+  },
+  {
+    "topic_id": "217",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "油液含气与可压缩性",
+    "start": 4321,
+    "end": 4340
+  },
+  {
+    "topic_id": "218",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "液压过滤与污染等级概念",
+    "start": 4341,
+    "end": 4360
+  },
+  {
+    "topic_id": "219",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "油液温度与密封相容",
+    "start": 4361,
+    "end": 4380
+  },
+  {
+    "topic_id": "220",
+    "domain_id": "17",
+    "domain": "液压泵与油液",
+    "topic": "管路流速与能量损失",
+    "start": 4381,
+    "end": 4400
+  },
+  {
+    "topic_id": "221",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "溢流阀压力与流量",
+    "start": 4401,
+    "end": 4420
+  },
+  {
+    "topic_id": "222",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "减压阀与局部压力",
+    "start": 4421,
+    "end": 4440
+  },
+  {
+    "topic_id": "223",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "顺序阀与动作条件",
+    "start": 4441,
+    "end": 4460
+  },
+  {
+    "topic_id": "224",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "单向阀与液控开启",
+    "start": 4461,
+    "end": 4480
+  },
+  {
+    "topic_id": "225",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "节流调速与负载变化",
+    "start": 4481,
+    "end": 4500
+  },
+  {
+    "topic_id": "226",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "流量分配与优先控制",
+    "start": 4501,
+    "end": 4520
+  },
+  {
+    "topic_id": "227",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "多路阀中位与回路",
+    "start": 4521,
+    "end": 4540
+  },
+  {
+    "topic_id": "228",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "液压缸面积与速度",
+    "start": 4541,
+    "end": 4560
+  },
+  {
+    "topic_id": "229",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "液压锁与负载保持",
+    "start": 4561,
+    "end": 4580
+  },
+  {
+    "topic_id": "230",
+    "domain_id": "18",
+    "domain": "液压阀与执行器",
+    "topic": "软管脉动与接头应力",
+    "start": 4581,
+    "end": 4600
+  },
+  {
+    "topic_id": "231",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "三点悬挂几何与运动",
+    "start": 4601,
+    "end": 4620
+  },
+  {
+    "topic_id": "232",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "提升力与测量位置",
+    "start": 4621,
+    "end": 4640
+  },
+  {
+    "topic_id": "233",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "位置调节与反馈",
+    "start": 4641,
+    "end": 4660
+  },
+  {
+    "topic_id": "234",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "力调节与牵引阻力",
+    "start": 4661,
+    "end": 4680
+  },
+  {
+    "topic_id": "235",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "浮动状态与地面跟随",
+    "start": 4681,
+    "end": 4700
+  },
+  {
+    "topic_id": "236",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "悬挂稳定与侧向摆动",
+    "start": 4701,
+    "end": 4720
+  },
+  {
+    "topic_id": "237",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "液压转向与优先供油",
+    "start": 4721,
+    "end": 4740
+  },
+  {
+    "topic_id": "238",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "全液压转向反馈与负载",
+    "start": 4741,
+    "end": 4760
+  },
+  {
+    "topic_id": "239",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "转向几何与轮胎磨耗",
+    "start": 4761,
+    "end": 4780
+  },
+  {
+    "topic_id": "240",
+    "domain_id": "19",
+    "domain": "悬挂与转向",
+    "topic": "转向助力与机械连接边界",
+    "start": 4781,
+    "end": 4800
+  },
+  {
+    "topic_id": "241",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "摩擦制动能量与热衰退",
+    "start": 4801,
+    "end": 4820
+  },
+  {
+    "topic_id": "242",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "干式湿式制动差别",
+    "start": 4821,
+    "end": 4840
+  },
+  {
+    "topic_id": "243",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "液压制动压力与面积",
+    "start": 4841,
+    "end": 4860
+  },
+  {
+    "topic_id": "244",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "双踏板联动与道路工况",
+    "start": 4861,
+    "end": 4880
+  },
+  {
+    "topic_id": "245",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "制动力分配与附着",
+    "start": 4881,
+    "end": 4900
+  },
+  {
+    "topic_id": "246",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "拖挂制动与协调",
+    "start": 4901,
+    "end": 4920
+  },
+  {
+    "topic_id": "247",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "驻车机构与坡向载荷",
+    "start": 4921,
+    "end": 4940
+  },
+  {
+    "topic_id": "248",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "制动间隙与响应",
+    "start": 4941,
+    "end": 4960
+  },
+  {
+    "topic_id": "249",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "制动液材料与相容性",
+    "start": 4961,
+    "end": 4980
+  },
+  {
+    "topic_id": "250",
+    "domain_id": "20",
+    "domain": "制动与驻车",
+    "topic": "制动异常的工况证据",
+    "start": 4981,
+    "end": 5000
+  },
+  {
+    "topic_id": "251",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "轮胎结构与载荷形变",
+    "start": 5001,
+    "end": 5020
+  },
+  {
+    "topic_id": "252",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "充气状态与接地分布",
+    "start": 5021,
+    "end": 5040
+  },
+  {
+    "topic_id": "253",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "滚动半径与轮速",
+    "start": 5041,
+    "end": 5060
+  },
+  {
+    "topic_id": "254",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "滑转率与牵引效率",
+    "start": 5061,
+    "end": 5080
+  },
+  {
+    "topic_id": "255",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "土壤承载与沉陷",
+    "start": 5081,
+    "end": 5100
+  },
+  {
+    "topic_id": "256",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "配重分配与动态轴荷",
+    "start": 5101,
+    "end": 5120
+  },
+  {
+    "topic_id": "257",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "双轮配置与地面压力",
+    "start": 5121,
+    "end": 5140
+  },
+  {
+    "topic_id": "258",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "履带接地与转向阻力",
+    "start": 5141,
+    "end": 5160
+  },
+  {
+    "topic_id": "259",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "前后胎匹配与传动应力",
+    "start": 5161,
+    "end": 5180
+  },
+  {
+    "topic_id": "260",
+    "domain_id": "21",
+    "domain": "轮胎与牵引",
+    "topic": "轮胎损伤与工况关联",
+    "start": 5181,
+    "end": 5200
+  },
+  {
+    "topic_id": "261",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "螺纹连接预紧与刚度",
+    "start": 5201,
+    "end": 5220
+  },
+  {
+    "topic_id": "262",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "防松形式与载荷路径",
+    "start": 5221,
+    "end": 5240
+  },
+  {
+    "topic_id": "263",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "滚动轴承寿命与润滑",
+    "start": 5241,
+    "end": 5260
+  },
+  {
+    "topic_id": "264",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "滑动轴承间隙与磨损",
+    "start": 5261,
+    "end": 5280
+  },
+  {
+    "topic_id": "265",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "密封件唇口与轴面",
+    "start": 5281,
+    "end": 5300
+  },
+  {
+    "topic_id": "266",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "焊接结构与疲劳裂纹",
+    "start": 5301,
+    "end": 5320
+  },
+  {
+    "topic_id": "267",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "机架刚度与载荷传递",
+    "start": 5321,
+    "end": 5340
+  },
+  {
+    "topic_id": "268",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "振动频率与激励来源",
+    "start": 5341,
+    "end": 5360
+  },
+  {
+    "topic_id": "269",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "声学观察与测点位置",
+    "start": 5361,
+    "end": 5380
+  },
+  {
+    "topic_id": "270",
+    "domain_id": "22",
+    "domain": "结构与状态监测",
+    "topic": "结构腐蚀与储存环境",
+    "start": 5381,
+    "end": 5400
+  },
+  {
+    "topic_id": "271",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "牵引线与挂接几何",
+    "start": 5401,
+    "end": 5420
+  },
+  {
+    "topic_id": "272",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "耕深幅宽与作业阻力",
+    "start": 5421,
+    "end": 5440
+  },
+  {
+    "topic_id": "273",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "旋耕功率与土壤条件",
+    "start": 5441,
+    "end": 5460
+  },
+  {
+    "topic_id": "274",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "播种驱动与地轮滑转",
+    "start": 5461,
+    "end": 5480
+  },
+  {
+    "topic_id": "275",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "施肥计量与行进速度",
+    "start": 5481,
+    "end": 5500
+  },
+  {
+    "topic_id": "276",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "喷雾泵负荷与流量匹配",
+    "start": 5501,
+    "end": 5520
+  },
+  {
+    "topic_id": "277",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "装载机载荷与稳定性",
+    "start": 5521,
+    "end": 5540
+  },
+  {
+    "topic_id": "278",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "运输挂车与总成匹配",
+    "start": 5541,
+    "end": 5560
+  },
+  {
+    "topic_id": "279",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "作业效率与地块组织",
+    "start": 5561,
+    "end": 5580
+  },
+  {
+    "topic_id": "280",
+    "domain_id": "23",
+    "domain": "农具匹配与作业",
+    "topic": "保护性耕作与拖拉机工况",
+    "start": 5581,
+    "end": 5600
+  },
+  {
+    "topic_id": "281",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "侧翻稳定与支承边界",
+    "start": 5601,
+    "end": 5620
+  },
+  {
+    "topic_id": "282",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "翻滚防护与安全带配合",
+    "start": 5621,
+    "end": 5640
+  },
+  {
+    "topic_id": "283",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "上下车通道与接触点",
+    "start": 5641,
+    "end": 5660
+  },
+  {
+    "topic_id": "284",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "驾驶视野与盲区",
+    "start": 5661,
+    "end": 5680
+  },
+  {
+    "topic_id": "285",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "噪声振动与暴露概念",
+    "start": 5681,
+    "end": 5700
+  },
+  {
+    "topic_id": "286",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "热环境与人员状态",
+    "start": 5701,
+    "end": 5720
+  },
+  {
+    "topic_id": "287",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "粉尘气体与通风",
+    "start": 5721,
+    "end": 5740
+  },
+  {
+    "topic_id": "288",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "能量隔离与残余能量",
+    "start": 5741,
+    "end": 5760
+  },
+  {
+    "topic_id": "289",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "拖挂连接与挤压区域",
+    "start": 5761,
+    "end": 5780
+  },
+  {
+    "topic_id": "290",
+    "domain_id": "24",
+    "domain": "人员安全与人机",
+    "topic": "人机界面与误操作预防",
+    "start": 5781,
+    "end": 5800
+  },
+  {
+    "topic_id": "291",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "假设与因果证据",
+    "start": 5801,
+    "end": 5820
+  },
+  {
+    "topic_id": "292",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "对比试验与变量控制",
+    "start": 5821,
+    "end": 5840
+  },
+  {
+    "topic_id": "293",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "量具分辨率与不确定度",
+    "start": 5841,
+    "end": 5860
+  },
+  {
+    "topic_id": "294",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "压力流量测试的测点含义",
+    "start": 5861,
+    "end": 5880
+  },
+  {
+    "topic_id": "295",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "电测量参考点与加载条件",
+    "start": 5881,
+    "end": 5900
+  },
+  {
+    "topic_id": "296",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "趋势数据与异常基线",
+    "start": 5901,
+    "end": 5920
+  },
+  {
+    "topic_id": "297",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "故障复现与环境记录",
+    "start": 5921,
+    "end": 5940
+  },
+  {
+    "topic_id": "298",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "资料适用性与版本追溯",
+    "start": 5941,
+    "end": 5960
+  },
+  {
+    "topic_id": "299",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "维修记录与恢复验收边界",
+    "start": 5961,
+    "end": 5980
+  },
+  {
+    "topic_id": "300",
+    "domain_id": "25",
+    "domain": "诊断与证据管理",
+    "topic": "知识条目去重与证据独立性",
+    "start": 5981,
+    "end": 6000
+  }
+]

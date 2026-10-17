@@ -100,10 +100,31 @@
       "date": "2026-10-16"
     },
     {
-      "id": "tencent-service-path-20261017",
+      "id": "auto-load-releases-20261017",
       "kind": "fix",
       "base": "3.5.0",
       "version": "3.5.1",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "tractor-general-1000-20261017",
+      "kind": "knowledge",
+      "base": "3.5.1",
+      "version": "3.5.2",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "tractor-general-plus-5000-20261017",
+      "kind": "knowledge",
+      "base": "3.5.2",
+      "version": "3.5.3",
+      "date": "2026-10-17"
+    },
+    {
+      "id": "unified-knowledge-10853-20261017",
+      "kind": "knowledge",
+      "base": "3.5.3",
+      "version": "3.5.4",
       "date": "2026-10-17"
     }
   ]

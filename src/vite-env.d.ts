@@ -22,5 +22,6 @@ declare global {
     };
   }
   const __AGRIDX_DEV_PREVIEW__: boolean;
+  const __AGRIDX_BUILD_COMMIT__: string;
   const __AGRIDX_PREVIEW_RELEASE__: { version: string; commit: string; branch: string; repository: string; builtAt: string };
 }

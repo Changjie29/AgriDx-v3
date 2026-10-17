@@ -33,7 +33,9 @@ function responseWithoutTimings(response: ChatResponse) {
 test('开发快照只包含已索引资料，路径不会暴露本机文件或原始说明书', () => {
   const snapshot = createKnowledgeSnapshot();
   assert.ok(Object.keys(snapshot).length > 3);
-  assert.ok(Object.keys(snapshot).every((file) => file.endsWith('.md') || /\/(entries.jsonl|sources.json|hierarchy.json|通用框架.json)$/.test(file)));
+  assert.ok(Object.keys(snapshot).every((file) => file.endsWith('.md') || /\/(entries.jsonl|index.jsonl|sources.json|hierarchy.json|通用框架.json)$/.test(file)));
+  assert.ok(snapshot['/docs/tractor-knowledge/01.md']);
+  assert.ok(snapshot['/docs/tractor-knowledge/expansion-5000/60.md']);
   assert.ok(Object.keys(snapshot).every((file) => !/\.env|原始农机说明书|00_说明/.test(file)));
   const fs = createReadOnlyFileSystem(snapshot);
   assert.throws(() => fs.readFileSync('/etc/agridx.env'));
@@ -89,6 +91,17 @@ test('实际浏览器构建保持完整知识目录、诊断来源与型号隔�
     }
     assert.equal((await previewFetch('/api/knowledge/catalog?symptom=unknown')).status, 404);
     assert.equal((await previewFetch('/api/knowledge/catalog?configuration=unknown')).status, 400);
+    for (const filters of [
+      { collection: 'all' as const }, { collection: 'learning' as const, q: 'TK-6000' },
+      { collection: 'archive' as const, q: 'KB-YTO-LF-MANUAL-007' }, { collection: 'learning' as const, page: '300' },
+    ]) {
+      const response = await previewFetch(`/api/knowledge/catalog?${new URLSearchParams(filters)}`);
+      assert.equal(response.status, 200);
+      assert.deepEqual(await response.json(), transported(getKnowledgeCatalog(filters)));
+    }
+    for (const query of ['collection=unknown', 'page=0', 'page=1.5', 'page=1&page=2']) {
+      assert.equal((await previewFetch(`/api/knowledge/catalog?${query}`)).status, 400);
+    }
     const provider = { hasAnyConfigured: () => false, chat: async () => { throw new Error('Must not call an external model'); } };
     const diagnose = createDiagnosticService(provider);
     for (const model of ['5E-1004', '不存在的型号']) {
@@ -106,7 +119,9 @@ test('实际浏览器构建保持完整知识目录、诊断来源与型号隔�
     controller.abort();
     await assert.rejects(previewFetch('/api/health', { signal: controller.signal }), { name: 'AbortError' });
     const health = await (await previewFetch('/api/health')).json();
-    assert.equal(health.knowledge.archivedEntries, catalog.totals.entries);
+    assert.equal(health.knowledge.archivedEntries, catalog.totals.archivedEntries);
+    assert.equal(health.knowledge.learningEntries, 6000);
+    assert.equal(health.knowledge.totalEntries, 10853);
     assert.equal(health.llm.configured, false);
   } finally { rmSync(directory, { recursive: true, force: true }); }
 });

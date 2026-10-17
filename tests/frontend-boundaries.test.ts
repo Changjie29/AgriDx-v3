@@ -138,8 +138,12 @@ test('取消在请求前或读取响应期间发生，都不接受迟到的答�
 test('通用客户端保留HTTP状态并传递原AbortSignal', async () => {
   const controller = new AbortController();
   const fakeFetch: FetchImplementation = async (path, options) => {
-    assert.equal(path, '/api/knowledge/catalog?brand=test');
+    const url = new URL(String(path), 'https://agridx.test');
+    assert.equal(url.pathname, '/api/knowledge/catalog');
+    assert.equal(url.searchParams.get('brand'), 'test');
+    assert.match(url.searchParams.get('__agridx_check') ?? '', /^\d+$/);
     assert.equal(options?.signal, controller.signal);
+    assert.equal(options?.cache, 'no-store');
     return new Response('{}', { status: 403 });
   };
   await assert.rejects(requestJson('/api/knowledge/catalog?brand=test', { signal: controller.signal }, fakeFetch),
@@ -153,8 +157,8 @@ test('健康状态配置标志必须是boolean，不能把未知模型当成已�
 });
 
 const catalog = {
-  totals: { entries: 0, sources: 0, brands: 1, models: 1, faultEntries: 0, mappedEntries: 0 },
-  expansion: { targetLabel: '1w+', countingUnit: 'pending', status: 'planned' },
+  totals: { entries: 0, archivedEntries: 0, learningEntries: 0, sources: 0, brands: 1, models: 1, faultEntries: 0, mappedEntries: 0 },
+  expansion: { targetLabel: '1w+', countingUnit: 'indexed-entry', status: 'planned' },
   limitations: ['适用范围仍需核对'],
   brands: [{ id: 'brand', name: '品牌', entryCount: 0, faultCount: 0, sourceCount: 0,
     models: [{ id: 'model', name: '型号', scope: 'exact', machineType: '拖拉机', entryCount: 0, faultCount: 0, sourceCount: 0,

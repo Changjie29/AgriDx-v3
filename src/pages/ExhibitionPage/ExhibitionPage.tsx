@@ -535,8 +535,8 @@ export default function ExhibitionPage() {
               </div>
               <div className="expo-sheet-counts">
                 <div>
-                  <strong>{number(totals?.entries)}</strong>
-                  <span>{t('资料条目', 'ENTRIES')}</span>
+                  <strong>{number(totals?.archivedEntries)}</strong>
+                  <span>{t('机型归档条目', 'MODEL ARCHIVE ENTRIES')}</span>
                 </div>
                 <div>
                   <strong>{number(totals?.sources)}</strong>
@@ -746,7 +746,7 @@ export default function ExhibitionPage() {
           </div>
           <dl>
             <div>
-              <dt>{t('归档条目', 'INDEXED ENTRIES')}</dt>
+              <dt>{t('知识条目合计', 'KNOWLEDGE ENTRIES')}</dt>
               <dd>{number(totals?.entries)}</dd>
             </div>
             <div>

@@ -25,6 +25,8 @@ import type { AnswerMode, ChatProvider, FallbackReason } from '@shared/chat';
 import { MACHINE_TYPES_ZH, MACHINE_TYPES_EN } from '@/features/chat/session';
 import { useChatSession } from '@/features/chat/useChatSession';
 import { useLlmHealth } from '@/features/chat/useLlmHealth';
+import { useUpdateBlocker } from '@/features/updates/useUpdateBlocker';
+import { hasUnsavedProfile } from '@/features/updates/update-safety';
 
 export default function ChatPage() {
   const location = useLocation();
@@ -49,6 +51,9 @@ export default function ChatPage() {
     sendMessage, stopRequest, handleClear, memory, profile,
     diagnosisMode, setDiagnosisMode, deviceName, setDeviceName, hours, setHours, deviceNotes, setDeviceNotes, progress, setProgress,
   } = useChatSession({ handoff, translate: t, focusInput });
+  useUpdateBlocker('/chat', isLoading || memory.busy || !memory.ready || !!input.trim()
+    || progress.trim() !== (memory.session?.progress ?? '')
+    || hasUnsavedProfile(profile, memory.devices.find(device => device.id === memory.deviceId)));
   const llmHealth = useLlmHealth();
   useEffect(() => {
     if (typeof llmHealth === 'object') {
