@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { before, test } from 'node:test';
-import { loadKnowledgeBase, retrieve } from '../server/knowledge/retriever';
+import { loadKnowledgeBase, retrieve, type KnowledgeChunk } from '../server/knowledge/retriever';
+
+const isLearningReference = (chunk: KnowledgeChunk) => chunk.entryType === '通识学习' &&
+  chunk.diagnosticEvidence === false && !chunk.indexedReference && chunk.applicability !== 'matched';
 
 before(() => loadKnowledgeBase());
 
@@ -16,10 +19,10 @@ test('new repair evidence answers distinct 6B starting and hydraulic symptoms', 
     assert.ok(entry, `${query}: ${found.map((chunk) => chunk.entryId).join(', ')}`);
     assert.match(entry.locator ?? '', /PDF第\d+.*印刷300-/);
     assert.match(entry.scopeBoundary ?? '', /不|先|停止/);
-    assert.ok(found.every((chunk) => !chunk.entryId || chunk.sourceId === 'SRC-JD-6B-L1-OMSU54855'));
+    assert.ok(found.every((chunk) => !chunk.entryId || chunk.sourceId === 'SRC-JD-6B-L1-OMSU54855' || isLearningReference(chunk)));
   }
-  assert.equal(retrieve('国四 起动机不转', 100, scope).length, 0);
-  assert.equal(retrieve('起动机不转', 100, { ...scope, model: 'JD954-X' }).length, 0);
+  assert.ok(retrieve('国四 起动机不转', 100, scope).every(isLearningReference));
+  assert.ok(retrieve('起动机不转', 100, { ...scope, model: 'JD954-X' }).every(isLearningReference));
 });
 
 test('5E front-drive maintenance excludes two-drive models and explicit configuration conflicts', () => {

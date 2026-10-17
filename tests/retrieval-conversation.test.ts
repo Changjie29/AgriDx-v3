@@ -1,10 +1,14 @@
 import assert from 'node:assert/strict';
 import { before, test } from 'node:test';
 import { resolveDiagnosticContext } from '../server/knowledge/conversation';
-import { loadKnowledgeBase, retrieve } from '../server/knowledge/retriever';
+import { loadKnowledgeBase, retrieve, type KnowledgeChunk } from '../server/knowledge/retriever';
 import { resolveScope } from '../server/knowledge/scope';
 
 before(() => loadKnowledgeBase());
+
+const isLearningReference = (chunk: KnowledgeChunk) => chunk.entryType === '通识学习' &&
+  chunk.diagnosticEvidence === false && !chunk.indexedReference && chunk.applicability !== 'matched';
+function expectNoManual(chunks: KnowledgeChunk[]) { assert.ok(chunks.every(isLearningReference)); }
 
 function user(content: string) {
   return { role: 'user', content };
@@ -36,9 +40,9 @@ test('colloquial symptoms retrieve their existing sections without the file prea
 test('symptom expansion retains exact-model and emission applicability', () => {
   const found = retrieve('东方红 LF1504 打不着火');
   assert.ok(found.length > 0);
-  assert.ok(found.every((chunk) => chunk.sourceId === 'SRC-YTO-LF1504-SMLF150449010'));
-  assert.equal(retrieve('东方红 LF1504 国四 打不着火').length, 0);
-  assert.equal(retrieve('久保田 LX9999 打不着火').length, 0);
+  assert.ok(found.every((chunk) => chunk.sourceId === 'SRC-YTO-LF1504-SMLF150449010' || isLearningReference(chunk)));
+  expectNoManual(retrieve('东方红 LF1504 国四 打不着火'));
+  expectNoManual(retrieve('久保田 LX9999 打不着火'));
 });
 
 test('separate symptom, brand and model answers preserve the diagnosis', () => {
@@ -76,7 +80,7 @@ test('brand correction clears a previous model and preserves the symptom for the
   assert.equal(resolved.scope.brand, '东方红');
   assert.equal(resolved.scope.model, 'lf1504');
   assert.ok(found.some((chunk) => chunk.entryId === 'KB-YTO-LF1504-007'));
-  assert.ok(found.every((chunk) => chunk.brand === '东方红'));
+  assert.ok(found.every((chunk) => chunk.brand === '东方红' || isLearningReference(chunk)));
 });
 
 test('operating-condition follow-ups retain the symptom and latest configuration gates', () => {
@@ -88,7 +92,7 @@ test('operating-condition follow-ups retain the symptom and latest configuration
   assert.match(resolved.query, /变速箱油位检查/);
   assert.match(resolved.query, /热车/);
   assert.match(resolved.query, /2WD/);
-  assert.equal(found.length, 0);
+  expectNoManual(found);
 });
 
 test('emission follow-ups replace old stage and cannot reuse incompatible manuals', () => {
@@ -98,7 +102,7 @@ test('emission follow-ups replace old stage and cannot reuse incompatible manual
   ]);
   assert.match(resolved.query, /国四/);
   assert.doesNotMatch(resolved.query, /国三/);
-  assert.equal(found.length, 0);
+  expectNoManual(found);
 });
 
 test('switching machines clears previous configuration and emission limits', () => {
@@ -110,7 +114,7 @@ test('switching machines clears previous configuration and emission limits', () 
   assert.equal(resolved.scope.model, 'workmaster25');
   assert.doesNotMatch(resolved.query, /WF1404|国三|2WD|CAB/i);
   assert.ok(found.length > 0);
-  assert.ok(found.every((chunk) => chunk.brand === '纽荷兰'));
+  assert.ok(found.every((chunk) => chunk.brand === '纽荷兰' || isLearningReference(chunk)));
   const unidentified = resolveDiagnosticContext([
     user('久保田 LX2620 拖拉机 国四 起动机不转'),
     user('另一台拖拉机也不能启动'),
@@ -147,7 +151,7 @@ test('unknown explicitly declared models and ambiguous brands cannot borrow appl
     user('型号是904'),
   ]);
   assert.equal(unknown.scope.model, '904');
-  assert.equal(retrieve(unknown.query, 100, unknown.scope).length, 0);
+  expectNoManual(retrieve(unknown.query, 100, unknown.scope));
   const ambiguous = resolveDiagnosticContext([
     user('久保田 LX2620 起动机不转'),
     user('久保田或者东方红'),
@@ -196,7 +200,7 @@ test('correcting a model on the same machine preserves declared emission limits'
   assert.match(resolved.query, /国四/);
   assert.match(resolved.query, /ROPS/);
   assert.match(resolved.query, /2WD/);
-  assert.equal(retrieve(resolved.query, 100, resolved.scope).length, 0);
+  expectNoManual(retrieve(resolved.query, 100, resolved.scope));
 });
 
 test('matching aliases and explicit current identity remain compatible with conversation scope', () => {
@@ -210,7 +214,7 @@ test('matching aliases and explicit current identity remain compatible with conv
   ], { brand: '纽荷兰', model: 'WORKMASTER25' });
   assert.equal(resolveScope(switched.query, switched.scope).identityConflict, false);
   assert.doesNotMatch(switched.query, /久保田|lx2620/i);
-  assert.ok(retrieve(switched.query, 100, switched.scope).every((chunk) => chunk.brand === '纽荷兰'));
+  assert.ok(retrieve(switched.query, 100, switched.scope).every((chunk) => chunk.brand === '纽荷兰' || isLearningReference(chunk)));
 });
 
 test('an explicitly attached implement does not replace the primary machine type', () => {
@@ -303,7 +307,7 @@ test('colloquial brand and punctuated unknown model answers retain the original 
   assert.equal(unknown.scope.model, 'RX904');
   assert.equal(unknown.clarificationNeeded, false);
   assert.match(unknown.query, /启动电机不转/);
-  assert.equal(retrieve(unknown.query, 100, unknown.scope).length, 0);
+  expectNoManual(retrieve(unknown.query, 100, unknown.scope));
 });
 
 test('a denied machine type stays pending until the user supplies the new type', () => {
