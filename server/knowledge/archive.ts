@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { KnowledgeChunk } from './retriever';
+import type { KnowledgeChunk } from './types';
 import { configureIndexedModels } from './scope';
 import { isArchiveId } from './evidence';
 
@@ -26,7 +26,9 @@ interface ArchiveEntry {
   emission_stage?: '国三' | '国四';
 }
 
-interface ArchiveSource {
+export interface ArchiveSource {
+  model?: string;
+  document_type?: string;
   source_id: string;
   path: string;
   url: string;
@@ -36,6 +38,7 @@ interface ArchiveSource {
   configuration?: 'CAB' | 'ROPS';
   drive_configuration?: '2WD' | '4WD';
   emission_stage?: '国三' | '国四';
+  emission_stage_unknown?: boolean;
 }
 
 function requireStrings(value: unknown, fields: string[], label: string): void {
@@ -46,7 +49,7 @@ function requireStrings(value: unknown, fields: string[], label: string): void {
 }
 
 /** Only indexed entry sections are loaded; raw manuals, READMEs and pending lists are excluded. */
-export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChunk[]; fileCount: number } {
+export function loadArchive(archiveRoot = ARCHIVE_ROOT, options: { configureModels?: boolean } = {}): { chunks: KnowledgeChunk[]; fileCount: number; sources: ArchiveSource[] } {
   const INDEX_ROOT = path.join(archiveRoot, '农用拖拉机知识库');
   const sources: unknown = JSON.parse(fs.readFileSync(path.join(INDEX_ROOT, 'sources.json'), 'utf8'));
   if (!Array.isArray(sources)) throw new Error('sources.json 必须是数组');
@@ -61,6 +64,10 @@ export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChun
     }
     if (source.emission_stage !== undefined && !['国三', '国四'].includes(source.emission_stage)) {
       throw new Error(`知识来源排放阶段无效：${source.source_id}`);
+    }
+    if (source.emission_stage_unknown !== undefined && (typeof source.emission_stage_unknown !== 'boolean' ||
+      source.emission_stage_unknown && source.emission_stage !== undefined)) {
+      throw new Error(`知识来源未知排放标记无效或与明确阶段冲突：${source.source_id}`);
     }
     if (source.configuration !== undefined && !['CAB', 'ROPS'].includes(source.configuration)) {
       throw new Error(`知识来源配置无效：${source.source_id}`);
@@ -140,6 +147,7 @@ export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChun
       configuration: entry.configuration ?? source.configuration,
       driveConfiguration: entry.drive_configuration ?? source.drive_configuration,
       emissionStage: entry.emission_stage ?? source.emission_stage,
+      emissionStageUnknown: source.emission_stage_unknown,
       sourceUrl: source.url,
       originalPath: source.path,
       locator: entry.locator,
@@ -149,6 +157,7 @@ export function loadArchive(archiveRoot = ARCHIVE_ROOT): { chunks: KnowledgeChun
       entryType: entry.entry_type,
     });
   }
-  configureIndexedModels(chunks);
-  return { chunks, fileCount: documents.size };
+  if (options.configureModels !== false) configureIndexedModels(chunks);
+  return { chunks, fileCount: documents.size, sources: [...sourceMap.values()] };
 }
+

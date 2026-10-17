@@ -1,4 +1,5 @@
 import type { KnowledgeChunk } from './retriever';
+import type { ReferenceVerification } from '../../shared/diagnosis';
 
 /** IDs are exact index keys, not fuzzy search terms. */
 export function isArchiveId(value: unknown): value is string {
@@ -6,13 +7,19 @@ export function isArchiveId(value: unknown): value is string {
 }
 
 /** This describes reference review only, never manufacturer or vehicle validation. */
-export function referenceVerification(status?: string): 'verified' | 'pending' | 'unverified' | 'unspecified' {
+export function referenceVerification(status?: string): ReferenceVerification {
   if (!status?.trim()) return 'unspecified';
-  if (/未核验|未经核验|未完成.*核验|核验未完成|未全部核验/.test(status)) return 'unverified';
-  if (/待核验|待核实|待确认|部分核验|尚未完成/.test(status)) return 'pending';
+  if (/核验失败|核对失败|验证失败|证据不符|与原文不符|来源错误|资料不实|资料伪造|(?:^|[；;。])\s*(?:failed|(?:verification|review)[ _-]+failed|invalid source|rejected)\b/i.test(status)) return 'failed';
+  if (/未核验|未核对|未经核验|未经验证|未验证|未完成.*核验|核验未完成|核对未完成|未全部核验/.test(status)) return 'unverified';
+  if (/待核验|待核对|待核实|待确认|部分核验|部分核对|尚未完成/.test(status)) return 'pending';
   // An affirmative, complete clause is required. "计划已核验" and "已核验？"
   // must not be accepted just because they contain the same substring.
-  return /(?:^|[；;。])\s*(?:原文(?:文本及页面图像|文本|图像)?|证据页(?:文本及图像)?)?已核验\s*(?:$|[；;。])/.test(status)
+  const completeVerification = /(?:^|[；;。])\s*(?:原文(?:文本及页面图像|文本|图像)?|证据页(?:文本及图像)?)?已核验\s*(?:$|[；;。])/;
+  // These are explicit reviews of the cited pages, not claims about the whole
+  // manual, the manufacturer, or an actual vehicle. Do not infer review from
+  // "沿用既有", a cover-only review, a plan, or a question.
+  const citedPageReview = /(?:^|[；;。])\s*(?:已(?:核对|目视核对|目视对照)(?:引用页原文|原文|文本|证据页|所列|扫描证据页)|已对照网页正文|已同时阅读可提取文字和对应PDF图像|原件图像目视核验|新增证据页已核对条目|指定正文已完成文本及图像核对|(?:所列证据页|指定正文页文本及图像|证据选页文本\/原图及实际印刷页|证据页渲染\+OCR|证据页\d+dpi完整渲染目视核对|引用选页)[^；;。？?]*已(?:核验|核对|复核)|\d{4}-\d{2}-\d{2}按对应PDF页文本及图像逐条核对)(?:[^；;。？?]*)(?:$|[；;。])/;
+  return completeVerification.test(status) || citedPageReview.test(status)
     ? 'verified' : 'unspecified';
 }
 

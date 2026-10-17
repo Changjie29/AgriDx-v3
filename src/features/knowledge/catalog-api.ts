@@ -1,4 +1,5 @@
 import type { KnowledgeCatalog } from '../../../shared/knowledge-catalog';
+import { isCommonFramework } from '../../../shared/common-knowledge';
 import { isRecord, requestJson } from '../../lib/api-client';
 
 const isCount = (value: unknown) => typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
@@ -53,7 +54,8 @@ export function parseKnowledgeCatalog(value: unknown): KnowledgeCatalog {
     !Array.isArray(value.brands) || !value.brands.every(isBrand) || !isStrings(value.limitations) ||
     !isRecord(value.expansion) || value.expansion.targetLabel !== '1w+' ||
     value.expansion.countingUnit !== 'pending' || value.expansion.status !== 'planned' ||
-    (value.selected !== undefined && !isSelection(value.selected))) {
+    (value.selected !== undefined && !isSelection(value.selected)) ||
+    (value.common !== undefined && !isCommonFramework(value.common))) {
     throw new Error('Invalid knowledge catalog');
   }
   return value as unknown as KnowledgeCatalog;

@@ -1,0 +1,2585 @@
+{
+  "date_shanghai": "2026-10-13",
+  "project_version": "3.6.0",
+  "schema_version": 1,
+  "scope": "通用分类、问诊与已有知识关联；不新增维修事实、不扩大机型范围、不证明实车性能覆盖",
+  "upstream_base": "aa6f3db8be325a58522affdff2e6c4cff1da78b5",
+  "archive": {
+    "sources": 26,
+    "entries": 1213,
+    "knowledge_documents": 32,
+    "retained_pdf_files": 15,
+    "link_only_pdf_sources": 7,
+    "entry_types": {
+      "安全操作": 53,
+      "操作/维护知识": 809,
+      "维护/故障知识": 313,
+      "机型资料": 5,
+      "资料缺口": 3,
+      "资料索引": 13,
+      "系统适用边界": 2,
+      "资料核验": 9,
+      "系统安装/调试": 6
+    },
+    "errors": 0
+  },
+  "common_framework": {
+    "systems": 15,
+    "performance_targets": 36,
+    "symptoms": 37,
+    "linked_entries": 46,
+    "matrix_cells": 216
+  },
+  "input_sha256": {
+    "entries.jsonl": "466814d7c01b799ee33cbc8c63276dc67abb83c00664cd1be3f472d67b43a760",
+    "sources.json": "7ccf908fb1696d47b896721cf9e63b18b5018cae74a27693dae4b3ff588cec49",
+    "hierarchy.json": "ca7028ca47561332c26e4c26d352ef604269e7cea71e2373a478e6663e49276d",
+    "通用框架.json": "274cfe7c1501004a1acc0b9b897ce28ec0d811330c56e52e827ecd9791ed4923"
+  },
+  "http_validation": {
+    "checks": [
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=starter-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=starter-slow",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-start",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-power",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-unstable",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=engine-noise",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=smoke-dark",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=smoke-white",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=coolant-hot",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=coolant-reading-low",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=oil-pressure",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=oil-consumption",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=fuel-consumption",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=shift-difficult",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=drive-slip",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=vehicle-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=transmission-hot",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=lift-slow",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=hitch-sinking",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=hydraulic-hot",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=remote-slow",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=steering-heavy",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=steering-lost",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=brake-weak",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=brake-pull",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=brake-drag",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=charging",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=vehicle-power",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=lighting",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=axle-leak",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=tyre-wear",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=pto-slip",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=pto-release",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=cab-cooling",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=nav-position",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=nav-track",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=aftertreatment-alert",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94&model=5E-1004&symptom=starter-stopped",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94&model=5E-1004&symptom=engine-power&emissionStage=%E5%9B%BD%E5%9B%9B",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E9%B8%BF%E9%B9%84&model=T70&symptom=engine-power",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?brand=%E4%B9%85%E4%BF%9D%E7%94%B0&model=M6060&symptom=aftertreatment-alert&driveConfiguration=2WD",
+        "status": 200
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=unknown",
+        "status": 404
+      },
+      {
+        "path": "/api/knowledge/catalog?configuration=unknown",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?driveConfiguration=AWD",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?emissionStage=Tier4",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?symptom=a&symptom=b",
+        "status": 400
+      },
+      {
+        "path": "/api/knowledge/catalog?model=LF804S",
+        "status": 400
+      },
+      {
+        "chat": "东方红 LF804S",
+        "knowledgeChunks": 6,
+        "provider": "knowledge-base"
+      },
+      {
+        "chat": "约翰迪尔 5E-1004",
+        "knowledgeChunks": 6,
+        "provider": "knowledge-base"
+      },
+      {
+        "chat": "东方红 LF1504(G4)",
+        "knowledgeChunks": 0,
+        "provider": "knowledge-base"
+      }
+    ],
+    "total": 53
+  },
+  "browser_validation": {
+    "results": [
+      {
+        "shell": "old",
+        "viewport": "desktop-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "old",
+        "viewport": "desktop-dark",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "old",
+        "viewport": "mobile-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "old",
+        "viewport": "mobile-dark",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "desktop-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "desktop-dark",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "mobile-light",
+        "checks": 12,
+        "pageErrors": []
+      },
+      {
+        "shell": "new",
+        "viewport": "mobile-dark",
+        "checks": 12,
+        "pageErrors": []
+      }
+    ],
+    "checks": 96
+  },
+  "verification": {
+    "complete_verify": "passed",
+    "external_llm": false,
+    "deployment": false,
+    "field_validation": false,
+    "tests": {
+      "tests": 230,
+      "pass": 228,
+      "fail": 0,
+      "skipped": 2
+    },
+    "version_consistency": true,
+    "typecheck": true,
+    "lint_errors": 0,
+    "production_build": true,
+    "git_diff_check": true
+  },
+  "limitations": [
+    "正常功能基准与恢复验收阶段保留待补",
+    "已有原件及外链来源记录沿用，本次未重新取得外链PDF或全书审校",
+    "资料阶段关联不代表完整检测程序、诊断确诊或所有配置互换"
+  ],
+  "contrast_validation": {
+    "checks": [
+      {
+        "shell": "old",
+        "theme": "light",
+        "width": 390,
+        "contrast": 8.63
+      },
+      {
+        "shell": "old",
+        "theme": "light",
+        "width": 1440,
+        "contrast": 8.63
+      },
+      {
+        "shell": "old",
+        "theme": "dark",
+        "width": 390,
+        "contrast": 9.8
+      },
+      {
+        "shell": "old",
+        "theme": "dark",
+        "width": 1440,
+        "contrast": 9.8
+      },
+      {
+        "shell": "new",
+        "theme": "light",
+        "width": 390,
+        "contrast": 7.15
+      },
+      {
+        "shell": "new",
+        "theme": "light",
+        "width": 1440,
+        "contrast": 7.15
+      },
+      {
+        "shell": "new",
+        "theme": "dark",
+        "width": 390,
+        "contrast": 9.19
+      },
+      {
+        "shell": "new",
+        "theme": "dark",
+        "width": 1440,
+        "contrast": 9.19
+      }
+    ],
+    "total": 8
+  },
+  "coordinated_project_version": "3.4.5",
+  "compatibility_validation": {
+    "upstream_base": "f203d0b71418fbf1253270f3fbbadc6e5319a360",
+    "project_version": "3.4.4",
+    "historical_outputs_preserved": true,
+    "review": "intake-condition issue fixed; follow-up review found no blocking issue",
+    "verify": {
+      "tests": 233,
+      "passed": 231,
+      "failed": 0,
+      "skipped": 2,
+      "result": "passed",
+      "version_type_lint_build": "passed",
+      "lint_errors": 0,
+      "lint_existing_warnings": 1
+    },
+    "http": {
+      "project_version": "3.4.4",
+      "upstream_base": "f203d0b71418fbf1253270f3fbbadc6e5319a360",
+      "checks": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=starter-stopped",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=starter-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-start",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-power",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-unstable",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-noise",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=smoke-dark",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=smoke-white",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=coolant-hot",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=coolant-reading-low",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=oil-pressure",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=oil-consumption",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=fuel-consumption",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=shift-difficult",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=drive-slip",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=vehicle-stopped",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=transmission-hot",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=lift-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=hitch-sinking",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=hydraulic-hot",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=remote-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=steering-heavy",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=steering-lost",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=brake-weak",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=brake-pull",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=brake-drag",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=charging",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=vehicle-power",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=lighting",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=axle-leak",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=tyre-wear",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=pto-slip",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=pto-release",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=cab-cooling",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=nav-position",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=nav-track",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=aftertreatment-alert",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-stopped",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-stopped&driveConfiguration=2WD",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94&model=5E-1004&symptom=engine-power&emissionStage=%E5%9B%BD%E5%9B%9B",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B9%85%E4%BF%9D%E7%94%B0&model=M6060&symptom=aftertreatment-alert&driveConfiguration=4WD",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B9%85%E4%BF%9D%E7%94%B0&model=M6060&symptom=aftertreatment-alert&driveConfiguration=2WD",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=does-not-exist",
+          "status": 404,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF1504%28G4%29",
+          "status": 404,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?model=LF804S",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?configuration=invalid",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?driveConfiguration=2WD&driveConfiguration=4WD",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/chat",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/chat",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/chat",
+          "status": 200,
+          "result": "passed"
+        }
+      ],
+      "count": 54,
+      "failures": 0,
+      "external_ai": false,
+      "health": {
+        "ok": true,
+        "version": "3.4.4",
+        "timestamp": "2026-10-13T11:45:31.067Z",
+        "coordination": {
+          "defaultMode": "knowledge_only",
+          "configValid": true,
+          "allowExternalAi": false
+        },
+        "knowledge": {
+          "chunks": 1222,
+          "archivedEntries": 1213
+        },
+        "llm": {
+          "preference": "auto",
+          "configValid": true,
+          "configured": false,
+          "primary": null,
+          "proxyConfigured": true,
+          "providers": [
+            {
+              "provider": "gemini",
+              "model": "gemini-3.8-flash",
+              "configured": false
+            },
+            {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash",
+              "configured": false
+            }
+          ]
+        }
+      },
+      "framework": {
+        "systems": 15,
+        "performance_targets": 36,
+        "symptoms": 37,
+        "matrix_cells": 216,
+        "linked_entries": 46,
+        "gap_cells": 95
+      }
+    },
+    "index_errors": 0,
+    "external_ai": false,
+    "field_validation": false,
+    "deployment": false,
+    "browser": {
+      "baseUrl": "http://127.0.0.1:3310",
+      "version": "3.4.4",
+      "combinations": [
+        {
+          "id": "old-desktop-light",
+          "uiVersion": "old",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "theme": "light",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(32, 106, 78)",
+            "ratio": 6.495433510309363
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "old-desktop-dark",
+          "uiVersion": "old",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "theme": "dark",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(0, 56, 37)",
+            "background": "rgb(141, 213, 178)",
+            "ratio": 7.719945088520278
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "old-mobile-light",
+          "uiVersion": "old",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "theme": "light",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(32, 106, 78)",
+            "ratio": 6.495433510309363
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "old-mobile-dark",
+          "uiVersion": "old",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "theme": "dark",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(0, 56, 37)",
+            "background": "rgb(141, 213, 178)",
+            "ratio": 7.719945088520278
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "new-desktop-light",
+          "uiVersion": "new",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "theme": "light",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 101, 132)",
+            "ratio": 6.4945129818608285
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "new-desktop-dark",
+          "uiVersion": "new",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "theme": "dark",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(0, 53, 72)",
+            "background": "rgb(141, 207, 242)",
+            "ratio": 7.698841161166148
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "new-mobile-light",
+          "uiVersion": "new",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "theme": "light",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 101, 132)",
+            "ratio": 6.4945129818608285
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "new-mobile-dark",
+          "uiVersion": "new",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "theme": "dark",
+          "pageErrors": [],
+          "chatRequests": [],
+          "ctaContrast": {
+            "color": "rgb(0, 53, 72)",
+            "background": "rgb(141, 207, 242)",
+            "ratio": 7.698841161166148
+          },
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        }
+      ],
+      "checks": [
+        {
+          "combination": "old-desktop-light",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(32, 106, 78)",
+            "ratio": 6.495433510309363
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-desktop-light",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(0, 56, 37)",
+            "background": "rgb(141, 213, 178)",
+            "ratio": 7.719945088520278
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-desktop-dark",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(32, 106, 78)",
+            "ratio": 6.495433510309363
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-mobile-light",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(0, 56, 37)",
+            "background": "rgb(141, 213, 178)",
+            "ratio": 7.719945088520278
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 101, 132)",
+            "ratio": 6.4945129818608285
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(0, 53, 72)",
+            "background": "rgb(141, 207, 242)",
+            "ratio": 7.698841161166148
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 1440,
+            "scrollWidth": 1440,
+            "bodyScrollWidth": 1440
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-desktop-dark",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 101, 132)",
+            "ratio": 6.4945129818608285
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-mobile-light",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "correct selected shell and theme",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "common symptom catalog has 37 selectable behaviors",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "starter-stopped displays references, gaps, and missing-condition intake questions",
+          "passed": true,
+          "detail": {
+            "references": 4,
+            "gaps": 2
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "normal criteria and recovery acceptance stay gaps",
+          "passed": true,
+          "detail": {
+            "rows": 1,
+            "gaps": true,
+            "headers": [
+              "性能目标",
+              "正常功能与基准",
+              "故障表现",
+              "候选原因",
+              "检查与排除",
+              "条件化处置",
+              "恢复验收"
+            ]
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "common diagnosis CTA computed contrast is at least 4.5",
+          "passed": true,
+          "detail": {
+            "color": "rgb(0, 53, 72)",
+            "background": "rgb(141, 207, 242)",
+            "ratio": 7.698841161166148
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "generic starter matrix has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "tyre-wear selects wheel-system matrix with gaps retained",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "LF804S expands only correct original starter evidence and retained provenance",
+          "passed": true,
+          "detail": {
+            "entryId": "KB-YTO-LF-MANUAL-007",
+            "originalScopeRetained": true
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "selected model and expanded source have no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "width": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "explicit 2WD excludes unconfirmed source configuration and shows evidence gaps",
+          "passed": true,
+          "detail": {
+            "gapMessage": "当前层级的资料缺口\n发动机与进排气：当前没有归档的维护/故障类别条目，待补匹配资料。\n燃油系统：当前没有归档的维护/故障类别条目，待补匹配资料。\n发动机润滑：当前没有归档的维护/故障类别条目，待补匹配资料。\n驾驶室与防翻保护：当前没有归档的维护/故障类别条目，待补匹配资料。\n当前选择没有归档条目；不得据此判断机器正常或生成维修策略。\n该运行表现暂无本目录的关联证据；通用分类不提供其他机型的维修策略。\n已按明确的配置/驱动/排放元数据筛选；未登记这些条件的条目保留待核实，未作为匹配证据返回。"
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "model handoff is a draft with selected symptom and 2WD only",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "changing model clears previously selected configuration",
+          "passed": true
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "generic handoff clears old machine identity and configuration",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "both diagnosis handoffs never auto-send a request",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-mobile-dark",
+          "name": "no page script errors during tested flows",
+          "passed": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "scope": "Actual local production browser UI only; no external AI or website deployment; diagnosis handoffs remain drafts.",
+      "health": {
+        "ok": true,
+        "version": "3.4.4",
+        "timestamp": "2026-10-13T11:48:55.532Z",
+        "coordination": {
+          "defaultMode": "knowledge_only",
+          "configValid": true,
+          "allowExternalAi": false
+        },
+        "knowledge": {
+          "chunks": 1222,
+          "archivedEntries": 1213
+        },
+        "llm": {
+          "preference": "auto",
+          "configValid": true,
+          "configured": false,
+          "primary": null,
+          "proxyConfigured": true,
+          "providers": [
+            {
+              "provider": "gemini",
+              "model": "gemini-3.8-flash",
+              "configured": false
+            },
+            {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash",
+              "configured": false
+            }
+          ]
+        }
+      },
+      "durationSeconds": 73.94,
+      "summary": {
+        "combinations": 8,
+        "passedCombinations": 8,
+        "checks": 120,
+        "passedChecks": 120,
+        "failedChecks": 0
+      },
+      "screenshots_not_archived": true,
+      "screenshots_visually_inspected": true
+    }
+  },
+  "latest_main_validation": {
+    "project_version": "3.4.5",
+    "upstream_base": "8651e4ac0e01f17778383c5139f559531b71324a",
+    "preserved_upstream_model_ui": true,
+    "npm_ci": "passed; official npm lock retained",
+    "verify": {
+      "tests": 235,
+      "passed": 233,
+      "failed": 0,
+      "skipped": 2,
+      "result": "passed",
+      "version_type_lint_build": "passed",
+      "lint_errors": 0,
+      "lint_existing_warnings": 1
+    },
+    "http": {
+      "project_version": "3.4.5",
+      "upstream_base": "8651e4ac0e01f17778383c5139f559531b71324a",
+      "checks": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=starter-stopped",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=starter-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-start",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-power",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-unstable",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=engine-noise",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=smoke-dark",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=smoke-white",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=coolant-hot",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=coolant-reading-low",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=oil-pressure",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=oil-consumption",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=fuel-consumption",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=shift-difficult",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=drive-slip",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=vehicle-stopped",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=transmission-hot",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=lift-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=hitch-sinking",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=hydraulic-hot",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=remote-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=steering-heavy",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=steering-lost",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=brake-weak",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=brake-pull",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=brake-drag",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=charging",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=vehicle-power",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=lighting",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=axle-leak",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=tyre-wear",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=pto-slip",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=pto-release",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=cab-cooling",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=nav-position",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=nav-track",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=aftertreatment-alert",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-stopped",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-slow",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF804S&symptom=starter-stopped&driveConfiguration=2WD",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E7%BA%A6%E7%BF%B0%E8%BF%AA%E5%B0%94&model=5E-1004&symptom=engine-power&emissionStage=%E5%9B%BD%E5%9B%9B",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B9%85%E4%BF%9D%E7%94%B0&model=M6060&symptom=aftertreatment-alert&driveConfiguration=4WD",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B9%85%E4%BF%9D%E7%94%B0&model=M6060&symptom=aftertreatment-alert&driveConfiguration=2WD",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=does-not-exist",
+          "status": 404,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?brand=%E4%B8%9C%E6%96%B9%E7%BA%A2&model=LF1504%28G4%29",
+          "status": 404,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?model=LF804S",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?configuration=invalid",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?driveConfiguration=2WD&driveConfiguration=4WD",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/knowledge/catalog?symptom=",
+          "status": 400,
+          "result": "passed"
+        },
+        {
+          "path": "/api/chat",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/chat",
+          "status": 200,
+          "result": "passed"
+        },
+        {
+          "path": "/api/chat",
+          "status": 200,
+          "result": "passed"
+        }
+      ],
+      "count": 54,
+      "failures": 0,
+      "external_ai": false,
+      "health": {
+        "ok": true,
+        "version": "3.4.5",
+        "timestamp": "2026-10-13T11:55:07.409Z",
+        "coordination": {
+          "defaultMode": "knowledge_only",
+          "configValid": true,
+          "allowExternalAi": false
+        },
+        "knowledge": {
+          "chunks": 1222,
+          "archivedEntries": 1213
+        },
+        "llm": {
+          "preference": "auto",
+          "configValid": true,
+          "configured": false,
+          "primary": null,
+          "proxyConfigured": true,
+          "providers": [
+            {
+              "provider": "gemini",
+              "model": "gemini-3.8-flash",
+              "configured": false
+            },
+            {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash",
+              "configured": false
+            }
+          ]
+        }
+      },
+      "framework": {
+        "systems": 15,
+        "performance_targets": 36,
+        "symptoms": 37,
+        "matrix_cells": 216,
+        "linked_entries": 46,
+        "gap_cells": 95
+      }
+    },
+    "index_errors": 0,
+    "external_ai": false,
+    "deployment": false,
+    "field_validation": false,
+    "browser_smoke": {
+      "version": "3.4.5",
+      "scope": "Final production build smoke after integrating upstream PR #32. Historical 3.4.4 eight-combination report remains separate. No external AI calls or deployment.",
+      "combinations": [
+        {
+          "id": "new-desktop-light",
+          "width": 1440,
+          "theme": "light",
+          "pageErrors": [],
+          "chatRequests": [],
+          "footer": "AGRIDX\n南京农业大学工学院 · 农机知识与诊断\nv3.4.5\nSPATIAL EXPLORATION",
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        },
+        {
+          "id": "old-mobile-dark",
+          "width": 390,
+          "theme": "dark",
+          "pageErrors": [],
+          "chatRequests": [],
+          "footer": "耕知·耘诊\n\n耕知沉淀农机知识，耘诊连接故障与依据。从机型、组件到零部件，让诊断路径更清楚，让资料边界看得见。\n\n项目与资料\n南京农业大学农机智能诊断团队\n农机资料与适用范围\n项目迭代与验证记录\n© 2026 耕知·耘诊 · 农业机械智能诊断平台 · v3.4.5\n资料覆盖持续完善 · 现场处置请结合专业人员复核",
+          "selectedHandoff": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "genericHandoff": {
+            "brand": "",
+            "model": "",
+            "draft": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          },
+          "passed": true
+        }
+      ],
+      "checks": [
+        {
+          "combination": "new-desktop-light",
+          "name": "final browser build footer displays v3.4.5",
+          "passed": true,
+          "detail": "AGRIDX\n南京农业大学工学院 · 农机知识与诊断\nv3.4.5\nSPATIAL EXPLORATION"
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "common framework loads with 37 symptom choices",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "starter-stopped + LF804S expands correct original scoped evidence",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "knowledge page has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "viewport": 1440,
+            "scrollWidth": 1440
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "2WD remains an explicit configuration evidence gap",
+          "passed": true
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "selected model handoff retains only confirmed symptom and 2WD",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "generic tyre-wear draft has no four-wheel-drive inquiry or carried configuration",
+          "passed": true,
+          "detail": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "generic handoff clears old machine brand and model",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": ""
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "generic diagnosis page has no horizontal overflow",
+          "passed": true,
+          "detail": {
+            "viewport": 1440,
+            "scrollWidth": 1440
+          }
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "draft handoffs do not auto-send requests",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "new-desktop-light",
+          "name": "final smoke produces no page script errors",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "final browser build footer displays v3.4.5",
+          "passed": true,
+          "detail": "耕知·耘诊\n\n耕知沉淀农机知识，耘诊连接故障与依据。从机型、组件到零部件，让诊断路径更清楚，让资料边界看得见。\n\n项目与资料\n南京农业大学农机智能诊断团队\n农机资料与适用范围\n项目迭代与验证记录\n© 2026 耕知·耘诊 · 农业机械智能诊断平台 · v3.4.5\n资料覆盖持续完善 · 现场处置请结合专业人员复核"
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "common framework loads with 37 symptom choices",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "starter-stopped + LF804S expands correct original scoped evidence",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "knowledge page has no document horizontal overflow",
+          "passed": true,
+          "detail": {
+            "viewport": 390,
+            "scrollWidth": 390
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "2WD remains an explicit configuration evidence gap",
+          "passed": true
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "selected model handoff retains only confirmed symptom and 2WD",
+          "passed": true,
+          "detail": {
+            "brand": "东方红",
+            "model": "LF804S",
+            "draft": "起动机不转。已确认配置：2WD。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "generic tyre-wear draft has no four-wheel-drive inquiry or carried configuration",
+          "passed": true,
+          "detail": "轮胎或轮系异常磨损。请先核对本机资料和缺失的工况信息，再给出有来源的排查建议。"
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "generic handoff clears old machine brand and model",
+          "passed": true,
+          "detail": {
+            "brand": "",
+            "model": ""
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "generic diagnosis page has no horizontal overflow",
+          "passed": true,
+          "detail": {
+            "viewport": 390,
+            "scrollWidth": 390
+          }
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "draft handoffs do not auto-send requests",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "combination": "old-mobile-dark",
+          "name": "final smoke produces no page script errors",
+          "passed": true,
+          "detail": []
+        }
+      ],
+      "errors": [],
+      "health": {
+        "ok": true,
+        "version": "3.4.5",
+        "timestamp": "2026-10-13T11:56:42.809Z",
+        "coordination": {
+          "defaultMode": "knowledge_only",
+          "configValid": true,
+          "allowExternalAi": false
+        },
+        "knowledge": {
+          "chunks": 1222,
+          "archivedEntries": 1213
+        },
+        "llm": {
+          "preference": "auto",
+          "configValid": true,
+          "configured": false,
+          "primary": null,
+          "proxyConfigured": true,
+          "providers": [
+            {
+              "provider": "gemini",
+              "model": "gemini-3.8-flash",
+              "configured": false
+            },
+            {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash",
+              "configured": false
+            }
+          ]
+        }
+      },
+      "summary": {
+        "combinations": 2,
+        "passedCombinations": 2,
+        "checks": 22,
+        "passedChecks": 22,
+        "failedChecks": 0
+      },
+      "screenshots_not_archived": true
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "label_source": "assistant_authored_synthetic",
+    "review_state": "pending_domain_review",
+    "description": "本次助手依据关系定义逐对编写的合成期望样本；尚未经人类维护者或农机维修领域专家独立标注/复核。不是人工金标准，不用于声称真实准确率。",
+    "scope": "仅测试文本关系与保守审核保护，不构成可用于实际维修的指导。"
+  },
+  "pairs": [
+    {
+      "id": "exact-cross-source", "category": "cross_source", "expected_relation": "exact_duplicate", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：按手册要求给蓄电池充电"},
+      "right": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：按手册要求给蓄电池充电"},
+      "rationale": "独立来源引用相同内容、车型和条件；证据与来源编号本身不应妨碍候选。"
+    },
+    {
+      "id": "exact-punctuation", "category": "normalization", "expected_relation": "exact_duplicate", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难。\n- 原表可能原因：蓄电池电量不足。\n- 针对处理：给蓄电池充电。"},
+      "right": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电"},
+      "rationale": "句末标点不构成维修事实差异。"
+    },
+    {
+      "id": "synonym-battery", "category": "synonyms", "expected_relation": "semantic_duplicate", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电"},
+      "right": {"title": "起动困难", "model": "M1", "body": "- 故障现象：发动机起动困难\n- 可能原因：电瓶亏电\n- 维修建议：给电瓶充电"},
+      "rationale": "起动/启动及蓄电池/电瓶是表达变化，故障、原因、措施对应。"
+    },
+    {
+      "id": "synonym-filter", "category": "synonyms", "expected_relation": "semantic_duplicate", "candidate_expected": true,
+      "left": {"title": "动力不足", "model": "M1", "body": "- 故障现象：发动机动力不足\n- 原表可能原因：空气滤清器堵塞\n- 针对处理：清洁空气滤清器"},
+      "right": {"title": "动力不足", "model": "M1", "body": "- 故障现象：发动机动力不足\n- 可能原因：空滤堵塞\n- 维修建议：清洁空滤"},
+      "rationale": "空滤与空气滤清器仅术语表达不同。"
+    },
+    {
+      "id": "symptom-different-cause", "category": "same_symptom_different_cause", "expected_relation": "complementary", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电"},
+      "right": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：燃油滤清器堵塞\n- 针对处理：更换燃油滤清器"},
+      "rationale": "相同现象对应不同候选原因，不能合并为一条确诊结论。"
+    },
+    {
+      "id": "same-cause-different-action", "category": "same_cause_different_action", "expected_relation": "complementary", "candidate_expected": true,
+      "left": {"title": "接触不良", "model": "M1", "body": "- 故障现象：启动机不转\n- 原表可能原因：线路接头接触不良\n- 针对处理：检查并紧固松动接头"},
+      "right": {"title": "接触不良", "model": "M1", "body": "- 故障现象：启动机不转\n- 原表可能原因：线路接头接触不良\n- 针对处理：检查并清洁氧化接点"},
+      "rationale": "同原因名下的不同检查和措施分别保留，不能仅凭case_key判重复。"
+    },
+    {
+      "id": "partial-action-detail", "category": "containment", "expected_relation": "partial_overlap", "candidate_expected": true,
+      "left": {"title": "空气滤清器堵塞", "model": "M1", "body": "- 故障现象：发动机动力不足\n- 原表可能原因：空气滤清器堵塞\n- 针对处理：清洁空气滤清器"},
+      "right": {"title": "空气滤清器堵塞", "model": "M1", "body": "- 故障现象：发动机动力不足\n- 原表可能原因：空气滤清器堵塞\n- 针对处理：清洁空气滤清器，并检查密封圈"},
+      "rationale": "一侧明确包含另一侧措施且有额外步骤，不能直接当完全重复。"
+    },
+    {
+      "id": "scope-model", "category": "model", "expected_relation": "scope_variant", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电"},
+      "right": {"title": "启动困难", "model": "M2", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电"},
+      "rationale": "同样维修描述适用不同精确车型。"
+    },
+    {
+      "id": "scope-emission", "category": "emission", "expected_relation": "scope_variant", "candidate_expected": true,
+      "left": {"title": "动力不足", "model": "M1", "emission_stage": "国三", "body": "- 故障现象：发动机动力不足\n- 原表可能原因：空气滤清器堵塞\n- 针对处理：清洁空气滤清器"},
+      "right": {"title": "动力不足", "model": "M1", "emission_stage": "国四", "body": "- 故障现象：发动机动力不足\n- 原表可能原因：空气滤清器堵塞\n- 针对处理：清洁空气滤清器"},
+      "rationale": "排放阶段不同，不能跨条件合并。"
+    },
+    {
+      "id": "scope-cab", "category": "configuration", "expected_relation": "scope_variant", "candidate_expected": true,
+      "left": {"title": "检查电路", "model": "M1", "configuration": "CAB", "body": "- 手册事实：检查照明线路接头"},
+      "right": {"title": "检查电路", "model": "M1", "configuration": "ROPS", "body": "- 手册事实：检查照明线路接头"},
+      "rationale": "驾驶室与防翻架配置不能互相假设等价。"
+    },
+    {
+      "id": "scope-condition", "category": "operating_condition", "expected_relation": "scope_variant", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电\n- 适用条件：低温启动时"},
+      "right": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电\n- 适用条件：热机启动时"},
+      "rationale": "工况差异必须在报告中保留。"
+    },
+    {
+      "id": "numeric-pressure", "category": "numeric", "expected_relation": "uncertain", "candidate_expected": true,
+      "left": {"title": "检查压力", "model": "M1", "body": "- 手册事实：测试条件下压力为200 kPa"},
+      "right": {"title": "检查压力", "model": "M1", "body": "- 手册事实：测试条件下压力为300 kPa"},
+      "rationale": "数值差异需要回看原件，禁止被高相似度覆盖。"
+    },
+    {
+      "id": "numeric-unit", "category": "units", "expected_relation": "uncertain", "candidate_expected": true,
+      "left": {"title": "检查压力", "model": "M1", "body": "- 手册事实：测试条件下压力为200 kPa"},
+      "right": {"title": "检查压力", "model": "M1", "body": "- 手册事实：测试条件下压力为200 MPa"},
+      "rationale": "同数值不同单位有巨大事实差异。"
+    },
+    {
+      "id": "unit-conversion-unreviewed", "category": "units", "expected_relation": "uncertain", "candidate_expected": true,
+      "left": {"title": "检查压力", "model": "M1", "body": "- 手册事实：测试条件下压力为200 kPa"},
+      "right": {"title": "检查压力", "model": "M1", "body": "- 手册事实：测试条件下压力为0.2 MPa"},
+      "rationale": "轻量规则不自动推定单位换算后的证据等价，交人工审核。"
+    },
+    {
+      "id": "negation", "category": "negation", "expected_relation": "uncertain", "candidate_expected": true,
+      "left": {"title": "接通电源", "model": "M1", "body": "- 手册事实：检查前需要接通电源"},
+      "right": {"title": "接通电源", "model": "M1", "body": "- 手册事实：检查前不需要接通电源"},
+      "rationale": "否定词改变操作含义。"
+    },
+    {
+      "id": "safety-prohibition", "category": "safety", "expected_relation": "uncertain", "candidate_expected": true,
+      "left": {"title": "散热器盖安全", "model": "M1", "body": "- 手册事实：发动机运转时禁止打开散热器盖"},
+      "right": {"title": "散热器盖安全", "model": "M1", "body": "- 手册事实：发动机运转时可以打开散热器盖"},
+      "rationale": "安全禁令变化须人工确认，不能自动合并。"
+    },
+    {
+      "id": "missing-cause", "category": "missing_evidence", "expected_relation": "uncertain", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "- 故障现象：发动机启动困难\n- 针对处理：检查电路"},
+      "right": {"title": "起动费力", "model": "M1", "body": "- 故障现象：发动机起动困难\n- 针对处理：检查供油"},
+      "rationale": "没有明确原因，不能推断同因；高embedding分数也只能待核实。"
+    },
+    {
+      "id": "legacy-prose", "category": "legacy_format", "expected_relation": "uncertain", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "body": "发动机启动困难时应按手册排查电路及供油，原因待进一步检查。"},
+      "right": {"title": "启动困难", "model": "M1", "body": "出现发动机启动困难，应按手册检查供油和电路，尚不能确定原因。"},
+      "rationale": "旧式自由正文接受读取，但不臆造结构化故障原因。"
+    },
+    {
+      "id": "different-source-boundary", "category": "source_scope", "expected_relation": "scope_variant", "candidate_expected": true,
+      "left": {"title": "启动困难", "model": "M1", "source_boundary": "M1测试市场甲", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电"},
+      "right": {"title": "启动困难", "model": "M1", "source_boundary": "M1测试市场乙", "body": "- 故障现象：发动机启动困难\n- 原表可能原因：蓄电池电量不足\n- 针对处理：给蓄电池充电"},
+      "rationale": "来源市场边界不同，即便正文一致仍保留变体。"
+    },
+    {
+      "id": "unrelated-negative", "category": "unrelated", "expected_relation": "uncertain", "candidate_expected": false,
+      "left": {"title": "轮胎检查", "model": "M1", "body": "- 手册事实：检查轮胎外观损伤"},
+      "right": {"title": "无线配置", "model": "M1", "body": "- 手册事实：接收机无线参数由终端配置"},
+      "rationale": "无共同维修事实的对照样本，不作为候选召回分母的相关对。"
+    }
+  ]
+}

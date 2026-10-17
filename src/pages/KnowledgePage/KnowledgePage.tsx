@@ -1,9 +1,11 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Layers, Loader2, Search, TriangleAlert } from 'lucide-react';
 import EvidenceEntry from './EvidenceEntry';
+import CommonFrameworkBrowser from './CommonFrameworkBrowser';
 import { useLang } from '@/hooks/useLang';
 import { useKnowledgeCatalog } from '@/hooks/useKnowledgeCatalog';
 import type { CatalogEntry } from '@shared/knowledge-catalog';
+import { CATALOG_FILTER_KEYS } from '@shared/knowledge-catalog';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
 import '@/control-glass.css';
 
@@ -15,7 +17,7 @@ export default function KnowledgePage() {
   const [params, setParams] = useSearchParams();
   const filters = ['brand', 'model', 'component', 'part'] as const;
   const query = new URLSearchParams();
-  filters.forEach(key => { const value = params.get(key); if (value) query.set(key, value); });
+  CATALOG_FILTER_KEYS.forEach(key => { const value = params.get(key); if (value) query.set(key, value); });
   const { catalog, loading, failed, retry } = useKnowledgeCatalog(query.toString());
   const brand = catalog?.brands.find(item => item.id === params.get('brand'));
   const model = brand?.models.find(item => item.id === params.get('model'));
@@ -26,6 +28,7 @@ export default function KnowledgePage() {
     const next = new URLSearchParams(params);
     const index = filters.indexOf(key);
     filters.slice(index).forEach(item => next.delete(item));
+    if (key === 'brand' || key === 'model') ['configuration', 'driveConfiguration', 'emissionStage'].forEach(item => next.delete(item));
     if (value) next.set(key, value);
     setParams(next);
   };
@@ -33,7 +36,7 @@ export default function KnowledgePage() {
     machineType: model?.machineType === '待核实' ? '' : model?.machineType,
     brand: brand?.name,
     model: model?.scope === 'exact' ? model.name : '',
-    question: entry ? t(`关于${brand?.name || ''}${model?.name || ''}的“${entry.title}”，${INFORMATION_TYPES.has(entry.entryType) ? '请说明资料来源、适用范围与需要补充核实的信息。' : '请结合适用资料说明故障表现、排查顺序及处置策略。'}${model?.scope !== 'exact' ? '完整型号与配置待确认，请先提示我需要补充哪些信息。' : ''}`, `For ${brand?.name || ''} ${model?.name || ''}: ${entry.title}. ${INFORMATION_TYPES.has(entry.entryType) ? 'Explain the source, applicability and information that needs verification.' : 'Explain symptoms, troubleshooting and action from applicable sources.'}${model?.scope !== 'exact' ? ' The complete model and configuration need confirmation; ask me what is missing first.' : ''}`) : '',
+    question: entry ? t(`关于${brand?.name || ''}${model?.name || ''}的“${entry.title}”，${INFORMATION_TYPES.has(entry.entryType) ? '请说明资料来源、适用范围与需要补充核实的信息。' : '请结合适用资料说明故障表现、排查顺序及处置策略。'}${model?.scope !== 'exact' ? '完整型号与配置待确认，请先提示我需要补充哪些信息。' : ''}`, `For ${brand?.name || ''} ${model?.name || ''}: ${entry.title}. ${INFORMATION_TYPES.has(entry.entryType) ? 'Explain the source, applicability and information that needs verification.' : 'Explain symptoms, troubleshooting and action from applicable sources.'}${model?.scope !== 'exact' ? ' The complete model and configuration need confirmation; ask me what is missing first.' : ''}`) + ` ${['configuration', 'driveConfiguration', 'emissionStage'].map(key => params.get(key)).filter(Boolean).join(' ')}` : '',
   });
   const scopeLabel = model?.scope === 'exact' ? t('具体型号目录 · 配置仍需核对', 'Specific-model directory · check configuration') : model?.scope === 'series' ? t('系列资料 · 不等同于全部型号', 'Series documents · not every individual model') : t('完整型号待核实', 'Complete model needs verification');
 
@@ -54,6 +57,14 @@ export default function KnowledgePage() {
         ].map(([value, label]) => <div key={String(label)}><strong>{typeof value === 'number' ? value.toLocaleString() : '—'}</strong><span>{label}</span></div>)}
       </div>
 
+      {!loading && !failed && catalog?.common && <CommonFrameworkBrowser framework={catalog.common} lang={lang}
+        diagnosisState={{ ...machineState(), configurationText: ['configuration', 'driveConfiguration', 'emissionStage'].map(key => params.get(key)).filter(Boolean).join(' ') }} onSymptomChange={id => {
+          const next = new URLSearchParams(params);
+          next.delete('component'); next.delete('part');
+          if (id) next.set('symptom', id); else next.delete('symptom');
+          setParams(next);
+        }} />}
+
       <section className="catalog-filter-section" aria-labelledby="catalog-select-heading">
         <LiquidGlass variant="regular" className="catalog-browser catalog-filter-glass" contentClassName="catalog-filter-content">
         <div className="catalog-browser-top"><h2 id="catalog-select-heading"><Search size={18} />{t('找到你的农机', 'Find your machine')}</h2><button onClick={() => setParams({})} className="catalog-reset">{t('重置选择', 'Reset selection')}</button></div>
@@ -63,6 +74,19 @@ export default function KnowledgePage() {
           <label><span>03 {t('组件', 'Component')}</span><select aria-label={t('知识浏览组件', 'Knowledge component')} value={component?.id || ''} onChange={event => updateFilter('component', event.target.value)} disabled={!model || loading}><option value="">{t('查看全部组件', 'All components')}</option>{model?.components.map(item => <option key={item.id} value={item.id}>{item.name} · {item.entryCount ? t(`${item.entryCount} 条`, `${item.entryCount} entries`) : t('待补资料', 'Missing evidence')}</option>)}</select></label>
           <label><span>04 {t('零部件', 'Part')}</span><select aria-label={t('知识浏览零部件', 'Knowledge part')} value={part?.id || ''} onChange={event => updateFilter('part', event.target.value)} disabled={!component || !component.parts.length || loading}><option value="">{component && !component.parts.length ? t('待细分零部件', 'Parts not yet identified') : t('查看全部零部件', 'All identified parts')}</option>{component?.parts.map(item => <option key={item.id} value={item.id}>{item.name} · {item.entryCount}{t(' 条', ' entries')}</option>)}</select></label>
         </div>
+        {model && <div className="catalog-selectors common-conditions">
+          {[
+            ['configuration', t('驾驶室 / 防翻架', 'CAB / ROPS'), [['CAB', 'CAB'], ['ROPS', 'ROPS']]],
+            ['driveConfiguration', t('驱动配置', 'Drive configuration'), [['2WD', t('两驱', '2WD')], ['4WD', t('四驱', '4WD')]]],
+            ['emissionStage', t('排放阶段', 'Emission stage'), [['国三', t('国三', 'China III')], ['国四', t('国四', 'China IV')]]],
+          ].map(([key, label, choices]) => <label key={String(key)}><span>{String(label)}</span><select aria-label={String(label)}
+            value={params.get(String(key)) || ''} onChange={event => {
+              const next = new URLSearchParams(params);
+              if (event.target.value) next.set(String(key), event.target.value); else next.delete(String(key));
+              setParams(next);
+            }} disabled={loading}><option value="">{t('待确认', 'Unconfirmed')}</option>
+              {(choices as string[][]).map(([value, name]) => <option key={value} value={value}>{name}</option>)}</select></label>)}
+        </div>}
         </LiquidGlass>
       </section>
 

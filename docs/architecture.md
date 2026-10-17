@@ -37,7 +37,27 @@ flowchart LR
 
 HTTP 路由只做传输边界；诊断用例保留来源编号、定位、手册版本与适用范围，不将模型通用分析或品牌匹配当作确诊。知识原件和索引不随架构整理改写；修改知识时继续遵守其目录规范。
 
+3.6.0 的 `server/diagnosis/router.ts` 在一次已完成的检索结果上执行无副作用决策；`service.ts` 复用结果生成本地或 AI 答复。覆盖标签与检索文本在知识导入时计算，短期缓存只保存公开静态片段；来源、限制和正文按完整块计入上下文预算。安全降级、必要追问、可靠来源和原始分数的边界及性能验收见[诊断路由说明](diagnosis-router.md)。
+
 ## 初始化与入口
+
+### 共享知识快照
+
+`server/knowledge/snapshot.ts` 是生产知识初始化的统一入口。它一次读取通用 Markdown、归档条目、来源记录和层级索引，完成原有归档与目录校验后，发布只读快照。`retriever.ts` 的检索和统计、`catalog.ts` 的目录均使用该快照；先调用任一加载入口，后续初始化调用都复用已验证数据，不再重复读取归档和来源。`catalog-data.ts` 只负责从已加载数据构造目录，不执行文件读取。
+
+```mermaid
+flowchart LR
+  Original[知识原件与既有索引] --> Snapshot[统一读取、校验、冻结]
+  Snapshot --> Retrieval[检索与来源引用]
+  Snapshot --> Catalog[品牌、型号、组件目录]
+  Snapshot --> Stats[健康接口知识统计]
+```
+
+`loadKnowledgeBase()`、`loadKnowledgeCatalog()`、`getKnowledgeCatalog()`、`retrieve()` 和 `stats()` 保留原有调用与响应协议。型号、配置、排放范围、来源编号、章节定位和手册版本继续使用原数据与原筛选规则。快照和返回的目录数据被冻结，防止调用者修改缓存证据。
+
+需要进程内重新读取时，显式调用 `reloadKnowledgeSnapshot()`。只有全部读取和校验成功后，才一起切换检索、目录、统计与型号识别；失败会抛出异常并保留上一份可用快照。首次读取失败则阻止初始化，避免提供部分知识。通用 Markdown 的读取错误也按此规则处理，不再跳过损坏文件。独立 `loadArchive()` 默认仍配置型号以保留兼容性；生产消费者应使用快照，隔离测试可传入 `{ configureModels: false }`。
+
+`tests/knowledge-snapshot.test.ts` 验证重复入口的读取次数、证据和目录只读保护、配置隔离、重载成功整体切换及失败时的数据与型号识别回退。浏览器开发预览继续使用既有文件系统替代实现，无新增生产接口。
 
 `server.ts` 是 `npm run dev` / `npm start` 共用入口，依次创建运行依赖、装配 API、挂载开发 Vite 或生产静态前端，再监听端口。初始化读取既有进程环境、根 `.env`、`server/.env`，配置代理后再构造模型实例。健康状态只表明配置是否存在，不表示上游鉴权或连接通过。
 

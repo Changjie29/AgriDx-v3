@@ -24,6 +24,8 @@ export interface ChatRequest {
   machineType?: string;
   brand?: string;
   model?: string;
+  engineModel?: string;
+  faultCodes?: string[];
 }
 
 export interface ChatKnowledgeSource {
@@ -35,11 +37,12 @@ export interface ChatKnowledgeSource {
   version?: string;
   applicability?: 'matched' | 'pending';
   status?: string;
-  referenceVerification?: 'verified' | 'pending' | 'unverified' | 'unspecified';
+  referenceVerification?: 'verified' | 'pending' | 'unverified' | 'unspecified' | 'failed';
   sourceIndexed?: boolean;
 }
 
 export interface ChatResponse {
+  diagnosisTrace?: DiagnosisTrace;
   coordination?: CoordinationDecision;
   coordinationMessage?: string;
   localSummary?: string;
@@ -53,6 +56,18 @@ export interface ChatResponse {
   knowledgeChunks: number;
   knowledgeSources: ChatKnowledgeSource[];
   fallbackReason?: FallbackReason;
+}
+
+/** Timing is measured on the executing server; scores are retrieval matches, not accuracy. */
+export interface DiagnosisTrace {
+  retrievalCount: number;
+  aiAttempts: number;
+  aiSuccesses: number;
+  aiProvider: 'gemini' | 'deepseek' | null;
+  scoreMethod: 'keyword-weighted-overlap';
+  contextChars: number;
+  sentKnowledgeIds: string[];
+  timings: { retrievalMs: number; decisionMs: number; externalAiMs: number; totalMs: number };
 }
 
 export interface LlmHealth {

@@ -1,0 +1,1314 @@
+{
+  "capturedAt": "2026-10-13T10:12:24.764436+00:00",
+  "environment": "Local NODE_ENV=production; real Express listener, no external provider credentials/calls; fixed public test inputs, not user records",
+  "checks": 12,
+  "requests": [
+    {
+      "path": "/api/health",
+      "request": null,
+      "status": 200,
+      "response": {
+        "ok": true,
+        "version": "3.6.0",
+        "timestamp": "2026-10-13T10:12:24.645Z",
+        "coordination": {
+          "defaultMode": "auto",
+          "configValid": true,
+          "allowExternalAi": true,
+          "highRelevanceThreshold": 8,
+          "mediumRelevanceThreshold": 3
+        },
+        "knowledge": {
+          "chunks": 1222,
+          "archivedEntries": 1213
+        },
+        "llm": {
+          "preference": "auto",
+          "configValid": true,
+          "configured": false,
+          "primary": null,
+          "proxyConfigured": true,
+          "providers": [
+            {
+              "provider": "gemini",
+              "model": "gemini-3.8-flash",
+              "configured": false
+            },
+            {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash",
+              "configured": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "纽荷兰",
+        "model": "WORKMASTER25",
+        "diagnosisMode": "auto",
+        "messages": [
+          {
+            "role": "user",
+            "content": "钥匙在 START，启动电机不转"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【服务状态】**\n当前未启用外部模型，本次仅提供本地资料和信息补充建议。\n\n**【故障现象分析】**\n收到关于「拖拉机 纽荷兰 WORKMASTER25」的咨询：“钥匙在 START，启动电机不转”。\n\n**【当前资料不足】**\n未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。\n\n**【需要补充】**\n- 故障是在启动、行驶还是带机具作业时出现？出现前是否有保养、更换或碰撞？\n- 请记录异常位置、报警／故障代码及伴随现象，并确认出厂配置与版本。\n\n**【安全提醒】**\n故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。\n\n**【参考资料 · 适用或核验仍待确认】**\n- NH-WM25-003／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 175 页／印刷第 8-1 页；PDF 第 85～86 页／印刷第 4-11～4-12 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n- NH-WM25-004／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 85～86 页；印刷第 4-11～4-12 页；PDF 第 175 页；印刷第 8-1 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n- NH-WM25-001／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 20～21 页；印刷第 2-2～2-3 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n上述资料只作来源参考，本次不展示其具体操作步骤或参数。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": true,
+        "fallbackReason": "not_configured",
+        "knowledgeChunks": 3,
+        "knowledgeSources": [
+          {
+            "entryId": "NH-WM25-003",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-003｜钥匙在 START，启动电机不转",
+            "locator": "- 证据：SRC-NH-WM25-92157408，Engine troubleshooting；PDF 第 175 页／印刷第 8-1 页；配置校核见 Starting the engine，PDF 第 85～86 页／印刷第 4-11～4-12 页。安全见 NH-WM25-001。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "NH-WM25-004",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-004｜启动电机能转，但发动机不着火",
+            "locator": "- 连续操作启动电机不得超过 10 秒；这不是保证可以无限次重复启动。证据：PDF 第 85～86 页；印刷第 4-11～4-12 页。；- 故障证据：SRC-NH-WM25-92157408，Engine troubleshooting；PDF 第 175 页；印刷第 8-1 页。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "NH-WM25-001",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-001｜启动与维护安全",
+            "locator": "- 证据：SRC-NH-WM25-92157408，Safety rules；PDF 第 20～21 页；印刷第 2-2～2-3 页。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "local-evidence",
+        "localSummary": "**【服务状态】** 当前未启用大模型，本次只有本地检索，没有模型补充分析。\n\n**【继续确认】** 已记下：纽荷兰 WORKMASTER25。当前关注：钥匙在 START，启动电机不转。\n\n**【本地资料】** 未找到能直接支持本次诊断的匹配手册。信息收集提示不作为维修依据。\n\n**【先确认两点】**\n1. 是否有报警或故障码？请提供原文。\n2. 问题在什么工况下出现，有哪些同时发生的现象？\n\n**【提醒】** 不必为回答问题新增试车或拆检；出现危险征兆时停止作业并联系专业维修人员。\n\n参考来源：NH-WM25-003、NH-WM25-004、NH-WM25-001。核验或适用条件待确认；请展开查看来源和限制，本次不据此提供维修步骤。",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "local",
+          "reason": "llm_not_configured",
+          "evidenceLevel": "partial",
+          "llmConfigured": false,
+          "knowledgeIds": [
+            "NH-WM25-003",
+            "NH-WM25-004",
+            "NH-WM25-001"
+          ],
+          "aiRequired": false,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "NH-WM25-003",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 25.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "NH-WM25-004",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 13.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "NH-WM25-001",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 4,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-NH-WM25-20261013-014",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 1.9500000000000002,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "low"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": true
+            },
+            {
+              "entryId": "KB-NH-WM25-20261013-068",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 1.3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "low"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": true
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "NH-WM25-003",
+            "NH-WM25-004",
+            "NH-WM25-001"
+          ],
+          "excludedKnowledgeIds": [
+            "KB-NH-WM25-20261013-014",
+            "KB-NH-WM25-20261013-068"
+          ]
+        },
+        "coordinationMessage": "本次需要进一步分析，但尚未配置外部 AI；先展示本地资料和追问。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 19.6424410000036,
+            "decisionMs": 2.373167999998259,
+            "externalAiMs": 0,
+            "totalMs": 36.22578400000202
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "纽荷兰",
+        "model": "WORKMASTER25",
+        "diagnosisMode": "knowledge_only",
+        "messages": [
+          {
+            "role": "user",
+            "content": "钥匙在 START，启动电机不转"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【故障现象分析】**\n收到关于「拖拉机 纽荷兰 WORKMASTER25」的咨询：“钥匙在 START，启动电机不转”。\n\n**【当前资料不足】**\n未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。\n\n**【需要补充】**\n- 故障是在启动、行驶还是带机具作业时出现？出现前是否有保养、更换或碰撞？\n- 请记录异常位置、报警／故障代码及伴随现象，并确认出厂配置与版本。\n\n**【安全提醒】**\n故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。\n\n**【参考资料 · 适用或核验仍待确认】**\n- NH-WM25-003／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 175 页／印刷第 8-1 页；PDF 第 85～86 页／印刷第 4-11～4-12 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n- NH-WM25-004／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 85～86 页；印刷第 4-11～4-12 页；PDF 第 175 页；印刷第 8-1 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n- NH-WM25-001／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 20～21 页；印刷第 2-2～2-3 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n上述资料只作来源参考，本次不展示其具体操作步骤或参数。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 3,
+        "knowledgeSources": [
+          {
+            "entryId": "NH-WM25-003",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-003｜钥匙在 START，启动电机不转",
+            "locator": "- 证据：SRC-NH-WM25-92157408，Engine troubleshooting；PDF 第 175 页／印刷第 8-1 页；配置校核见 Starting the engine，PDF 第 85～86 页／印刷第 4-11～4-12 页。安全见 NH-WM25-001。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "NH-WM25-004",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-004｜启动电机能转，但发动机不着火",
+            "locator": "- 连续操作启动电机不得超过 10 秒；这不是保证可以无限次重复启动。证据：PDF 第 85～86 页；印刷第 4-11～4-12 页。；- 故障证据：SRC-NH-WM25-92157408，Engine troubleshooting；PDF 第 175 页；印刷第 8-1 页。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "NH-WM25-001",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-001｜启动与维护安全",
+            "locator": "- 证据：SRC-NH-WM25-92157408，Safety rules；PDF 第 20～21 页；印刷第 2-2～2-3 页。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "local-evidence",
+        "localSummary": "**【服务状态】** 本次直接使用本地资料，未调用外部 AI。\n\n**【继续确认】** 已记下：纽荷兰 WORKMASTER25。当前关注：钥匙在 START，启动电机不转。\n\n**【本地资料】** 未找到能直接支持本次诊断的匹配手册。信息收集提示不作为维修依据。\n\n**【先确认两点】**\n1. 是否有报警或故障码？请提供原文。\n2. 问题在什么工况下出现，有哪些同时发生的现象？\n\n**【提醒】** 不必为回答问题新增试车或拆检；出现危险征兆时停止作业并联系专业维修人员。\n\n参考来源：NH-WM25-003、NH-WM25-004、NH-WM25-001。核验或适用条件待确认；请展开查看来源和限制，本次不据此提供维修步骤。",
+        "coordination": {
+          "requestedMode": "knowledge_only",
+          "effectiveMode": "knowledge_only",
+          "route": "local",
+          "reason": "local_requested",
+          "evidenceLevel": "partial",
+          "llmConfigured": false,
+          "knowledgeIds": [
+            "NH-WM25-003",
+            "NH-WM25-004",
+            "NH-WM25-001"
+          ],
+          "aiRequired": false,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "NH-WM25-003",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 25.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "NH-WM25-004",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 13.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "NH-WM25-001",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 4,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-NH-WM25-20261013-014",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 1.9500000000000002,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "low"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": true
+            },
+            {
+              "entryId": "KB-NH-WM25-20261013-068",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 1.3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "low"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": true
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "NH-WM25-003",
+            "NH-WM25-004",
+            "NH-WM25-001"
+          ],
+          "excludedKnowledgeIds": [
+            "KB-NH-WM25-20261013-014",
+            "KB-NH-WM25-20261013-068"
+          ]
+        },
+        "coordinationMessage": "按你的选择，仅使用本地知识库。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.050186000000394415,
+            "decisionMs": 0.6529119999977411,
+            "externalAiMs": 0,
+            "totalMs": 3.019480000002659
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "纽荷兰",
+        "model": "WORKMASTER25",
+        "diagnosisMode": "ai_assisted",
+        "messages": [
+          {
+            "role": "user",
+            "content": "钥匙在 START，启动电机不转"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【服务状态】**\n当前未启用外部模型，本次仅提供本地资料和信息补充建议。\n\n**【故障现象分析】**\n收到关于「拖拉机 纽荷兰 WORKMASTER25」的咨询：“钥匙在 START，启动电机不转”。\n\n**【当前资料不足】**\n未检索到与问题及已知机型相符的知识条目，不能据此确定原因或提供操作参数。\n\n**【需要补充】**\n- 故障是在启动、行驶还是带机具作业时出现？出现前是否有保养、更换或碰撞？\n- 请记录异常位置、报警／故障代码及伴随现象，并确认出厂配置与版本。\n\n**【安全提醒】**\n故障原因未确认前不要继续危险作业、绕过安全装置或盲目拆修。电动／无人机型请按本机安全规程处理，并联系具备相应资质的维修人员。\n\n**【参考资料 · 适用或核验仍待确认】**\n- NH-WM25-003／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 175 页／印刷第 8-1 页；PDF 第 85～86 页／印刷第 4-11～4-12 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n- NH-WM25-004／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 85～86 页；印刷第 4-11～4-12 页；PDF 第 175 页；印刷第 8-1 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n- NH-WM25-001／SRC-NH-WM25-92157408；2023-11，92157408；PDF 第 20～21 页；印刷第 2-2～2-3 页；核验状态：沿用既有原文核对条目。\n  适用限制：北美版，不适用于25S；既有补充资料\n- 仅适用于此版 WORKMASTER 25 手册覆盖的配置；不适用于 WORKMASTER 25S、35/40 或未经确认的其他市场机型。机械变速、HST 和中置 PTO 选装项需逐车确认；精确序列号范围待核实。\n- 整理日期：2026-10-01；状态：选摘已对照原文和关键表格图像，未经厂家复核／实车验证。共 8 条；英文内容为中文事实摘要，不是授权译本或完整维修步骤。各条继承上述来源与配置限制。\n匹配型号、市场、配置后使用。\n上述资料只作来源参考，本次不展示其具体操作步骤或参数。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": true,
+        "fallbackReason": "not_configured",
+        "knowledgeChunks": 3,
+        "knowledgeSources": [
+          {
+            "entryId": "NH-WM25-003",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-003｜钥匙在 START，启动电机不转",
+            "locator": "- 证据：SRC-NH-WM25-92157408，Engine troubleshooting；PDF 第 175 页／印刷第 8-1 页；配置校核见 Starting the engine，PDF 第 85～86 页／印刷第 4-11～4-12 页。安全见 NH-WM25-001。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "NH-WM25-004",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-004｜启动电机能转，但发动机不着火",
+            "locator": "- 连续操作启动电机不得超过 10 秒；这不是保证可以无限次重复启动。证据：PDF 第 85～86 页；印刷第 4-11～4-12 页。；- 故障证据：SRC-NH-WM25-92157408，Engine troubleshooting；PDF 第 175 页；印刷第 8-1 页。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          },
+          {
+            "entryId": "NH-WM25-001",
+            "sourceId": "SRC-NH-WM25-92157408",
+            "source": "知识库/整理后的知识库/拖拉机/纽荷兰/WORKMASTER25.md",
+            "heading": "NH-WM25-001｜启动与维护安全",
+            "locator": "- 证据：SRC-NH-WM25-92157408，Safety rules；PDF 第 20～21 页；印刷第 2-2～2-3 页。",
+            "version": "2023-11，92157408",
+            "applicability": "matched",
+            "status": "沿用既有原文核对条目",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": true
+          }
+        ],
+        "answerMode": "local-evidence",
+        "localSummary": "**【服务状态】** 当前未启用大模型，本次只有本地检索，没有模型补充分析。\n\n**【继续确认】** 已记下：纽荷兰 WORKMASTER25。当前关注：钥匙在 START，启动电机不转。\n\n**【本地资料】** 未找到能直接支持本次诊断的匹配手册。信息收集提示不作为维修依据。\n\n**【先确认两点】**\n1. 是否有报警或故障码？请提供原文。\n2. 问题在什么工况下出现，有哪些同时发生的现象？\n\n**【提醒】** 不必为回答问题新增试车或拆检；出现危险征兆时停止作业并联系专业维修人员。\n\n参考来源：NH-WM25-003、NH-WM25-004、NH-WM25-001。核验或适用条件待确认；请展开查看来源和限制，本次不据此提供维修步骤。",
+        "coordination": {
+          "requestedMode": "ai_assisted",
+          "effectiveMode": "ai_assisted",
+          "route": "local",
+          "reason": "llm_not_configured",
+          "evidenceLevel": "partial",
+          "llmConfigured": false,
+          "knowledgeIds": [
+            "NH-WM25-003",
+            "NH-WM25-004",
+            "NH-WM25-001"
+          ],
+          "aiRequired": false,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "entryId": "NH-WM25-003",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 25.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "NH-WM25-004",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 13.95,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "high"
+              },
+              "coverage": {
+                "symptom": true,
+                "causes": true,
+                "checks": true,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "low",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "NH-WM25-001",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 4,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "entryId": "KB-NH-WM25-20261013-014",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 1.9500000000000002,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "low"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": true
+            },
+            {
+              "entryId": "KB-NH-WM25-20261013-068",
+              "sourceId": "SRC-NH-WM25-92157408",
+              "relevance": {
+                "score": 1.3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "low"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "exact",
+              "referenceVerification": "verified",
+              "verificationBasis": "document-review",
+              "sourceIndexed": true,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": true
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [
+            "NH-WM25-003",
+            "NH-WM25-004",
+            "NH-WM25-001"
+          ],
+          "excludedKnowledgeIds": [
+            "KB-NH-WM25-20261013-014",
+            "KB-NH-WM25-20261013-068"
+          ]
+        },
+        "coordinationMessage": "本次需要进一步分析，但尚未配置外部 AI；先展示本地资料和追问。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.03917899999942165,
+            "decisionMs": 0.3386389999941457,
+            "externalAiMs": 0,
+            "totalMs": 2.290252999999211
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "diagnosisMode": "auto",
+        "machineType": "拖拉机",
+        "messages": [
+          {
+            "role": "user",
+            "content": "制动失灵怎么办"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 0,
+        "knowledgeSources": [],
+        "answerMode": "local-evidence",
+        "localSummary": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "safe",
+          "reason": "high_risk_insufficient_evidence",
+          "evidenceLevel": "none",
+          "llmConfigured": false,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "high",
+          "requiredCoverage": [
+            "symptom",
+            "checks",
+            "repair"
+          ],
+          "candidates": [],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "涉及高风险系统且可靠依据不足；本次仅返回停机与安全确认提示，不调用外部 AI。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 15.908086999996158,
+            "decisionMs": 0.41717700000299374,
+            "externalAiMs": 0,
+            "totalMs": 18.135376000005635
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "diagnosisMode": "knowledge_only",
+        "machineType": "拖拉机",
+        "messages": [
+          {
+            "role": "user",
+            "content": "制动失灵怎么办"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 0,
+        "knowledgeSources": [],
+        "answerMode": "local-evidence",
+        "localSummary": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。",
+        "coordination": {
+          "requestedMode": "knowledge_only",
+          "effectiveMode": "knowledge_only",
+          "route": "safe",
+          "reason": "high_risk_insufficient_evidence",
+          "evidenceLevel": "none",
+          "llmConfigured": false,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "high",
+          "requiredCoverage": [
+            "symptom",
+            "checks",
+            "repair"
+          ],
+          "candidates": [],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "涉及高风险系统且可靠依据不足；本次仅返回停机与安全确认提示，不调用外部 AI。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.02560799999628216,
+            "decisionMs": 0.2332509999978356,
+            "externalAiMs": 0,
+            "totalMs": 1.549951000000874
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "diagnosisMode": "ai_assisted",
+        "machineType": "拖拉机",
+        "messages": [
+          {
+            "role": "user",
+            "content": "制动失灵怎么办"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 0,
+        "knowledgeSources": [],
+        "answerMode": "local-evidence",
+        "localSummary": "**【安全处置优先】**\n本次问题涉及制动、转向、动力输出、高压或其他尚未排除的维修风险。请停止危险作业，按本机安全规程安全停机并联系具备相应资质的维修人员。不要带压、带电拆检，不要绕过安全联锁或在悬空机具下作业。\n\n**【需要补充】**\n请记录故障发生条件、报警或故障码及已观察到的现象；品牌、完整型号及必要配置尚未明确时，请同时确认。匹配资料也不代表风险已经解除，本次不提供拆解、调压或试操作步骤。",
+        "coordination": {
+          "requestedMode": "ai_assisted",
+          "effectiveMode": "ai_assisted",
+          "route": "safe",
+          "reason": "high_risk_insufficient_evidence",
+          "evidenceLevel": "none",
+          "llmConfigured": false,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "high",
+          "requiredCoverage": [
+            "symptom",
+            "checks",
+            "repair"
+          ],
+          "candidates": [],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "涉及高风险系统且可靠依据不足；本次仅返回停机与安全确认提示，不调用外部 AI。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.020469999995839316,
+            "decisionMs": 0.2309979999990901,
+            "externalAiMs": 0,
+            "totalMs": 1.6876869999978226
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "machineType": "拖拉机",
+        "messages": [
+          {
+            "role": "user",
+            "content": "故障码是什么意思"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【需要补充】** 请提供品牌和铭牌上的完整型号，再核对故障码或参数。不能用其他型号的数据代替。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 5,
+        "knowledgeSources": [
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "四、液压系统故障",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "五、电气系统故障",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "一、发动机水温过高（开锅）",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "二、发动机启动困难 / 不能启动",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          },
+          {
+            "source": "01_通用原理/通用故障诊断.md",
+            "heading": "六、制动与转向",
+            "referenceVerification": "unspecified",
+            "sourceIndexed": false
+          }
+        ],
+        "answerMode": "local-evidence",
+        "localSummary": "**【需要补充】** 请提供品牌和铭牌上的完整型号，再核对故障码或参数。不能用其他型号的数据代替。",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "clarify",
+          "reason": "identity_required",
+          "evidenceLevel": "none",
+          "llmConfigured": false,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [
+            {
+              "relevance": {
+                "score": 5,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 5,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "unknown",
+              "directEligible": false,
+              "excluded": false
+            },
+            {
+              "relevance": {
+                "score": 3,
+                "method": "keyword-weighted-overlap",
+                "calibrated": false,
+                "level": "medium"
+              },
+              "coverage": {
+                "symptom": false,
+                "causes": false,
+                "checks": false,
+                "repair": false
+              },
+              "coverageSufficient": false,
+              "modelMatch": "unknown",
+              "referenceVerification": "unspecified",
+              "verificationBasis": "none",
+              "sourceIndexed": false,
+              "riskLevel": "high",
+              "directEligible": false,
+              "excluded": false
+            }
+          ],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "解释专用故障码或参数需要品牌和完整型号，本次先追问。",
+        "diagnosisTrace": {
+          "retrievalCount": 1,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 16.477162999995926,
+            "decisionMs": 0.5270630000013625,
+            "externalAiMs": 0,
+            "totalMs": 18.24107499999809
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "纽荷兰",
+        "model": "WORKMASTER25",
+        "messages": [
+          {
+            "role": "user",
+            "content": "纽荷兰 WORKMASTER25启动电机不转"
+          },
+          {
+            "role": "user",
+            "content": "不是纽荷兰"
+          }
+        ]
+      },
+      "status": 200,
+      "response": {
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "**【需要确认机型】** 请确认本次设备的品牌、完整型号及发动机信息；确认前暂停引用冲突资料。"
+            }
+          }
+        ],
+        "model": "kb-rag-engine (本地知识引擎)",
+        "provider": "knowledge-base",
+        "fellBack": false,
+        "knowledgeChunks": 0,
+        "knowledgeSources": [],
+        "answerMode": "local-evidence",
+        "localSummary": "**【需要确认机型】** 请确认本次设备的品牌、完整型号及发动机信息；确认前暂停引用冲突资料。",
+        "coordination": {
+          "requestedMode": "auto",
+          "effectiveMode": "auto",
+          "route": "clarify",
+          "reason": "identity_conflict",
+          "evidenceLevel": "none",
+          "llmConfigured": false,
+          "knowledgeIds": [],
+          "aiRequired": false,
+          "riskLevel": "unknown",
+          "requiredCoverage": [
+            "symptom",
+            "causes",
+            "checks",
+            "repair"
+          ],
+          "candidates": [],
+          "directEligibleIds": [],
+          "referenceOnlyIds": [],
+          "excludedKnowledgeIds": []
+        },
+        "coordinationMessage": "机型信息有冲突，先确认设备，本次不调用外部 AI。",
+        "diagnosisTrace": {
+          "retrievalCount": 0,
+          "aiAttempts": 0,
+          "aiSuccesses": 0,
+          "aiProvider": null,
+          "scoreMethod": "keyword-weighted-overlap",
+          "contextChars": 0,
+          "sentKnowledgeIds": [],
+          "timings": {
+            "retrievalMs": 0.0007209999967017211,
+            "decisionMs": 0.3390900000013062,
+            "externalAiMs": 0,
+            "totalMs": 4.904253000000608
+          }
+        }
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "纽荷兰",
+        "model": "WORKMASTER25",
+        "engineModel": 42,
+        "messages": [
+          {
+            "role": "user",
+            "content": "启动困难原因"
+          }
+        ]
+      },
+      "status": 400,
+      "response": {
+        "error": "农机类型、品牌和型号必须为字符串（各上限 100 字符）",
+        "code": "bad_request"
+      }
+    },
+    {
+      "path": "/api/chat",
+      "request": {
+        "machineType": "拖拉机",
+        "brand": "纽荷兰",
+        "model": "WORKMASTER25",
+        "faultCodes": [
+          ""
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "content": "启动困难原因"
+          }
+        ]
+      },
+      "status": 400,
+      "response": {
+        "error": "故障码必须为非空文本数组（最多20个，各上限32字符）",
+        "code": "bad_request"
+      }
+    },
+    {
+      "path": "/api/knowledge/catalog?brand=%E7%BA%BD%E8%8D%B7%E5%85%B0&model=WORKMASTER25",
+      "request": null,
+      "status": 200,
+      "responseSummary": {
+        "totals": {
+          "entries": 1213,
+          "sources": 26,
+          "brands": 15,
+          "models": 97,
+          "faultEntries": 313,
+          "mappedEntries": 1213
+        },
+        "topLevelFields": [
+          "totals",
+          "expansion",
+          "brands",
+          "limitations",
+          "selected"
+        ],
+        "note": "Catalog response summarized to avoid copying the full existing knowledge hierarchy; status and assertions were checked against the actual response."
+      }
+    }
+  ]
+}

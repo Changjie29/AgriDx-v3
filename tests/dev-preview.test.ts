@@ -12,12 +12,28 @@ import { createDiagnosticService } from '../server/diagnosis/service';
 import { parseDiagnosticRequest } from '../server/diagnosis/request';
 import { createReadOnlyFileSystem } from '../src/dev-preview/filesystem.mjs';
 import browserPath from '../src/dev-preview/path.mjs';
+import type { ChatResponse } from '../shared/chat';
 const transported = (value: unknown) => JSON.parse(JSON.stringify(value));
+
+/** Durations differ by runtime; every other response field must match the server contract. */
+function responseWithoutTimings(response: ChatResponse) {
+  assert.ok(response.diagnosisTrace, 'preview must retain the diagnosis trace');
+  const { timings, ...trace } = response.diagnosisTrace;
+  assert.deepEqual(Object.keys(timings).sort(), ['decisionMs', 'externalAiMs', 'retrievalMs', 'totalMs']);
+  for (const [name, duration] of Object.entries(timings)) {
+    assert.equal(typeof duration, 'number', `${name} must be numeric`);
+    assert.ok(Number.isFinite(duration) && duration >= 0, `${name} must be finite and non-negative`);
+  }
+  assert.equal(timings.externalAiMs, 0, 'the browser preview must never spend time in an external AI call');
+  assert.equal(trace.aiAttempts, 0);
+  assert.equal(trace.aiSuccesses, 0);
+  return transported({ ...response, diagnosisTrace: trace });
+}
 
 test('开发快照只包含已索引资料，路径不会暴露本机文件或原始说明书', () => {
   const snapshot = createKnowledgeSnapshot();
   assert.ok(Object.keys(snapshot).length > 3);
-  assert.ok(Object.keys(snapshot).every((file) => file.endsWith('.md') || /\/(entries.jsonl|sources.json|hierarchy.json)$/.test(file)));
+  assert.ok(Object.keys(snapshot).every((file) => file.endsWith('.md') || /\/(entries.jsonl|sources.json|hierarchy.json|通用框架.json)$/.test(file)));
   assert.ok(Object.keys(snapshot).every((file) => !/\.env|原始农机说明书|00_说明/.test(file)));
   const fs = createReadOnlyFileSystem(snapshot);
   assert.throws(() => fs.readFileSync('/etc/agridx.env'));
@@ -63,12 +79,23 @@ test('实际浏览器构建保持完整知识目录、诊断来源与型号隔�
     assert.equal((await previewFetch('/api/knowledge/catalog?model=5E')).status, 400);
     assert.equal((await previewFetch('/api/knowledge/catalog?brand=a&brand=b')).status, 400);
     assert.equal((await previewFetch('/api/knowledge/catalog?brand=unknown&model=unknown')).status, 404);
+    for (const filters of [
+      { symptom: 'starter-stopped' },
+      { brand: '东方红', model: 'LF804S', symptom: 'starter-stopped' },
+      { brand: '约翰迪尔', model: '5E-1004', symptom: 'engine-power', emissionStage: '国四' as const },
+    ]) {
+      const actual = await (await previewFetch(`/api/knowledge/catalog?${new URLSearchParams(filters)}`)).json();
+      assert.deepEqual(actual, transported(getKnowledgeCatalog(filters)));
+    }
+    assert.equal((await previewFetch('/api/knowledge/catalog?symptom=unknown')).status, 404);
+    assert.equal((await previewFetch('/api/knowledge/catalog?configuration=unknown')).status, 400);
     const provider = { hasAnyConfigured: () => false, chat: async () => { throw new Error('Must not call an external model'); } };
     const diagnose = createDiagnosticService(provider);
     for (const model of ['5E-1004', '不存在的型号']) {
       const body = { messages: [{ role: 'user', content: '发动机无法启动' }], machineType: '拖拉机', brand: '约翰迪尔', model };
       const actual = await (await previewFetch('/api/chat', { method: 'POST', body: JSON.stringify(body) })).json();
-      assert.deepEqual(actual, transported(await diagnose({ ...parseDiagnosticRequest(body), diagnosisMode: 'knowledge_only' })));
+      const expected = await diagnose({ ...parseDiagnosticRequest(body), diagnosisMode: 'knowledge_only' });
+      assert.deepEqual(responseWithoutTimings(actual), responseWithoutTimings(expected));
       assert.equal(actual.provider, 'knowledge-base');
     }
     assert.equal((await previewFetch('/api/chat', { method: 'POST', body: '{' })).status, 400);

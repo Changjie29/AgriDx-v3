@@ -1,0 +1,4 @@
+# Optional offline cleaner only; rules mode and the application do not need this.
+# Prepare CPU-only torch wheels for the target Python/platform first.
+# Export and retain a tested wheelhouse/lock for each actual offline deployment.
+sentence-transformers>=5.1,<6

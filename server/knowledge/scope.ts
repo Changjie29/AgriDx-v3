@@ -4,6 +4,8 @@ export interface RetrievalContext {
   machineType?: string;
   brand?: string;
   model?: string;
+  engineModel?: string;
+  faultCodes?: string[];
 }
 
 const BRAND_ALIASES: Record<string, string[]> = {
@@ -226,7 +228,9 @@ export function resolveScope(query: string, context: RetrievalContext): Resolved
     : nonTractor.test(type) && /拖拉机|\btractor\b/i.test(queryTypeIdentity)));
   const identityConflict = brandConflict || modelConflict || typeConflict;
   // Powered hand tools do not identify the tractor's propulsion system.
-  const queryPowerIdentity = queryIdentity.replace(/电动(?:工具|扳手|螺丝刀)|\belectric\s+(?:tools?|wrenches?|screwdrivers?)\b/gi, ' ');
+  const queryPowerIdentity = queryIdentity.replace(/电动(?:工具|扳手|螺丝刀)|\belectric\s+(?:tools?|wrenches?|screwdrivers?)\b/gi, ' ')
+    // Manual steering becoming unavailable does not identify an autonomous tractor.
+    .replace(/无人力转向/g, '人力转向');
   const electric = /电动|新能源|无人|electric|autonomous|new-energy/i.test([type, explicitBrand, context.model, queryPowerIdentity].filter(Boolean).join(' ')) ||
     brand === '鸿鹄' || models.includes('t70');
   const ambiguous = queryBrands.length > 1 || contextBrands.length > 1;
@@ -241,8 +245,9 @@ export function archiveApplicability(chunk: KnowledgeChunk, scope: ResolvedScope
   if (chunk.configuration && scope.configurations.some((configuration) => configuration !== chunk.configuration)) return undefined;
   if (chunk.driveConfiguration && scope.driveConfigurations.some((configuration) => configuration !== chunk.driveConfiguration)) return undefined;
   const allowed = declaredModels(chunk);
-  const emissionStage = chunk.emissionStage ?? (chunk.model === '国三拖拉机' ? '国三'
-    : allowed.length > 0 && allowed.every((model) => model.endsWith('g4')) ? '国四' : undefined);
+  const emissionStage = chunk.emissionStage ?? (chunk.emissionStageUnknown ? undefined
+    : chunk.model === '国三拖拉机' ? '国三'
+      : allowed.length > 0 && allowed.every((model) => model.endsWith('g4')) ? '国四' : undefined);
   if (scope.emissions.some((stage) => stage !== emissionStage)) return undefined;
   const models = scope.models.filter((model) => model !== '国三' && model !== '国四');
   if (models.length === 0) return !chunk.requiresExactModel && scope.brand === brand ? 'pending' : undefined;

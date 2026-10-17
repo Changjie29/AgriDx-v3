@@ -80,6 +80,10 @@ def require(condition, rule, message, field=''):
 
 
 def check_conditions(record):
+    if 'emission_stage_unknown' in record:
+        require(isinstance(record['emission_stage_unknown'], bool) and
+                not (record['emission_stage_unknown'] and record.get('emission_stage') is not None),
+                'scope.condition', '未知排放标记须为布尔值，且不能与来源明确阶段同时成立', 'emission_stage_unknown')
     for field, allowed in [('emission_stage', ['国三', '国四']),
                            ('configuration', ['CAB', 'ROPS']),
                            ('drive_configuration', ['2WD', '4WD'])]:
@@ -186,9 +190,15 @@ class ArchiveAudit:
                 self.emit('record.whitespace', f'字段含首尾空白：{field}', record, path, line, field)
             if re.fullmatch(r'TODO|TBD|N/A|[-—]+', value, re.I):
                 self.emit('record.placeholder', f'字段仍为占位符：{field}', record, path, line, field)
-        if 'case_key' in record and (not isinstance(record['case_key'], str) or
-                                     not re.fullmatch(r'[a-f0-9]{64}', record['case_key'])):
-            self.emit('record.optional', 'case_key须为64位小写十六进制摘要', record, path, line, 'case_key')
+        if 'case_key' in record:
+            key = record['case_key']
+            source = record.get('source_id')
+            legacy_pattern = (re.escape(source) + r'/[1-9]\d*-[1-9]\d*/现象[1-9]\d*/原因\(([1-9]\d*)\)→排除\(\1\)'
+                              if isinstance(source, str) else None)
+            valid = isinstance(key, str) and (re.fullmatch(r'[a-f0-9]{64}', key) or
+                    legacy_pattern is not None and re.fullmatch(legacy_pattern, key))
+            if not valid:
+                self.emit('record.optional', 'case_key须为64位摘要或带本来源、表号及对应原因/排除项的定位键', record, path, line, 'case_key')
 
     def source_checks(self, source, position):
         start = len(self.findings)
@@ -387,6 +397,16 @@ class ArchiveAudit:
             if result['body_format']:
                 formats[result['body_format']] += 1
                 document_paths.add(entry['knowledge_path'])
+        common_summary = None
+        common_path = self.index / '通用框架.json'
+        if common_path.exists():
+            try:
+                from 校验通用框架 import validate_common_framework
+                self.track(common_path)
+                self.track(self.index / 'hierarchy.json')
+                common_summary = validate_common_framework(self.repo)
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                self.emit('index.json', f'通用框架：{error}', path=self.relative(common_path))
         for path, before in self.file_stats.items():
             try:
                 unchanged = before == self.stat(path)
@@ -420,6 +440,7 @@ class ArchiveAudit:
                         'by_category': dict(collections.Counter(x['category'] for x in findings))},
             'verification_counts': {state: states[state] for state in STATES},
             'body_formats': dict(formats), 'sources': checked, 'errors': errors, 'notes': notes, 'findings': findings,
+            'common_framework': common_summary,
             'incremental': {'enabled': bool(self.cache.path), **{key: self.cache.stats[key] for key in
                             ['sources_checked', 'sources_reused', 'entries_checked', 'entries_reused']},
                             'global_checks': '索引解析、编号唯一性、内容哈希与输入稳定性每次重检'},
