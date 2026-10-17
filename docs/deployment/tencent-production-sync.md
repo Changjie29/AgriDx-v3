@@ -48,6 +48,8 @@ curl -fsSL "https://raw.githubusercontent.com/srt2777/AgriDx-v3/$INSTALL_SHA/scr
 
 ## 查看、验收与暂停
 
+3.5.1起，正式网页也会自动检查同源`/deployment.json`并安全加载新版；不再只有服务端更新、已打开页面仍停留旧脚本。频率、输入保护、网络失败和防循环边界见[网页自动加载](automatic-client-update.md)。未经过main检查及部署的个人分支仍不会发布。
+
 ```bash
 sudo systemctl status agridx-github-sync.timer --no-pager
 sudo journalctl -u agridx-github-sync.service -n 80 --no-pager

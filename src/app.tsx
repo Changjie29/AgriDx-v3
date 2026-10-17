@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import PageLoading from '@/components/PageLoading';
 import { pageLoaders } from '@/lib/page-loaders';
+import AutoUpdateStatus from '@/features/updates/AutoUpdateStatus';
 const HomePage = lazy(pageLoaders.classic);
 const ChatPage = lazy(pageLoaders.chat);
 const KnowledgePage = lazy(pageLoaders.knowledge);
@@ -43,6 +44,7 @@ export default function App() {
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
     {PreviewStatus && <Suspense fallback={null}><PreviewStatus /></Suspense>}
+    <AutoUpdateStatus />
     </>
   );
 }
