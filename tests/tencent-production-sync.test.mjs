@@ -187,6 +187,37 @@ test('公网验收核对后端版本、完整提交及所有首页资源摘要',
   assert.deepEqual(await verifyPublicSite(fixture.options), { commit, version: '3.4.8', entries: 2, files: 3 });
 });
 
+test('公网验收逐项绕过旧缓存，取得目标健康版本、提交及网页资源摘要', async () => {
+  const fixture = publicFixture();
+  const healthyFetch = fixture.options.fetchImpl;
+  const requests = [];
+  fixture.options.fetchImpl = async (url, options) => {
+    if (!url.searchParams.has('__agridx_check')) {
+      return url.pathname === '/api/health'
+        ? Response.json({ ok: true, version: '3.1.1', knowledge: { archivedEntries: 212, chunks: 221 } })
+        : new Response('cached old webpage');
+    }
+    requests.push({ url, options });
+    return healthyFetch(url, options);
+  };
+  const bareHealth = await fixture.options.fetchImpl(new URL('/api/health', fixture.options.baseUrl), {});
+  assert.equal((await bareHealth.json()).version, '3.1.1');
+  const barePage = await fixture.options.fetchImpl(new URL('/', fixture.options.baseUrl), {});
+  assert.equal(await barePage.text(), 'cached old webpage');
+
+  assert.deepEqual(await verifyPublicSite(fixture.options), { commit, version: '3.4.8', entries: 2, files: 3 });
+  assert.deepEqual(requests.map(({ url }) => url.pathname).sort(),
+    ['/', '/api/health', '/assets/app.js', '/deployment.json', '/theme-init.js'].sort());
+  for (const { url, options } of requests) {
+    assert.match(url.searchParams.get('__agridx_check'), /^\d+$/);
+    assert.equal(url.searchParams.size, 1);
+    assert.equal(options.cache, 'no-store');
+    assert.equal(options.headers['Cache-Control'], 'no-cache');
+    assert.equal(options.redirect, 'error');
+    assert.ok(options.signal instanceof AbortSignal);
+  }
+});
+
 test('公网200但旧后端、旧提交、旧首页或旧JS均不能判定同步完成', async () => {
   const mutations = [fixture => { fixture.health.version = '3.1.1'; },
     fixture => { fixture.manifest.commit = other; },
@@ -227,6 +258,24 @@ test('服务器尚未安装时只发布请求，HTTP故障不能被宣称为已�
   assert.equal(await controllerConfigured('https://fixture.example/', async () => Response.json({
     controller: 'agridx-github-sync', repository: 'srt2777/AgriDx-v3', configured: true })), true);
   await assert.rejects(controllerConfigured('https://fixture.example/', async () => new Response('down', { status: 503 })), /503/);
+});
+
+test('控制器接入检查也通过独立时间戳和no-store绕过旧404缓存', async () => {
+  let requests = 0;
+  const fetchImpl = async (url, options) => {
+    if (!url.searchParams.has('__agridx_check')) return new Response('cached missing controller', { status: 404 });
+    requests++;
+    assert.equal(url.pathname, '/deployment-automation.json');
+    assert.match(url.searchParams.get('__agridx_check'), /^\d+$/);
+    assert.equal(options.cache, 'no-store');
+    assert.equal(options.headers['Cache-Control'], 'no-cache');
+    assert.equal(options.redirect, 'error');
+    assert.ok(options.signal instanceof AbortSignal);
+    return Response.json({ controller: 'agridx-github-sync', repository: 'srt2777/AgriDx-v3', configured: true });
+  };
+  assert.equal((await fetchImpl(new URL('https://fixture.example/deployment-automation.json'), {})).status, 404);
+  assert.equal(await controllerConfigured('https://fixture.example/', fetchImpl), true);
+  assert.equal(requests, 1);
 });
 
 test('main在等待中更新时，旧验收任务提前停止且不宣称部署通过', async () => {
